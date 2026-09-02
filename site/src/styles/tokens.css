@@ -22,10 +22,10 @@
 
   /* --- Type ------------------------------------------------------------- */
   --font-body: Montserrat, Arial, sans-serif;
-  /* Oswald — semi-condensed display face, real contrast against Montserrat.
-     (The original site asked for "LEMON MILK", which is not a Google Font and
-     never loaded — every display element silently fell back to Montserrat.) */
-  --font-display: "Oswald", "Montserrat", Arial, sans-serif;
+  /* The original site used Montserrat for everything — its "LEMON MILK" links
+     are not a Google Font and never loaded. Display character comes from
+     weight 800 + uppercase, not a second family. */
+  --font-display: Montserrat, Arial, sans-serif;
 
   /* Fluid type scale — clamp(min, preferred, max). Step names, not px. */
   --text-xs: 0.6875rem;                       /* 11px  eyebrows, meta       */

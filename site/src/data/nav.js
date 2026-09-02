@@ -69,7 +69,7 @@ export const primaryNav = [
 /* Header action buttons (right side of the nav bar). */
 export const headerActions = [
   { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true, variant: "solid" },
-  { label: "Become a Member", href: "/membership/become-a-member/", variant: "outline" },
+  { label: "Join ΣΓΡ", href: "/membership/become-a-member/", variant: "outline" },
 ];
 
 /* Footer link columns. Kept separate from primaryNav because the footer
@@ -98,8 +98,10 @@ export const footerColumns = [
     title: "Programs",
     links: [
       { label: "National Programs", href: "/service-impact/national-programs/" },
+      { label: "Scholarships", href: "/service-impact/partner-foundations/" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
       { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
+      { label: "Community Impact", href: "/service-impact/" },
     ],
   },
 ];

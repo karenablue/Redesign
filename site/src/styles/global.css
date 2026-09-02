@@ -43,6 +43,21 @@ p  { margin: 0 0 var(--space-4); }
   width: min(var(--container), calc(100% - (var(--gutter) * 2)));
   margin-inline: auto;
 }
+.container--narrow { width: min(820px, calc(100% - (var(--gutter) * 2))); }
+
+/* --- Section band (used by <Section> and by raw <section> in pages) ------ */
+.section { padding-block: clamp(3.25rem, 7vw, 5.5rem); }
+.section--pad-tight { padding-block: clamp(2.25rem, 5vw, 3.5rem); }
+.section--white { background: var(--white); }
+.section--cream { background: var(--cream); }
+.section--mist  { background: #f4f6fb; }
+.section--navy {
+  color: #fff;
+  background: linear-gradient(160deg, #22459f 0%, var(--royal) 55%, #1c3c8f 100%);
+}
+.section--navy a { color: #fff; }
+.section--bordered { border-block: 4px solid var(--gold); }
+.section--round-b { border-radius: 0 0 40px 40px; }
 
 /* --- Eyebrow / kicker (used in hero + every section heading) ------------- */
 .eyebrow {
@@ -89,6 +104,22 @@ p  { margin: 0 0 var(--space-4); }
   --btn-border: var(--gold);
 }
 .btn--outline:hover { --btn-bg: var(--gold); --btn-fg: var(--navy); }
+
+/* white pill on dark imagery (hero "Reactivate") */
+.btn--ghost-light {
+  --btn-bg: #fff;
+  --btn-fg: var(--royal);
+  --btn-border: #fff;
+}
+.btn--ghost-light:hover { --btn-bg: var(--cream); --btn-border: var(--cream); }
+
+/* navy pill (e.g. "Submit Chapter Event") */
+.btn--navy {
+  --btn-bg: var(--navy);
+  --btn-fg: #fff;
+  --btn-border: var(--navy);
+}
+.btn--navy:hover { --btn-bg: var(--royal); --btn-border: var(--royal); }
 
 .on-dark .btn--outline, .btn--outline.on-dark {
   --btn-fg: var(--white);
