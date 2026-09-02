@@ -48,6 +48,9 @@ p  { margin: 0 0 var(--space-4); }
 /* --- Section band (used by <Section> and by raw <section> in pages) ------ */
 .section { padding-block: clamp(3.25rem, 7vw, 5.5rem); }
 .section--pad-tight { padding-block: clamp(2.25rem, 5vw, 3.5rem); }
+/* a section that is only a heading (intro before a following band) shouldn't
+   stack its full padding on top of the next band's padding */
+.section--heading-only { padding-block: clamp(2.5rem, 5vw, 3.75rem) clamp(1.5rem, 3vw, 2.25rem); text-align: center; }
 .section--white { background: var(--white); }
 .section--cream { background: var(--cream); }
 .section--mist  { background: #f4f6fb; }

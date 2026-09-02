@@ -40,18 +40,19 @@ const {
 
 const hasHeading = Boolean(eyebrow || title || lead);
 const isCentered = centered ?? heading === "feature";
+const headingOnly = hasHeading && !Astro.slots.has("default");
 ---
 <section
   id={id}
   class:list={[
     "section",
     `section--${tone}`,
-    { "section--pad-tight": pad === "tight", "section--bordered": bordered, "section--round-b": roundBottom, "on-dark": tone === "navy" },
+    { "section--pad-tight": pad === "tight", "section--heading-only": headingOnly, "section--bordered": bordered, "section--round-b": roundBottom, "on-dark": tone === "navy" },
   ]}
 >
   <div class:list={["container", { "container--narrow": width === "narrow" }]}>
     {hasHeading && (
-      <div class:list={["s-head", `s-head--${heading}`, { "s-head--centered": isCentered }]}>
+      <div class:list={["s-head", `s-head--${heading}`, { "s-head--centered": isCentered, "s-head--bare": headingOnly }]}>
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         {title && <h2 class="s-head__title">{title}{highlight && <span> {highlight}</span>}</h2>}
         {lead && <p class="s-head__lead">{lead}</p>}
@@ -65,6 +66,7 @@ const isCentered = centered ?? heading === "feature";
   /* section band + container primitives live in global.css so raw <section>
      elements in pages get them too; only heading styles are scoped here. */
   .s-head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .s-head--bare { margin-bottom: 0; }
   .s-head__title { margin: 0.5rem 0 0; }
   .s-head__title span { color: var(--gold); }
   .s-head__lead { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-md); max-width: 60ch; }

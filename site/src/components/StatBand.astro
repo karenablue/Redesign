@@ -13,9 +13,9 @@ const { stats = [], tone = "cream", eyebrow, title } = Astro.props;
 <section class:list={["statband", `statband--${tone}`, { "on-dark": tone === "navy" }]}>
   <div class="container">
     {(eyebrow || title) && (
-      <div class="section-heading centered">
+      <div class="statband__head">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        {title && <h2>{title}</h2>}
+        {title && <h2 class="statband__title">{title}</h2>}
       </div>
     )}
     <dl class="statband__grid">
@@ -43,7 +43,17 @@ const { stats = [], tone = "cream", eyebrow, title } = Astro.props;
     gap: var(--space-8) 0;
     margin: 0;
   }
-  .section-heading + .statband__grid { margin-top: var(--space-12); }
+  .statband__head { text-align: center; margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
+  .statband__title {
+    margin: .4rem 0 0;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: .005em;
+    font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+    color: var(--royal);
+  }
+  .statband--navy .statband__title { color: #fff; }
   .statband__item { text-align: center; padding-inline: var(--space-4); }
   .statband__item + .statband__item { border-left: 1px solid rgba(255, 255, 255, 0.22); }
   .statband--white .statband__item + .statband__item,
@@ -54,7 +64,6 @@ const { stats = [], tone = "cream", eyebrow, title } = Astro.props;
     color: var(--royal);
     line-height: 1;
   }
-  .statband--navy :global(h2) { color: #fff; }
   .statband--navy .statband__value { color: #fff; }
   .statband__label {
     margin: var(--space-3) 0 0;
