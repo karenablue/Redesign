@@ -1,0 +1,65 @@
+---
+/**
+ * Section — a vertical band with consistent rhythm and an optional heading
+ * block. Replaces the ad-hoc `.section` / `.section-white` / `.century-section`
+ * variants that each page redefined.
+ *
+ * props:
+ *   tone      "white" (default) | "cream" | "navy"  — background treatment
+ *   eyebrow   kicker above the heading (optional)
+ *   title     h2 text (optional). Accent fragment goes in `highlight`.
+ *   highlight optional gold trailing fragment of the title
+ *   lead      paragraph under the heading (optional)
+ *   centered  center the heading block and its text
+ *   bordered  gold hairline top+bottom (house style for navy bands)
+ *   width     "default" (1180) | "narrow" (820) content column
+ *   id        anchor id on the <section>
+ */
+const {
+  tone = "white",
+  eyebrow,
+  title,
+  highlight,
+  lead,
+  centered = false,
+  bordered = tone === "navy",
+  width = "default",
+  id,
+} = Astro.props;
+
+const hasHeading = Boolean(eyebrow || title || lead);
+---
+<section
+  id={id}
+  class:list={["section", `section--${tone}`, { "section--bordered": bordered, "on-dark": tone === "navy" }]}
+>
+  <div class:list={["container", { "container--narrow": width === "narrow" }]}>
+    {hasHeading && (
+      <div class:list={["section-heading", { centered }]}>
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        {title && <h2>{title}{highlight && <span>{highlight}</span>}</h2>}
+        {lead && <p>{lead}</p>}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section { padding-block: var(--section-y); }
+  .section--white { background: var(--white); }
+  .section--cream { background: var(--cream); }
+  .section--navy {
+    color: var(--white);
+    background:
+      radial-gradient(circle at 84% 14%, rgba(63, 99, 191, 0.28), transparent 30%),
+      linear-gradient(145deg, var(--navy) 0%, var(--deep-blue) 45%, var(--royal-dark) 100%);
+  }
+  .section--bordered { border-block: 4px solid var(--gold); }
+  .container--narrow { width: min(820px, calc(100% - (var(--gutter) * 2))); }
+
+  .section-heading + :global(*) { margin-top: var(--space-12); }
+  .section--navy :global(h2) { color: var(--white); }
+  .section--navy :global(h2 span) { color: var(--gold-bright); }
+  .section--navy .section-heading :global(p) { color: rgba(255, 255, 255, 0.82); }
+</style>

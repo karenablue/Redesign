@@ -1,0 +1,112 @@
+---
+/**
+ * Hero — full-bleed image band with dark overlay, eyebrow, title, lead copy.
+ * ONE component for what the old site rebuilt on every page (founders-hero,
+ * hq-page-hero, programs-hero, membership-hero, gallery-hero …).
+ *
+ * props:
+ *   eyebrow    small uppercase kicker above the title
+ *   title      main heading text. Wrap the accent portion in the `highlight`
+ *              prop instead of markup, e.g. title="Her" highlight="story".
+ *   highlight  optional gold-accented trailing fragment of the title
+ *   copy       lead paragraph (optional)
+ *   image      background image path (root-absolute, e.g. "/images/foo.jpg")
+ *   focal      object-position for the image (default "50% 40%")
+ *   grayscale  desaturate the image (default true — matches house style)
+ *   watermark  faint oversized text bottom-left (e.g. a year). Optional.
+ *   as         heading level, "h1" (default) or "h2"
+ */
+import { withBase } from "../lib/url.js";
+
+const {
+  eyebrow,
+  title,
+  highlight,
+  copy,
+  image,
+  focal = "50% 40%",
+  grayscale = true,
+  watermark,
+  as = "h1",
+} = Astro.props;
+
+const Heading = as;
+---
+<section class="hero on-dark">
+  {image && (
+    <div
+      class="hero__image"
+      class:list={[{ "is-gray": grayscale }]}
+      style={`background-image:url('${withBase(image)}');background-position:${focal}`}
+    />
+  )}
+  <div class="hero__overlay" />
+
+  <div class="container hero__content">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <Heading class="hero__title">
+      {title}{highlight && <span>{highlight}</span>}
+    </Heading>
+    <div class="hero__rule" />
+    {copy && <p class="hero__copy"><slot>{copy}</slot></p>}
+    {watermark && <div class="hero__watermark" aria-hidden="true">{watermark}</div>}
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    min-height: clamp(420px, 60vh, 610px);
+    color: var(--white);
+    background: var(--navy);
+  }
+  .hero__image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .hero__image.is-gray { filter: grayscale(100%); }
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(8, 22, 51, 0.97) 0%,
+      rgba(14, 37, 88, 0.92) 38%,
+      rgba(21, 52, 122, 0.60) 72%,
+      rgba(8, 22, 51, 0.38) 100%
+    );
+  }
+  .hero__content { position: relative; z-index: 2; padding-block: clamp(4rem, 9vw, 6rem); }
+  .hero__title {
+    margin: 0;
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    line-height: 0.95;
+  }
+  .hero__title span { color: var(--gold); }
+  .hero__rule { width: 84px; height: 2px; margin: 2rem 0 1.5rem; background: var(--gold); }
+  .hero__copy {
+    max-width: 640px;
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .hero__watermark {
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    font-family: var(--font-display);
+    font-size: clamp(120px, 22vw, 220px);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+  }
+</style>

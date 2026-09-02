@@ -1,0 +1,89 @@
+---
+/**
+ * Home — rebuilt from the shared component set. This is a condensed pass that
+ * demonstrates the system end to end (Hero → StatBand → Section+CardGrid →
+ * CtaBand); the full homepage has more bands (Sisterhood in Motion, Member
+ * Voices, chapter locator, FAQ) that follow the same pattern.
+ */
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import StatBand from "../components/StatBand.astro";
+import CardGrid from "../components/CardGrid.astro";
+import Card from "../components/Card.astro";
+import CtaBand from "../components/CtaBand.astro";
+
+const stats = [
+  { value: "500+", label: "Chapters Worldwide" },
+  { value: "100,000+", label: "Members Strong" },
+  { value: "100+", label: "Years of Service" },
+  { value: "50+", label: "States & Territories" },
+];
+
+const impactSince2020 = [
+  { value: "2,145,830", label: "Hours of service performed globally" },
+  { value: "$3.4M", label: "Donated to philanthropic initiatives" },
+  { value: "$1.2M", label: "Awarded in academic scholarships" },
+];
+
+const programs = [
+  { title: "Youth Empowerment", body: "Preparing the next generation to lead with confidence, courage, and character." },
+  { title: "Educational Access", body: "Expanding pathways to learning and closing the digital divide." },
+  { title: "Scholarship & Opportunity", body: "Removing financial barriers and investing in academic excellence." },
+  { title: "Socioeconomic Justice", body: "Advocating for systemic change and equity in our communities." },
+  { title: "Financial Literacy", body: "Building the foundation for generational wealth and long-term stability." },
+  { title: "Women's Wellness", body: "Championing holistic physical, emotional, and maternal well-being." },
+];
+---
+<Base
+  title="Home"
+  description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
+>
+  <Hero
+    eyebrow="National Website • Est. 1922"
+    title="A Legacy of "
+    highlight="Leadership & Service"
+    copy="On November 12, 1922, seven young Black educators founded Sigma Gamma Rho. A century later, that founding purpose still drives everything we do."
+    image="/images/sgr-alpha-charter.jpeg"
+    focal="60% 35%"
+    watermark="1922"
+  />
+
+  <StatBand stats={stats} tone="cream" />
+
+  <Section
+    tone="white"
+    eyebrow="Our Commitment"
+    title="Greater Service, "
+    highlight="Greater Progress"
+    lead="Since 2020, our members have turned that motto into measurable impact."
+    centered
+  >
+    <StatBand stats={impactSince2020} tone="white" />
+  </Section>
+
+  <Section
+    tone="cream"
+    eyebrow="National Programs"
+    title="Where Our Work Makes a "
+    highlight="Difference"
+    lead="Six focus areas guide our chapters' service in every region."
+  >
+    <CardGrid min="300px" cols={3}>
+      {programs.map((p) => (
+        <Card title={p.title}><p>{p.body}</p></Card>
+      ))}
+    </CardGrid>
+  </Section>
+
+  <CtaBand
+    eyebrow="Join Our Sisterhood"
+    title="Become a Member of "
+    highlight="Sigma Gamma Rho"
+    copy="Membership is an active pursuit of our founding mandate — invested in scholarship, service, and one another."
+    actions={[
+      { label: "Explore Membership", href: "/membership/become-a-member/" },
+      { label: "Find a Chapter", href: "/membership/chapter-locator/", variant: "outline" },
+    ]}
+  />
+</Base>
