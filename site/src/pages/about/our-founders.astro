@@ -40,6 +40,7 @@ const founders = [
 
   <Section
     tone="white"
+    pad="tight"
     heading="display"
     centered
     eyebrow="Founded 1922"
@@ -48,14 +49,16 @@ const founders = [
   />
 
   <Section tone="cream">
-    <CardGrid min="220px" cols={4}>
-      {founders.map((f) => (
-        <Card image={f.img} imageAlt={`Portrait of ${f.name}`} title={f.name}>
-          <p class="founder-role">{f.role}</p>
-          {f.note && <p>{f.note}</p>}
-        </Card>
-      ))}
-    </CardGrid>
+    <div class="founder-grid">
+      <CardGrid min="220px" cols={4}>
+        {founders.map((f) => (
+          <Card image={f.img} imageAlt={`Portrait of ${f.name}`} title={f.name}>
+            <p class="founder-role">{f.role}</p>
+            {f.note && <p>{f.note}</p>}
+          </Card>
+        ))}
+      </CardGrid>
+    </div>
   </Section>
 
   <Section tone="white" width="narrow" heading="rule" eyebrow="Their Legacy, Our Responsibility" title="Seven women began the work. Generations carry it forward.">
@@ -82,4 +85,8 @@ const founders = [
     color: var(--gold);
   }
   .founder-motto { font-family: var(--font-display); color: var(--royal); font-weight: 700; }
+
+  /* portrait crop for the founder cards (Card defaults to 16/10 landscape) */
+  .founder-grid :global(.card__img) { aspect-ratio: 4 / 5; object-position: top center; }
+  .founder-grid :global(.card__body) { justify-content: flex-start; }
 </style>
