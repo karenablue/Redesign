@@ -9,15 +9,25 @@ real screens).
 The old files in the repo root are the **visual reference**. Nothing here
 imports them.
 
-## Running it
+## ⚠️ You must run it through a server — do not open the HTML files
+
+Double-clicking `dist/index.html` (or any `.astro`/`.html` file) opens it as
+`file://`, where the stylesheets (`/_astro/*.css`) and every internal link
+(`/about/herstory/`) fail to resolve. The page renders with **no CSS** — the
+nav collapses to a bullet list and the hero is unstyled black text. That is not
+a bug in the site; a multi-page site with clean URLs has to be served.
+
+Always view it with:
 
 ```bash
 cd site
 npm install        # first time only
-npm run dev        # http://localhost:4321
-npm run build      # -> site/dist/  (plain static HTML, deploy anywhere)
-npm run preview    # serve the built output
+npm run dev        # builds + opens http://localhost:4321 in your browser
 ```
+
+`npm run build` → `site/dist/` (plain static HTML); `npm run preview` serves
+that build the same way a host would. Deploying `dist/` to any web host also
+works — the "no CSS" problem is unique to opening files straight from disk.
 
 `predev` / `prebuild` run `scripts/link-images.mjs`, which links
 `site/public/images` to the repo-root `images/` folder so the existing 65 MB of

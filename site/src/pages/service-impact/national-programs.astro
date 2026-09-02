@@ -31,6 +31,7 @@ const programs = [
     eyebrow: "National Program 02",
     title: "Women's Wellness Initiative",
     image: "/images/Women’s Wellness Initiative.png",
+    fit: "contain",
     body: "Health education designed with women in mind — creating space for informed decisions about physical, mental, and emotional wellness across the life span.",
   },
   {
@@ -84,7 +85,8 @@ const programs = [
       eyebrow={p.eyebrow}
       title={p.title}
       image={p.image}
-      imageAlt={`${p.title} in action`}
+      imageAlt={p.fit === "contain" ? p.title : `${p.title} in action`}
+      fit={p.fit ?? "cover"}
       index={i}
       tone={i % 2 === 1 ? "cream" : "white"}
     >

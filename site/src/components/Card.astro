@@ -41,13 +41,14 @@ const external = href && /^https?:/.test(href);
   .card {
     display: flex;
     flex-direction: column;
+    height: 100%;
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
   .card__img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-  .card__body { padding: var(--space-6); }
+  .card__body { padding: var(--space-6); display: flex; flex-direction: column; flex: 1; }
   .card__eyebrow {
     display: block;
     margin-bottom: var(--space-2);

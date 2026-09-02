@@ -7,10 +7,11 @@
   },
   "scripts": {
     "predev": "node scripts/link-images.mjs",
-    "dev": "astro dev",
+    "dev": "astro dev --open",
+    "start": "astro dev --open",
     "prebuild": "node scripts/link-images.mjs",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --open",
     "astro": "astro"
   },
   "dependencies": {
