@@ -39,15 +39,17 @@ const faqs = [
   description="Eligibility standards and the official path to membership in Sigma Gamma Rho Sorority, Incorporated."
 >
   <Hero
+    variant="plain"
+    accent="gold"
+    size="compact"
     eyebrow="A Lifelong Commitment"
     title="Know the Standard "
     highlight="Before You Pursue It"
     copy="Membership in Sigma Gamma Rho is an active pursuit of our founding mandate — invested in scholarship, service, and one another. Here is what that requires and how the official process works."
-    image="/images/rho alpha sorors.jfif"
-    focal="50% 30%"
   />
 
-  <Section tone="cream" eyebrow="The Path" title="Four Steps to " highlight="Membership" centered>
+  <Section tone="cream" heading="rule" eyebrow="The Path" title="Four steps to membership"
+    lead="The process is deliberate. Each step confirms readiness before the next.">
     <ol class="steps">
       {steps.map((s) => (
         <li class="steps__item">
@@ -61,13 +63,13 @@ const faqs = [
     </ol>
   </Section>
 
-  <Section tone="white" width="narrow" eyebrow="Self-Assessment" title="Who Would Make a " highlight="Strong Candidate?">
+  <Section tone="white" width="narrow" heading="display" eyebrow="Self-Assessment" title="Who would make a strong candidate?">
     <ul class="candidate">
       {candidate.map((c) => <li>{c}</li>)}
     </ul>
   </Section>
 
-  <Section tone="cream" eyebrow="Two Paths" title="Collegiate or " highlight="Alumnae">
+  <Section tone="cream" eyebrow="Two Paths" title="Collegiate or alumnae">
     <div class="paths">
       <article class="path">
         <h3>Collegiate Path</h3>
@@ -92,7 +94,8 @@ const faqs = [
     </div>
   </Section>
 
-  <Section tone="white" width="narrow" eyebrow="Prospective Member FAQ" title="Questions Prospective Members " highlight="Ask">
+  <Section tone="white" width="narrow" heading="rule" eyebrow="FAQ" title="Prospective member questions"
+    lead="Straight answers to what candidates and their families ask most.">
     <div class="faq">
       {faqs.map((f) => (
         <details class="faq__item">

@@ -40,6 +40,9 @@ const programs = [
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
 >
   <Hero
+    variant="image"
+    size="tall"
+    align="center"
     eyebrow="National Website • Est. 1922"
     title="A Legacy of "
     highlight="Leadership & Service"
@@ -51,22 +54,19 @@ const programs = [
 
   <StatBand stats={stats} tone="cream" />
 
-  <Section
+  <StatBand
+    stats={impactSince2020}
     tone="white"
     eyebrow="Our Commitment"
-    title="Greater Service, "
-    highlight="Greater Progress"
-    lead="Since 2020, our members have turned that motto into measurable impact."
-    centered
-  >
-    <StatBand stats={impactSince2020} tone="white" />
-  </Section>
+    title="Greater Service, Greater Progress"
+  />
 
   <Section
     tone="cream"
+    heading="display"
     eyebrow="National Programs"
-    title="Where Our Work Makes a "
-    highlight="Difference"
+    title="Where our work makes a"
+    highlight="difference"
     lead="Six focus areas guide our chapters' service in every region."
   >
     <CardGrid min="300px" cols={3}>
