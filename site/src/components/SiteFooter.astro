@@ -23,7 +23,7 @@ const socialPaths = {
       <a href={withBase("/")} class="site-footer__logo" aria-label="Sigma Gamma Rho home">
         <img src={withBase("/images/SGR-Logo-Shield.png")} alt="Sigma Gamma Rho Sorority coat of arms" width="60" height="60" />
         <span class="site-footer__wordmark">
-          <span>Sigma Gamma Rho</span><em>Sorority, Incorporated&reg;</em>
+          <span>Sigma Gamma Rho</span><em>Sorority, Inc. &reg;</em>
         </span>
       </a>
       <ul class="site-footer__social">
@@ -67,8 +67,13 @@ const socialPaths = {
 
   <div class="container site-footer__bottom">
     <span>&copy; {year} Sigma Gamma Rho Sorority, Inc. All rights reserved.</span>
-    <span class="site-footer__tagline">Greater Service, Greater Progress</span>
+    <span class="site-footer__legal">
+      <a href={withBase("/resources/anti-hazing-policy/")}>Privacy Policy</a>
+      <a href={withBase("/resources/help-center/")}>Terms of Use</a>
+      <a href={withBase("/resources/help-center/")}>Accessibility</a>
+    </span>
   </div>
+  <p class="site-footer__tagline">Greater Service, Greater Progress — For Over 100 Years</p>
 </footer>
 
 <style>
@@ -107,12 +112,23 @@ const socialPaths = {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: var(--space-2);
-    padding-block: var(--space-6);
+    gap: var(--space-2) var(--space-6);
+    padding-block: var(--space-6) var(--space-3);
     border-top: 1px solid var(--line-dark);
     font-size: var(--text-xs);
   }
-  .site-footer__tagline { color: var(--gold); font-weight: 700; letter-spacing: 0.1em; }
+  .site-footer__legal { display: flex; gap: var(--space-6); }
+  .site-footer__legal a { text-decoration: none; }
+  .site-footer__legal a:hover { color: var(--gold-bright); }
+  .site-footer__tagline {
+    margin: 0;
+    padding-bottom: var(--space-6);
+    text-align: center;
+    color: var(--gold);
+    font-style: italic;
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+  }
 
   @media (max-width: 900px) {
     .site-footer__top { grid-template-columns: repeat(2, 1fr); }
