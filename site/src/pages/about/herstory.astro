@@ -71,7 +71,7 @@ const regions = [
   />
 
   <!-- THE BEGINNING — page-specific split layout -->
-  <Section tone="white" eyebrow="The Beginning" title="A Vision Born in " highlight="1922">
+  <Section tone="white" eyebrow="The Beginning" title="A Vision Born in" highlight="1922">
     <div class="split">
       <div class="split__copy">
         <p>On November 12, 1922, seven young educators in Indianapolis established Sigma Gamma Rho Sorority at Butler University.</p>
@@ -88,8 +88,8 @@ const regions = [
   </Section>
 
   <!-- KEY FACTS — shared CardGrid + Card -->
-  <Section tone="cream" eyebrow="At a Glance" title="Key " highlight="Facts"
-    lead="The essential facts behind more than a century of Sigma Gamma Rho history." centered>
+  <Section tone="cream" heading="display" centered eyebrow="At a Glance" title="Key facts"
+    lead="The essential facts behind more than a century of Sigma Gamma Rho history.">
     <CardGrid min="240px" cols={4}>
       {facts.map((f) => (
         <Card eyebrow={f.n} title={f.title}>
@@ -101,7 +101,7 @@ const regions = [
   </Section>
 
   <!-- FIRSTS & DISTINCTIONS — page-specific list -->
-  <Section tone="white" eyebrow="Distinct by History" title="Firsts & " highlight="Distinctions"
+  <Section tone="white" heading="rule" eyebrow="Distinct by History" title="Firsts & distinctions"
     lead="Milestones and traditions that distinguish Sigma Gamma Rho within the history of Black Greek-letter organizations.">
     <ol class="firsts">
       {firsts.map((f) => (
@@ -133,8 +133,8 @@ const regions = [
   </Section>
 
   <!-- CENTURY IN MOTION — navy band, page-specific timeline -->
-  <Section tone="navy" eyebrow="Our Journey" title="More Than a Century " highlight="in Motion"
-    lead="From seven educators in Indianapolis to a national institution shaped by education, civic action, service, and organizational growth." centered>
+  <Section tone="navy" heading="display" centered eyebrow="Our Journey" title="More than a century in motion"
+    lead="From seven educators in Indianapolis to a national institution shaped by education, civic action, service, and organizational growth.">
     <ol class="timeline">
       {timeline.map((t) => (
         <li class="timeline__item">
@@ -150,7 +150,7 @@ const regions = [
   </Section>
 
   <!-- REGIONS — shared CardGrid -->
-  <Section tone="white" eyebrow="National Structure" title="A National Sisterhood. " highlight="Five Regions."
+  <Section tone="white" eyebrow="National Structure" title="A national sisterhood. Five regions."
     lead="The regional system connected a growing Sorority across chapters, campuses, communities, and generations of leadership.">
     <CardGrid min="280px" cols={3}>
       {regions.map((r) => (

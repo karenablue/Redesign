@@ -1,22 +1,30 @@
 ---
 /**
- * Section — a vertical band with consistent rhythm and an optional heading
- * block. Replaces the ad-hoc `.section` / `.section-white` / `.century-section`
- * variants that each page redefined.
+ * Section — a vertical band with consistent rhythm and an optional heading.
+ *
+ * Heading treatments (prop `heading`) so bands don't all look identical:
+ *   "kicker"  (default) small gold eyebrow + Montserrat title. Compact.
+ *   "display" Oswald title, uppercase, larger — for a band you want to land.
+ *   "rule"    left-aligned, a gold vertical rule beside a navy title, lead in
+ *             a second column on wide screens. Editorial.
  *
  * props:
- *   tone      "white" (default) | "cream" | "navy"  — background treatment
- *   eyebrow   kicker above the heading (optional)
- *   title     h2 text (optional). Accent fragment goes in `highlight`.
- *   highlight optional gold trailing fragment of the title
- *   lead      paragraph under the heading (optional)
- *   centered  center the heading block and its text
- *   bordered  gold hairline top+bottom (house style for navy bands)
- *   width     "default" (1180) | "narrow" (820) content column
- *   id        anchor id on the <section>
+ *   tone       "white" (default) | "cream" | "navy"
+ *   heading    "kicker" | "display" | "rule"
+ *   eyebrow    kicker text (optional)
+ *   title      heading text (optional)
+ *   highlight  gold fragment appended to the title — use sparingly, not on
+ *              every section
+ *   lead       paragraph under / beside the heading (optional)
+ *   centered   center the heading block (ignored for "rule")
+ *   bordered   gold hairline top+bottom (default on navy)
+ *   width      "default" (1180) | "narrow" (820)
+ *   pad        "default" | "tight"  — vertical padding
+ *   id         anchor id
  */
 const {
   tone = "white",
+  heading = "kicker",
   eyebrow,
   title,
   highlight,
@@ -24,21 +32,28 @@ const {
   centered = false,
   bordered = tone === "navy",
   width = "default",
+  pad = "default",
   id,
 } = Astro.props;
 
 const hasHeading = Boolean(eyebrow || title || lead);
+const isCentered = centered && heading !== "rule";
 ---
 <section
   id={id}
-  class:list={["section", `section--${tone}`, { "section--bordered": bordered, "on-dark": tone === "navy" }]}
+  class:list={[
+    "section",
+    `section--${tone}`,
+    `section--pad-${pad}`,
+    { "section--bordered": bordered, "on-dark": tone === "navy" },
+  ]}
 >
   <div class:list={["container", { "container--narrow": width === "narrow" }]}>
     {hasHeading && (
-      <div class:list={["section-heading", { centered }]}>
+      <div class:list={["s-head", `s-head--${heading}`, { "s-head--centered": isCentered }]}>
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        {title && <h2>{title}{highlight && <span>{highlight}</span>}</h2>}
-        {lead && <p>{lead}</p>}
+        {title && <h2 class="s-head__title">{title}{highlight && <span> {highlight}</span>}</h2>}
+        {lead && <p class="s-head__lead">{lead}</p>}
       </div>
     )}
     <slot />
@@ -46,7 +61,8 @@ const hasHeading = Boolean(eyebrow || title || lead);
 </section>
 
 <style>
-  .section { padding-block: var(--section-y); }
+  .section--pad-default { padding-block: var(--section-y); }
+  .section--pad-tight { padding-block: clamp(2.25rem, 5vw, 3.5rem); }
   .section--white { background: var(--white); }
   .section--cream { background: var(--cream); }
   .section--navy {
@@ -58,8 +74,49 @@ const hasHeading = Boolean(eyebrow || title || lead);
   .section--bordered { border-block: 4px solid var(--gold); }
   .container--narrow { width: min(820px, calc(100% - (var(--gutter) * 2))); }
 
-  .section-heading + :global(*) { margin-top: var(--space-12); }
-  .section--navy :global(h2) { color: var(--white); }
-  .section--navy :global(h2 span) { color: var(--gold-bright); }
-  .section--navy .section-heading :global(p) { color: rgba(255, 255, 255, 0.82); }
+  .s-head + :global(*) { margin-top: var(--space-8); }
+  .s-head__title { margin: 0; }
+  .s-head__title span { color: var(--gold); }
+  .s-head__lead { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-md); max-width: 60ch; }
+
+  /* kicker (default): modest Montserrat title */
+  .s-head--kicker .s-head__title { font-size: var(--text-xl); color: var(--royal); }
+
+  /* display: Oswald, uppercase, bigger — reserve for a band that should land */
+  .s-head--display .s-head__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-2xl);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--navy);
+    line-height: 1.05;
+  }
+
+  /* rule: left-aligned editorial, gold vertical rule, lead beside on wide */
+  .s-head--rule {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: var(--space-4) var(--space-12);
+    align-items: end;
+    padding-left: var(--space-6);
+    border-left: 3px solid var(--gold);
+  }
+  .s-head--rule .eyebrow { grid-column: 1 / -1; }
+  .s-head--rule .s-head__title { font-size: var(--text-xl); color: var(--navy); }
+  .s-head--rule .s-head__lead { margin-top: 0; }
+  @media (max-width: 760px) {
+    .s-head--rule { grid-template-columns: 1fr; }
+  }
+
+  /* centered modifier (kicker / display only) */
+  .s-head--centered { text-align: center; }
+  .s-head--centered .s-head__lead { margin-inline: auto; }
+
+  /* on navy */
+  .section--navy .s-head__title,
+  .section--navy .s-head--display .s-head__title,
+  .section--navy .s-head--rule .s-head__title { color: #fff; }
+  .section--navy .s-head__title span { color: var(--gold-bright); }
+  .section--navy .s-head__lead { color: rgba(255, 255, 255, 0.82); }
 </style>
