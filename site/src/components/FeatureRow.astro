@@ -1,0 +1,60 @@
+---
+/**
+ * FeatureRow — an image beside a block of copy, alternating sides down the
+ * page. The recurring "big topic" layout on the old site (program features,
+ * initiative spotlights, region features). Put several in a row; pass
+ * flip on every other one, or use the `index` prop and let it auto-alternate.
+ *
+ * props:
+ *   eyebrow   small label (e.g. "National Program 01")
+ *   title     heading
+ *   image     image path (root-absolute)
+ *   imageAlt  alt text (required with image)
+ *   flip      image on the right instead of the left
+ *   index     if given, even -> normal, odd -> flipped (overrides `flip`)
+ *   tone      "white" (default) | "cream"
+ * slot: body copy + any links/buttons
+ */
+import { withBase } from "../lib/url.js";
+
+const { eyebrow, title, image, imageAlt = "", flip = false, index, tone = "white" } = Astro.props;
+const flipped = typeof index === "number" ? index % 2 === 1 : flip;
+---
+<section class:list={["frow", `frow--${tone}`, { "frow--flip": flipped }]}>
+  <div class="container frow__inner">
+    <figure class="frow__media">
+      <img src={withBase(image)} alt={imageAlt} loading="lazy" />
+    </figure>
+    <div class="frow__copy">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      {title && <h2>{title}</h2>}
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .frow { padding-block: var(--section-y); }
+  .frow--white { background: var(--white); }
+  .frow--cream { background: var(--cream); }
+  .frow__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .frow--flip .frow__media { order: 2; }
+  .frow__media {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .frow__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .frow__copy :global(p) { color: var(--muted); }
+  .frow__copy :global(p:last-child) { margin-bottom: 0; }
+  @media (max-width: 820px) {
+    .frow__inner { grid-template-columns: 1fr; gap: var(--space-8); }
+    .frow--flip .frow__media { order: 0; }
+  }
+</style>
