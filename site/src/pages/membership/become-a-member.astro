@@ -1,0 +1,200 @@
+---
+/**
+ * Become a Member — the conversion / standards page.
+ *
+ * Treatment: the densest, most functional page in the set. Warm cream base,
+ * a numbered process strip, a candidate checklist, two side-by-side "path"
+ * panels, and a real <details> FAQ. No big photography — this page is about
+ * information, not atmosphere.
+ */
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/Hero.astro";
+import Section from "../../components/Section.astro";
+import CtaBand from "../../components/CtaBand.astro";
+
+const steps = [
+  { n: "1", title: "Review eligibility", body: "Confirm you meet the academic, institutional, and character standards below." },
+  { n: "2", title: "Prepare your record", body: "Official transcripts, enrollment or degree verification, and references." },
+  { n: "3", title: "Watch for an interest event", body: "Chapters announce official interest meetings. Attendance never guarantees selection." },
+  { n: "4", title: "Complete the official process", body: "Membership intake is conducted only through a chartered chapter and the Sorority's official process." },
+];
+
+const candidate = [
+  "She takes scholarship seriously.",
+  "She is service-minded, not image-driven.",
+  "She values structure, accountability, and official process.",
+  "She understands sisterhood requires conduct.",
+  "She is prepared for a lifelong commitment.",
+];
+
+const faqs = [
+  { q: "Does attending a public event guarantee an invitation?", a: "No. Attendance at public events does not guarantee an invitation, selection, or membership opportunity." },
+  { q: "Does legacy status guarantee membership?", a: "No. Legacy status does not replace academic, institutional, character, or selection requirements." },
+  { q: "Where does membership intake happen?", a: "Only through a chartered chapter using the Sorority's official membership process. Be cautious of anyone claiming another route." },
+];
+---
+<Base
+  title="Become a Member"
+  activeTop="Membership"
+  description="Eligibility standards and the official path to membership in Sigma Gamma Rho Sorority, Incorporated."
+>
+  <Hero
+    eyebrow="A Lifelong Commitment"
+    title="Know the Standard "
+    highlight="Before You Pursue It"
+    copy="Membership in Sigma Gamma Rho is an active pursuit of our founding mandate — invested in scholarship, service, and one another. Here is what that requires and how the official process works."
+    image="/images/rho alpha sorors.jfif"
+    focal="50% 30%"
+  />
+
+  <Section tone="cream" eyebrow="The Path" title="Four Steps to " highlight="Membership" centered>
+    <ol class="steps">
+      {steps.map((s) => (
+        <li class="steps__item">
+          <span class="steps__num">{s.n}</span>
+          <div>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section tone="white" width="narrow" eyebrow="Self-Assessment" title="Who Would Make a " highlight="Strong Candidate?">
+    <ul class="candidate">
+      {candidate.map((c) => <li>{c}</li>)}
+    </ul>
+  </Section>
+
+  <Section tone="cream" eyebrow="Two Paths" title="Collegiate or " highlight="Alumnae">
+    <div class="paths">
+      <article class="path">
+        <h3>Collegiate Path</h3>
+        <p class="path__meta">Enrolled undergraduates</p>
+        <ul>
+          <li>Enrolled full-time at a school accredited by the U.S. Department of Education</li>
+          <li>Minimum 2.5 cumulative GPA on a 4.0 scale</li>
+          <li>At least sophomore standing (varies by chapter and institution)</li>
+          <li>A record of demonstrated community service</li>
+        </ul>
+      </article>
+      <article class="path">
+        <h3>Alumnae Path</h3>
+        <p class="path__meta">Degree-holding women</p>
+        <ul>
+          <li>Bachelor's degree from an accredited institution</li>
+          <li>A sustained history of community service and civic engagement</li>
+          <li>Sponsorship through a chartered alumnae chapter</li>
+          <li>Good standing in your community and profession</li>
+        </ul>
+      </article>
+    </div>
+  </Section>
+
+  <Section tone="white" width="narrow" eyebrow="Prospective Member FAQ" title="Questions Prospective Members " highlight="Ask">
+    <div class="faq">
+      {faqs.map((f) => (
+        <details class="faq__item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </Section>
+
+  <CtaBand
+    eyebrow="Ready?"
+    title="Find a Chapter "
+    highlight="Near You"
+    copy="Membership begins with a chartered chapter. Locate the collegiate or alumnae chapters in your area."
+    actions={[
+      { label: "Chapter Locator", href: "/membership/chapter-locator/" },
+      { label: "Eligibility Standards", href: "/membership/become-a-member/", variant: "outline" },
+    ]}
+  />
+</Base>
+
+<style>
+  /* numbered process strip */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-8);
+  }
+  .steps__item { display: grid; grid-template-columns: 48px 1fr; gap: var(--space-4); align-items: start; }
+  .steps__num {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--royal);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  .steps__item h3 { margin-bottom: var(--space-1); font-size: var(--text-md); }
+  .steps__item p { color: var(--muted); margin: 0; }
+
+  /* checklist */
+  .candidate { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .candidate li {
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-12);
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
+    position: relative;
+    font-weight: 600;
+  }
+  .candidate li::before {
+    content: "✓";
+    position: absolute;
+    left: var(--space-4);
+    color: var(--gold);
+    font-weight: 800;
+  }
+
+  /* two paths */
+  .paths { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+  .path {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--gold);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+  }
+  .path h3 { margin-bottom: var(--space-1); }
+  .path__meta {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: var(--space-4);
+  }
+  .path ul { margin: 0; padding-left: 1.1rem; display: grid; gap: var(--space-2); }
+  .path li { color: var(--ink); }
+  @media (max-width: 720px) { .paths { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .faq { display: grid; gap: var(--space-2); }
+  .faq__item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4) var(--space-6);
+    background: var(--white);
+  }
+  .faq__item summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--royal);
+    list-style: none;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary::after { content: "+"; float: right; color: var(--gold); font-weight: 800; }
+  .faq__item[open] summary::after { content: "–"; }
+  .faq__item p { margin: var(--space-3) 0 0; color: var(--muted); }
+</style>
