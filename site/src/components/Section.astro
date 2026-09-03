@@ -1,37 +1,29 @@
 ---
 /**
- * Section — a vertical band with an optional heading, styled to match the
- * original SGRho site.
- *
- * Heading treatments (prop `heading`):
- *   "feature" (default) centered gold eyebrow + Montserrat 800 italic UPPERCASE
- *             title, one word in gold. The site's signature section header.
- *   "plain"   Title Case, upright (not italic). For content-list sections
- *             (news, partners). Left-aligned unless `centered`.
+ * Section — a band with the site's standard header triad:
+ *   LEMON MILK eyebrow  →  Newsreader heading (italic, one word gold)  →  Montserrat lead
  *
  * props:
- *   tone       "white" (default) | "cream" | "navy"
- *   heading    "feature" | "plain"
- *   eyebrow    kicker text
- *   title      heading text
- *   highlight  gold fragment appended to the title
- *   lead       paragraph under the heading
- *   centered   center the heading block (feature is centered by default)
- *   bordered   gold hairline top+bottom
- *   width      "default" (1180) | "narrow" (820)
+ *   tone       "white" (default) | "cream" | "navy" | "mist"
+ *   eyebrow    label text (LEMON MILK)
+ *   title      heading text (Newsreader italic)
+ *   highlight  gold-accented word/fragment appended to the title
+ *   lead       supporting paragraph
+ *   align      "center" (default) | "left"
+ *   rule       show the short gold rule under the eyebrow (default true when centered)
+ *   width      "default" (1100) | "narrow" (760)
  *   pad        "default" | "tight"
  *   roundBottom  round the lower corners (navy CTA blocks)
  *   id         anchor id
  */
 const {
   tone = "white",
-  heading = "feature",
   eyebrow,
   title,
   highlight,
   lead,
-  centered,
-  bordered = false,
+  align = "center",
+  rule,
   width = "default",
   pad = "default",
   roundBottom = false,
@@ -39,22 +31,28 @@ const {
 } = Astro.props;
 
 const hasHeading = Boolean(eyebrow || title || lead);
-const isCentered = centered ?? heading === "feature";
+const centered = align === "center";
+const showRule = rule ?? centered;
 const headingOnly = hasHeading && !Astro.slots.has("default");
 ---
 <section
   id={id}
   class:list={[
-    "section",
-    `section--${tone}`,
-    { "section--pad-tight": pad === "tight", "section--heading-only": headingOnly, "section--bordered": bordered, "section--round-b": roundBottom, "on-dark": tone === "navy" },
+    "section", `section--${tone}`,
+    {
+      "section--pad-tight": pad === "tight",
+      "section--heading-only": headingOnly,
+      "section--round-b": roundBottom,
+      "on-dark": tone === "navy",
+    },
   ]}
 >
   <div class:list={["container", { "container--narrow": width === "narrow" }]}>
     {hasHeading && (
-      <div class:list={["s-head", `s-head--${heading}`, { "s-head--centered": isCentered, "s-head--bare": headingOnly }]}>
+      <div class:list={["s-head", { "s-head--center": centered, "s-head--bare": headingOnly }]}>
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        {title && <h2 class="s-head__title">{title}{highlight && <span> {highlight}</span>}</h2>}
+        {showRule && eyebrow && <span class="s-head__rule" aria-hidden="true"></span>}
+        {title && <h2 class="s-head__title">{title}{highlight && <> <span>{highlight}</span></>}</h2>}
         {lead && <p class="s-head__lead">{lead}</p>}
       </div>
     )}
@@ -63,39 +61,43 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
 </section>
 
 <style>
-  /* section band + container primitives live in global.css so raw <section>
-     elements in pages get them too; only heading styles are scoped here. */
-  .s-head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .s-head { margin-bottom: clamp(2.5rem, 4vw, 4rem); max-width: 52rem; }
+  .s-head--center { margin-inline: auto; text-align: center; }
   .s-head--bare { margin-bottom: 0; }
-  .s-head__title { margin: 0.5rem 0 0; }
-  .s-head__title span { color: var(--gold); }
-  .s-head__lead { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-md); max-width: 60ch; }
 
-  /* feature (default): italic uppercase, one gold word */
-  .s-head--feature .s-head__title {
-    font-weight: 800;
-    font-style: italic;
-    font-size: clamp(1.9rem, 4vw, 2.9rem);
-    letter-spacing: 0.005em;
+  .s-head__rule {
+    display: block;
+    width: 2rem;
+    height: 1px;
+    margin: 0 0 var(--space-6);
+    background: var(--gold);
+  }
+  .s-head--center .s-head__rule { margin-inline: auto; }
+
+  .s-head__title {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--text-h2);
+    line-height: 1.14;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
     color: var(--royal);
-    line-height: 1.08;
   }
+  .s-head__title span { color: var(--gold); }
 
-  /* plain: Title Case, upright */
-  .s-head--plain .s-head__title {
-    font-weight: 800;
-    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-    color: var(--royal);
-    line-height: 1.12;
+  .s-head__lead {
+    margin: var(--space-5) 0 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 46rem;
   }
+  .s-head--center .s-head__lead { margin-inline: auto; }
 
-  .s-head--centered { text-align: center; }
-  .s-head--centered .s-head__lead { margin-inline: auto; }
-
-  /* on navy */
   .section--navy .s-head__title { color: #fff; }
   .section--navy .s-head__title span { color: var(--gold); }
   .section--navy .s-head__lead { color: rgba(255, 255, 255, 0.88); }
-  .section--navy .eyebrow { color: var(--gold); }
 </style>
