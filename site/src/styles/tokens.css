@@ -1,33 +1,35 @@
 /* ==========================================================================
-   SGRho design tokens — single source of truth for color, type, spacing.
-   Per the official SGRho Brand Guidelines (FY2027, effective July 2026):
-     LEMON MILK  → headings / short headlines / labels
-     Montserrat  → all body text
-     Colors: Royal Blue #2041A5 · Gold #DFB136 · Bright White #FCFFFE · Black
+   SGRho design tokens — matched to the Figma Make design source.
+     Playfair Display (italic)  → section headings
+     LEMON MILK                 → eyebrows / labels / big stat numerals
+     Montserrat                 → all body text
+   (Note: the FY2027 brand PDF prescribes LEMON MILK headings + no cream; this
+    file follows the Make design instead. Swap --font-head if that changes.)
    ========================================================================== */
 
 :root {
-  /* --- Brand color (official) ---------------------------------------- */
+  /* --- Brand color ------------------------------------------------- */
   --royal: #2041a5;         /* Royal Blue — Pantone 19-4053 TCX            */
   --royal-2: #1a3580;       /* darker royal for gradients                 */
   --royal-3: #2b4ea8;       /* lighter royal for gradients                */
   --royal-dark: #17357f;    /* link hover                                 */
-  --navy: #0f2555;          /* deepest royal — hero base, footer          */
-  --deep-blue: #0f2555;
-  --gold: #dfb136;          /* Gold — Pantone 13-0757 TCX (Soror/Philo)   */
+  --navy: #081633;          /* deepest — hero base                        */
+  --deep-blue: #0f2555;     /* footer gradient start                      */
+  --gold: #dfb136;          /* Gold — Pantone 13-0757 TCX                 */
   --gold-dark: #c9961a;     /* gold hover / gradient end                  */
-  --white: #fcfffe;         /* Bright White                               */
-  --ink: #1a1a1a;           /* body text on white                         */
+  --white: #ffffff;
+  --ink: #333333;           /* body text (Make uses #333)                 */
   --muted: #555a66;         /* secondary text                             */
-  --tint: #f4f6fb;          /* faint royal-tinted panel (sparingly)       */
-  --cream: #fbfcfe;         /* legacy alias — brand has no cream; near-white */
-  --cream-2: #f6f8fc;       /* legacy alias                              */
+  --muted-2: #6a7282;
+  --cream: #fffbf0;         /* warm card background (from the Make source) */
+  --cream-2: #fef8ed;
+  --tint: #f4f6fb;
   --line: rgba(32, 65, 165, 0.12);        /* hairline on light            */
   --line-dark: rgba(255, 255, 255, 0.14); /* hairline on dark             */
 
-  /* --- Type (official brand fonts) --------------------------------- */
+  /* --- Type (Make design source) --------------------------------- */
   --font-body: "Montserrat", system-ui, Arial, sans-serif;
-  --font-head: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-head: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-label: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
 
   /* px-ish scale matching the Make source */
@@ -59,8 +61,8 @@
   /* --- Layout ---------------------------------------------------- */
   --container: 1100px;       /* the Make source uses max-w-[1100px]        */
   --gutter: 24px;
-  /* feedback: 80–120px between major sections */
-  --section-y: clamp(4.5rem, 3rem + 5vw, 7rem);
+  /* Make source uses py-20 / py-24 (80–96px) */
+  --section-y: clamp(4rem, 3rem + 3vw, 6rem);
   --radius: 8px;
   --radius-lg: 16px;
   --radius-2xl: 40px;        /* the rounded-b-[40px] membership block      */
