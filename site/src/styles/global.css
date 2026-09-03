@@ -46,16 +46,16 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 
-/* h1/h2 = section headlines in LEMON MILK. h3/h4 = sub-heads in Montserrat
-   bold (LEMON MILK is "for short headlines only" — big ones, not every label). */
+/* h1/h2 = section headings, Playfair Display italic (the Make design).
+   h3/h4 = sub-heads / card titles in Montserrat bold. */
 h1, h2 {
   margin: 0 0 var(--space-4);
   color: var(--royal);
   font-family: var(--font-head);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
 }
 h3, h4 {
   margin: 0 0 var(--space-3);
