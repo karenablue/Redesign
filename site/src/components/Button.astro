@@ -1,0 +1,37 @@
+---
+/**
+ * Button — renders an <a> (link) or <button> (action).
+ * props:
+ *   href     internal ("/path/") or external ("https://…"); omit for a <button>
+ *   variant  "solid" (default) | "outline" | any other -> class `btn--<variant>`
+ *   onDark   set on dark bands so the outline variant flips to white text
+ *   type     button type when no href (default "button")
+ */
+import { withBase } from "../lib/url.js";
+
+const {
+  href,
+  variant = "solid",
+  onDark = false,
+  type = "button",
+  class: extra,
+  ...rest
+} = Astro.props;
+
+const cls = ["btn", variant && variant !== "solid" && `btn--${variant}`, onDark && "on-dark", extra]
+  .filter(Boolean)
+  .join(" ");
+const external = href && /^https?:/.test(href);
+---
+{href ? (
+  <a
+    href={withBase(href)}
+    class={cls}
+    {...(external ? { target: "_blank", rel: "noopener" } : {})}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button type={type} class={cls} {...rest}><slot /></button>
+)}

@@ -1,0 +1,102 @@
+---
+/**
+ * StatBand — big institutional numerals on the royal gradient, no card chrome.
+ * Matches the Make source's Stats component.
+ *
+ * props:
+ *   stats  [{ value: "500+", label: "Chapters Worldwide" }, …]
+ *   tone   "navy" (default) | "white" | "cream"
+ *   anchor show the Σ divider ornament below the row (default true on navy)
+ */
+const { stats = [], tone = "navy", anchor } = Astro.props;
+const showAnchor = anchor ?? tone === "navy";
+---
+<section class:list={["statband", `statband--${tone}`]}>
+  <div class="container statband__inner">
+    <dl class="statband__row">
+      {stats.map((s, i) => (
+        <div class="statband__item" data-first={i === 0 ? "" : undefined}>
+          <dt class="statband__value">{s.value}</dt>
+          <dd class="statband__label">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+    {showAnchor && (
+      <div class="statband__anchor" aria-hidden="true">
+        <span class="statband__anchor-line"></span>
+        <span class="statband__sigma">&Sigma;</span>
+        <span class="statband__anchor-line statband__anchor-line--r"></span>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .statband--navy { color: #fff; background: var(--grad-royal); position: relative; }
+  .statband--navy::before,
+  .statband--navy::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(223,177,54,0.5), transparent);
+  }
+  .statband--navy::before { top: 0; }
+  .statband--navy::after { bottom: 0; }
+  .statband--white { background: var(--white); }
+  .statband--cream { background: var(--cream); }
+
+  .statband__inner { padding-block: clamp(3rem, 2rem + 4vw, 4rem); }
+
+  .statband__row {
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+  }
+  .statband__item {
+    flex: 1;
+    text-align: center;
+    padding-inline: var(--space-8);
+    position: relative;
+  }
+  .statband__item + .statband__item::before {
+    content: ""; position: absolute; left: 0; top: 8%; bottom: 8%;
+    width: 1px; background: rgba(255, 255, 255, 0.12);
+  }
+  .statband--white .statband__item + .statband__item::before,
+  .statband--cream .statband__item + .statband__item::before { background: var(--line); }
+
+  .statband__value {
+    font-family: var(--font-label);
+    font-size: var(--text-stat);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin: 0 0 var(--space-3);
+  }
+  .statband--white .statband__value,
+  .statband--cream .statband__value { color: var(--royal); }
+
+  .statband__label {
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .statband--white .statband__label,
+  .statband--cream .statband__label { color: var(--muted); }
+
+  .statband__anchor {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-4); margin-top: clamp(1.75rem, 3vw, 2.5rem); opacity: 0.5;
+  }
+  .statband__anchor-line { width: 3rem; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .statband__anchor-line--r { background: linear-gradient(270deg, transparent, var(--gold)); }
+  .statband__sigma { font-family: Georgia, serif; font-size: 1.75rem; line-height: 1; color: var(--gold); }
+
+  @media (max-width: 720px) {
+    .statband__row { flex-wrap: wrap; gap: var(--space-8) 0; }
+    .statband__item { flex-basis: 50%; }
+    .statband__item + .statband__item::before { display: none; }
+  }
+</style>

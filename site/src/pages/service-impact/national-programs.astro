@@ -1,0 +1,107 @@
+---
+/**
+ * National Programs — the impact / directory page.
+ *
+ * Treatment: the boldest page in the set. A navy stat band sits directly under
+ * the hero (no gentle cream intro), then each program gets a full alternating
+ * FeatureRow with a number and a photo. High contrast, image-heavy, driven by
+ * numbers.
+ */
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/Hero.astro";
+import StatBand from "../../components/StatBand.astro";
+import Section from "../../components/Section.astro";
+import FeatureRow from "../../components/FeatureRow.astro";
+import CtaBand from "../../components/CtaBand.astro";
+
+const impact = [
+  { value: "2,145,830", label: "Hours of Service" },
+  { value: "$3.4M", label: "Donated to Philanthropy" },
+  { value: "$1.2M", label: "Awarded in Scholarships" },
+];
+
+const programs = [
+  {
+    eyebrow: "National Program 01",
+    title: "Operation BigBookBag",
+    image: "/images/operation-bigbookbag-2.jpg",
+    body: "Providing educational materials and school supplies so students start the year prepared. Local chapters partner with schools to reach children who would otherwise go without.",
+  },
+  {
+    eyebrow: "National Program 02",
+    title: "Women's Wellness Initiative",
+    image: "/images/Women’s Wellness Initiative.png",
+    fit: "contain",
+    body: "Health education designed with women in mind — creating space for informed decisions about physical, mental, and emotional wellness across the life span.",
+  },
+  {
+    eyebrow: "National Program 03",
+    title: "Swim 1922",
+    image: "/images/swim-1922-2-768x432.jpg",
+    body: "Expanding access to swimming instruction and water safety in partnership with USA Swimming, building confidence in and around the water in communities with the least access.",
+  },
+  {
+    eyebrow: "National Program 04",
+    title: "Project CRADLE Care",
+    image: "/images/project-cradle-care-3.jpg",
+    body: "Supporting maternal and infant health through education, resources, and advocacy that address disparities in outcomes for Black mothers and babies.",
+  },
+  {
+    eyebrow: "National Program 05",
+    title: "Annual Youth Symposium",
+    image: "/images/youth-symposium-2-768x432.jpg",
+    body: "Preparing the next generation to lead — a national gathering focused on academic achievement, leadership, and civic responsibility for young people.",
+  },
+];
+---
+<Base
+  title="National Programs"
+  activeTop="Service & Impact"
+  description="Sigma Gamma Rho's national programs in education, health, swimming access, maternal care, and youth leadership."
+>
+  <Hero
+    variant="image"
+    size="tall"
+    eyebrow="A Tradition of Service"
+    title="Programs Built to "
+    highlight="Meet the Moment"
+    copy="Sigma Gamma Rho's national programs turn Greater Service, Greater Progress into structured, measurable work carried out by chapters in every region."
+    image="/images/youth-symposium-1-768x432.jpg"
+    focal="50% 40%"
+  />
+
+  <StatBand stats={impact} tone="navy" eyebrow="Since 2020" title="Service, in Numbers" />
+
+  <Section
+    tone="white"
+    heading="plain"
+    eyebrow="Five National Programs"
+    title="Where the work happens"
+    lead="Each program is coordinated nationally and delivered locally. Chapters adapt the model to their community's needs."
+  />
+
+  {programs.map((p, i) => (
+    <FeatureRow
+      eyebrow={p.eyebrow}
+      title={p.title}
+      image={p.image}
+      imageAlt={p.fit === "contain" ? p.title : `${p.title} in action`}
+      fit={p.fit ?? "cover"}
+      index={i}
+      tone={i % 2 === 1 ? "cream" : "white"}
+    >
+      <p>{p.body}</p>
+    </FeatureRow>
+  ))}
+
+  <CtaBand
+    eyebrow="Get Involved"
+    title="Bring a Program to "
+    highlight="Your Community"
+    copy="Chapters lead every national program locally. Connect with the chapter nearest you to volunteer or partner."
+    actions={[
+      { label: "Find a Chapter", href: "/membership/chapter-locator/" },
+      { label: "Partner Foundations", href: "/service-impact/partner-foundations/", variant: "outline" },
+    ]}
+  />
+</Base>

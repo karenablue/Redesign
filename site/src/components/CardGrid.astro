@@ -1,0 +1,43 @@
+---
+/**
+ * CardGrid — the fluid replacement for the exported
+ *   grid-template-columns: repeat(3, 313.3340148925781px)
+ * that appears in ~half the old CSS files and collapses to one column
+ * whenever its parent is narrower than the baked-in pixel total.
+ *
+ * Default: as many columns as fit at >= `min` width, each sharing space
+ * equally. Pass `cols` to cap the count on wide screens.
+ *
+ * props:
+ *   min   minimum card width before wrapping (default "280px")
+ *   cols  optional max column count on wide viewports (e.g. 3, 4)
+ *   gap   grid gap (default "var(--space-8)")
+ *   as    wrapper element (default "div"; use "ul" for list semantics)
+ */
+const { min = "280px", cols, gap = "var(--space-8)", as = "div" } = Astro.props;
+const Tag = as;
+const style = [
+  `--card-min:${min}`,
+  `--card-gap:${gap}`,
+  cols && `--card-cols:${cols}`,
+].filter(Boolean).join(";");
+---
+<Tag class:list={["card-grid", { "card-grid--capped": cols }]} style={style}>
+  <slot />
+</Tag>
+
+<style>
+  .card-grid {
+    display: grid;
+    gap: var(--card-gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--card-min), 100%), 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* With a hard column count: exactly `cols` on wide screens, but still
+     collapse one card at a time on narrow ones (never a fixed px total). */
+  @media (min-width: 900px) {
+    .card-grid--capped { grid-template-columns: repeat(var(--card-cols), 1fr); }
+  }
+</style>

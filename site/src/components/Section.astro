@@ -1,0 +1,103 @@
+---
+/**
+ * Section — a band with the site's standard header triad:
+ *   LEMON MILK eyebrow  →  Newsreader heading (italic, one word gold)  →  Montserrat lead
+ *
+ * props:
+ *   tone       "white" (default) | "cream" | "navy" | "mist"
+ *   eyebrow    label text (LEMON MILK)
+ *   title      heading text (Newsreader italic)
+ *   highlight  gold-accented word/fragment appended to the title
+ *   lead       supporting paragraph
+ *   align      "center" (default) | "left"
+ *   rule       show the short gold rule under the eyebrow (default true when centered)
+ *   width      "default" (1100) | "narrow" (760)
+ *   pad        "default" | "tight"
+ *   roundBottom  round the lower corners (navy CTA blocks)
+ *   id         anchor id
+ */
+const {
+  tone = "white",
+  eyebrow,
+  title,
+  highlight,
+  lead,
+  align = "center",
+  rule,
+  width = "default",
+  pad = "default",
+  roundBottom = false,
+  id,
+} = Astro.props;
+
+const hasHeading = Boolean(eyebrow || title || lead);
+const centered = align === "center";
+const showRule = rule ?? centered;
+const headingOnly = hasHeading && !Astro.slots.has("default");
+---
+<section
+  id={id}
+  class:list={[
+    "section", `section--${tone}`,
+    {
+      "section--pad-tight": pad === "tight",
+      "section--heading-only": headingOnly,
+      "section--round-b": roundBottom,
+      "on-dark": tone === "navy",
+    },
+  ]}
+>
+  <div class:list={["container", { "container--narrow": width === "narrow" }]}>
+    {hasHeading && (
+      <div class:list={["s-head", { "s-head--center": centered, "s-head--bare": headingOnly }]}>
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        {showRule && eyebrow && <span class="s-head__rule" aria-hidden="true"></span>}
+        {title && <h2 class="s-head__title">{title}{highlight && <> <span>{highlight}</span></>}</h2>}
+        {lead && <p class="s-head__lead">{lead}</p>}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .s-head { margin-bottom: clamp(2.5rem, 4vw, 4rem); max-width: 52rem; }
+  .s-head--center { margin-inline: auto; text-align: center; }
+  .s-head--bare { margin-bottom: 0; }
+
+  .s-head__rule {
+    display: block;
+    width: 2rem;
+    height: 1px;
+    margin: 0 0 var(--space-6);
+    background: var(--gold);
+  }
+  .s-head--center .s-head__rule { margin-inline: auto; }
+
+  .s-head__title {
+    margin: 0;
+    font-family: var(--font-head);
+    font-style: italic;
+    font-weight: 600;
+    font-size: var(--text-h2);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--royal);
+  }
+  .s-head__title span { color: var(--gold); }
+
+  .s-head__lead {
+    margin: var(--space-5) 0 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 46rem;
+  }
+  .s-head--center .s-head__lead { margin-inline: auto; }
+
+  .section--navy .s-head__title { color: #fff; }
+  .section--navy .s-head__title span { color: var(--gold); }
+  .section--navy .s-head__lead { color: rgba(255, 255, 255, 0.88); }
+</style>

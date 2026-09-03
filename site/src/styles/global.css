@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Global base — reset, typography, shared primitives.
+   Type system (from redesign-feedback.md):
+     LEMON MILK → labels/eyebrows/numerals · Newsreader → headings · Montserrat → body
+   ========================================================================== */
+
+@import "./tokens.css";
+
+/* LEMON MILK — official SGRho heading font, self-hosted (not on Google Fonts). */
+@font-face {
+  font-family: "LEMON MILK";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LemonMilkLight-owxMq.woff") format("woff");
+}
+@font-face {
+  font-family: "LEMON MILK";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LemonMilkRegular-X3XE2.woff") format("woff");
+}
+@font-face {
+  font-family: "LEMON MILK";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LemonMilkMedium-mLZYV.woff") format("woff");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 500;                 /* Montserrat Medium body */
+  line-height: 1.7;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+
+/* h1/h2 = section headings, Playfair Display italic (the Make design).
+   h3/h4 = sub-heads / card titles in Montserrat bold. */
+h1, h2 {
+  margin: 0 0 var(--space-4);
+  color: var(--royal);
+  font-family: var(--font-head);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+h3, h4 {
+  margin: 0 0 var(--space-3);
+  color: var(--royal);
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 1.3;
+}
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+p  { margin: 0 0 var(--space-6); }
+strong { font-weight: 700; }
+
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* --- Layout primitive ------------------------------------------------- */
+.container {
+  width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+  margin-inline: auto;
+}
+.container--narrow { width: min(760px, calc(100% - (var(--gutter) * 2))); }
+
+/* --- Section band --------------------------------------------------- */
+.section { padding-block: var(--section-y); }
+.section--pad-tight { padding-block: clamp(2.5rem, 5vw, 3.75rem); }
+.section--heading-only { padding-block: var(--section-y) clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
+.section--white { background: var(--white); }
+.section--cream { background: var(--cream); }
+.section--mist  { background: #f4f6fb; }
+.section--navy  { color: #fff; background: var(--grad-royal); }
+.section--navy a { color: #fff; }
+.section--round-b { border-radius: 0 0 var(--radius-2xl) var(--radius-2xl); }
+
+/* --- Eyebrow / label ---------------------------------------------- */
+.eyebrow {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-label);
+  color: var(--gold);
+  font-size: var(--text-sm);           /* ~13px */
+  font-weight: 400;                    /* LEMON MILK is single-weight */
+  letter-spacing: 0.28em;
+  text-transform: uppercase;           /* for the Oswald fallback */
+}
+.on-dark .eyebrow, .eyebrow.on-dark { color: var(--gold); }
+
+/* --- Buttons (pill; content buttons dominate) -------------------- */
+.btn {
+  --btn-bg: var(--gold);
+  --btn-fg: #ffffff;
+  --btn-border: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.95em 2.2em;
+  border: 1.5px solid var(--btn-border);
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(223, 177, 54, 0.35);
+  transition: background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.btn:hover { --btn-bg: var(--gold-dark); --btn-border: var(--gold-dark); box-shadow: 0 6px 22px rgba(223, 177, 54, 0.45); }
+
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-fg: var(--royal);
+  --btn-border: var(--gold);
+  box-shadow: none;
+}
+.btn--outline:hover { --btn-bg: var(--gold); --btn-fg: #fff; box-shadow: none; }
+
+.btn--ghost-light {
+  --btn-bg: rgba(255, 255, 255, 0.96);
+  --btn-fg: var(--royal);
+  --btn-border: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+}
+.btn--ghost-light:hover { --btn-bg: #fff; --btn-border: #fff; }
+
+.btn--navy {
+  --btn-bg: var(--navy);
+  --btn-fg: #fff;
+  --btn-border: var(--navy);
+  box-shadow: none;
+}
+.btn--navy:hover { --btn-bg: var(--royal); --btn-border: var(--royal); }
+
+.on-dark .btn--outline { --btn-fg: #fff; --btn-border: var(--gold); }
+.on-dark .btn--outline:hover { --btn-fg: #fff; --btn-bg: rgba(255,255,255,0.08); }
+
+/* --- Utility ------------------------------------------------------ */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

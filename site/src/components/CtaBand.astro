@@ -1,0 +1,67 @@
+---
+/**
+ * CtaBand — the dark navy call-to-action band that closes almost every page
+ * on the old site right before the footer. One component, gold-ruled, with
+ * a one- or two-button row.
+ *
+ * props:
+ *   eyebrow  kicker (optional)
+ *   title    heading text; accent fragment -> `highlight`
+ *   highlight optional gold trailing fragment
+ *   copy     supporting line (optional)
+ *   actions  [{ label, href, variant? }]  variant "solid" (default) | "outline"
+ */
+import Button from "./Button.astro";
+
+const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
+---
+<section class="cta on-dark">
+  <div class="container cta__inner">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {title && <h2 class="cta__title">{title}{highlight && <span>{highlight}</span>}</h2>}
+    {copy && <p class="cta__copy">{copy}</p>}
+    {actions.length > 0 && (
+      <div class="cta__actions">
+        {actions.map((a) => (
+          <Button href={a.href} variant={a.variant ?? "solid"} onDark>{a.label}</Button>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .cta {
+    color: var(--white);
+    background: linear-gradient(160deg, #22459f 0%, var(--royal) 55%, #1c3c8f 100%);
+    border-block: 4px solid var(--gold);
+  }
+  .cta__inner {
+    padding-block: clamp(3.25rem, 7vw, 5rem);
+    text-align: center;
+    max-width: 760px;
+  }
+  .cta__title {
+    margin: 0;
+    color: var(--white);
+    font-family: var(--font-head);
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    font-size: var(--text-h2);
+  }
+  .cta__title span { color: var(--gold); }
+  .cta__copy {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-md);
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .cta__actions {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+/**
+ * Our Founders — "The Seven Pearls".
+ *
+ * Treatment: reverent and portrait-forward. No hero watermark (herstory has
+ * one), a light white -> cream flow, and the page's centrepiece is a photo
+ * grid of the seven women rather than a timeline or feature rows. Deliberately
+ * the airiest page in the set.
+ */
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/Hero.astro";
+import Section from "../../components/Section.astro";
+import CardGrid from "../../components/CardGrid.astro";
+import Card from "../../components/Card.astro";
+import CtaBand from "../../components/CtaBand.astro";
+
+const founders = [
+  { name: "Mary Lou Allison Gardner Little", role: "Primary Founder", img: "/images/our-founders-mary-lou-allison.jpg", note: "Led the seven educators who established the Sorority at Butler University." },
+  { name: "Dorothy Hanley Whiteside", role: "Founding Member", img: "/images/our-founders-dorothy-hanley-whiteside.jpg" },
+  { name: "Vivian Irene White Marbury", role: "Founding Member", img: "/images/our-founders-vivian-irene-white.jpg" },
+  { name: "Nannie Mae Gahn Johnson", role: "Founding Member", img: "/images/our-founders-nannie-mae-gahn-johnson-300x300.jpg" },
+  { name: "Hattie Mae Annette Dulin Redford", role: "Founding Member", img: "/images/our-founders-hattie-mae-redford-300x300.jpg" },
+  { name: "Bessie Mae Downey Rhoades Martin", role: "Founding Member", img: "/images/our-founders-bessie-mae-downey-rhoades-300x300.jpg" },
+  { name: "Cubena McClure", role: "Founding Member", img: "/images/our-founders-cubena-mcclure-300x300.jpg" },
+];
+---
+<Base
+  title="Our Founders"
+  activeTop="About"
+  description="Meet the seven Black educators who founded Sigma Gamma Rho Sorority, Incorporated at Butler University in 1922."
+>
+  <Hero
+    variant="split"
+    eyebrow="The Seven Pearls"
+    title="The Women Who Began It"
+    copy="On November 12, 1922, seven schoolteachers in Indianapolis chose to build an institution grounded in scholarship, service, and sisterhood — at Butler University, Indianapolis, Indiana."
+    image="/images/our-founders-mary-lou-allison.jpg"
+    imageAlt="Portrait of Primary Founder Mary Lou Allison Gardner Little"
+  />
+
+  <Section
+    tone="white"
+    pad="tight"
+    heading="feature"
+    centered
+    eyebrow="Founded 1922"
+    title="Seven educators. One purpose."
+    lead="Each was already a working teacher. Together they created a professional sisterhood at a time when Black women faced sharply limited access to institutional power."
+  />
+
+  <Section tone="cream">
+    <div class="founder-grid">
+      <CardGrid min="220px" cols={4}>
+        {founders.map((f) => (
+          <Card image={f.img} imageAlt={`Portrait of ${f.name}`} title={f.name}>
+            <p class="founder-role">{f.role}</p>
+            {f.note && <p>{f.note}</p>}
+          </Card>
+        ))}
+      </CardGrid>
+    </div>
+  </Section>
+
+  <Section tone="white" width="narrow" heading="plain" eyebrow="Their Legacy, Our Responsibility" title="Seven women began the work. Generations carry it forward.">
+    <p>The founders did not set out to be remembered for a moment in 1922. They set a standard — that membership carries an obligation to scholarship, to service, and to one another.</p>
+    <p>More than a century later, that obligation is inherited by every member initiated into Sigma Gamma Rho.</p>
+    <p class="founder-motto">Greater Service, Greater Progress.</p>
+  </Section>
+
+  <CtaBand
+    eyebrow="Keep Reading"
+    title="A century of "
+    highlight="Herstory"
+    copy="Follow the Sorority's story from seven educators in Indianapolis to an international sisterhood."
+    actions={[{ label: "Explore Our Herstory", href: "/about/herstory/" }]}
+  />
+</Base>
+
+<style>
+  .founder-role {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .founder-motto { font-family: var(--font-display); color: var(--royal); font-weight: 700; }
+
+  /* portrait crop for the founder cards (Card defaults to 16/10 landscape) */
+  .founder-grid :global(.card__img) { aspect-ratio: 4 / 5; object-position: top center; }
+  .founder-grid :global(.card__body) { justify-content: flex-start; }
+</style>

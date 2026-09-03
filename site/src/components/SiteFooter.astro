@@ -1,0 +1,163 @@
+---
+/**
+ * SiteFooter — brand + social, link columns, contact block, bottom bar.
+ * Content comes from src/data/nav.js (footerColumns / footerContact /
+ * socialLinks). The column grid uses fr units, not the fixed-px tracks the
+ * old footer shipped with.
+ */
+import { footerColumns, footerContact, socialLinks } from "../data/nav.js";
+import { withBase } from "../lib/url.js";
+
+const year = new Date().getFullYear();
+
+const socialPaths = {
+  Facebook: "M15 8.5h2V5.6c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.9v2.4H6.8v3.2h2.7V22h3.3v-6h2.7l.4-3.2h-3.1V10.7c0-1 .3-1.7 1.2-1.7Z",
+  Instagram: "M12 7.8a4.2 4.2 0 1 0 0 8.4 4.2 4.2 0 0 0 0-8.4Zm0 6.9a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4Z",
+  "X (Twitter)": "M4 4l7.2 8.4L4.4 20h2.1l6-6.9 4.6 6.9H21l-7.5-8.9L20 4h-2.1l-5.6 6.4L7.6 4H4Z",
+  YouTube: "M10 9.2 15 12l-5 2.8V9.2Z",
+};
+---
+<footer class="site-footer on-dark">
+  <div class="site-footer__curve" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 60C240 20 480 0 720 0C960 0 1200 20 1440 60V0H0V60Z" fill="#ffffff" />
+    </svg>
+  </div>
+  <div class="container site-footer__top">
+    <div class="site-footer__brand">
+      <a href={withBase("/")} class="site-footer__logo" aria-label="Sigma Gamma Rho home">
+        <img src={withBase("/images/SGR-Logo-Shield.png")} alt="Sigma Gamma Rho Sorority coat of arms" width="72" height="72" />
+        <span class="site-footer__wordmark">
+          <span>Sigma Gamma Rho</span><em>Sorority, Inc.<sup>&reg;</sup></em>
+        </span>
+      </a>
+      <ul class="site-footer__social">
+        {socialLinks.map((s) => (
+          <li>
+            <a href={s.href} aria-label={s.label}>
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" width="20" height="20">
+                <path d={socialPaths[s.label]} />
+              </svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {footerColumns.map((col) => (
+      <nav class="site-footer__col" aria-label={col.title}>
+        <p class="site-footer__col-title">{col.title}</p>
+        <ul>
+          {col.links.map((l) => (
+            <li>
+              <a
+                href={withBase(l.href)}
+                {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
+              >{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="site-footer__col">
+      <p class="site-footer__col-title">{footerContact.title}</p>
+      <address>
+        {footerContact.lines.map((line) => <span>{line}</span>)}
+        <a href={`tel:${footerContact.phone}`}>{footerContact.phoneLabel}</a>
+        <a href={`mailto:${footerContact.email}`}>{footerContact.email}</a>
+      </address>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <span>&copy; {year} Sigma Gamma Rho Sorority, Inc. All rights reserved.</span>
+    <span class="site-footer__legal">
+      <a href={withBase("/resources/anti-hazing-policy/")}>Privacy Policy</a>
+      <a href={withBase("/resources/help-center/")}>Terms of Use</a>
+      <a href={withBase("/resources/help-center/")}>Accessibility</a>
+    </span>
+  </div>
+  <p class="site-footer__tagline">Greater Service, Greater Progress &mdash; Far Over 100 Years</p>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    color: rgba(255, 255, 255, 0.82);
+    background: linear-gradient(135deg, var(--deep-blue) 0%, var(--royal) 100%);
+  }
+  .site-footer__curve { position: absolute; top: 0; left: 0; right: 0; line-height: 0; }
+  .site-footer__curve svg { width: 100%; height: clamp(32px, 4vw, 60px); display: block; }
+
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: 1.3fr repeat(4, 1fr);
+    gap: var(--space-10) var(--space-8);
+    padding-block: clamp(4rem, 3rem + 4vw, 6rem) var(--space-12);
+  }
+  .site-footer__logo { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); text-decoration: none; color: var(--white); }
+  .site-footer__wordmark { display: flex; flex-direction: column; line-height: 1.3; }
+  .site-footer__wordmark > span {
+    font-family: var(--font-label);
+    font-size: 1.25rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .site-footer__wordmark em { font-style: normal; font-weight: 500; font-size: var(--text-xs); letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.6); }
+  .site-footer__social { display: flex; gap: var(--space-2); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
+  .site-footer__social a {
+    width: 36px; height: 36px; border-radius: 999px;
+    display: grid; place-items: center;
+    background: rgba(255, 255, 255, 0.1); color: #fff;
+    transition: background .18s ease;
+  }
+  .site-footer__social a:hover { background: var(--gold); }
+
+  .site-footer__col-title {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-label);
+    color: var(--gold);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .site-footer__col ul { margin: 0; padding: 0; list-style: none; }
+  .site-footer__col li { margin-bottom: var(--space-3); }
+  .site-footer__col a { font-size: var(--text-sm); color: rgba(255, 255, 255, 0.8); text-decoration: none; }
+  .site-footer__col a:hover { color: var(--gold); }
+  .site-footer__col address { font-style: normal; display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm); color: rgba(255, 255, 255, 0.85); }
+  .site-footer__col address span:first-child { color: rgba(255, 255, 255, 0.6); }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line-dark);
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .site-footer__legal { display: flex; gap: var(--space-6); }
+  .site-footer__legal a { text-decoration: none; color: rgba(255, 255, 255, 0.6); }
+  .site-footer__legal a:hover { color: var(--gold); }
+  .site-footer__tagline {
+    margin: 0;
+    padding: var(--space-4) 0 var(--space-8);
+    text-align: center;
+    color: var(--gold);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--text-sm);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .site-footer__top { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .site-footer__top { grid-template-columns: 1fr; }
+  }
+</style>

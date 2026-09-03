@@ -1,0 +1,292 @@
+---
+/**
+ * Herstory — the end-to-end reference page for the rebuild.
+ *
+ * It reproduces the hand-built about/herstory/herstory.html using the shared
+ * component set. Shared bands (Hero, Section, CardGrid/Card, StatBand, CtaBand,
+ * header, footer) carry the house style; the genuinely page-specific bands
+ * (the split intro, the "Firsts" list, the century timeline, the legacy split)
+ * live as local markup with a scoped <style> block below — that is the intended
+ * pattern for every page: lean on components first, drop to scoped CSS only for
+ * what is truly unique to the page.
+ *
+ * Content here is condensed in a few spots (3 of 6 "Firsts", 3 timeline
+ * chapters) with a comment where the rest follow identical markup.
+ */
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/Hero.astro";
+import Section from "../../components/Section.astro";
+import CardGrid from "../../components/CardGrid.astro";
+import Card from "../../components/Card.astro";
+import Button from "../../components/Button.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { withBase } from "../../lib/url.js";
+
+const facts = [
+  { n: "01", label: "Founded", title: "November 12, 1922", body: "Indianapolis, Indiana" },
+  { n: "02", label: "Founding Institution", title: "Butler University", body: "The only NPHC sorority founded at a predominantly white institution." },
+  { n: "03", label: "Founders", title: "Seven Educators", body: "Women whose professional lives were already rooted in education and service." },
+  { n: "04", label: "National Incorporation", title: "December 30, 1929", body: "Sigma Gamma Rho became an incorporated national collegiate sorority." },
+  { n: "05", label: "Motto", title: "Greater Service, Greater Progress", body: "A century-long standard for service and institutional responsibility." },
+  { n: "06", label: "Official Colors", title: "Royal Blue & Gold", body: "Colors carried across generations of the sisterhood." },
+  { n: "07", label: "Official Flower", title: "Yellow Tea Rose", body: "A longstanding symbol within the Sorority's visual identity." },
+  { n: "08", label: "Headquarters", title: "Cary, North Carolina", body: "Home of the International Corporate Headquarters." },
+];
+
+const firsts = [
+  { n: "01", title: "Founded at a Predominantly White Institution", body: "Sigma Gamma Rho is the only NPHC sorority founded at a predominantly white institution — Butler University in Indianapolis." },
+  { n: "02", title: "Professional-Educator Roots", body: "The Sorority began as a professional organization created by Black women educators whose work centered education, advancement, and service." },
+  { n: "03", title: "Early NPHC Organizing Participation", body: "Sigma Gamma Rho participated in the 1928 Indianapolis discussions that preceded the permanent National Pan-Hellenic Council and became a full NPHC member in 1937." },
+  // …items 04–06 (Affiliate Tradition, Philo Affiliate, Rhoer Club) use the same markup.
+];
+
+const timeline = [
+  { year: "1922", label: "Founding", head: "Seven educators build an institution.", body: "Sigma Gamma Rho Sorority, Inc. was founded on November 12, 1922, in Indianapolis, Indiana, by seven African American educators." },
+  { year: "1929", label: "Incorporation", head: "A national collegiate sorority.", body: "On December 30, 1929, Sigma Gamma Rho became an incorporated national collegiate sorority, formalizing its structure and reach." },
+  // …intervening chapters (1937 NPHC membership, regional expansion, international growth) follow the same markup.
+  { year: "Today", label: "The Work Continues", head: "A century later, the responsibility remains.", body: "Each generation inherits that work — to organize, advocate, educate, serve, and expand without abandoning the founding principles." },
+];
+
+const regions = [
+  { n: "01", meta: "Established 1925 • Organized 1940", name: "Central", lead: "The first region to form — and the region in which Sigma Gamma Rho itself was born.", body: "Sorors here originated many of the Sorority's defining elements: the Pledge, National Hymn, Slogan, Badge, Coat of Arms, Flower, and Colors." },
+  { n: "02", meta: "December 29, 1939", name: "Northeastern", lead: "Organized at the 14th Boulé when the Sorority expanded from two regions to four.", body: "Soror Edna F. Browne, “The Mother of the Northeastern Region,” became its first Syntaktes." },
+  { n: "03", meta: "Established 1939", name: "Southeastern", lead: "Created during the Sorority's 1939 regional restructuring.", body: "Soror Elizabeth Lemon served as the first Syntaktes as the Sorority strengthened its leadership structure throughout the Southeast." },
+  { n: "04", meta: "Voted 1939 • Organized 1940", name: "Southwestern", lead: "Organized under first Syntaktes Soror Mary Scales Greenwood of Houston.", body: "Contributed enduring traditions including the Poodle as official mascot and the development of the Philo Affiliate." },
+  { n: "05", meta: "December 1952", name: "Western", lead: "The fifth and most recently established of today's regions.", body: "Formerly part of Southwestern Region, organized under first Syntaktes Soror Lessie B. Crossland; first conference in 1953." },
+];
+---
+<Base
+  title="Herstory"
+  activeTop="About"
+  description="Explore the history, milestones, regional development, and enduring legacy of Sigma Gamma Rho Sorority, Incorporated."
+>
+  <Hero
+    eyebrow="Our History. Our Legacy. Our Future."
+    title="Her"
+    highlight="story"
+    copy="Founded by seven educators in 1922, Sigma Gamma Rho has spent more than a century turning scholarship, sisterhood, leadership, and service into sustained progress."
+    image="/images/sgr-alpha-charter.jpeg"
+    focal="66% 42%"
+    watermark="1922"
+  />
+
+  <!-- THE BEGINNING — page-specific split layout -->
+  <Section tone="white" eyebrow="The Beginning" title="A Vision Born in" highlight="1922">
+    <div class="split">
+      <div class="split__copy">
+        <p>On November 12, 1922, seven young educators in Indianapolis established Sigma Gamma Rho Sorority at Butler University.</p>
+        <p>Their decision was deliberate. They built an organization grounded in scholarship, mutual responsibility, leadership, and public service at a time when Black women faced sharply limited access to institutional power.</p>
+        <p>What began with seven educators became a national institution and, eventually, an international sisterhood.</p>
+        <p class="split__emphasis">Seven educators. One purpose. A legacy still in motion.</p>
+        <Button href="/about/our-founders/" variant="outline">Meet Our Seven Founders <span aria-hidden="true">→</span></Button>
+      </div>
+      <figure class="split__figure">
+        <img src={withBase("/images/College Avenue Campus.jpg")} alt="Historic Butler University campus" />
+        <figcaption><span>Butler University</span><small>Indianapolis, Indiana</small></figcaption>
+      </figure>
+    </div>
+  </Section>
+
+  <!-- KEY FACTS — shared CardGrid + Card -->
+  <Section tone="cream" heading="feature" centered eyebrow="At a Glance" title="Key facts"
+    lead="The essential facts behind more than a century of Sigma Gamma Rho history.">
+    <CardGrid min="240px" cols={4}>
+      {facts.map((f) => (
+        <Card eyebrow={f.n} title={f.title}>
+          <p class="card-label">{f.label}</p>
+          <p>{f.body}</p>
+        </Card>
+      ))}
+    </CardGrid>
+  </Section>
+
+  <!-- FIRSTS & DISTINCTIONS — page-specific list -->
+  <Section tone="white" heading="plain" eyebrow="Distinct by History" title="Firsts & distinctions"
+    lead="Milestones and traditions that distinguish Sigma Gamma Rho within the history of Black Greek-letter organizations.">
+    <ol class="firsts">
+      {firsts.map((f) => (
+        <li class="firsts__item">
+          <span class="firsts__num">{f.n}</span>
+          <div>
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <!-- MISSION & VISION -->
+  <Section tone="cream" width="narrow">
+    <div class="mv">
+      <article>
+        <p class="eyebrow">Our Purpose</p>
+        <h2>Mission</h2>
+        <p>It is the mission of Sigma Gamma Rho Sorority, Inc. to enhance the quality of life for women and their families in the U.S. and globally through community service, civil, and social action — achieving greater progress in education, health awareness, and leadership development.</p>
+      </article>
+      <article>
+        <p class="eyebrow">What We Envision</p>
+        <h2>Vision</h2>
+        <p>We visualize a world in which all women and their families reach their full potential in all aspects of life and are able to create unlimited opportunities for future generations.</p>
+      </article>
+    </div>
+  </Section>
+
+  <!-- CENTURY IN MOTION — navy band, page-specific timeline -->
+  <Section tone="navy" heading="feature" centered eyebrow="Our Journey" title="More than a century in motion"
+    lead="From seven educators in Indianapolis to a national institution shaped by education, civic action, service, and organizational growth.">
+    <ol class="timeline">
+      {timeline.map((t) => (
+        <li class="timeline__item">
+          <div class="timeline__year">{t.year}</div>
+          <div class="timeline__body">
+            <p class="timeline__label">{t.label}</p>
+            <h3>{t.head}</h3>
+            <p>{t.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <!-- REGIONS — shared CardGrid -->
+  <Section tone="white" eyebrow="National Structure" title="A national sisterhood. Five regions."
+    lead="The regional system connected a growing Sorority across chapters, campuses, communities, and generations of leadership.">
+    <CardGrid min="280px" cols={3}>
+      {regions.map((r) => (
+        <Card eyebrow={r.n} title={r.name}>
+          <p class="region-meta">{r.meta}</p>
+          <p class="region-lead">{r.lead}</p>
+          <p>{r.body}</p>
+        </Card>
+      ))}
+    </CardGrid>
+  </Section>
+
+  <!-- LEGACY — page-specific split with image + quote -->
+  <Section tone="cream">
+    <div class="legacy">
+      <figure class="legacy__figure">
+        <img src={withBase("/images/Sigma Gamma Rho 75th Anniversary Stained Glass Window.jpg")} alt="Sigma Gamma Rho commemorative stained glass" />
+      </figure>
+      <div class="legacy__copy">
+        <p class="eyebrow">A Living Legacy</p>
+        <h2>History That Still <span>Requires Something of Us</span></h2>
+        <p>Sigma Gamma Rho's history is not preserved merely to be admired. It establishes a standard.</p>
+        <p>Each generation inherits the responsibility to strengthen the institution, serve communities with purpose, and leave the sisterhood more capable than it found it.</p>
+        <blockquote>"Our story did not start with a moment. It started with a decision. And it continues with each of us."</blockquote>
+        <p class="legacy__motto">Greater Service, Greater Progress.</p>
+        <div class="legacy__actions">
+          <Button href="/about/our-founders/">Meet Our Founders</Button>
+          <Button href="/service-impact/national-programs/" variant="outline">Explore Service &amp; Impact <span aria-hidden="true">→</span></Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <CtaBand
+    title="The story is still "
+    highlight="in motion"
+    copy="More than a century later, the responsibility remains — and each generation inherits the work."
+    actions={[{ label: "Become a Member", href: "/membership/become-a-member/" }]}
+  />
+</Base>
+
+<style>
+  /* ---- shared-ish helpers used by a couple of cards on this page ---- */
+  .card-label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .region-meta { font-size: var(--text-xs); color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .region-lead { font-weight: 600; color: var(--ink) !important; }
+
+  /* ---- THE BEGINNING split ---- */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    gap: var(--space-16);
+    align-items: center;
+  }
+  .split__emphasis { font-weight: 700; color: var(--royal); }
+  .split__figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .split__figure img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .split__figure figcaption {
+    display: flex; flex-direction: column;
+    padding: var(--space-4) var(--space-6);
+    background: var(--royal); color: #fff;
+  }
+  .split__figure figcaption small { color: rgba(255, 255, 255, 0.7); }
+  @media (max-width: 820px) { .split { grid-template-columns: 1fr; gap: var(--space-8); } }
+
+  /* ---- FIRSTS list ---- */
+  .firsts { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-8); }
+  .firsts__item { display: grid; grid-template-columns: 64px 1fr; gap: var(--space-6); }
+  .firsts__num {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--gold);
+    line-height: 1;
+  }
+  .firsts__item h3 { margin-bottom: var(--space-2); }
+  .firsts__item p { color: var(--muted); margin: 0; }
+  @media (max-width: 560px) { .firsts__item { grid-template-columns: 1fr; gap: var(--space-2); } }
+
+  /* ---- MISSION / VISION ---- */
+  .mv { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); }
+  .mv h2 { font-size: var(--text-xl); }
+  .mv p { color: var(--muted); margin: 0; }
+  @media (max-width: 720px) { .mv { grid-template-columns: 1fr; gap: var(--space-8); } }
+
+  /* ---- CENTURY timeline ---- */
+  .timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: var(--space-8);
+    padding-block: var(--space-12);
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .timeline__item:last-child { border-bottom: 0; }
+  .timeline__year {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-align: right;
+  }
+  .timeline__label {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+  }
+  .timeline__body h3 { color: #fff; }
+  .timeline__body p { color: rgba(255, 255, 255, 0.8); margin: 0; }
+  @media (max-width: 560px) {
+    .timeline__item { grid-template-columns: 1fr; gap: var(--space-3); }
+    .timeline__year { text-align: left; }
+  }
+
+  /* ---- LEGACY split ---- */
+  .legacy { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: var(--space-16); align-items: center; }
+  .legacy__figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .legacy__figure img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .legacy blockquote {
+    margin: var(--space-6) 0;
+    padding-left: var(--space-6);
+    border-left: 3px solid var(--gold);
+    font-size: var(--text-md);
+    font-style: italic;
+    color: var(--ink);
+  }
+  .legacy__motto { font-family: var(--font-display); color: var(--royal); font-weight: 700; }
+  .legacy__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-6); }
+  @media (max-width: 820px) { .legacy { grid-template-columns: 1fr; gap: var(--space-8); } }
+</style>

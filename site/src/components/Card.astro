@@ -1,0 +1,69 @@
+---
+/**
+ * Card — one item inside a <CardGrid>. Covers the recurring shapes on the old
+ * site: numbered "fact" cards, program cards, partner cards, plain feature
+ * cards. Anything more elaborate can ignore this and drop custom markup into
+ * the CardGrid slot instead.
+ *
+ * props:
+ *   eyebrow  small label above the title (e.g. "01", "Program")
+ *   title    card heading
+ *   href     makes the whole card a link (internal or external)
+ *   image    optional image path (root-absolute)
+ *   imageAlt alt text (required if `image` is set)
+ *   as       "article" (default) | "li"
+ * slot: body copy / anything else
+ */
+import { withBase } from "../lib/url.js";
+
+const { eyebrow, title, href, image, imageAlt = "", as = "article" } = Astro.props;
+const Tag = as;
+const external = href && /^https?:/.test(href);
+---
+<Tag class:list={["card", { "card--link": href }]}>
+  {image && <img class="card__img" src={withBase(image)} alt={imageAlt} loading="lazy" />}
+  <div class="card__body">
+    {eyebrow && <span class="card__eyebrow">{eyebrow}</span>}
+    {title && (
+      <h3 class="card__title">
+        {href ? (
+          <a href={withBase(href)} {...(external ? { target: "_blank", rel: "noopener" } : {})}>
+            {title}
+          </a>
+        ) : title}
+      </h3>
+    )}
+    <slot />
+  </div>
+</Tag>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .card__img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .card__body { padding: var(--space-6); display: flex; flex-direction: column; flex: 1; }
+  .card__eyebrow {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 700;
+  }
+  .card__title { margin: 0 0 var(--space-2); font-size: var(--text-lg); }
+  .card__title a { text-decoration: none; }
+  /* Make the whole card clickable while keeping the real <a> for a11y. */
+  .card--link { transition: transform .15s ease, box-shadow .15s ease; }
+  .card--link:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .card--link .card__title a::after { content: ""; position: absolute; inset: 0; }
+  .card--link { position: relative; }
+  .card :global(p:last-child) { margin-bottom: 0; }
+  .card :global(p) { color: var(--muted); }
+</style>
