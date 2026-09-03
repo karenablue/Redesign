@@ -1,77 +1,102 @@
 ---
 /**
- * StatBand — the "at a glance" number row that appears on most pages
- * (founded 1922, N chapters, N members …).
+ * StatBand — big institutional numerals on the royal gradient, no card chrome.
+ * Matches the Make source's Stats component.
  *
  * props:
- *   stats  [{ value: "1922", label: "Founded" }, …]
- *   tone   "cream" (default) | "white" | "navy"
- *   eyebrow / title  optional heading above the stats
+ *   stats  [{ value: "500+", label: "Chapters Worldwide" }, …]
+ *   tone   "navy" (default) | "white" | "cream"
+ *   anchor show the Σ divider ornament below the row (default true on navy)
  */
-const { stats = [], tone = "cream", eyebrow, title } = Astro.props;
+const { stats = [], tone = "navy", anchor } = Astro.props;
+const showAnchor = anchor ?? tone === "navy";
 ---
-<section class:list={["statband", `statband--${tone}`, { "on-dark": tone === "navy" }]}>
-  <div class="container">
-    {(eyebrow || title) && (
-      <div class="statband__head">
-        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        {title && <h2 class="statband__title">{title}</h2>}
-      </div>
-    )}
-    <dl class="statband__grid">
-      {stats.map((s) => (
-        <div class="statband__item">
+<section class:list={["statband", `statband--${tone}`]}>
+  <div class="container statband__inner">
+    <dl class="statband__row">
+      {stats.map((s, i) => (
+        <div class="statband__item" data-first={i === 0 ? "" : undefined}>
           <dt class="statband__value">{s.value}</dt>
           <dd class="statband__label">{s.label}</dd>
         </div>
       ))}
     </dl>
+    {showAnchor && (
+      <div class="statband__anchor" aria-hidden="true">
+        <span class="statband__anchor-line"></span>
+        <span class="statband__sigma">&Sigma;</span>
+        <span class="statband__anchor-line statband__anchor-line--r"></span>
+      </div>
+    )}
   </div>
 </section>
 
 <style>
-  .statband { padding-block: clamp(2.75rem, 6vw, 4.25rem); }
+  .statband--navy { color: #fff; background: var(--grad-royal); position: relative; }
+  .statband--navy::before,
+  .statband--navy::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(223,177,54,0.5), transparent);
+  }
+  .statband--navy::before { top: 0; }
+  .statband--navy::after { bottom: 0; }
   .statband--white { background: var(--white); }
   .statband--cream { background: var(--cream); }
-  .statband--navy {
-    color: var(--white);
-    background: linear-gradient(160deg, #22459f 0%, var(--royal) 55%, #1c3c8f 100%);
-  }
-  .statband__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--space-8) 0;
+
+  .statband__inner { padding-block: clamp(3rem, 2rem + 4vw, 4rem); }
+
+  .statband__row {
+    display: flex;
+    align-items: stretch;
     margin: 0;
   }
-  .statband__head { text-align: center; margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
-  .statband__title {
-    margin: .4rem 0 0;
-    font-weight: 800;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: .005em;
-    font-size: clamp(1.6rem, 3.4vw, 2.4rem);
-    color: var(--royal);
+  .statband__item {
+    flex: 1;
+    text-align: center;
+    padding-inline: var(--space-8);
+    position: relative;
   }
-  .statband--navy .statband__title { color: #fff; }
-  .statband__item { text-align: center; padding-inline: var(--space-4); }
-  .statband__item + .statband__item { border-left: 1px solid rgba(255, 255, 255, 0.22); }
-  .statband--white .statband__item + .statband__item,
-  .statband--cream .statband__item + .statband__item { border-left-color: var(--line); }
+  .statband__item + .statband__item::before {
+    content: ""; position: absolute; left: 0; top: 8%; bottom: 8%;
+    width: 1px; background: rgba(255, 255, 255, 0.12);
+  }
+  .statband--white .statband__item + .statband__item::before,
+  .statband--cream .statband__item + .statband__item::before { background: var(--line); }
+
   .statband__value {
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    font-weight: 800;
-    color: var(--royal);
+    font-family: var(--font-label);
+    font-size: var(--text-stat);
     line-height: 1;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin: 0 0 var(--space-3);
   }
-  .statband--navy .statband__value { color: #fff; }
+  .statband--white .statband__value,
+  .statband--cream .statband__value { color: var(--royal); }
+
   .statband__label {
-    margin: var(--space-3) 0 0;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: rgba(255, 255, 255, 0.6);
   }
-  .statband--navy .statband__label { color: rgba(255, 255, 255, 0.7); }
+  .statband--white .statband__label,
+  .statband--cream .statband__label { color: var(--muted); }
+
+  .statband__anchor {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-4); margin-top: clamp(1.75rem, 3vw, 2.5rem); opacity: 0.5;
+  }
+  .statband__anchor-line { width: 3rem; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .statband__anchor-line--r { background: linear-gradient(270deg, transparent, var(--gold)); }
+  .statband__sigma { font-family: Georgia, serif; font-size: 1.75rem; line-height: 1; color: var(--gold); }
+
+  @media (max-width: 720px) {
+    .statband__row { flex-wrap: wrap; gap: var(--space-8) 0; }
+    .statband__item { flex-basis: 50%; }
+    .statband__item + .statband__item::before { display: none; }
+  }
 </style>
