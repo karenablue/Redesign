@@ -44,11 +44,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Official brand fonts: Montserrat (body). LEMON MILK (headings) is
-         self-hosted via @font-face in global.css; Oswald is its fallback. -->
+    <!-- Design fonts: Montserrat (body) + Playfair Display (headings, italic).
+         LEMON MILK (eyebrows / stat numerals) is self-hosted via @font-face in
+         global.css; Oswald is its fallback. -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,600;1,700&family=Oswald:wght@400;500;600;700&display=swap"
     />
   </head>
   <body>
@@ -68,6 +69,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
         padding: 0.6rem 1rem;
         background: var(--royal);
         color: var(--white);
+        font-size: var(--text-sm);
+        line-height: 1;
         border-radius: 0 0 var(--radius) var(--radius);
         transition: top .15s ease;
       }

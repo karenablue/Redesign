@@ -15,8 +15,8 @@ const showAnchor = anchor ?? tone === "navy";
   <div class="container statband__inner">
     <dl class="statband__row">
       {stats.map((s, i) => (
-        <div class="statband__item" data-first={i === 0 ? "" : undefined}>
-          <dt class="statband__value">{s.value}</dt>
+        <div class="statband__item">
+          <dt class="statband__value" data-count data-value={s.value}>{s.value}</dt>
           <dd class="statband__label">{s.label}</dd>
         </div>
       ))}
@@ -100,3 +100,60 @@ const showAnchor = anchor ?? tone === "navy";
     .statband__item + .statband__item::before { display: none; }
   }
 </style>
+
+<script>
+  // Counts each stat up from 0 when it scrolls into view. The SSR'd text is
+  // the real final value, so this only enhances — no JS / reduced-motion
+  // leaves the correct number in place.
+  function parseStatValue(raw) {
+    const match = raw.match(/^([^\d]*)(\d[\d,]*(?:\.\d+)?)([^\d]*)$/);
+    if (!match) return null;
+    const [, prefix, numStr, suffix] = match;
+    return {
+      prefix,
+      suffix,
+      target: parseFloat(numStr.replace(/,/g, "")),
+      hasComma: numStr.includes(","),
+      decimals: numStr.includes(".") ? numStr.split(".")[1].length : 0,
+    };
+  }
+
+  function formatStatNumber(n, { hasComma, decimals }) {
+    const fixed = n.toFixed(decimals);
+    if (!hasComma) return fixed;
+    const [intPart, decPart] = fixed.split(".");
+    const withCommas = Number(intPart).toLocaleString("en-US");
+    return decPart ? `${withCommas}.${decPart}` : withCommas;
+  }
+
+  function animateStat(el, parsed) {
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = `${parsed.prefix}${formatStatNumber(parsed.target * eased, parsed)}${parsed.suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const items = document.querySelectorAll("[data-count]");
+
+  if (!reduceMotion && items.length && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target;
+          const parsed = parseStatValue(el.dataset.value ?? "");
+          if (parsed) animateStat(el, parsed);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    items.forEach((el) => observer.observe(el));
+  }
+</script>

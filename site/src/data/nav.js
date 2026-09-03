@@ -115,10 +115,11 @@ export const footerContact = {
 };
 
 export const socialLinks = [
-  { label: "Facebook", href: "#" },
-  { label: "Instagram", href: "#" },
-  { label: "X (Twitter)", href: "#" },
-  { label: "YouTube", href: "#" },
+  { label: "Facebook", href: "https://www.facebook.com/sgrhoupdates", external: true },
+  { label: "YouTube", href: "https://www.youtube.com/@ICHQofSigmaGammaRhoSororityInc", external: true },
+  { label: "TikTok", href: "https://www.tiktok.com/@sgrhoupdates", external: true },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/sigma-gamma-rho-sorority-inc./", external: true },
+  { label: "Instagram", href: "https://www.instagram.com/sgrhoupdates/", external: true },
 ];
 
 /* Flat list for the client-side search index. Derived from primaryNav so it

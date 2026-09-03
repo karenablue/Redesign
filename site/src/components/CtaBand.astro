@@ -18,7 +18,7 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 <section class="cta on-dark">
   <div class="container cta__inner">
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    {title && <h2 class="cta__title">{title}{highlight && <span>{highlight}</span>}</h2>}
+    {title && <h2 class="cta__title">{title}{highlight && <> <span>{highlight}</span></>}</h2>}
     {copy && <p class="cta__copy">{copy}</p>}
     {actions.length > 0 && (
       <div class="cta__actions">
@@ -45,10 +45,10 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
     margin: 0;
     color: var(--white);
     font-family: var(--font-head);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    line-height: 1.14;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
     font-size: var(--text-h2);
   }
   .cta__title span { color: var(--gold); }
