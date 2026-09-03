@@ -198,8 +198,8 @@ const partners = [
   <section class="section section--navy section--round-b becoming">
     <div class="container becoming__grid">
       <div class="becoming__copy">
-        <p class="eyebrow">Join Our Sisterhood</p>
-        <h2 class="feature-title feature-title--light">Membership Is a <span>Commitment</span></h2>
+        <p class="eyebrow">✦ &nbsp; Join Our Sisterhood &nbsp; ✦</p>
+        <h2 class="feature-title feature-title--light">Becoming a Member of Sigma Gamma Rho Sorority, Incorporated&reg; Is a Commitment</h2>
         <div class="gold-rule"></div>
         <p>A commitment to scholarship, uncompromising sisterhood, and the profound responsibility to advance our communities. We seek women who understand that our legacy—forged by seven Black educators in 1922—demands action, integrity, and lifelong dedication.</p>
         <p>We invite candidates who are prepared to invest their time, intellectual rigor, and leadership into tangible public service, with the academic standing and personal accountability that sustain it.</p>
@@ -326,11 +326,11 @@ const partners = [
   .feature-title {
     margin: 0;
     font-family: var(--font-head);
-    font-weight: 500;
+    font-style: italic;
+    font-weight: 600;
     font-size: var(--text-h2);
-    line-height: 1.14;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
     color: var(--royal);
   }
   .feature-title span { color: var(--gold); }
@@ -359,11 +359,11 @@ const partners = [
   .home-hero__title {
     margin: 0;
     font-family: var(--font-head);
-    font-weight: 500;
+    font-style: italic;
+    font-weight: 600;
     font-size: var(--text-hero);
     line-height: 1.1;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    letter-spacing: -0.01em;
     color: #fff;
     text-shadow: 0 4px 24px rgba(0,0,0,0.5);
   }
@@ -411,19 +411,38 @@ const partners = [
   .impact-lead { max-width: 62ch; margin-inline: auto; text-align: center; color: var(--muted); }
   .impact-lead strong { color: var(--gold); }
   .impact-since { text-align: center; color: var(--royal); font-weight: 800; margin-top: 2.5rem; }
-  .impact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6); margin-top: var(--space-6); }
-  .impact-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .5rem; padding: 2rem 1.5rem; background: #fff; border: 1px solid var(--gold); border-radius: var(--radius-lg); }
-  .impact-card__icon { width: 44px; height: 44px; border-radius: 50%; background: var(--gold); }
-  .impact-card__value { font-size: clamp(1.8rem, 3.4vw, 2.4rem); font-weight: 800; color: var(--royal); }
-  .impact-card__label { font-size: var(--text-sm); color: var(--muted); }
+  .impact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-8); margin-top: var(--space-8); }
+  .impact-card {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: .75rem;
+    padding: 2rem 1.75rem; background: #fff; border-radius: var(--radius-lg);
+    border: 1.5px solid rgba(223, 177, 54, 0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 0 0 1px rgba(223,177,54,0.08);
+  }
+  .impact-card__icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    box-shadow: 0 4px 12px rgba(223, 177, 54, 0.25); margin-bottom: .25rem;
+  }
+  .impact-card__value { font-family: var(--font-body); font-size: clamp(2rem, 3.4vw, 2.6rem); font-weight: 800; color: var(--royal); line-height: 1; }
+  .impact-card__label { font-size: var(--text-base); color: var(--muted-2); }
 
   /* 6. PROGRAM CARDS */
   .prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6); }
   @media (min-width: 900px) { .prog-grid { grid-template-columns: repeat(3, 1fr); } }
-  .prog-card { text-align: center; padding: 2.25rem 1.75rem; background: var(--cream-2); border-radius: var(--radius-lg); }
-  .prog-card__icon { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 8px rgba(223,177,54,.15); margin-bottom: 1rem; }
-  .prog-card h3 { color: var(--royal); font-size: var(--text-lg); margin: 0 0 .5rem; }
-  .prog-card p { color: var(--ink); margin: 0; }
+  .prog-card {
+    text-align: center; padding: 2rem 1.75rem; border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--cream) 0%, var(--cream-2) 100%);
+    box-shadow: 0 4px 16px rgba(223, 177, 54, 0.1);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .prog-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(223, 177, 54, 0.2); }
+  .prog-card__icon {
+    display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    box-shadow: 0 4px 12px rgba(223, 177, 54, 0.3); margin-bottom: 1rem;
+  }
+  .prog-card h3 { color: var(--royal); font-size: var(--text-md); margin: 0 0 .5rem; }
+  .prog-card p { color: var(--ink); font-size: var(--text-base); margin: 0; }
 
   /* 7. FIND A CHAPTER */
   .find__inner { text-align: center; max-width: 720px; margin-inline: auto; }
