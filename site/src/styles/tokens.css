@@ -7,8 +7,10 @@
      LEMON MILK        → display headers: short section titles, stat numerals
      Playfair Display  → editorial voice: multi-word headlines, pull quotes,
                          storytelling subtitles (italic where quoted)
-     Pinyon Script     → accent kicker: 1–3 word eyebrows, formal touches
-     Montserrat        → body & UI: paragraphs, buttons, forms, nav
+     Pinyon Script     → RESERVED accent — one signature / high-emotion phrase
+                         per page, sized ≥30px. NOT eyebrows or labels.
+     Montserrat        → body & UI: paragraphs, buttons, forms, nav, and
+                         eyebrows (bold, uppercase, 11px, 0.15em tracked)
    LEMON MILK is self-hosted (Oswald fallback); the other three load from
    Google Fonts in Base.astro.
    ========================================================================== */

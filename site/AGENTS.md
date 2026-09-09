@@ -114,10 +114,12 @@ for a band that is genuinely one-of-a-kind.
                   --font-label)
 --font-editorial Playfair Display  → editorial voice: multi-word headlines,
                                      pull quotes, storytelling subtitles
---font-kicker    Pinyon Script     → accent kicker: 1–3 word eyebrows,
-                                     formal sisterhood touches
+--font-kicker    Pinyon Script     → RESERVED accent only — a signature line
+                                     or one high-emotion phrase per page.
+                                     NOT eyebrows, NOT any repeating label.
 --font-body      Montserrat        → body & UI: paragraphs, buttons, forms,
-                                     nav, h3/h4 sub-heads
+                                     nav, h3/h4 sub-heads, AND eyebrows
+                                     (bold, uppercase, 11px, 0.15em tracked)
 ```
 
 - This **extends** the FY2027 PDF's two families (LEMON MILK + Montserrat)
@@ -127,9 +129,11 @@ for a band that is genuinely one-of-a-kind.
   a page, you may bring it onto the four-role system; keep `tokens.css`,
   `global.css`, and this list in sync.
 - **LEMON MILK stays upright, `font-weight: 400`, never italic.** Playfair
-  Display carries the italic (quotes, subtitles); Pinyon Script is a script
-  face — never uppercase it, never letter-space it, size it up (~24–34px)
-  since its x-height is tiny.
+  Display carries the italic (quotes, subtitles).
+- **Pinyon Script is rationed.** It read as fussy and amateur when used as
+  the eyebrow on every section. One use per page, sized ≥30px (its
+  x-height is tiny), never uppercased or letter-spaced. Functional
+  eyebrows are Montserrat bold caps.
 - `--font-head` and `--font-label` remain aliases of the LEMON MILK stack
   for now; don't repoint them without a human's sign-off.
 - LEMON MILK is self-hosted (`@font-face` in `global.css`, files in
