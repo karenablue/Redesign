@@ -1,0 +1,196 @@
+---
+import Base from "../layouts/Base.astro";
+import { withBase } from "../lib/url.js";
+
+const updated = "September 9, 2026";
+
+const sections = [
+  {
+    id: "information-we-collect",
+    title: "Information We Collect",
+    body: [
+      "We collect information you provide directly — such as your name, email address, mailing address, chapter affiliation, and payment details — when you join, reactivate, register for an event, make a donation, or contact us.",
+      "We also collect limited technical information automatically when you visit the site, including your IP address, browser type, pages viewed, and the date and time of your visit.",
+    ],
+  },
+  {
+    id: "how-we-use-information",
+    title: "How We Use Your Information",
+    body: [
+      "To process membership, dues, event registrations, and donations; to respond to your inquiries; to send Sorority communications you have asked to receive; and to maintain the security and integrity of our systems.",
+      "We do not sell your personal information.",
+    ],
+  },
+  {
+    id: "sharing",
+    title: "When We Share Information",
+    body: [
+      "We share information with service providers who process it on our behalf (for example, payment processors and email delivery services) under contracts that limit their use of it.",
+      "We may also disclose information when required by law, or to protect the rights, safety, and property of the Sorority, its members, or the public.",
+    ],
+  },
+  {
+    id: "your-choices",
+    title: "Your Choices",
+    body: [
+      "You may opt out of non-essential email at any time using the unsubscribe link in those messages, or by contacting International Corporate Headquarters.",
+      "You may request access to, correction of, or deletion of your personal information, subject to records we are required to retain.",
+    ],
+  },
+  {
+    id: "data-security",
+    title: "Data Security & Retention",
+    body: [
+      "We use reasonable administrative, technical, and physical safeguards to protect personal information, and retain it only as long as needed for the purposes described here or as required by law.",
+    ],
+  },
+  {
+    id: "childrens-privacy",
+    title: "Children's Privacy",
+    body: [
+      "The site is not directed to children under 13, and we do not knowingly collect their personal information. Youth affiliate program data is provided and managed by a parent or guardian.",
+    ],
+  },
+  {
+    id: "changes",
+    title: "Changes to This Policy",
+    body: [
+      "We may update this policy from time to time. Material changes will be posted here with a revised effective date.",
+    ],
+  },
+];
+---
+
+<Base
+  title="Privacy Policy"
+  description="How Sigma Gamma Rho Sorority, Incorporated collects, uses, and protects personal information on its national website."
+>
+  <section class="legal-hero">
+    <div class="container container--narrow">
+      <p class="breadcrumb">
+        <a href={withBase("/")}>Home</a> <span aria-hidden="true">/</span>
+        <span>Privacy Policy</span>
+      </p>
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="legal-hero__updated">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <section class="legal-body">
+    <div class="container container--narrow">
+      <p class="legal-note" role="note">
+        This is a working draft for the site rebuild and is pending review by the Sorority's legal
+        counsel. It is not yet an official policy of Sigma Gamma Rho Sorority, Incorporated.
+      </p>
+
+      <p class="legal-intro">
+        Sigma Gamma Rho Sorority, Incorporated ("Sigma Gamma Rho," "we," or "us") respects your
+        privacy. This policy explains what information we collect through this website, how we use
+        it, and the choices you have.
+      </p>
+
+      <ol class="legal-toc" aria-label="Sections">
+        {sections.map((s) => (
+          <li>
+            <a href={`#${s.id}`}>{s.title}</a>
+          </li>
+        ))}
+      </ol>
+
+      {sections.map((s) => (
+        <section class="legal-section" id={s.id}>
+          <h2>{s.title}</h2>
+          {s.body.map((p) => (
+            <p>{p}</p>
+          ))}
+        </section>
+      ))}
+
+      <section class="legal-section" id="contact">
+        <h2>Contact Us</h2>
+        <p>
+          Questions about this policy can go to International Corporate Headquarters at{" "}
+          <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>, or through the{" "}
+          <a href={withBase("/contact/")}>contact page</a>.
+        </p>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal-hero {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4rem);
+  }
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-5);
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 600;
+  }
+  .breadcrumb a {
+    color: inherit;
+  }
+  .legal-hero h1 {
+    margin: var(--space-2) 0 0;
+  }
+  .legal-hero__updated {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+
+  .legal-body {
+    background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .legal-note {
+    padding: var(--space-4) var(--space-5);
+    margin: 0 0 var(--space-8);
+    background: var(--tint);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .legal-intro {
+    color: var(--muted);
+  }
+
+  .legal-toc {
+    margin: var(--space-8) 0 var(--space-12);
+    padding-left: 1.2rem;
+    display: grid;
+    gap: var(--space-2);
+    color: var(--royal);
+  }
+  .legal-toc a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .legal-toc a:hover {
+    color: var(--gold-dark);
+  }
+
+  .legal-section {
+    scroll-margin-top: 100px;
+    margin-top: var(--space-10);
+  }
+  .legal-section h2 {
+    font-size: var(--text-h3);
+    margin: 0 0 var(--space-4);
+  }
+  .legal-section p {
+    color: var(--muted);
+  }
+  .legal-section a {
+    color: var(--royal-dark);
+    font-weight: 600;
+  }
+</style>

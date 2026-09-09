@@ -5,7 +5,7 @@
  * socialLinks). The column grid uses fr units, not the fixed-px tracks the
  * old footer shipped with.
  */
-import { footerColumns, footerContact, socialLinks } from "../data/nav.js";
+import { footerColumns, footerContact, footerLegal, socialLinks } from "../data/nav.js";
 import { withBase } from "../lib/url.js";
 
 const year = new Date().getFullYear();
@@ -97,9 +97,9 @@ const socialPaths: Record<string, string> = {
   <div class="container site-footer__bottom">
     <span>&copy; {year} Sigma Gamma Rho Sorority, Inc. All rights reserved.</span>
     <span class="site-footer__legal">
-      <a href={withBase("/resources/privacy-policy/")}>Privacy Policy</a>
-      <a href={withBase("/resources/terms-of-use/")}>Terms of Use</a>
-      <a href={withBase("/resources/accessibility/")}>Accessibility</a>
+      {footerLegal.map((l) => (
+        <a href={withBase(l.href)}>{l.label}</a>
+      ))}
     </span>
   </div>
   <p class="site-footer__tagline">Greater Service, Greater Progress &mdash; Far Over 100 Years</p>
