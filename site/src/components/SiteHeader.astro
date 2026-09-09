@@ -275,16 +275,19 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     background: linear-gradient(to right, var(--gold), rgba(223, 177, 54, 0.5), transparent);
   }
 
+  /* Nav bar — matched to Figma Make Header.tsx: navy, 4px gold bottom rule,
+     64px row, links centred, 32px gap, 16px Montserrat 600, no dropdown
+     arrows, gold hover. */
   .nav-bar {
     background: var(--royal);
-    /* top divider comes from .brand-row's gold border; only the bottom rule here */
-    border-bottom: 2px solid var(--gold);
+    /* top divider comes from .brand-row's gold border */
+    border-bottom: 4px solid var(--gold);
   }
   .nav-bar__inner {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    min-height: 52px;
+    min-height: 64px;
   }
 
   .site-nav {
@@ -292,8 +295,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   }
   .site-nav__list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -304,21 +308,23 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .site-nav__link {
     display: flex;
     align-items: center;
-    padding: 0.9rem 0.8rem;
+    padding: 0.5rem 0;
     border: 0;
     background: none;
     color: var(--white);
-    font: inherit;
-    font-size: var(--text-sm);
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
     white-space: nowrap;
     cursor: pointer;
     text-decoration: none;
+    transition: color 0.15s ease;
   }
   .site-nav__item.is-active > .site-nav__link,
   .site-nav__item:hover > .site-nav__link,
   .site-nav__item:focus-within > .site-nav__link {
-    color: var(--gold-bright);
+    color: var(--gold);
   }
 
   .site-nav__menu {
@@ -328,12 +334,13 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     min-width: 220px;
     display: none;
     flex-direction: column;
-    margin: 0;
+    margin: 0.5rem 0 0;
     padding: var(--space-2) 0;
     list-style: none;
     background: var(--white);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 20px 44px rgba(8, 22, 51, 0.16);
     z-index: 50;
   }
   .site-nav__item:hover .site-nav__menu,
@@ -342,32 +349,49 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     display: flex;
   }
   .site-nav__menu a {
-    padding: 0.65rem 1rem;
-    color: #2c3951;
-    font-size: var(--text-xs);
+    padding: 0.625rem 1.25rem;
+    color: #374151;
+    font-size: var(--text-sm);
     line-height: 1.45;
     text-decoration: none;
+    transition:
+      background 0.12s ease,
+      color 0.12s ease;
   }
   .site-nav__menu a:hover,
   .site-nav__menu a:focus {
-    color: var(--royal);
-    background: #f5f7fc;
+    color: #fff;
+    background: var(--royal);
     outline: none;
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-3);
     margin-left: auto;
+    flex-shrink: 0;
   }
+  /* Figma nav CTAs: rounded-md (not pill), 13px, 600, 24/10 padding, no wrap */
   .header-actions :global(.header-actions__btn) {
-    font-size: var(--text-xs);
-    padding: 0.55rem 1rem;
+    border-radius: var(--radius);
+    padding: 0.625rem 1.5rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    white-space: nowrap;
   }
+  /* solid = Poodle Portal: gold fill, navy text */
+  .header-actions :global(.header-actions__btn:not(.btn--outline)) {
+    --btn-fg: var(--navy);
+  }
+  /* outline = Join ΣΓΡ: gold text + 2px gold border, transparent */
   .header-actions :global(.btn--outline) {
-    color: var(--white);
-    border-color: var(--gold-bright);
+    --btn-fg: var(--gold);
+    border-width: 2px;
+    border-color: var(--gold);
+  }
+  .header-actions :global(.btn--outline:hover) {
+    --btn-fg: var(--navy);
   }
 
   .header-search {
@@ -379,13 +403,17 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     display: grid;
     place-items: center;
     border: 0;
-    border-radius: var(--radius);
+    border-radius: 50%;
     background: transparent;
     color: var(--white);
     cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
   }
   .search-toggle:hover {
-    color: var(--gold-bright);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--gold);
   }
   .search-panel {
     position: absolute;
