@@ -207,16 +207,10 @@ const partners = [
     </video>
     <div class="home-hero__scrim"></div>
     <div class="container home-hero__inner">
-      <h1 class="home-hero__title">
-        Greater Service,
-        <br />
-        <span>Greater Progress</span>
+      {/* headline kept for SEO / a11y (one h1 per page) but not shown */}
+      <h1 class="visually-hidden">
+        Sigma Gamma Rho Sorority, Incorporated — Greater Service, Greater Progress
       </h1>
-      <p class="home-hero__copy">
-        Founded in 1922 by seven young Black educators at Butler University, Sigma Gamma Rho
-        Sorority, Incorporated is built on a century-long legacy of academic excellence,
-        uncompromising sisterhood, and concrete action in our communities.
-      </p>
       <div class="home-hero__actions">
         <Button href="/membership/become-a-member/">Join Our Sisterhood</Button>
         <Button href="/service-impact/corporate-partnerships/" variant="ghost-light">
@@ -734,10 +728,10 @@ const partners = [
     color: var(--gold);
   }
 
-  /* 1. HERO — video + headline + buttons */
+  /* 1. HERO — full-bleed video with just the CTA row */
   .home-hero {
     position: relative;
-    min-height: clamp(600px, 82vh, 820px);
+    min-height: clamp(420px, 58vh, 620px);
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -762,55 +756,22 @@ const partners = [
   .home-hero__scrim {
     position: absolute;
     inset: 0;
-    /* radial vignette drowns the baked-in text behind the headline; the
-       linear layer keeps the lower band dark for legibility while the top
-       and edges stay video-visible */
-    background:
-      radial-gradient(
-        ellipse 85% 75% at 50% 68%,
-        rgba(8, 22, 51, 0.9) 0%,
-        rgba(8, 22, 51, 0.45) 55%,
-        transparent 82%
-      ),
-      linear-gradient(
-        to top,
-        rgba(8, 22, 51, 0.85) 0%,
-        rgba(8, 22, 51, 0.3) 45%,
-        rgba(8, 22, 51, 0.05) 100%
-      );
+    /* dark lower band so the CTAs read; top stays video-visible */
+    background: linear-gradient(
+      to top,
+      rgba(8, 22, 51, 0.85) 0%,
+      rgba(8, 22, 51, 0.35) 45%,
+      rgba(8, 22, 51, 0.08) 100%
+    );
   }
   .home-hero__inner {
     position: relative;
     z-index: 2;
     margin-inline: auto;
-    padding-block: clamp(2rem, 6vw, 4rem) clamp(3rem, 8vw, 5rem);
+    padding-block: 0 clamp(2.5rem, 7vw, 4rem);
     max-width: 62rem;
   }
-  .home-hero__title {
-    margin: 0;
-    font-family: var(--font-head);
-    font-weight: 400;
-    font-size: var(--text-hero);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    color: #fff;
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  }
-  .home-hero__title span {
-    color: var(--gold);
-  }
-  .home-hero__copy {
-    margin: var(--space-6) 0 0;
-    max-width: 44rem;
-    margin-inline: auto;
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: var(--text-lg);
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.9);
-  }
   .home-hero__actions {
-    margin-top: var(--space-8);
     display: flex;
     gap: var(--space-5);
     justify-content: center;
