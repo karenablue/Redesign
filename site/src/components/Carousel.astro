@@ -20,6 +20,20 @@
  */
 import { withBase } from "../lib/url.js";
 
+interface CarouselImage {
+  src: string;
+  alt?: string;
+  caption?: string;
+  fit?: "cover" | "contain";
+}
+interface Props {
+  images?: (string | CarouselImage)[];
+  variant?: "panel" | "mini";
+  tone?: "light" | "navy";
+  label?: string;
+  ariaLabel?: string;
+}
+
 const {
   images = [],
   variant = "panel",
@@ -28,7 +42,7 @@ const {
   ariaLabel,
 } = Astro.props;
 const isPanel = variant === "panel";
-const slides = images.map((img) => (typeof img === "string" ? { src: img } : img));
+const slides: CarouselImage[] = images.map((img) => (typeof img === "string" ? { src: img } : img));
 ---
 
 <div
@@ -241,14 +255,14 @@ const slides = images.map((img) => (typeof img === "string" ? { src: img } : img
     });
     const dots = Array.from(dotsWrap?.children ?? []);
 
-    function show(i) {
+    function show(i: number) {
       index = (i + slides.length) % slides.length;
       slides.forEach((s, si) => s.classList.toggle("is-active", si === index));
       dots.forEach((d, di) => d.classList.toggle("is-active", di === index));
     }
 
     carousel.querySelectorAll(".carousel__btn").forEach((btn) => {
-      btn.addEventListener("click", () => show(index + Number(btn.dataset.dir)));
+      btn.addEventListener("click", () => show(index + Number((btn as HTMLElement).dataset.dir)));
     });
   });
 </script>

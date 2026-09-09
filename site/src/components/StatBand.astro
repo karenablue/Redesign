@@ -8,6 +8,16 @@
  *   tone   "navy" (default) | "white" | "cream"
  *   anchor show the Σ divider ornament below the row (default true on navy)
  */
+interface Stat {
+  value: string;
+  label: string;
+}
+interface Props {
+  stats?: Stat[];
+  tone?: "navy" | "white" | "cream";
+  anchor?: boolean;
+}
+
 const { stats = [], tone = "navy", anchor } = Astro.props;
 const showAnchor = anchor ?? tone === "navy";
 ---
@@ -160,7 +170,15 @@ const showAnchor = anchor ?? tone === "navy";
   // Counts each stat up from 0 when it scrolls into view. The SSR'd text is
   // the real final value, so this only enhances — no JS / reduced-motion
   // leaves the correct number in place.
-  function parseStatValue(raw) {
+  interface ParsedStat {
+    prefix: string;
+    suffix: string;
+    target: number;
+    hasComma: boolean;
+    decimals: number;
+  }
+
+  function parseStatValue(raw: string): ParsedStat | null {
     const match = raw.match(/^([^\d]*)(\d[\d,]*(?:\.\d+)?)([^\d]*)$/);
     if (!match) return null;
     const [, prefix, numStr, suffix] = match;
@@ -173,7 +191,10 @@ const showAnchor = anchor ?? tone === "navy";
     };
   }
 
-  function formatStatNumber(n, { hasComma, decimals }) {
+  function formatStatNumber(
+    n: number,
+    { hasComma, decimals }: Pick<ParsedStat, "hasComma" | "decimals">
+  ) {
     const fixed = n.toFixed(decimals);
     if (!hasComma) return fixed;
     const [intPart, decPart] = fixed.split(".");
@@ -181,10 +202,10 @@ const showAnchor = anchor ?? tone === "navy";
     return decPart ? `${withCommas}.${decPart}` : withCommas;
   }
 
-  function animateStat(el, parsed) {
+  function animateStat(el: HTMLElement, parsed: ParsedStat) {
     const duration = 1400;
     const start = performance.now();
-    function tick(now) {
+    function tick(now: number) {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = `${parsed.prefix}${formatStatNumber(parsed.target * eased, parsed)}${parsed.suffix}`;
@@ -201,7 +222,7 @@ const showAnchor = anchor ?? tone === "navy";
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          const el = entry.target;
+          const el = entry.target as HTMLElement;
           const parsed = parseStatValue(el.dataset.value ?? "");
           if (parsed) animateStat(el, parsed);
           observer.unobserve(el);
