@@ -21,18 +21,22 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   <div class="container brand-row">
     <a class="brand" href={withBase("/")} aria-label="Sigma Gamma Rho home">
       <img
+        class="brand__shield"
         src={withBase("/images/SGR-Logo-Shield.png")}
-        alt="Sigma Gamma Rho Sorority coat of arms"
-        width="72"
-        height="72"
+        alt="Sigma Gamma Rho Sorority Shield"
+        width="96"
+        height="96"
       />
       <span class="brand__copy">
         <span class="brand__kicker">
-          &mdash;&nbsp; National Website &bull; Est. 1922 &nbsp;&mdash;
+          <span class="brand__kicker-rule" aria-hidden="true"></span>
+          National Website &bull; Est. 1922
+          <span class="brand__kicker-rule" aria-hidden="true"></span>
         </span>
         <span class="brand__title">
           Sigma Gamma Rho Sorority, Incorporated<sup>&reg;</sup>
         </span>
+        <span class="brand__rule" aria-hidden="true"></span>
       </span>
     </a>
   </div>
@@ -199,6 +203,10 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 </script>
 
 <style>
+  /* Brand identity bar — matched to the Figma Make Header.tsx:
+     96px shield w/ gold drop-shadow, 24px gap, LEFT-aligned copy block,
+     11px/3px-tracked kicker between two 12px gold rules, 32px Montserrat
+     wordmark, 16px sup ®, and a 320px gold→transparent gradient underline. */
   .site-header {
     position: sticky;
     top: 0;
@@ -209,47 +217,68 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .brand-row {
     display: flex;
     align-items: center;
-    min-height: 104px;
+    padding-block: 1.25rem;
+    border-bottom: 4px solid var(--gold);
   }
   .brand {
     display: flex;
     align-items: center;
-    gap: var(--space-5);
+    gap: 1.5rem;
     text-decoration: none;
   }
-  .brand img {
-    width: 76px;
-    height: 76px;
+  .brand__shield {
+    width: 96px;
+    height: 96px;
     object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 12px rgba(223, 177, 54, 0.25));
   }
   .brand__copy {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
   .brand__kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 4px;
     color: var(--gold);
-    font-size: 0.625rem;
+    font-size: 0.6875rem; /* 11px */
     font-weight: 700;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.27em; /* ~3px at 11px */
     text-transform: uppercase;
   }
+  .brand__kicker-rule {
+    width: 12px;
+    height: 1px;
+    background: var(--gold);
+  }
   .brand__title {
-    margin-top: 5px;
     color: var(--royal);
-    font-size: clamp(1.25rem, 2.4vw, 2rem);
+    font-family: var(--font-body);
+    font-size: 2rem; /* 32px */
+    line-height: 1;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 2px;
+    letter-spacing: 0.01em;
   }
   .brand__title sup {
-    font-size: 0.5em;
+    font-size: 0.5em; /* 16px */
+    vertical-align: super;
+    margin-left: 2px;
+  }
+  .brand__rule {
+    width: 20rem; /* 320px */
+    max-width: 100%;
+    height: 1px;
+    margin-top: 6px;
+    background: linear-gradient(to right, var(--gold), rgba(223, 177, 54, 0.5), transparent);
   }
 
   .nav-bar {
     background: var(--royal);
-    border-block: 2px solid var(--gold);
+    /* top divider comes from .brand-row's gold border; only the bottom rule here */
+    border-bottom: 2px solid var(--gold);
   }
   .nav-bar__inner {
     display: flex;
