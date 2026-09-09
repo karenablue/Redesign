@@ -44,7 +44,6 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   <div class="nav-bar">
     <div class="header-wrap nav-bar__inner">
       <nav class="site-nav" aria-label="Primary">
-        <span class="site-nav__pill" aria-hidden="true"></span>
         <ul class="site-nav__list">
           {primaryNav.map((item) => (
             <li class:list={["site-nav__item", { "is-active": item.label === activeTop }]}>
@@ -215,58 +214,6 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeAllMenus();
     });
-
-    /* Sliding pill: a floating highlight that glides behind the hovered /
-       focused nav link and settles back on the active section on mouse-leave.
-       Disabled below 1180px, where the nav wraps to its own stacked rows. */
-    const nav = document.querySelector(".site-nav");
-    const pill = nav && nav.querySelector(".site-nav__pill");
-    const navList = nav && nav.querySelector(".site-nav__list");
-
-    if (nav && pill && navList) {
-      const PAD = 14;
-      const wide = window.matchMedia("(min-width: 1181px)");
-      const links = Array.prototype.slice.call(navList.querySelectorAll(".site-nav__link"));
-      const activeLink = navList.querySelector(".site-nav__item.is-active > .site-nav__link");
-      let hovered = null;
-
-      function movePill(el) {
-        if (!el || !wide.matches) {
-          pill.classList.remove("is-visible");
-          return;
-        }
-        const navRect = nav.getBoundingClientRect();
-        const r = el.getBoundingClientRect();
-        pill.style.width = r.width + PAD * 2 + "px";
-        pill.style.transform = "translate(" + (r.left - navRect.left - PAD) + "px, -50%)";
-        pill.classList.add("is-visible");
-      }
-      function settle() {
-        movePill(hovered || activeLink);
-      }
-
-      links.forEach(function (link) {
-        link.addEventListener("mouseenter", function () {
-          hovered = link;
-          movePill(link);
-        });
-        link.addEventListener("focus", function () {
-          hovered = link;
-          movePill(link);
-        });
-        link.addEventListener("blur", function () {
-          hovered = null;
-          settle();
-        });
-      });
-      navList.addEventListener("mouseleave", function () {
-        hovered = null;
-        settle();
-      });
-      window.addEventListener("resize", settle);
-      wide.addEventListener("change", settle);
-      requestAnimationFrame(settle);
-    }
   })();
 </script>
 
@@ -349,9 +296,8 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     background: linear-gradient(to right, var(--gold), rgba(223, 177, 54, 0.5), transparent);
   }
 
-  /* Nav bar — matched to Figma Make Header.tsx: navy, 4px gold bottom rule,
-     64px row, links centred, 32px gap, 16px Montserrat 600, no dropdown
-     arrows, gold hover. */
+  /* Nav bar — navy, 4px gold bottom rule, 64px row, links centred, 32px gap,
+     16px Montserrat 700, no dropdown arrows, gold underline-reveal on hover. */
   .nav-bar {
     background: var(--royal);
     /* top divider comes from .brand-row's gold border */
@@ -366,39 +312,8 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   .site-nav {
     flex: 1;
-    position: relative;
-  }
-  /* Sliding pill — a floating highlight that glides behind the hovered link
-     and settles on the active section. Positioned by JS (offsetLeft/width of
-     the target link, relative to .site-nav). */
-  .site-nav__pill {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 0;
-    height: 2.25rem;
-    transform: translate(0, -50%);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-    transition:
-      transform 0.32s cubic-bezier(0.34, 1.15, 0.4, 1),
-      width 0.32s cubic-bezier(0.34, 1.15, 0.4, 1),
-      opacity 0.2s ease;
-  }
-  .site-nav__pill.is-visible {
-    opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .site-nav__pill {
-      transition: opacity 0.2s ease;
-    }
   }
   .site-nav__list {
-    position: relative;
-    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -415,6 +330,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     align-items: center;
     padding: 0.5rem 0;
     border: 0;
+    border-bottom: 2px solid transparent;
     background: none;
     color: var(--white);
     font-family: var(--font-body);
@@ -424,13 +340,26 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     white-space: nowrap;
     cursor: pointer;
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease;
   }
-  .site-nav__item.is-active > .site-nav__link,
-  .site-nav__item.is-open > .site-nav__link,
+  /* Simple underline reveal — a gold rule wipes in under the link on hover
+     or keyboard focus. */
   .site-nav__link:hover,
   .site-nav__link:focus-visible {
+    border-bottom-color: var(--gold);
+  }
+  /* Current section / open dropdown — gold text with a persistent underline. */
+  .site-nav__item.is-active > .site-nav__link,
+  .site-nav__item.is-open > .site-nav__link {
     color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav__link {
+      transition: none;
+    }
   }
 
   .site-nav__menu {
@@ -618,28 +547,54 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   /* Below this width the full nav + search + two buttons no longer fit on one
      row; drop the nav to its own full-width row and the actions beneath it
-     rather than letting "Contact" wrap awkwardly. */
+     rather than letting "Contact" wrap awkwardly. The dropdown becomes an
+     inline, full-width disclosure instead of a floating panel. */
   @media (max-width: 1180px) {
     .nav-bar__inner {
       flex-wrap: wrap;
       padding-block: var(--space-2);
     }
-    .site-nav__pill {
-      display: none;
+    .site-nav {
+      position: relative;
     }
     .site-nav__list {
       width: 100%;
-      column-gap: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 1.25rem;
+      row-gap: 0.25rem;
+    }
+    /* Dropdown drops as a full-width sheet below the nav row instead of a
+       narrow floating panel. */
+    .site-nav__item {
+      position: static;
     }
     .site-nav__menu {
-      position: static;
-      box-shadow: none;
-      padding-left: var(--space-4);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + var(--space-2));
+      width: 100%;
+      min-width: 0;
+      margin: 0;
+      border: 0;
+      border-radius: var(--radius);
+      box-shadow: 0 18px 40px rgba(8, 22, 51, 0.35);
+      background: var(--royal-2);
+    }
+    .site-nav__menu a {
+      color: rgba(255, 255, 255, 0.88);
+      text-align: center;
+    }
+    .site-nav__menu a:hover,
+    .site-nav__menu a:focus {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
     }
     .header-actions {
       margin-left: 0;
       width: 100%;
-      justify-content: flex-start;
+      justify-content: center;
     }
   }
 </style>
