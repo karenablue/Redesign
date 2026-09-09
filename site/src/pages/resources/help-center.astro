@@ -1,0 +1,91 @@
+---
+import Base from "../../layouts/Base.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { withBase } from "../../lib/url.js";
+
+const cards = [
+  { title: "Membership Questions", body: "Eligibility, undergraduate and alumnae pathways, and the official membership process.", href: "/membership/become-a-member/", label: "Become a Member" },
+  { title: "Reactivating Membership", body: "Steps for lapsed members returning to active status with the Sorority.", href: "/membership/reactivate/", label: "Reactivate Membership" },
+  { title: "Find a Chapter", body: "Search by city, state, ZIP code, or university, or browse the five regions.", href: "/membership/chapter-locator/", label: "Chapter Locator" },
+  { title: "Report a Concern", body: "Review Sigma Gamma Rho's zero-tolerance anti-hazing policy and reporting process.", href: "/resources/anti-hazing-policy/", label: "Anti-Hazing Policy" },
+  { title: "Vendors & Partners", body: "Guidelines for approved vendors and how to apply for vendor status.", href: "/resources/vendor/", label: "Vendor Information" },
+  { title: "Media & Press", body: "Journalists and media contacts can reach the national Media Relations team.", href: "/news-events/media-relations/", label: "Media Relations" },
+];
+---
+<Base title="Help Center" activeTop="Resources" description="Search Sigma Gamma Rho help topics or reach Headquarters directly.">
+  <section class="hc-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href={withBase("/")}>Home</a> <span>/</span> <a href={withBase("/resources/vendor/")}>Resources</a> <span>/</span> <span>Help Center</span></p>
+      <p class="eyebrow">Resources • Help Center</p>
+      <h1>How Can We<br /><span>Help You?</span></h1>
+      <p>Search a topic below, or reach Headquarters directly if you can't find what you need.</p>
+      <label class="hc-search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="help-search" placeholder='Search topics, e.g. "reactivate" or "chapter"…' aria-label="Search help topics" />
+      </label>
+    </div>
+  </section>
+
+  <section class="hc-main">
+    <div class="container">
+      <div class="hc-grid" id="hc-grid">
+        {cards.map((c) => (
+          <article class="hc-card" data-search={`${c.title} ${c.body}`.toLowerCase()}>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+            <a href={withBase(c.href)}>{c.label} <span aria-hidden="true">&rarr;</span></a>
+          </article>
+        ))}
+      </div>
+      <p class="hc-empty" id="hc-empty" hidden>No topics match your search. Try a different term, or <a href={withBase("/contact/")}>contact Headquarters</a> directly.</p>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Still Need Help?"
+    title="Talk to "
+    highlight="Headquarters directly."
+    copy="International Corporate Headquarters can route your question to the right department."
+    actions={[{ label: "Contact Headquarters", href: "/contact/" }]}
+  />
+</Base>
+
+<style>
+  .hc-hero { background: var(--grad-royal); color: #fff; }
+  .hc-hero > .container { padding-block: clamp(3.5rem, 6vw, 5rem); max-width: 44rem; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-5); color: rgba(255,255,255,0.6); font-size: var(--text-xs); font-weight: 600; }
+  .breadcrumb a { color: inherit; }
+  .hc-hero h1 { color: #fff; margin: var(--space-2) 0 0; }
+  .hc-hero h1 span { color: var(--gold); }
+  .hc-hero > .container > p:not(.eyebrow):not(.breadcrumb) { color: rgba(255,255,255,0.85); margin-top: var(--space-4); }
+  .hc-search { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-8); padding: 0.9rem 1.2rem; background: #fff; border-radius: 999px; color: var(--royal); }
+  .hc-search input { flex: 1; border: 0; background: transparent; font: inherit; color: var(--ink); }
+  .hc-search input:focus { outline: none; }
+
+  .hc-main { background: var(--white); padding-block: clamp(3rem, 6vw, 4.5rem); }
+  .hc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6); }
+  .hc-card { background: var(--tint); border-radius: var(--radius-lg); padding: var(--space-6); }
+  .hc-card h3 { margin: 0 0 var(--space-2); font-size: var(--text-md); }
+  .hc-card p { color: var(--muted); font-size: var(--text-sm); }
+  .hc-card a { color: var(--royal); font-weight: 700; text-decoration: none; }
+  .hc-card a:hover { color: var(--gold-dark); }
+  .hc-empty { text-align: center; color: var(--muted); padding: var(--space-12) 0; }
+  .hc-empty a { color: var(--royal); font-weight: 700; }
+</style>
+
+<script>
+  const input = document.getElementById("help-search");
+  const cards = document.querySelectorAll("#hc-grid .hc-card");
+  const empty = document.getElementById("hc-empty");
+
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach((card) => {
+      const show = !q || card.dataset.search.includes(q);
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    empty.hidden = visible !== 0;
+  });
+</script>

@@ -1,10 +1,13 @@
 /* ==========================================================================
-   SGRho design tokens — matched to the Figma Make design source.
-     Playfair Display (italic)  → section headings
-     LEMON MILK                 → eyebrows / labels / big stat numerals
-     Montserrat                 → all body text
-   (Note: the FY2027 brand PDF prescribes LEMON MILK headings + no cream; this
-    file follows the Make design instead. Swap --font-head if that changes.)
+   SGRho design tokens — verified against the site's own per-page CSS
+   (index.css, herstory.css, founders.css, becomeamember.css, and every
+   other exported stylesheet), which is unanimous and matches the official
+   FY2027 brand guidelines: LEMON MILK headings, no italic, anywhere. The
+   live Figma Make source's Playfair Display usage is an earlier/divergent
+   exploration that was superseded when these pages were actually built —
+   do not revert to it again without re-checking every static CSS file.
+     LEMON MILK   → h1/h2 headings, eyebrows/labels, big stat numerals
+     Montserrat   → body text, buttons, sub-heads
    ========================================================================== */
 
 :root {
@@ -17,6 +20,7 @@
   --deep-blue: #0f2555;     /* footer gradient start                      */
   --gold: #dfb136;          /* Gold — Pantone 13-0757 TCX                 */
   --gold-dark: #c9961a;     /* gold hover / gradient end                  */
+  --gold-bright: #f0cf5c;   /* lighter gold for legibility on navy/dark bands */
   --white: #ffffff;
   --ink: #333333;           /* body text (Make uses #333)                 */
   --muted: #555a66;         /* secondary text                             */
@@ -27,10 +31,11 @@
   --line: rgba(32, 65, 165, 0.12);        /* hairline on light            */
   --line-dark: rgba(255, 255, 255, 0.14); /* hairline on dark             */
 
-  /* --- Type (Make design source) --------------------------------- */
+  /* --- Type (matches the real site's own CSS) --------------------- */
   --font-body: "Montserrat", system-ui, Arial, sans-serif;
-  --font-head: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-head: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-label: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-display: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
 
   /* px-ish scale matching the Make source */
   --text-xs: 0.6875rem;                        /* 11px  meta                */

@@ -76,7 +76,7 @@ const partners = [
   title="Home"
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
 >
-  <!-- 1. HERO — video, headline, two pill buttons -->
+  <!-- 1. HERO — video, headline, two pill buttons (verified against the live Figma Make Hero.tsx) -->
   <section class="home-hero">
     <video class="home-hero__video" autoplay muted loop playsinline preload="auto" poster={withBase("/images/sgr-alpha-charter.jpeg")}>
       <source src={withBase("/images/sgrho video.mp4")} type="video/mp4" />
@@ -90,8 +90,8 @@ const partners = [
         uncompromising sisterhood, and concrete action in our communities.
       </p>
       <div class="home-hero__actions">
-        <Button href="/membership/become-a-member/">Join Our Sisterhood <span aria-hidden="true">&rarr;</span></Button>
-        <Button href="/membership/reactivate/" variant="ghost-light">Reactivate <span aria-hidden="true">&rarr;</span></Button>
+        <Button href="/membership/become-a-member/">Join Our Sisterhood</Button>
+        <Button href="/membership/reactivate/" variant="ghost-light">Reactivate</Button>
       </div>
     </div>
   </section>
@@ -135,13 +135,13 @@ const partners = [
       </div>
       <div class="motto__aka">
         <p class="eyebrow">Also Known As</p>
-        <p class="motto__script">greater women, greater world.</p>
+        <p class="motto__main">"Greater Women, Greater World"</p>
       </div>
     </div>
   </section>
 
   <!-- 4. STAT BAND -->
-  <StatBand stats={stats} tone="navy" />
+  <StatBand stats={stats} tone="navy" anchor={false} />
 
   <!-- 5. OUR GLOBAL IMPACT -->
   <Section
@@ -334,8 +334,7 @@ const partners = [
     padding-bottom: 4px; white-space: nowrap;
   }
   .center-link a:hover, .arrow-link:hover { border-color: var(--gold); }
-  .gold { color: var(--gold); }
-  .gold-rule { width: 4rem; height: 2px; background: var(--gold); margin: 1.5rem 0; border-radius: 2px; }
+  .gold { color: var(--gold); }
 
   /* 1. HERO — video + headline + buttons */
   .home-hero { position: relative; min-height: clamp(560px, 78vh, 800px); display: flex; align-items: center; overflow: hidden; background: var(--navy); color: #fff; text-align: center; }
@@ -345,18 +344,18 @@ const partners = [
   .home-hero__title {
     margin: 0;
     font-family: var(--font-head);
-    font-style: italic;
-    font-weight: 600;
+    font-weight: 400;
     font-size: var(--text-hero);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
     color: #fff;
     text-shadow: 0 4px 24px rgba(0,0,0,0.5);
   }
   .home-hero__title span { color: var(--gold); }
   .home-hero__copy {
-    margin: var(--space-6) auto 0;
+    margin: var(--space-6) 0 0;
     max-width: 44rem;
+    margin-inline: auto;
     font-family: var(--font-body);
     font-weight: 500;
     font-size: var(--text-lg);
@@ -390,7 +389,6 @@ const partners = [
   .motto__grid > div:last-child { border-left: 1px solid var(--line); padding-left: 2rem; }
   .motto__main { color: var(--royal); font-weight: 800; font-size: var(--text-lg); margin: .35rem 0 0; }
   .motto__aka { text-align: right; }
-  .motto__script { font-family: Georgia, "Times New Roman", serif; font-style: italic; color: var(--navy); font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem); margin: .35rem 0 0; }
   @media (max-width: 640px) { .motto__grid { grid-template-columns: 1fr; } .motto__grid > div:last-child { border-left: 0; padding-left: 0; } .motto__aka { text-align: left; } }
 
   /* 5. GLOBAL IMPACT */
@@ -464,7 +462,7 @@ const partners = [
   .voices { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
   .voice { margin: 0; background: var(--cream-2); border-radius: var(--radius-lg); padding: 2rem 1.75rem; display: flex; flex-direction: column; }
   .voice__mark { color: var(--gold); font-size: 2.5rem; line-height: .6; font-weight: 800; }
-  .voice__quote { color: var(--royal); font-style: italic; text-transform: uppercase; font-size: var(--text-sm); line-height: 1.7; letter-spacing: .01em; margin: .75rem 0 1.5rem; flex: 1; }
+  .voice__quote { color: var(--royal); text-transform: uppercase; font-size: var(--text-sm); line-height: 1.7; letter-spacing: .01em; margin: .75rem 0 1.5rem; flex: 1; }
   .voice footer { display: flex; align-items: center; gap: .75rem; }
   .voice__avatar { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: #fff; font-size: var(--text-xs); font-weight: 700; }
   .voice__who { display: flex; flex-direction: column; font-size: var(--text-xs); }

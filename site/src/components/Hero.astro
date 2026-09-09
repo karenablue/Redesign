@@ -10,7 +10,8 @@
  * props:
  *   variant, eyebrow, title, highlight, copy, image, video, imageAlt,
  *   focal (image position), accent ("navy"|"gold" for plain), align,
- *   size ("tall"|"regular"|"compact"), as ("h1"|"h2")
+ *   size ("tall"|"regular"|"compact"), as ("h1"|"h2"),
+ *   watermark (giant faint decorative word/numeral in the corner)
  * default slot: action buttons (rendered under the copy)
  */
 import { withBase } from "../lib/url.js";
@@ -29,6 +30,7 @@ const {
   align = "center",
   size = "regular",
   as = "h1",
+  watermark,
 } = Astro.props;
 
 const Heading = as;
@@ -41,6 +43,7 @@ const cls = [
 const hasActions = Astro.slots.has("default");
 ---
 <section class={cls}>
+  {watermark && <span class="hero__watermark" aria-hidden="true">{watermark}</span>}
   {variant === "image" && (video || image) && (
     <div class="hero__media">
       {video ? (
@@ -74,13 +77,24 @@ const hasActions = Astro.slots.has("default");
 <style>
   .hero { position: relative; overflow: hidden; }
   .hero__content { position: relative; z-index: 2; }
+  .hero__watermark {
+    position: absolute;
+    left: 0;
+    bottom: -0.35em;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.035);
+    font-size: clamp(6rem, 15vw, 13rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    pointer-events: none;
+  }
   .hero__title {
     margin: 0;
     font-family: var(--font-head);
-    font-style: italic;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
     color: var(--royal);
   }
   .hero__title span { color: var(--gold); }

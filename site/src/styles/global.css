@@ -46,16 +46,15 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 
-/* h1/h2 = section headings, Playfair Display italic (the Make design).
-   h3/h4 = sub-heads / card titles in Montserrat bold. */
+/* h1/h2 = section headings, LEMON MILK (verified against every real page's
+   own CSS — see tokens.css note). h3/h4 = sub-heads / card titles in
+   Montserrat bold. */
 h1, h2 {
   margin: 0 0 var(--space-4);
   color: var(--royal);
   font-family: var(--font-head);
-  font-style: italic;
-  font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  line-height: 1.15;
 }
 h3, h4 {
   margin: 0 0 var(--space-3);
@@ -152,6 +151,12 @@ strong { font-weight: 700; }
 .on-dark .btn--outline:hover { --btn-fg: #fff; --btn-bg: rgba(255,255,255,0.08); }
 
 /* --- Utility ------------------------------------------------------ */
+/* Short gold divider rule under a heading — was hand-copied into ~12
+   page-level <style> blocks with identical rules; lives here once now.
+   (about/herstory.astro keeps its own bespoke sizing to match herstory.css
+   exactly, and a page may still add a page-scoped override, e.g. centering.) */
+.gold-rule { width: 4rem; height: 2px; background: var(--gold); margin: 1.5rem 0; border-radius: 2px; }
+
 .visually-hidden {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px; overflow: hidden;

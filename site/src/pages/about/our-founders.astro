@@ -1,11 +1,14 @@
 ---
 /**
- * Our Founders — "The Seven Pearls".
+ * Our Founders — ported from the original about/our-founders/founders.html.
  *
- * Treatment: reverent and portrait-forward. No hero watermark (herstory has
- * one), a light white -> cream flow, and the page's centrepiece is a photo
- * grid of the seven women rather than a timeline or feature rows. Deliberately
- * the airiest page in the set.
+ * Treatment: full-bleed grayscale archival hero (matching Herstory's pattern,
+ * "PEARLS" watermark), a Genesis narrative split, one equal-size tile grid
+ * for all seven founders (Mary Lou's "Primary Founder" distinction is a text
+ * eyebrow, not a bigger card) linking to seven full anchor-linked biography
+ * profiles below, and a closing legacy CTA. The tile-grid -> anchor-profile
+ * pattern IS the page's "interactive exploration" — clicking a founder jumps
+ * to her full story rather than just swapping a caption.
  */
 import Base from "../../layouts/Base.astro";
 import Hero from "../../components/Hero.astro";
@@ -13,15 +16,54 @@ import Section from "../../components/Section.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import Card from "../../components/Card.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import { withBase } from "../../lib/url.js";
 
 const founders = [
-  { name: "Mary Lou Allison Gardner Little", role: "Primary Founder", img: "/images/our-founders-mary-lou-allison.jpg", note: "Led the seven educators who established the Sorority at Butler University." },
-  { name: "Dorothy Hanley Whiteside", role: "Founding Member", img: "/images/our-founders-dorothy-hanley-whiteside.jpg" },
-  { name: "Vivian Irene White Marbury", role: "Founding Member", img: "/images/our-founders-vivian-irene-white.jpg" },
-  { name: "Nannie Mae Gahn Johnson", role: "Founding Member", img: "/images/our-founders-nannie-mae-gahn-johnson-300x300.jpg" },
-  { name: "Hattie Mae Annette Dulin Redford", role: "Founding Member", img: "/images/our-founders-hattie-mae-redford-300x300.jpg" },
-  { name: "Bessie Mae Downey Rhoades Martin", role: "Founding Member", img: "/images/our-founders-bessie-mae-downey-rhoades-300x300.jpg" },
-  { name: "Cubena McClure", role: "Founding Member", img: "/images/our-founders-cubena-mcclure-300x300.jpg" },
+  { id: "mary-lou", name: "Mary Lou Allison Gardner Little", role: "Educator • Founding Member", eyebrow: "Primary Founder", img: "/images/our-founders-mary-lou-allison.jpg" },
+  { id: "dorothy", name: "Dorothy Hanley Whiteside", role: "Educator • Founder", eyebrow: "Founding Member", img: "/images/our-founders-dorothy-hanley-whiteside.jpg" },
+  { id: "vivian", name: "Vivian Irene White Marbury", role: "Educator • Principal • Founder", eyebrow: "Founding Member", img: "/images/our-founders-vivian-irene-white.jpg" },
+  { id: "nannie", name: "Nannie Mae Gahn Johnson", role: "Educator • Principal • Founder", eyebrow: "Founding Member", img: "/images/our-founders-nannie-mae-gahn-johnson-300x300.jpg" },
+  { id: "hattie", name: "Hattie Mae Annette Dulin Redford", role: "Educator • Founder", eyebrow: "Founding Member", img: "/images/our-founders-hattie-mae-redford-300x300.jpg" },
+  { id: "bessie", name: "Bessie Mae Downey Rhoades Martin", role: "Educator • Founder", eyebrow: "Founding Member", img: "/images/our-founders-bessie-mae-downey-rhoades-300x300.jpg" },
+  { id: "cubena", name: "Cubena McClure", role: "Educator • Artist • Founder", eyebrow: "Founding Member", img: "/images/our-founders-cubena-mcclure-300x300.jpg" },
+];
+
+const profiles = [
+  {
+    id: "mary-lou", label: "Primary Founder", name: "Mary Lou Allison", highlight: "Gardner Little",
+    role: "Educator • Founding Member", img: "/images/our-founders-mary-lou-allison.jpg",
+    bio: "At the young age of three, Little suffered the tragic loss of both her parents and was then raised by a family friend. She graduated from Shortridge High School in 1915 and received a diploma from the Indianapolis Normal School in 1918 when she began teaching. In 1928, Little moved to Los Angeles with her husband and finished her undergraduate training at UCLA. She taught in the Los Angeles school system until her retirement in 1967. In her honor, the Mary Lou Allison Loving Cup Award is presented at each Boulé to the chapter reporting the most successful program.",
+  },
+  {
+    id: "dorothy", label: "Founding Member", name: "Dorothy Hanley", highlight: "Whiteside",
+    role: "Educator • Founding Member", img: "/images/our-founders-dorothy-hanley-whiteside.jpg",
+    bio: "Whiteside graduated from Shortridge High School and entered the Indianapolis Normal School in 1922. During her training as a cadet teacher, she met the teachers who became her best friends and fellow founders of the sorority. In 1951, she retired from teaching and later assisted her husband in developing a business. She also started her own millinery business and worked with her church and various organizations. After the death of her husband, she ran their business from 1955–1957, subsequently returning to teaching in 1959 before retiring again in 1970.",
+  },
+  {
+    id: "vivian", label: "Founding Member", name: "Vivian Irene White", highlight: "Marbury",
+    role: "Educator • Principal • Founding Member", img: "/images/our-founders-vivian-irene-white.jpg",
+    bio: "Marbury attended Shortridge High School and the Indianapolis Normal School. She received a B.S. from Butler University and a Master's from Columbia University in New York City. Her professional career included teaching at Morehouse College in Atlanta, Indianapolis University, Indianapolis State University and serving as Director of Practice Training of teachers from Butler University. She served as Principal of Indianapolis Public School #87 for 39 years. She was an active member and leader in her church and several local organizations.",
+  },
+  {
+    id: "nannie", label: "Founding Member", name: "Nannie Mae Gahn", highlight: "Johnson",
+    role: "Educator • Principal • Founding Member", img: "/images/our-founders-nannie-mae-gahn-johnson-300x300.jpg",
+    bio: "Johnson was a product of the Indianapolis Public School System and received both B.S. and M.S. degrees from Butler University. In 1923, she received her first teaching assignment and over the years she was promoted to principal of one of the largest elementary schools in Indianapolis. She was also very involved with many clubs and organizations dedicated to community service and retired in 1966.",
+  },
+  {
+    id: "hattie", label: "Founding Member", name: "Hattie Mae Annette Dulin", highlight: "Redford",
+    role: "Educator • Sorority Leader • Founding Member", img: "/images/our-founders-hattie-mae-redford-300x300.jpg",
+    bio: "Redford graduated from South Bend Central High School cum laude, from Indiana State Teachers College with a B.S., and studied at Western Reserve in Cleveland and Indiana University extension. She taught one year in Terre Haute, and thirty-seven years in Indianapolis, Indiana. She was Grand Epistoleus, Grand Tamiochus, Financial Consultant and received various awards and honors for her sorority service. Plaques are awarded in Redford's name at each Boulé for exhibits of chapter achievements.",
+  },
+  {
+    id: "bessie", label: "Founding Member", name: "Bessie Mae Downey Rhoades", highlight: "Martin",
+    role: "Educator • Founding Member", img: "/images/our-founders-bessie-mae-downey-rhoades-300x300.jpg",
+    bio: "Martin was the youngest of six children and attended grade school in Indianapolis. She graduated from the Manual Training High School and the City Teachers Normal School. Martin taught school for over 25 years. She married twice and was a devoted wife, educator, and engaged founder.",
+  },
+  {
+    id: "cubena", label: "Founding Member", name: "Cubena", highlight: "McClure",
+    role: "Educator • Artist • Founding Member", img: "/images/our-founders-cubena-mcclure-300x300.jpg",
+    bio: "Cubena McClure graduated from Shortridge High School, the Indianapolis City Normal School and attended Western Reserve University in Cleveland, Ohio. She won the Gregg Scholarship, which she planned to use to attend Columbia University; unfortunately, illness prevented her from accepting the scholarship. McClure was talented in art and she helped to design the Sorority pin. She died very young on August 24, 1924.",
+  },
 ];
 ---
 <Base
@@ -30,63 +72,107 @@ const founders = [
   description="Meet the seven Black educators who founded Sigma Gamma Rho Sorority, Incorporated at Butler University in 1922."
 >
   <Hero
-    variant="split"
     eyebrow="The Seven Pearls"
-    title="The Women Who Began It"
-    copy="On November 12, 1922, seven schoolteachers in Indianapolis chose to build an institution grounded in scholarship, service, and sisterhood — at Butler University, Indianapolis, Indiana."
-    image="/images/our-founders-mary-lou-allison.jpg"
-    imageAlt="Portrait of Primary Founder Mary Lou Allison Gardner Little"
+    title="Our"
+    highlight="Founders"
+    copy="Seven Black educators. One shared conviction. A sisterhood created in Indianapolis in 1922 and carried forward for generations."
+    image="/images/sgr-alpha-charter.jpeg"
+    focal="70% 50%"
+    watermark="PEARLS"
   />
 
-  <Section
-    tone="white"
-    pad="tight"
-    heading="feature"
-    centered
-    eyebrow="Founded 1922"
-    title="Seven educators. One purpose."
-    lead="Each was already a working teacher. Together they created a professional sisterhood at a time when Black women faced sharply limited access to institutional power."
-  />
+  <!-- GENESIS -->
+  <Section tone="white" eyebrow="Indianapolis • 1922" title="The Genesis at Butler University">
+    <div class="split">
+      <div class="split__copy">
+        <p>On November 12, 1922, seven young Black educators came together in Indianapolis, Indiana, while pursuing further education at Butler University. They did so during an era defined by segregation, restricted opportunity, and intense racial hostility. In 1920s Indiana, the Ku Klux Klan wielded significant political and social influence, shaping the environment in which these women lived, studied, and worked.</p>
+        <p>Against that backdrop, they established Sigma Gamma Rho Sorority, Incorporated. As the only sorority of the National Pan-Hellenic Council founded at a predominantly white institution, Sigma Gamma Rho occupies a distinct place in the history of Black Greek-letter organizations.</p>
+        <p>The Founders created more than a sisterhood. They built an institution rooted in education, mutual support, professional advancement, and service to the Black community. Their work reflected a conviction that Black women could create their own structures of opportunity, cultivate future generations of leaders, and use education as an instrument of progress.</p>
+        <p class="split__emphasis">What began with seven educators in Indianapolis became a legacy carried forward by generations of Sigma women.</p>
+      </div>
+      <figure class="split__figure">
+        <img src={withBase("/images/College Avenue Campus.jpg")} alt="Historic Butler University campus" />
+        <figcaption><span>Butler University</span><small>Indianapolis, Indiana</small></figcaption>
+      </figure>
+    </div>
+  </Section>
 
-  <Section tone="cream">
+  <!-- SEVEN PORTRAITS -->
+  <Section tone="cream" heading="feature" centered eyebrow="The Women Who Began It" title="Meet the" highlight="7 Pearls"
+    lead="Educators whose individual lives, professional work, and shared purpose became the foundation of Sigma Gamma Rho Sorority, Incorporated.">
     <div class="founder-grid">
-      <CardGrid min="220px" cols={4}>
+      <CardGrid min="200px" cols={4}>
         {founders.map((f) => (
-          <Card image={f.img} imageAlt={`Portrait of ${f.name}`} title={f.name}>
-            <p class="founder-role">{f.role}</p>
-            {f.note && <p>{f.note}</p>}
+          <Card href={`#${f.id}`} image={f.img} imageAlt={f.name} eyebrow={f.eyebrow} title={f.name}>
+            <p class="tile-role">{f.role}</p>
           </Card>
         ))}
       </CardGrid>
     </div>
   </Section>
 
-  <Section tone="white" width="narrow" heading="plain" eyebrow="Their Legacy, Our Responsibility" title="Seven women began the work. Generations carry it forward.">
-    <p>The founders did not set out to be remembered for a moment in 1922. They set a standard — that membership carries an obligation to scholarship, to service, and to one another.</p>
-    <p>More than a century later, that obligation is inherited by every member initiated into Sigma Gamma Rho.</p>
-    <p class="founder-motto">Greater Service, Greater Progress.</p>
-  </Section>
+  <!-- FOUNDER PROFILES -->
+  <section class="profiles">
+    {profiles.map((p, i) => (
+      <article id={p.id} class:list={["profile", { "profile--flip": i % 2 === 1 }]}>
+        <div class="container profile__inner">
+          <figure class="profile__figure">
+            <img src={withBase(p.img)} alt={`${p.name} ${p.highlight}`} />
+          </figure>
+          <div class="profile__copy">
+            <p class="profile__label">{p.label}</p>
+            <h2>{p.name} <span>{p.highlight}</span></h2>
+            <p class="profile__role">{p.role}</p>
+            <div class="profile__rule"></div>
+            <p>{p.bio}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
 
   <CtaBand
-    eyebrow="Keep Reading"
-    title="A century of"
-    highlight="Herstory"
-    copy="Follow the Sorority's story from seven educators in Indianapolis to an international sisterhood."
-    actions={[{ label: "Explore Our Herstory", href: "/about/herstory/" }]}
+    eyebrow="Their Legacy, Our Responsibility"
+    title="Seven Women Began the Work. "
+    highlight="Generations Carry It Forward."
+    copy="The Founders did not create Sigma Gamma Rho simply for their own time. They established a structure capable of educating, serving, supporting, and developing Black women across generations. Greater Service. Greater Progress."
+    actions={[
+      { label: "Explore Our Herstory", href: "/about/herstory/" },
+      { label: "Service & Impact", href: "/service-impact/national-programs/", variant: "outline" },
+    ]}
   />
 </Base>
 
 <style>
-  .founder-role {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .founder-motto { font-family: var(--font-display); color: var(--royal); font-weight: 700; }
-
-  /* portrait crop for the founder cards (Card defaults to 16/10 landscape) */
+  .tile-role { font-size: var(--text-xs); color: var(--muted); margin: 0; }
   .founder-grid :global(.card__img) { aspect-ratio: 4 / 5; object-position: top center; }
-  .founder-grid :global(.card__body) { justify-content: flex-start; }
+
+  /* ---- GENESIS split (matches herstory's "Beginning" pattern) ---- */
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: var(--space-16); align-items: center; }
+  .split__emphasis { font-weight: 700; color: var(--royal); }
+  .split__figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .split__figure img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .split__figure figcaption { display: flex; flex-direction: column; padding: var(--space-4) var(--space-6); background: var(--royal); color: #fff; }
+  .split__figure figcaption small { color: rgba(255, 255, 255, 0.7); }
+  @media (max-width: 820px) { .split { grid-template-columns: 1fr; gap: var(--space-8); } }
+
+  /* ---- FOUNDER PROFILES ---- */
+  .profile { padding-block: clamp(2.5rem, 5vw, 3.5rem); scroll-margin-top: 100px; }
+  .profile:nth-child(odd) { background: var(--white); }
+  .profile:nth-child(even) { background: var(--cream); }
+  .profile__inner { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr); gap: var(--space-12); align-items: center; }
+  .profile--flip .profile__inner { direction: rtl; }
+  .profile--flip .profile__inner > * { direction: ltr; }
+  .profile__figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .profile__figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top center; }
+  .profile__label { color: var(--gold-dark); font-weight: 800; font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 var(--space-2); }
+  .profile__copy h2 { margin: 0; font-size: var(--text-h3); }
+  .profile__copy h2 span { color: var(--gold); }
+  .profile__role { color: var(--muted); font-weight: 600; margin: var(--space-1) 0 0; }
+  .profile__rule { width: 3rem; height: 2px; background: var(--gold); margin: var(--space-4) 0; border-radius: 2px; }
+  .profile__copy > p:last-child { color: var(--ink); margin: 0; }
+  @media (max-width: 820px) {
+    .profile__inner { grid-template-columns: 1fr; direction: ltr !important; }
+    .profile__figure { max-width: 320px; }
+  }
 </style>

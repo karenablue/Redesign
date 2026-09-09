@@ -1,0 +1,140 @@
+---
+import Base from "../../layouts/Base.astro";
+import SigmaRule from "../../components/SigmaRule.astro";
+import { withBase } from "../../lib/url.js";
+
+const facts = [
+  { value: "1922", label: "Founded" },
+  { value: "500+", label: "Chapters Worldwide" },
+  { value: "100,000+", label: "Members Strong" },
+  { value: "50+", label: "States & Territories" },
+];
+
+const assets = [
+  { img: "/images/SGR-Logo-Shield.png", name: "Shield", note: "Digital PNG and print-ready shield resources." },
+  { img: "/images/SGR-Greek-Letter-Gold.png", name: "Greek Letters", note: "Gold, blue, white, and editable vector options." },
+  { img: "/images/SGR-Affiliate-Logo-Rhoers.png", name: "Rhoer", note: "Approved affiliate logo resources." },
+  { img: "/images/SGR-Affiliate-Logo-Philos.png", name: "Philo", note: "Approved affiliate logo resources." },
+  { img: "/images/SGR-Affiliate-Logo-Rhosebuds.png", name: "Rhosebud", note: "Approved affiliate logo resources." },
+];
+---
+<Base title="Media Relations" activeTop="News & Events" description="Official media resources for press, partners, and authorized use of the Sigma Gamma Rho brand.">
+  <section class="mr-hero">
+    <div class="container mr-hero__inner">
+      <p class="eyebrow">News &amp; Events • Media Relations</p>
+      <h1>Official Media.<br /><span>One Recognizable Brand.</span></h1>
+      <div class="gold-rule"></div>
+      <p>Approved media resources help ensure that Sigma Gamma Rho is represented consistently, accurately, and with the integrity of its visual identity intact.</p>
+      <div class="mr-facts">
+        {facts.map((f) => (
+          <div class="mr-fact"><strong>{f.value}</strong><span>{f.label}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SigmaRule />
+
+  <section class="mr-intro">
+    <div class="container mr-intro__grid">
+      <div>
+        <p class="eyebrow">For Press, Partners &amp; Authorized Use</p>
+        <h2>Use the brand<br /><span>with intention.</span></h2>
+      </div>
+      <div class="mr-intro__copy">
+        <p>Explore and download Sigma Gamma Rho's official media resources, including branded assets and approved materials for your communications needs. All materials are the intellectual property of Sigma Gamma Rho Sorority, Inc. and are provided for authorized use only; unauthorized reproduction, distribution, or modification is strictly prohibited.</p>
+        <p>To maintain a consistent and recognizable Sigma Gamma Rho brand, please consult the official <a href="https://sgrho1922.org/media-inquiries/" target="_blank" rel="noopener">Sigma Gamma Rho Brand Guidelines</a>, which provide the standards for logo usage, colors, typography, and visual identity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-assets">
+    <div class="container">
+      <div class="mr-heading">
+        <p class="eyebrow">Digital &amp; Print Assets</p>
+        <h2>A visual system<br /><span>ready for use.</span></h2>
+      </div>
+      <div class="mr-asset-grid">
+        {assets.map((a) => (
+          <a class="mr-asset" href={withBase(a.img)} download>
+            <img src={withBase(a.img)} alt={a.name} />
+            <span>{a.name} <i aria-hidden="true">&darr;</i></span>
+            <p>{a.note}</p>
+          </a>
+        ))}
+        <a class="mr-asset mr-asset--text" href={withBase("/images/SGR-Greater-Tagline.png")} download>
+          <strong>Greater Women<br />Greater World</strong>
+          <span>Campaign Mark <i aria-hidden="true">&darr;</i></span>
+          <p>Approved campaign/signature asset.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-formats">
+    <div class="container mr-formats__grid">
+      <div>
+        <p class="eyebrow">Available Formats</p>
+        <h2>Digital</h2>
+        <p>Rhoer Logo • Philo Logo • Rhosebud Logo • Shield PNG • Greek Letters in Gold, Blue, and White • Greater Women Greater World • PowerPoint • Letterhead</p>
+      </div>
+      <div>
+        <p class="eyebrow">Available Formats</p>
+        <h2>Print</h2>
+        <p>Rhoer Logo • Philo Logo • Rhosebud Logo • Shield SVG • Editable Greek Letters • Greater Women Greater World</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-contact">
+    <div class="container mr-contact__inner">
+      <div>
+        <p class="eyebrow eyebrow--light">Media Contact</p>
+        <h2>Jamila Walker</h2>
+        <p>Marketing &amp; Communications Manager</p>
+        <strong>(919) 928-5061</strong>
+      </div>
+      <a class="btn" href="mailto:media@sgrho1922.org">Send a Media Inquiry <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .mr-hero { background: var(--grad-royal); color: #fff; }
+  .mr-hero__inner { padding-block: clamp(3.5rem, 6vw, 5rem); max-width: 48rem; }
+  .mr-hero h1 { color: #fff; margin: var(--space-2) 0 0; }
+  .mr-hero h1 span { color: var(--gold); }
+  .mr-hero > .mr-hero__inner > p:not(.eyebrow) { color: rgba(255,255,255,0.85); }
+  .mr-facts { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-8); }
+  .mr-fact { display: flex; flex-direction: column; }
+  .mr-fact strong { font-family: var(--font-label); font-size: var(--text-lg); color: #fff; }
+  .mr-fact span { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.65); }
+
+  .mr-intro { background: var(--white); padding-block: clamp(3rem, 5vw, 4rem); }
+  .mr-intro__grid { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: var(--space-12); align-items: start; }
+  .mr-intro__copy p { color: var(--muted); }
+  .mr-intro__copy a { color: var(--royal); font-weight: 700; }
+  @media (max-width: 780px) { .mr-intro__grid { grid-template-columns: 1fr; } }
+
+  .mr-assets { background: var(--cream); padding-block: clamp(3rem, 6vw, 4.5rem); }
+  .mr-heading { max-width: 40rem; margin-bottom: var(--space-10); }
+  .mr-heading h2 span { color: var(--gold); }
+  .mr-asset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); }
+  .mr-asset { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); background: var(--white); border-radius: var(--radius-lg); text-decoration: none; color: inherit; box-shadow: var(--shadow-sm); }
+  .mr-asset img { height: 60px; object-fit: contain; align-self: flex-start; }
+  .mr-asset span { display: flex; justify-content: space-between; font-weight: 700; color: var(--royal); }
+  .mr-asset p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+  .mr-asset--text strong { color: var(--royal); font-family: var(--font-head); font-style: italic; }
+
+  .mr-formats { background: var(--white); padding-block: clamp(2.5rem, 5vw, 3.5rem); border-top: 1px solid var(--line); }
+  .mr-formats__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); }
+  .mr-formats__grid p:not(.eyebrow) { color: var(--muted); }
+  @media (max-width: 700px) { .mr-formats__grid { grid-template-columns: 1fr; } }
+
+  .mr-contact { background: var(--grad-royal); color: #fff; padding-block: clamp(2.5rem, 5vw, 3.5rem); }
+  .mr-contact__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
+  .mr-contact h2 { color: #fff; margin: var(--space-2) 0 0; font-size: var(--text-h3); }
+  .mr-contact p { color: rgba(255,255,255,0.85); margin: var(--space-1) 0; }
+  .mr-contact strong { color: var(--gold-bright); }
+  .eyebrow--light { color: var(--gold-bright); }
+</style>
