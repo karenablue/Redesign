@@ -69,7 +69,7 @@ export const primaryNav = [
 /* Header action buttons (right side of the nav bar). */
 export const headerActions = [
   {
-    label: "Member Portal",
+    label: "Poodle Portal",
     href: "https://portal.sgrho1922.org/",
     external: true,
     variant: "solid",
@@ -78,7 +78,7 @@ export const headerActions = [
 ];
 
 /* Footer link columns. Kept separate from primaryNav because the footer
-   groups links differently (e.g. "Programs", Member Portal). */
+   groups links differently (e.g. "Programs", Poodle Portal). */
 export const footerColumns = [
   {
     title: "About",
@@ -95,7 +95,7 @@ export const footerColumns = [
       { label: "Become a Member", href: "/membership/become-a-member/" },
       { label: "Reactivate", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
-      { label: "Member Portal", href: "https://portal.sgrho1922.org/", external: true },
+      { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
       { label: "Affiliates", href: "/membership/affiliates/" },
     ],
   },
