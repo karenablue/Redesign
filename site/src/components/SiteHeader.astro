@@ -454,13 +454,17 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     font-size: var(--text-sm);
   }
 
-  @media (max-width: 900px) {
+  /* Below this width the full nav + search + two buttons no longer fit on one
+     row; drop the nav to its own full-width row and the actions beneath it
+     rather than letting "Contact" wrap awkwardly. */
+  @media (max-width: 1180px) {
     .nav-bar__inner {
       flex-wrap: wrap;
       padding-block: var(--space-2);
     }
     .site-nav__list {
       width: 100%;
+      column-gap: 0.4rem;
     }
     .site-nav__menu {
       position: static;
