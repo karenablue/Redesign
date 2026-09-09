@@ -331,6 +331,52 @@ const news = [
     </p>
   </section>
 
+  <!-- 2a-iii. HERITAGE & LEADERSHIP BRIDGE -->
+  <section class="section section--white bridge">
+    <div class="container">
+      <div class="bridge__head">
+        <p class="eyebrow">Heritage &amp; Leadership</p>
+        <h2 class="feature-title">
+          From Seven Founders <span>to a Global Sisterhood</span>
+        </h2>
+      </div>
+      <div class="bridge__grid">
+        <div class="bridge__col">
+          <p class="bridge__year">1922</p>
+          <p class="bridge__col-label">Our Founding</p>
+          <ul>
+            <li>November 12, 1922 — Butler University, Indianapolis, Indiana</li>
+            <li>
+              Seven young Black educators; the only NPHC sorority founded at a predominantly white
+              institution
+            </li>
+            <li>Incorporated as a national collegiate sorority in 1929</li>
+          </ul>
+          <a class="arrow-link" href={withBase("/about/our-founders/")}>
+            Meet the Seven Founders <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+        <span class="bridge__link" aria-hidden="true">
+          &rarr;
+        </span>
+        <div class="bridge__col">
+          <p class="bridge__year">Today</p>
+          <p class="bridge__col-label">Our Leadership</p>
+          <ul>
+            <li>Marica T. Harris, 26th International Grand Basileus</li>
+            <li>
+              An elected International Board of Directors and five regional leadership structures
+            </li>
+            <li>Priorities: scholarship, service, sisterhood, and principled leadership</li>
+          </ul>
+          <a class="arrow-link" href={withBase("/leadership/international-board/")}>
+            See the International Board <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 2b. FIND YOUR HOME — audience routing engine -->
   <section class="section section--cream find-home">
     <div class="container">
@@ -1128,6 +1174,61 @@ const news = [
   }
   .one-sigma span {
     color: var(--gold);
+  }
+
+  /* 2a-iii. HERITAGE & LEADERSHIP BRIDGE */
+  .bridge__head {
+    max-width: 640px;
+    margin: 0 0 var(--space-10);
+  }
+  .bridge__grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+  .bridge__col {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .bridge__year {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-stat);
+    line-height: 1;
+    color: var(--gold);
+  }
+  .bridge__col-label {
+    margin: var(--space-2) 0 var(--space-4);
+    font-family: var(--font-label);
+    font-size: var(--text-sm);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--royal);
+  }
+  .bridge__col ul {
+    margin: 0 0 var(--space-5);
+    padding-left: 1.1rem;
+    display: grid;
+    gap: var(--space-2);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+  .bridge__link {
+    font-size: 2rem;
+    color: var(--gold);
+  }
+  @media (max-width: 780px) {
+    .bridge__grid {
+      grid-template-columns: 1fr;
+    }
+    .bridge__link {
+      justify-self: center;
+      transform: rotate(90deg);
+    }
   }
 
   /* 2b. FIND YOUR HOME */
