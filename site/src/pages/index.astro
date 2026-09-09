@@ -287,7 +287,95 @@ const news = [
     </h1>
   </section>
 
-  <!-- 2. WHO ARE WE -->
+  <!-- 2. PROOF OF SCALE — royal stat ticker; grounds the page immediately -->
+  <StatBand stats={stats} tone="navy" />
+
+  <!-- 3. FIND YOUR HOME — audience routing engine -->
+  <section class="section section--cream find-home">
+    <div class="container">
+      <div class="find-home__head">
+        <p class="eyebrow">Find Your Home</p>
+        <h2 class="feature-title">
+          Four Ways to <span>Belong</span>
+        </h2>
+        <p>
+          Whether you're on campus, established in your career, returning to the Sorority, or
+          joining an affiliate, there's a direct path in.
+        </p>
+      </div>
+      <div class="find-home__grid">
+        {findHome.map((c) => (
+          <a class="find-home__card" href={withBase(c.href)}>
+            <span class="find-home__label">{c.label}</span>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+            <span class="find-home__go" aria-hidden="true">
+              &rarr;
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. MOTTO CALLOUT -->
+  <section class="section section--white section--pad-tight motto">
+    <div class="container motto__grid">
+      <div>
+        <p class="eyebrow">Our Motto Since 1925</p>
+        <p class="motto__main">"Greater Service, Greater Progress"</p>
+      </div>
+      <div class="motto__aka">
+        <p class="eyebrow">Also Known As</p>
+        <p class="motto__main">"Greater Women, Greater World"</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. EXECUTIVE VISION — a message from the Grand Basileus -->
+  <section class="section section--cream basileus">
+    <div class="container basileus__grid">
+      <figure class="basileus__portrait">
+        <img
+          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
+          alt="International Grand Basileus Marica T. Harris"
+          width="704"
+          height="1024"
+        />
+      </figure>
+      <div class="basileus__body">
+        <p class="eyebrow">A Message From the Grand Basileus</p>
+        <blockquote class="basileus__quote">
+          <p>
+            Welcome to the digital home of Sigma Gamma Rho Sorority, Incorporated. For more than a
+            century, our founders' vision has been carried forward by women who lead with purpose
+            and serve without limits.
+          </p>
+          <p>
+            Whether you are exploring membership, partnering with us, or reconnecting with your
+            chapter, I invite you to see the work our sisterhood does every day — and to join us in
+            it.
+          </p>
+        </blockquote>
+        <p class="basileus__sign">Marica T. Harris</p>
+        <p class="basileus__role">26th International Grand Basileus</p>
+        <p class="center-link basileus__link">
+          <a href={withBase("/leadership/international-grand-basileus/")}>
+            Read her full message <span aria-hidden="true">&rarr;</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ONE SIGMA banner — closes the executive-vision beat -->
+  <section class="one-sigma" aria-label="One Sigma">
+    <p class="container">
+      One Mission. One Vision. One Sisterhood. <span>One Sigma.</span>
+    </p>
+  </section>
+
+  <!-- 7. HERITAGE — the founding story + the 1922 → today bridge -->
   <section class="section section--white waw">
     <div class="container waw__grid">
       <figure class="waw__figure">
@@ -339,65 +427,8 @@ const news = [
     </div>
   </section>
 
-  <!-- 3. MOTTO CALLOUT -->
-  <section class="section section--white section--pad-tight motto">
-    <div class="container motto__grid">
-      <div>
-        <p class="eyebrow">Our Motto Since 1925</p>
-        <p class="motto__main">"Greater Service, Greater Progress"</p>
-      </div>
-      <div class="motto__aka">
-        <p class="eyebrow">Also Known As</p>
-        <p class="motto__main">"Greater Women, Greater World"</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2a. MESSAGE FROM THE GRAND BASILEUS -->
-  <section class="section section--cream basileus">
-    <div class="container basileus__grid">
-      <figure class="basileus__portrait">
-        <img
-          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
-          alt="International Grand Basileus Marica T. Harris"
-          width="704"
-          height="1024"
-        />
-      </figure>
-      <div class="basileus__body">
-        <p class="eyebrow">A Message From the Grand Basileus</p>
-        <blockquote class="basileus__quote">
-          <p>
-            Welcome to the digital home of Sigma Gamma Rho Sorority, Incorporated. For more than a
-            century, our founders' vision has been carried forward by women who lead with purpose
-            and serve without limits.
-          </p>
-          <p>
-            Whether you are exploring membership, partnering with us, or reconnecting with your
-            chapter, I invite you to see the work our sisterhood does every day — and to join us in
-            it.
-          </p>
-        </blockquote>
-        <p class="basileus__sign">Marica T. Harris</p>
-        <p class="basileus__role">26th International Grand Basileus</p>
-        <p class="center-link basileus__link">
-          <a href={withBase("/leadership/international-grand-basileus/")}>
-            Read her full message <span aria-hidden="true">&rarr;</span>
-          </a>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2a-ii. ONE SIGMA banner -->
-  <section class="one-sigma" aria-label="One Sigma">
-    <p class="container">
-      One Mission. One Vision. One Sisterhood. <span>One Sigma.</span>
-    </p>
-  </section>
-
-  <!-- 2a-iii. HERITAGE & LEADERSHIP BRIDGE -->
-  <section class="section section--white bridge">
+  <!-- 8. HERITAGE & LEADERSHIP BRIDGE -->
+  <section class="section section--cream bridge">
     <div class="container">
       <div class="bridge__head">
         <p class="eyebrow">Heritage &amp; Leadership</p>
@@ -441,37 +472,6 @@ const news = [
       </div>
     </div>
   </section>
-
-  <!-- 2b. FIND YOUR HOME — audience routing engine -->
-  <section class="section section--cream find-home">
-    <div class="container">
-      <div class="find-home__head">
-        <p class="eyebrow">Find Your Home</p>
-        <h2 class="feature-title">
-          Four Ways to <span>Belong</span>
-        </h2>
-        <p>
-          Whether you're on campus, established in your career, returning to the Sorority, or
-          joining an affiliate, there's a direct path in.
-        </p>
-      </div>
-      <div class="find-home__grid">
-        {findHome.map((c) => (
-          <a class="find-home__card" href={withBase(c.href)}>
-            <span class="find-home__label">{c.label}</span>
-            <h3>{c.title}</h3>
-            <p>{c.body}</p>
-            <span class="find-home__go" aria-hidden="true">
-              &rarr;
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. STAT BAND -->
-  <StatBand stats={stats} tone="navy" />
 
   <!-- 5. NATIONAL PROGRAMS & IMPACT -->
   <Section tone="white" eyebrow="National Programs" title="Our" highlight="Global Impact">
@@ -517,53 +517,6 @@ const news = [
       </a>
     </p>
   </Section>
-
-  <!-- 7. FIND A CHAPTER -->
-  <section class="section section--navy find">
-    <div class="container find__inner">
-      <span class="find__icon" aria-hidden="true">
-        <svg
-          viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" />
-          <circle cx="12" cy="10" r="2.6" />
-        </svg>
-      </span>
-      <h2 class="feature-title feature-title--light">
-        Find a Chapter Near <span>You</span>
-      </h2>
-      <p>
-        With over 500 chapters across the globe, there is a community of Sigma women waiting to
-        welcome you. Enter your zip code or state to connect locally.
-      </p>
-      <form class="find__bar" role="search" onsubmit="return false">
-        <svg
-          viewBox="0 0 24 24"
-          width="18"
-          height="18"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        <input
-          type="search"
-          placeholder="Search by Zip Code, City, or University&hellip;"
-          aria-label="Search chapters"
-        />
-        <a class="btn find__btn" href={withBase("/membership/chapter-locator/")}>
-          Browse Directory
-        </a>
-      </form>
-    </div>
-  </section>
 
   <!-- 10. SISTERHOOD IN MOTION -->
   <Section
@@ -716,7 +669,54 @@ const news = [
     </p>
   </Section>
 
-  <!-- 13b. GIVING — two foundation-partner cards + fine print -->
+  <!-- 14. CONNECT LOCALLY — chapter locator -->
+  <section class="section section--navy find">
+    <div class="container find__inner">
+      <span class="find__icon" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" />
+          <circle cx="12" cy="10" r="2.6" />
+        </svg>
+      </span>
+      <h2 class="feature-title feature-title--light">
+        Find a Chapter Near <span>You</span>
+      </h2>
+      <p>
+        With over 500 chapters across the globe, there is a community of Sigma women waiting to
+        welcome you. Enter your zip code or state to connect locally.
+      </p>
+      <form class="find__bar" role="search" onsubmit="return false">
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="search"
+          placeholder="Search by Zip Code, City, or University&hellip;"
+          aria-label="Search chapters"
+        />
+        <a class="btn find__btn" href={withBase("/membership/chapter-locator/")}>
+          Browse Directory
+        </a>
+      </form>
+    </div>
+  </section>
+
+  <!-- 15. GIVING — two foundation-partner cards + fine print -->
   <section class="section section--white section--pad-tight give">
     <div class="container give__inner">
       <p class="eyebrow">The Giving Channel</p>
@@ -786,6 +786,16 @@ const news = [
 </script>
 
 <style>
+  /* ---- Palette — homepage grounds in white + cool slate --------------
+     The warm cream (#fffbf0) read as muddy against the royal/gold. On the
+     homepage only, repoint --cream to a cool slate so sections alternate
+     crisp white / cool grey. Every `section--cream` band and `var(--cream)`
+     card on this page follows automatically; other pages keep cream. */
+  :global(body.page-home) {
+    --cream: #f8fafc;
+    --cream-2: #f1f5f9;
+  }
+
   /* ---- Four-role typography — homepage rollout ------------------------
      Editorial voice → Playfair Display (multi-word headlines + quotes)
      Accent kicker   → Pinyon Script — RESERVED. Used exactly once on this
@@ -1201,15 +1211,15 @@ const news = [
   .basileus__portrait img {
     width: 100%;
     height: 100%;
-    max-height: 460px;
+    max-height: 520px;
     object-fit: cover;
     object-position: top;
     display: block;
   }
   .basileus__quote {
     margin: var(--space-4) 0 var(--space-6);
-    padding-left: 1.25rem;
-    border-left: 3px solid var(--gold);
+    padding-left: 1.5rem;
+    border-left: 4px solid var(--gold);
   }
   .basileus__quote p {
     color: var(--ink);
@@ -1248,21 +1258,24 @@ const news = [
     }
   }
 
-  /* ONE SIGMA banner */
+  /* ONE SIGMA banner — closes the executive-vision beat; solid royal,
+     the vision line set large in the editorial serif. */
   .one-sigma {
-    background: var(--grad-royal);
+    background: var(--royal);
     color: #fff;
     text-align: center;
-    padding-block: clamp(1.5rem, 4vw, 2.5rem);
+    padding-block: clamp(2rem, 5vw, 3.25rem);
   }
   .one-sigma p {
     margin: 0;
-    font-family: var(--font-head);
-    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
-    letter-spacing: 0.02em;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: clamp(1.4rem, 1rem + 2vw, 2.35rem);
+    line-height: 1.3;
   }
   .one-sigma span {
     color: var(--gold);
+    font-style: normal;
   }
 
   /* 2a-iii. HERITAGE & LEADERSHIP BRIDGE */
@@ -1278,7 +1291,7 @@ const news = [
   }
   .bridge__col {
     padding: clamp(1.5rem, 3vw, 2.25rem);
-    background: var(--cream);
+    background: var(--white);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
   }
