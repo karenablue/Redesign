@@ -55,7 +55,9 @@ const showAnchor = anchor ?? tone === "navy";
 <style>
   .statband--navy {
     color: #fff;
-    background: var(--grad-royal);
+    /* solid royal — a flat, saturated block anchors the page harder than
+       the soft gradient did; gold hairlines above/below stay as the accent */
+    background: var(--royal);
     position: relative;
   }
   .statband--navy::before,

@@ -506,7 +506,7 @@ const news = [
           <h3>{p.title}</h3>
           <p>{p.body}</p>
           <span class="prog-card__go" aria-hidden="true">
-            View program &rarr;
+            Explore Program &rarr;
           </span>
         </a>
       ))}
@@ -787,24 +787,21 @@ const news = [
 
 <style>
   /* ---- Four-role typography — homepage rollout ------------------------
-     Accent kicker  → Pinyon Script (script; never caps, never tracked)
      Editorial voice → Playfair Display (multi-word headlines + quotes)
-     Display / body  → unchanged (LEMON MILK / Montserrat)
+     Accent kicker   → Pinyon Script — RESERVED. Used exactly once on this
+       page (the Grand Basileus signature); never as a functional label.
+     Functional eyebrows → Montserrat bold caps, 11px, tracked — the
+       standard UI label, restored after the script proved too fussy at
+       label scale and too repetitive across ~10 sections.
      .eyebrow and .s-head__title are rendered by Section.astro, so they
-     need :global rules gated on body.page-home (other pages stay on the
-     two-family system). Everything else is edited in this file's own
-     scoped rules further down. */
+     need :global rules gated on body.page-home. */
   :global(body.page-home .eyebrow) {
-    font-family: var(--font-kicker);
-    font-size: clamp(1.55rem, 1.15rem + 1.3vw, 2.1rem);
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    line-height: 1.05;
-    color: var(--gold-dark);
-  }
-  :global(body.page-home .eyebrow--rule::after) {
-    margin-top: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--royal);
   }
   :global(body.page-home .s-head__title) {
     font-family: var(--font-editorial);
@@ -1106,77 +1103,86 @@ const news = [
     padding-top: clamp(2rem, 4vw, 3rem);
     border-top: 1px solid var(--line);
   }
-  /* flex (not grid) so the 5 cards sit 3-over-2 with the bottom row centred */
+  /* Editorial strip — all five programs in one left-aligned row on desktop,
+     white cards with a gold top-rule (no centred "app icon" beige tiles). */
   .prog-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-4);
     margin-top: var(--space-8);
   }
   .prog-card {
-    flex: 1 1 260px;
-    max-width: 380px;
-    display: block;
-    text-align: center;
-    padding: 2rem 1.75rem;
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--cream) 0%, var(--cream-2) 100%);
-    box-shadow: 0 4px 16px rgba(223, 177, 54, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--white);
     text-decoration: none;
     color: inherit;
     transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
   .prog-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(223, 177, 54, 0.2);
+    box-shadow: var(--shadow-md);
   }
-  /* 3 per row on desktop; the remaining 2 wrap and centre */
-  @media (min-width: 860px) {
-    .prog-card {
-      flex: 0 1 calc((100% - var(--space-6) * 2) / 3);
-      max-width: calc((100% - var(--space-6) * 2) / 3);
-    }
+  .prog-card__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--royal);
+    color: var(--gold);
+    margin-bottom: var(--space-4);
+  }
+  .prog-card__icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+  .prog-card h3 {
+    color: var(--royal);
+    font-size: var(--text-base);
+    line-height: 1.25;
+    margin: 0 0 var(--space-2);
+  }
+  .prog-card p {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    margin: 0 0 var(--space-4);
   }
   .prog-card__go {
-    display: inline-block;
-    margin-top: var(--space-4);
+    margin-top: auto;
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--gold-dark);
   }
   .prog-card:hover .prog-card__go {
     color: var(--royal);
   }
-  .prog-card__icon {
-    display: inline-grid;
-    place-items: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-    box-shadow: 0 4px 12px rgba(223, 177, 54, 0.3);
-    margin-bottom: 1rem;
-    color: #fff;
+  @media (max-width: 1100px) {
+    .prog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    /* 5th card spans the row so there's no lone orphan beside a gap */
+    .prog-card:last-child {
+      grid-column: 1 / -1;
+    }
   }
-  .prog-card__icon svg {
-    width: 28px;
-    height: 28px;
-    display: block;
-  }
-  .prog-card h3 {
-    color: var(--royal);
-    font-size: var(--text-md);
-    margin: 0 0 0.5rem;
-  }
-  .prog-card p {
-    color: var(--ink);
-    font-size: var(--text-base);
-    margin: 0;
+  @media (max-width: 620px) {
+    .prog-grid {
+      grid-template-columns: 1fr;
+    }
+    .prog-card:last-child {
+      grid-column: auto;
+    }
   }
 
   /* 2a. MESSAGE FROM THE GRAND BASILEUS */
@@ -1215,10 +1221,13 @@ const news = [
   .basileus__quote p:last-child {
     margin-bottom: 0;
   }
+  /* The one reserved use of Pinyon Script on the page — a signature line,
+     sized up so the script reads. */
   .basileus__sign {
     margin: 0;
-    font-family: var(--font-label);
-    font-size: var(--text-md);
+    font-family: var(--font-kicker);
+    font-size: 2.15rem;
+    line-height: 1.1;
     color: var(--royal);
   }
   .basileus__role {
@@ -1278,10 +1287,14 @@ const news = [
     font-family: var(--font-display);
     font-size: var(--text-stat);
     line-height: 1;
-    color: var(--gold);
+    /* royal, not gold — gold (#dfb136) on cream fails WCAG AA even at
+       display size. The gold accent moves to the rule under the label. */
+    color: var(--royal);
   }
   .bridge__col-label {
     margin: var(--space-2) 0 var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--gold);
     font-family: var(--font-label);
     font-size: var(--text-sm);
     letter-spacing: 0.2em;
