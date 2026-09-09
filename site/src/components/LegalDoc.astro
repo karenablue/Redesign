@@ -1,0 +1,192 @@
+---
+/**
+ * LegalDoc — shared shell for Privacy Policy, Cookie Notice, Terms of Use.
+ * Renders a cream hero (breadcrumb, eyebrow, h1, "Last updated"), an optional
+ * draft note, lead paragraphs, a numbered in-page TOC, the sections, and a
+ * final contact block. All content is passed as data.
+ *
+ * props:
+ *   title       page + <h1> text
+ *   updated     "Last updated" string
+ *   draftNote   optional callout shown above the intro (omit for finalized docs)
+ *   intro       string[] of lead paragraphs
+ *   sections    { id, title, blocks[] }[]  — blocks are
+ *               { p: string } | { subhead: string } | { list: string[] } | { address: string[] }
+ */
+import { withBase } from "../lib/url.js";
+
+interface Block {
+  p?: string;
+  subhead?: string;
+  list?: string[];
+  address?: string[];
+}
+interface Section {
+  id: string;
+  title: string;
+  blocks: Block[];
+}
+interface Props {
+  title: string;
+  updated: string;
+  draftNote?: string;
+  intro?: string[];
+  sections: Section[];
+}
+
+const { title, updated, draftNote, intro = [], sections } = Astro.props;
+---
+
+<section class="legal-hero">
+  <div class="container container--narrow">
+    <p class="breadcrumb">
+      <a href={withBase("/")}>Home</a> <span aria-hidden="true">/</span>
+      <span>{title}</span>
+    </p>
+    <p class="eyebrow">Legal</p>
+    <h1>{title}</h1>
+    <p class="legal-hero__updated">Last updated {updated}</p>
+  </div>
+</section>
+
+<section class="legal-body">
+  <div class="container container--narrow">
+    {draftNote && (
+      <p class="legal-note" role="note">
+        {draftNote}
+      </p>
+    )}
+
+    {intro.map((p) => (
+      <p class="legal-intro">{p}</p>
+    ))}
+
+    <ol class="legal-toc" aria-label="Sections">
+      {sections.map((s) => (
+        <li>
+          <a href={`#${s.id}`}>{s.title}</a>
+        </li>
+      ))}
+    </ol>
+
+    {sections.map((s) => (
+      <section class="legal-section" id={s.id}>
+        <h2>{s.title}</h2>
+        {s.blocks.map((b) =>
+          b.subhead ? (
+            <h3>{b.subhead}</h3>
+          ) : b.list ? (
+            <ul>
+              {b.list.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          ) : b.address ? (
+            <address>
+              {b.address.map((line) => (
+                <span>{line}</span>
+              ))}
+            </address>
+          ) : (
+            <p>{b.p}</p>
+          )
+        )}
+      </section>
+    ))}
+  </div>
+</section>
+
+<style>
+  .legal-hero {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4rem);
+  }
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-5);
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .breadcrumb a {
+    color: inherit;
+  }
+  .legal-hero h1 {
+    margin: var(--space-2) 0 0;
+  }
+  .legal-hero__updated {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+
+  .legal-body {
+    background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .legal-note {
+    padding: var(--space-4) var(--space-5);
+    margin: 0 0 var(--space-8);
+    background: var(--tint);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .legal-intro {
+    color: var(--muted);
+  }
+
+  .legal-toc {
+    margin: var(--space-8) 0 var(--space-12);
+    padding-left: 0;
+    list-style: none; /* section titles carry their own "N." prefix */
+    display: grid;
+    gap: var(--space-2);
+    color: var(--royal);
+  }
+  .legal-toc a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .legal-toc a:hover {
+    color: var(--gold-dark);
+  }
+
+  .legal-section {
+    scroll-margin-top: 100px;
+    margin-top: var(--space-10);
+  }
+  .legal-section h2 {
+    font-size: var(--text-h3);
+    margin: 0 0 var(--space-4);
+  }
+  .legal-section h3 {
+    font-size: var(--text-md);
+    margin: var(--space-6) 0 var(--space-3);
+  }
+  .legal-section p {
+    color: var(--muted);
+  }
+  .legal-section ul {
+    margin: 0 0 var(--space-6);
+    padding-left: 1.2rem;
+    display: grid;
+    gap: var(--space-1);
+    color: var(--muted);
+  }
+  .legal-section address {
+    font-style: normal;
+    display: grid;
+    gap: var(--space-1);
+    margin-top: var(--space-4);
+    color: var(--muted);
+  }
+  .legal-section a {
+    color: var(--royal-dark);
+    font-weight: 700;
+  }
+</style>

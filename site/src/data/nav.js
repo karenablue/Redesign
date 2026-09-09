@@ -115,6 +115,7 @@ export const footerColumns = [
    and footerColumns because they belong in the copyright row. */
 export const footerLegal = [
   { label: "Privacy Policy", href: "/privacy/" },
+  { label: "Cookie Notice", href: "/cookies/" },
   { label: "Terms of Use", href: "/terms/" },
 ];
 
