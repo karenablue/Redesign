@@ -46,7 +46,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--text-body);
-  font-weight: 500; /* Montserrat Medium body */
+  font-weight: 400; /* Montserrat Regular body (brand: Light / Regular / Bold only) */
   line-height: 1.7;
 }
 
@@ -166,7 +166,7 @@ strong {
   color: var(--btn-fg);
   font-family: var(--font-body);
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(223, 177, 54, 0.35);

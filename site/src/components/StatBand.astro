@@ -103,6 +103,7 @@ const showAnchor = anchor ?? tone === "navy";
 
   .statband__value {
     font-family: var(--font-label);
+    font-weight: 500; /* LEMON MILK Medium — heaviest brand-allowed weight */
     font-size: var(--text-stat);
     line-height: 1;
     letter-spacing: 0.02em;
@@ -118,7 +119,7 @@ const showAnchor = anchor ?? tone === "navy";
   .statband__label {
     margin: 0;
     font-family: var(--font-body);
-    font-weight: 500;
+    font-weight: 400;
     font-size: var(--text-sm);
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -146,7 +147,7 @@ const showAnchor = anchor ?? tone === "navy";
     background: linear-gradient(270deg, transparent, var(--gold));
   }
   .statband__sigma {
-    font-family: Georgia, serif;
+    font-family: var(--font-body);
     font-size: 1.75rem;
     line-height: 1;
     color: var(--gold);
