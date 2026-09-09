@@ -131,8 +131,8 @@ const showAnchor = anchor ?? tone === "navy";
   .statband__value {
     font-family: var(--font-label);
     font-weight: 500; /* LEMON MILK Medium — heaviest brand-allowed weight */
-    /* sized to keep 4–5 stats on one row without wrapping */
-    font-size: clamp(1.6rem, 0.9rem + 2.6vw, 2.6rem);
+    /* sized so all 5 stats stay on one row, non-overlapping, from 1024px up */
+    font-size: clamp(1.2rem, 0.35rem + 2.25vw, 2.4rem);
     line-height: 1;
     letter-spacing: 0.01em;
     font-variant-numeric: tabular-nums;
@@ -182,6 +182,14 @@ const showAnchor = anchor ?? tone === "navy";
     font-size: 28px;
     line-height: 1;
     color: var(--gold);
+  }
+
+  /* Tablet range — tighten the gutters so the widest numeral ("100,000+")
+     never crosses into the next column's divider. */
+  @media (max-width: 1120px) {
+    .statband__item {
+      padding-inline: clamp(0.3rem, 1.4vw, 1rem);
+    }
   }
 
   @media (max-width: 720px) {

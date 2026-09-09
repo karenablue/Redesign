@@ -18,7 +18,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 ---
 
 <header class="site-header">
-  <div class="container brand-row">
+  <div class="header-wrap brand-row">
     <a class="brand" href={withBase("/")} aria-label="Sigma Gamma Rho home">
       <img
         class="brand__shield"
@@ -42,8 +42,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   </div>
 
   <div class="nav-bar">
-    <div class="container nav-bar__inner">
+    <div class="header-wrap nav-bar__inner">
       <nav class="site-nav" aria-label="Primary">
+        <span class="site-nav__pill" aria-hidden="true"></span>
         <ul class="site-nav__list">
           {primaryNav.map((item) => (
             <li class:list={["site-nav__item", { "is-active": item.label === activeTop }]}>
@@ -182,23 +183,90 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       });
     }
 
-    /* Dropdown: open on hover via CSS; here we wire keyboard + tap for the
-       button triggers so it works without a pointer. */
-    document
-      .querySelectorAll(".site-nav__item > .site-nav__link[aria-expanded]")
-      .forEach(function (btn) {
-        const item = btn.parentElement;
-        btn.addEventListener("click", function () {
-          const openNow = item.classList.toggle("is-open");
-          btn.setAttribute("aria-expanded", String(openNow));
+    /* Dropdowns are click-only. The trigger button toggles .is-open; opening
+       one closes the others; a click or Escape anywhere else closes them. */
+    const navItems = Array.prototype.slice.call(
+      document.querySelectorAll(".site-nav__item > .site-nav__link[aria-expanded]")
+    );
+
+    function closeAllMenus(except) {
+      navItems.forEach(function (b) {
+        const it = b.parentElement;
+        if (it === except) return;
+        it.classList.remove("is-open");
+        b.setAttribute("aria-expanded", "false");
+      });
+    }
+
+    navItems.forEach(function (btn) {
+      const item = btn.parentElement;
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const openNow = !item.classList.contains("is-open");
+        closeAllMenus(item);
+        item.classList.toggle("is-open", openNow);
+        btn.setAttribute("aria-expanded", String(openNow));
+      });
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest || !e.target.closest(".site-nav__item")) closeAllMenus();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeAllMenus();
+    });
+
+    /* Sliding pill: a floating highlight that glides behind the hovered /
+       focused nav link and settles back on the active section on mouse-leave.
+       Disabled below 1180px, where the nav wraps to its own stacked rows. */
+    const nav = document.querySelector(".site-nav");
+    const pill = nav && nav.querySelector(".site-nav__pill");
+    const navList = nav && nav.querySelector(".site-nav__list");
+
+    if (nav && pill && navList) {
+      const PAD = 14;
+      const wide = window.matchMedia("(min-width: 1181px)");
+      const links = Array.prototype.slice.call(navList.querySelectorAll(".site-nav__link"));
+      const activeLink = navList.querySelector(".site-nav__item.is-active > .site-nav__link");
+      let hovered = null;
+
+      function movePill(el) {
+        if (!el || !wide.matches) {
+          pill.classList.remove("is-visible");
+          return;
+        }
+        const navRect = nav.getBoundingClientRect();
+        const r = el.getBoundingClientRect();
+        pill.style.width = r.width + PAD * 2 + "px";
+        pill.style.transform = "translate(" + (r.left - navRect.left - PAD) + "px, -50%)";
+        pill.classList.add("is-visible");
+      }
+      function settle() {
+        movePill(hovered || activeLink);
+      }
+
+      links.forEach(function (link) {
+        link.addEventListener("mouseenter", function () {
+          hovered = link;
+          movePill(link);
         });
-        item.addEventListener("focusout", function (e) {
-          if (!item.contains(e.relatedTarget)) {
-            item.classList.remove("is-open");
-            btn.setAttribute("aria-expanded", "false");
-          }
+        link.addEventListener("focus", function () {
+          hovered = link;
+          movePill(link);
+        });
+        link.addEventListener("blur", function () {
+          hovered = null;
+          settle();
         });
       });
+      navList.addEventListener("mouseleave", function () {
+        hovered = null;
+        settle();
+      });
+      window.addEventListener("resize", settle);
+      wide.addEventListener("change", settle);
+      requestAnimationFrame(settle);
+    }
   })();
 </script>
 
@@ -213,6 +281,12 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     z-index: 1000;
     background: var(--white);
     box-shadow: var(--shadow-sm);
+  }
+  /* Figma Make header spans the full width with ~80px side gutters,
+     not the site's 1100px container. */
+  .header-wrap {
+    width: 100%;
+    padding-inline: clamp(1.25rem, 5.5vw, 5rem);
   }
   .brand-row {
     display: flex;
@@ -292,8 +366,39 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   .site-nav {
     flex: 1;
+    position: relative;
+  }
+  /* Sliding pill — a floating highlight that glides behind the hovered link
+     and settles on the active section. Positioned by JS (offsetLeft/width of
+     the target link, relative to .site-nav). */
+  .site-nav__pill {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 2.25rem;
+    transform: translate(0, -50%);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition:
+      transform 0.32s cubic-bezier(0.34, 1.15, 0.4, 1),
+      width 0.32s cubic-bezier(0.34, 1.15, 0.4, 1),
+      opacity 0.2s ease;
+  }
+  .site-nav__pill.is-visible {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav__pill {
+      transition: opacity 0.2s ease;
+    }
   }
   .site-nav__list {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -314,7 +419,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     color: var(--white);
     font-family: var(--font-body);
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.025em;
     white-space: nowrap;
     cursor: pointer;
@@ -322,8 +427,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     transition: color 0.15s ease;
   }
   .site-nav__item.is-active > .site-nav__link,
-  .site-nav__item:hover > .site-nav__link,
-  .site-nav__item:focus-within > .site-nav__link {
+  .site-nav__item.is-open > .site-nav__link,
+  .site-nav__link:hover,
+  .site-nav__link:focus-visible {
     color: var(--gold);
   }
 
@@ -343,8 +449,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     box-shadow: 0 20px 44px rgba(8, 22, 51, 0.16);
     z-index: 50;
   }
-  .site-nav__item:hover .site-nav__menu,
-  .site-nav__item:focus-within .site-nav__menu,
+  /* click-only — the trigger button toggles .is-open (no hover-open) */
   .site-nav__item.is-open .site-nav__menu {
     display: flex;
   }
@@ -377,7 +482,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     border-radius: var(--radius);
     padding: 0.625rem 1.5rem;
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
   }
   /* solid = Poodle Portal: gold fill, navy text */
@@ -494,7 +599,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     padding: 0.55rem 0.7rem;
     color: var(--ink);
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     border-radius: var(--radius);
   }
@@ -518,6 +623,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     .nav-bar__inner {
       flex-wrap: wrap;
       padding-block: var(--space-2);
+    }
+    .site-nav__pill {
+      display: none;
     }
     .site-nav__list {
       width: 100%;
