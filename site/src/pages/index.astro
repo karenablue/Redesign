@@ -23,30 +23,61 @@ const since2020 = [
   { icon: "cap", value: "$3,125,500", label: "Awarded in academic scholarships" },
 ];
 
+// The five national flagship programs — mirrors service-impact/national-programs.astro
+// so the homepage and that page never drift. Each links to its section anchor.
 const programs = [
   {
-    title: "Youth Empowerment",
-    body: "Preparing the next generation to lead with confidence, courage, and character.",
+    title: "Project CRADLE Care®",
+    body: "Advancing healthier maternal and infant outcomes through education, advocacy, and outreach.",
+    href: "/service-impact/national-programs/#cradle",
   },
   {
-    title: "Educational Access",
-    body: "Expanding pathways to learning and closing the digital divide.",
+    title: "SWIM 1922®",
+    body: "Water safety, swimming access, and confidence in communities historically excluded from aquatic participation.",
+    href: "/service-impact/national-programs/#swim",
   },
   {
-    title: "Scholarship & Opportunity",
-    body: "Removing financial barriers and investing in academic excellence.",
+    title: "Operation BigBookBag®",
+    body: "Removing educational barriers by placing the tools students need directly into their hands.",
+    href: "/service-impact/national-programs/#bigbookbag",
   },
   {
-    title: "Socioeconomic Justice",
-    body: "Advocating for systemic change and equity in our communities.",
+    title: "Annual Youth Symposium",
+    body: "A nationwide day of hands-on programming designed to empower young people and strengthen their futures.",
+    href: "/service-impact/national-programs/#youth",
   },
   {
-    title: "Financial Literacy",
-    body: "Building the foundation for generational wealth and long-term stability.",
+    title: "Women's Wellness Initiative",
+    body: "Supporting informed, empowered decisions about physical, mental, and emotional health.",
+    href: "/service-impact/national-programs/#wellness",
+  },
+];
+
+// "Find Your Home" — routes each audience straight to its intake path.
+const findHome = [
+  {
+    label: "Collegiate",
+    title: "Undergraduate Membership",
+    body: "Campus leadership, academic excellence, and intake for enrolled students.",
+    href: "/membership/become-a-member/",
   },
   {
-    title: "Women's Wellness",
-    body: "Championing holistic physical, emotional, and maternal well-being.",
+    label: "Alumnae & Professional",
+    title: "Graduate Membership",
+    body: "Graduate intake, professional networking, and civic leadership for degree-holders.",
+    href: "/membership/become-a-member/",
+  },
+  {
+    label: "Reclamation",
+    title: "Come Home to Sigma",
+    body: "A direct, low-friction path for inactive Sorors to reactivate their membership.",
+    href: "/membership/reactivate/",
+  },
+  {
+    label: "Affiliates",
+    title: "Rhoer Club & Philos",
+    body: "Entry points for teen (Rhoer) and non-collegiate professional (Philo) affiliates.",
+    href: "/membership/affiliates/",
   },
 ];
 
@@ -186,8 +217,8 @@ const partners = [
       </p>
       <div class="home-hero__actions">
         <Button href="/membership/become-a-member/">Join Our Sisterhood</Button>
-        <Button href="/membership/reactivate/" variant="ghost-light">
-          Reactivate
+        <Button href="/service-impact/corporate-partnerships/" variant="ghost-light">
+          Partner With Us
         </Button>
       </div>
     </div>
@@ -255,6 +286,34 @@ const partners = [
     </div>
   </section>
 
+  <!-- 2b. FIND YOUR HOME — audience routing engine -->
+  <section class="section section--cream find-home">
+    <div class="container">
+      <div class="find-home__head">
+        <p class="eyebrow">Find Your Home</p>
+        <h2 class="feature-title">
+          Four Ways to <span>Belong</span>
+        </h2>
+        <p>
+          Whether you're on campus, established in your career, returning to the Sorority, or
+          joining an affiliate, there's a direct path in.
+        </p>
+      </div>
+      <div class="find-home__grid">
+        {findHome.map((c) => (
+          <a class="find-home__card" href={withBase(c.href)}>
+            <span class="find-home__label">{c.label}</span>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+            <span class="find-home__go" aria-hidden="true">
+              &rarr;
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- 3. MOTTO CALLOUT -->
   <section class="section section--white section--pad-tight motto">
     <div class="container motto__grid">
@@ -302,16 +361,19 @@ const partners = [
   >
     <div class="prog-grid">
       {programs.map((p) => (
-        <article class="prog-card">
+        <a class="prog-card" href={withBase(p.href)}>
           <span class="prog-card__icon" aria-hidden="true"></span>
           <h3>{p.title}</h3>
           <p>{p.body}</p>
-        </article>
+          <span class="prog-card__go" aria-hidden="true">
+            View program &rarr;
+          </span>
+        </a>
       ))}
     </div>
     <p class="center-link">
       <a href={withBase("/service-impact/national-programs/")}>
-        Explore our National Programs <span aria-hidden="true">&rarr;</span>
+        Explore all National Programs <span aria-hidden="true">&rarr;</span>
       </a>
     </p>
   </Section>
@@ -538,6 +600,35 @@ const partners = [
       </a>
     </p>
   </Section>
+
+  <!-- 13b. FOUNDATION ARM — tax-deductible giving channel -->
+  <section class="section section--navy foundation">
+    <div class="container foundation__inner">
+      <div class="foundation__copy">
+        <p class="eyebrow">The Giving Channel</p>
+        <h2 class="feature-title feature-title--light">
+          Invest in <span>Transformational Change</span>
+        </h2>
+        <p>
+          Sigma Gamma Rho Sorority, Incorporated is a 501(c)(7) organization and cannot receive
+          tax-deductible public contributions directly. Charitable giving flows through the
+          Sorority's 501(c)(3) foundation partners — the National Education Fund and the SPEAR
+          Foundation — which fund scholarships, program delivery, and community grants.
+        </p>
+        <p class="foundation__note">
+          Gifts to a 501(c)(3) foundation partner are tax-deductible to the extent allowed by law.
+        </p>
+        <div class="foundation__actions">
+          <a class="btn" href={withBase("/service-impact/partner-foundations/")}>
+            Give Through the Foundation
+          </a>
+          <a class="btn btn--outline" href={withBase("/service-impact/corporate-partnerships/")}>
+            Corporate Grants & DAFs
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- 14. PARTNERS -->
   <Section
@@ -914,11 +1005,14 @@ const partners = [
     }
   }
   .prog-card {
+    display: block;
     text-align: center;
     padding: 2rem 1.75rem;
     border-radius: var(--radius-lg);
     background: linear-gradient(135deg, var(--cream) 0%, var(--cream-2) 100%);
     box-shadow: 0 4px 16px rgba(223, 177, 54, 0.1);
+    text-decoration: none;
+    color: inherit;
     transition:
       transform 0.25s ease,
       box-shadow 0.25s ease;
@@ -926,6 +1020,18 @@ const partners = [
   .prog-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(223, 177, 54, 0.2);
+  }
+  .prog-card__go {
+    display: inline-block;
+    margin-top: var(--space-4);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .prog-card:hover .prog-card__go {
+    color: var(--royal);
   }
   .prog-card__icon {
     display: inline-grid;
@@ -946,6 +1052,86 @@ const partners = [
     color: var(--ink);
     font-size: var(--text-base);
     margin: 0;
+  }
+
+  /* 2b. FIND YOUR HOME */
+  .find-home__head {
+    max-width: 640px;
+    margin: 0 0 var(--space-10);
+  }
+  .find-home__head p:last-child {
+    margin: var(--space-4) 0 0;
+    color: var(--muted);
+  }
+  .find-home__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: var(--space-5);
+  }
+  .find-home__card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .find-home__card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-md);
+  }
+  .find-home__label {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .find-home__card h3 {
+    margin: var(--space-3) 0 var(--space-2);
+    font-size: var(--text-md);
+  }
+  .find-home__card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .find-home__go {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    color: var(--royal);
+    font-weight: 700;
+  }
+
+  /* 13b. FOUNDATION ARM */
+  .foundation__inner {
+    max-width: 760px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .foundation__copy p {
+    margin: var(--space-4) auto 0;
+    max-width: 60ch;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .foundation__copy p.foundation__note {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .foundation__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
   }
 
   /* 7. FIND A CHAPTER */
