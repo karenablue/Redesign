@@ -69,7 +69,7 @@ export const primaryNav = [
 /* Header action buttons (right side of the nav bar). */
 export const headerActions = [
   {
-    label: "Poodle Portal",
+    label: "Member Portal",
     href: "https://portal.sgrho1922.org/",
     external: true,
     variant: "solid",

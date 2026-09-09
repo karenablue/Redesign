@@ -233,7 +233,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   .nav-bar {
     background: var(--royal);
-    border-block: 3px solid var(--gold);
+    border-block: 2px solid var(--gold);
   }
   .nav-bar__inner {
     display: flex;
@@ -333,11 +333,14 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     height: 36px;
     display: grid;
     place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 0;
     border-radius: var(--radius);
     background: transparent;
     color: var(--white);
     cursor: pointer;
+  }
+  .search-toggle:hover {
+    color: var(--gold-bright);
   }
   .search-panel {
     position: absolute;
