@@ -208,7 +208,9 @@ const partners = [
     <div class="home-hero__scrim"></div>
     <div class="container home-hero__inner">
       <h1 class="home-hero__title">
-        Greater Service, <span>Greater Progress</span>
+        Greater Service,
+        <br />
+        <span>Greater Progress</span>
       </h1>
       <p class="home-hero__copy">
         Founded in 1922 by seven young Black educators at Butler University, Sigma Gamma Rho
@@ -331,13 +333,12 @@ const partners = [
   <!-- 4. STAT BAND -->
   <StatBand stats={stats} tone="navy" />
 
-  <!-- 5. OUR GLOBAL IMPACT -->
+  <!-- 5. NATIONAL PROGRAMS & IMPACT -->
   <Section tone="white" eyebrow="National Programs" title="Our" highlight="Global Impact">
     <p class="impact-lead">
       Our commitment to <strong>Greater Service, Greater Progress</strong> translates into direct,
-      tangible action. From teaching water safety through Swim 1922, to funding undergraduate
-      education, promoting maternal health via Project Cradle Care, and preparing youth for
-      leadership, our chapters address specific, critical needs in the communities we serve.
+      tangible action — five national programs addressing specific, critical needs in the
+      communities we serve.
     </p>
     <p class="impact-since">Since 2020, we have:</p>
     <div class="impact-cards">
@@ -349,16 +350,6 @@ const partners = [
         </div>
       ))}
     </div>
-  </Section>
-
-  <!-- 6. WHERE OUR WORK MAKES A DIFFERENCE -->
-  <Section
-    tone="white"
-    pad="tight"
-    heading="plain"
-    centered
-    title="Where Our Work Makes a Difference"
-  >
     <div class="prog-grid">
       {programs.map((p) => (
         <a class="prog-card" href={withBase(p.href)}>
@@ -660,6 +651,41 @@ const partners = [
       </a>
     </p>
   </Section>
+
+  <!-- 15. VENDOR VERIFICATION — trademark defense -->
+  <section class="section section--cream vendor-check">
+    <div class="container vendor-check__inner">
+      <div>
+        <p class="eyebrow">Brand Protection</p>
+        <h2 class="feature-title">
+          Verify a Licensed Vendor <span>Before You Buy</span>
+        </h2>
+        <p>
+          Only officially licensed vendors may sell Sigma Gamma Rho&reg;-branded merchandise. Check
+          a shop name or store URL against the certified vendor registry.
+        </p>
+      </div>
+      <form class="vendor-check__bar" method="get" action={withBase("/resources/vendor/")}>
+        <label class="visually-hidden" for="vendor-query">
+          Vendor or store name
+        </label>
+        <input
+          id="vendor-query"
+          name="q"
+          type="search"
+          placeholder="Shop name or store URL&hellip;"
+          autocomplete="off"
+        />
+        <button class="btn" type="submit">
+          Verify
+        </button>
+      </form>
+      <p class="vendor-check__note">
+        The searchable registry is being connected. For now, Verify opens the full certified vendor
+        list.
+      </p>
+    </div>
+  </section>
 </Base>
 
 <style>
@@ -725,7 +751,7 @@ const partners = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.4;
+    opacity: 0.32;
     mix-blend-mode: luminosity;
   }
   .home-hero__scrim {
@@ -734,8 +760,8 @@ const partners = [
     background: linear-gradient(
       to top,
       var(--navy) 0%,
-      rgba(32, 65, 165, 0.6) 55%,
-      transparent 100%
+      rgba(32, 65, 165, 0.72) 45%,
+      rgba(8, 22, 51, 0.58) 100%
     );
   }
   .home-hero__inner {
@@ -998,6 +1024,7 @@ const partners = [
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--space-6);
+    margin-top: var(--space-12);
   }
   @media (min-width: 900px) {
     .prog-grid {
@@ -1132,6 +1159,52 @@ const partners = [
     justify-content: center;
     gap: var(--space-4);
     margin-top: var(--space-8);
+  }
+
+  /* 15. VENDOR VERIFICATION */
+  .vendor-check__inner {
+    max-width: 760px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .vendor-check__inner > div > p {
+    margin: var(--space-4) auto 0;
+    max-width: 54ch;
+    color: var(--muted);
+  }
+  .vendor-check__bar {
+    display: flex;
+    gap: var(--space-3);
+    margin: var(--space-6) auto 0;
+    max-width: 30rem;
+  }
+  .vendor-check__bar input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    font: inherit;
+    font-size: var(--text-sm);
+  }
+  .vendor-check__bar input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .vendor-check__bar .btn {
+    flex-shrink: 0;
+    padding: 0.75rem 1.75rem;
+  }
+  .vendor-check__note {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-xs);
+    color: var(--muted-2);
+  }
+  @media (max-width: 520px) {
+    .vendor-check__bar {
+      flex-direction: column;
+    }
   }
 
   /* 7. FIND A CHAPTER */
@@ -1318,11 +1391,9 @@ const partners = [
     font-weight: 700;
   }
   .voice__quote {
-    color: var(--royal);
-    text-transform: uppercase;
-    font-size: var(--text-sm);
-    line-height: 1.7;
-    letter-spacing: 0.01em;
+    color: var(--ink);
+    font-size: var(--text-base);
+    line-height: 1.65;
     margin: 0.75rem 0 1.5rem;
     flex: 1;
   }
