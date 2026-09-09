@@ -3,9 +3,33 @@ import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 
 const tiers = [
-  { tier: "Tier 1", name: "Partners & Collaborators", fee: "$1,000", items: ["0–22% royalties based on project scope", "Quarterly reporting", "Eligible for participation opportunities"] },
-  { tier: "Tier 2", name: "Annual Sales Over $10,000", fee: "$2,400", featured: true, items: ["12% royalties", "Quarterly reporting", "Eligible for participation opportunities"] },
-  { tier: "Tier 3", name: "Annual Sales Up to $10,000", fee: "$1,200", items: ["0% royalties", "Annual reporting", "Generally not eligible for in-person participation"] },
+  {
+    tier: "Tier 1",
+    name: "Partners & Collaborators",
+    fee: "$1,000",
+    items: [
+      "0–22% royalties based on project scope",
+      "Quarterly reporting",
+      "Eligible for participation opportunities",
+    ],
+  },
+  {
+    tier: "Tier 2",
+    name: "Annual Sales Over $10,000",
+    fee: "$2,400",
+    featured: true,
+    items: ["12% royalties", "Quarterly reporting", "Eligible for participation opportunities"],
+  },
+  {
+    tier: "Tier 3",
+    name: "Annual Sales Up to $10,000",
+    fee: "$1,200",
+    items: [
+      "0% royalties",
+      "Annual reporting",
+      "Generally not eligible for in-person participation",
+    ],
+  },
 ];
 
 const windows = [
@@ -20,16 +44,38 @@ const standardLinks = [
   { n: "03", title: "Official Vendor Information", href: "https://sgrho1922.org/vendors/" },
 ];
 ---
-<Base title="Vendor" activeTop="Resources" description="Sigma Gamma Rho's licensed vendor program — trademark authorization, licensing tiers, and application windows.">
+
+<Base
+  title="Vendor"
+  activeTop="Resources"
+  description="Sigma Gamma Rho's licensed vendor program — trademark authorization, licensing tiers, and application windows."
+>
   <section class="ven-hero">
     <div class="container ven-hero__inner">
       <p class="eyebrow">Resources • Vendor Licensing</p>
-      <h1>Protect the Brand.<br /><span>Build the Marketplace.</span></h1>
+      <h1>
+        Protect the Brand.
+        <br />
+        <span>Build the Marketplace.</span>
+      </h1>
       <div class="gold-rule"></div>
-      <p>Sigma Gamma Rho's licensed vendor program governs authorized use of the Sorority's trademarks and supports a marketplace built around compliance, quality, and responsible stewardship of intellectual property.</p>
+      <p>
+        Sigma Gamma Rho's licensed vendor program governs authorized use of the Sorority's
+        trademarks and supports a marketplace built around compliance, quality, and responsible
+        stewardship of intellectual property.
+      </p>
       <div class="ven-actions">
-        <a class="btn" href="https://sgrho1922.store/" target="_blank" rel="noopener">Verify a Licensed Vendor</a>
-        <a class="btn btn--outline on-dark" href="https://fs20.formsite.com/" target="_blank" rel="noopener">Report Vendor Misconduct</a>
+        <a class="btn" href="https://sgrho1922.store/" target="_blank" rel="noopener">
+          Verify a Licensed Vendor
+        </a>
+        <a
+          class="btn btn--outline on-dark"
+          href="https://fs20.formsite.com/"
+          target="_blank"
+          rel="noopener"
+        >
+          Report Vendor Misconduct
+        </a>
       </div>
     </div>
   </section>
@@ -40,9 +86,18 @@ const standardLinks = [
     <div class="container ven-intro__grid">
       <div>
         <p class="eyebrow">Licensed Vendors</p>
-        <h2>Verify before<br /><span>you purchase.</span></h2>
+        <h2>
+          Verify before
+          <br />
+          <span>you purchase.</span>
+        </h2>
       </div>
-      <p>The Official Licensed Vendor Directory is the primary source for confirming whether a business is authorized to sell products using Sigma Gamma Rho intellectual property. Reports involving non-delivery, poor quality, or vendor service concerns should be submitted through the official reporting process.</p>
+      <p>
+        The Official Licensed Vendor Directory is the primary source for confirming whether a
+        business is authorized to sell products using Sigma Gamma Rho intellectual property. Reports
+        involving non-delivery, poor quality, or vendor service concerns should be submitted through
+        the official reporting process.
+      </p>
     </div>
   </section>
 
@@ -51,7 +106,10 @@ const standardLinks = [
       <div class="ven-heading">
         <p class="eyebrow">Vendor Program</p>
         <h2>Three licensing tiers.</h2>
-        <p>New vendors begin in Tier 3 for their first licensing year. Licenses operate on a July 1–June 30 fiscal year and must be renewed annually.</p>
+        <p>
+          New vendors begin in Tier 3 for their first licensing year. Licenses operate on a July
+          1–June 30 fiscal year and must be renewed annually.
+        </p>
       </div>
       <div class="ven-tiers__grid">
         {tiers.map((t) => (
@@ -60,7 +118,11 @@ const standardLinks = [
             <h3>{t.name}</h3>
             <strong>{t.fee}</strong>
             <p class="ven-tier__fee-label">Annual advance fee</p>
-            <ul>{t.items.map((it) => <li>{it}</li>)}</ul>
+            <ul>
+              {t.items.map((it) => (
+                <li>{it}</li>
+              ))}
+            </ul>
           </article>
         ))}
       </div>
@@ -71,13 +133,23 @@ const standardLinks = [
     <div class="container ven-windows__grid">
       <div>
         <p class="eyebrow">Application Windows</p>
-        <h2>New applications<br /><span>open once a year.</span></h2>
+        <h2>
+          New applications
+          <br />
+          <span>open once a year.</span>
+        </h2>
       </div>
       <div class="ven-windows__list">
         {windows.map((w) => (
-          <div><strong>{w.fy}</strong><span>{w.range}</span></div>
+          <div>
+            <strong>{w.fy}</strong>
+            <span>{w.range}</span>
+          </div>
         ))}
-        <p>Applications are reviewed only during posted application windows. Tier 1 partner applications may be considered throughout the fiscal year.</p>
+        <p>
+          Applications are reviewed only during posted application windows. Tier 1 partner
+          applications may be considered throughout the fiscal year.
+        </p>
       </div>
     </div>
   </section>
@@ -86,13 +158,23 @@ const standardLinks = [
     <div class="container ven-standards__grid">
       <div>
         <p class="eyebrow">Brand &amp; Intellectual Property</p>
-        <h2>Authorization carries<br /><span>responsibility.</span></h2>
-        <p>Licensees must comply with Sigma Gamma Rho's brand guidelines and submit mockups of licensed products for artwork review before launch. Upon acceptance, vendors must provide required payment and proof of insurance.</p>
+        <h2>
+          Authorization carries
+          <br />
+          <span>responsibility.</span>
+        </h2>
+        <p>
+          Licensees must comply with Sigma Gamma Rho's brand guidelines and submit mockups of
+          licensed products for artwork review before launch. Upon acceptance, vendors must provide
+          required payment and proof of insurance.
+        </p>
       </div>
       <div class="ven-standards__links">
         {standardLinks.map((l) => (
           <a href={l.href} target="_blank" rel="noopener">
-            <span>{l.n}</span><strong>{l.title}</strong><b aria-hidden="true">&#8599;</b>
+            <span>{l.n}</span>
+            <strong>{l.title}</strong>
+            <b aria-hidden="true">&#8599;</b>
           </a>
         ))}
       </div>
@@ -103,69 +185,259 @@ const standardLinks = [
     <div class="container ven-rfp__inner">
       <div>
         <p class="eyebrow eyebrow--light">Requests for Proposal</p>
-        <h2>Professional services<br /><span>beyond merchandise.</span></h2>
-        <p>Sigma Gamma Rho also solicits experienced firms and service providers for strategic and operational projects. Current opportunities and future-interest forms are published through official vendor channels.</p>
+        <h2>
+          Professional services
+          <br />
+          <span>beyond merchandise.</span>
+        </h2>
+        <p>
+          Sigma Gamma Rho also solicits experienced firms and service providers for strategic and
+          operational projects. Current opportunities and future-interest forms are published
+          through official vendor channels.
+        </p>
       </div>
-      <a class="btn" href="https://sgrho1922.org/vendors/" target="_blank" rel="noopener">View Current RFPs <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn" href="https://sgrho1922.org/vendors/" target="_blank" rel="noopener">
+        View Current RFPs <span aria-hidden="true">&rarr;</span>
+      </a>
     </div>
   </section>
 </Base>
 
 <style>
-  .ven-hero { background: var(--grad-royal); color: #fff; }
-  .ven-hero__inner { padding-block: clamp(3.5rem, 6vw, 5rem); max-width: 48rem; }
-  .ven-hero h1 { color: #fff; margin: var(--space-2) 0 0; }
-  .ven-hero h1 span { color: var(--gold); }
-  .ven-hero > .container > p:not(.eyebrow) { color: rgba(255,255,255,0.85); }
-  .ven-actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-8); }
+  .ven-hero {
+    background: var(--grad-royal);
+    color: #fff;
+  }
+  .ven-hero__inner {
+    padding-block: clamp(3.5rem, 6vw, 5rem);
+    max-width: 48rem;
+  }
+  .ven-hero h1 {
+    color: #fff;
+    margin: var(--space-2) 0 0;
+  }
+  .ven-hero h1 span {
+    color: var(--gold);
+  }
+  .ven-hero > .container > p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .ven-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
 
-  .ven-intro { background: var(--white); padding-block: clamp(3rem, 5vw, 4rem); }
-  .ven-intro__grid { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: var(--space-12); align-items: start; }
-  .ven-intro__grid h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .ven-intro__grid h2 span { color: var(--gold); }
-  .ven-intro__grid > p { color: var(--muted); }
-  @media (max-width: 780px) { .ven-intro__grid { grid-template-columns: 1fr; } }
+  .ven-intro {
+    background: var(--white);
+    padding-block: clamp(3rem, 5vw, 4rem);
+  }
+  .ven-intro__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .ven-intro__grid h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .ven-intro__grid h2 span {
+    color: var(--gold);
+  }
+  .ven-intro__grid > p {
+    color: var(--muted);
+  }
+  @media (max-width: 780px) {
+    .ven-intro__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-  .ven-tiers { background: var(--cream); padding-block: clamp(3rem, 6vw, 4.5rem); }
-  .ven-heading { max-width: 44rem; margin: 0 auto var(--space-10); text-align: center; }
-  .ven-heading h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .ven-heading > p { color: var(--muted); margin-top: var(--space-3); }
-  .ven-tiers__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .ven-tier { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-6); }
-  .ven-tier--featured { border-color: var(--gold); box-shadow: var(--shadow-md); }
-  .ven-tier__label { font-family: var(--font-label); color: var(--gold); font-size: var(--text-sm); }
-  .ven-tier h3 { margin: var(--space-2) 0; font-size: var(--text-md); }
-  .ven-tier strong { display: block; font-size: var(--text-h3); color: var(--royal); }
-  .ven-tier__fee-label { color: var(--muted-2); font-size: var(--text-xs); margin: 0 0 var(--space-4); }
-  .ven-tier ul { margin: 0; padding-left: 1.1rem; color: var(--muted); font-size: var(--text-sm); display: grid; gap: var(--space-2); }
-  @media (max-width: 820px) { .ven-tiers__grid { grid-template-columns: 1fr; } }
+  .ven-tiers {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .ven-heading {
+    max-width: 44rem;
+    margin: 0 auto var(--space-10);
+    text-align: center;
+  }
+  .ven-heading h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .ven-heading > p {
+    color: var(--muted);
+    margin-top: var(--space-3);
+  }
+  .ven-tiers__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+  .ven-tier {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+  .ven-tier--featured {
+    border-color: var(--gold);
+    box-shadow: var(--shadow-md);
+  }
+  .ven-tier__label {
+    font-family: var(--font-label);
+    color: var(--gold);
+    font-size: var(--text-sm);
+  }
+  .ven-tier h3 {
+    margin: var(--space-2) 0;
+    font-size: var(--text-md);
+  }
+  .ven-tier strong {
+    display: block;
+    font-size: var(--text-h3);
+    color: var(--royal);
+  }
+  .ven-tier__fee-label {
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    margin: 0 0 var(--space-4);
+  }
+  .ven-tier ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    display: grid;
+    gap: var(--space-2);
+  }
+  @media (max-width: 820px) {
+    .ven-tiers__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-  .ven-windows { background: var(--white); padding-block: clamp(3rem, 6vw, 4.5rem); }
-  .ven-windows__grid { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: var(--space-12); align-items: start; }
-  .ven-windows__grid h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .ven-windows__grid h2 span { color: var(--gold); }
-  .ven-windows__list { display: grid; gap: var(--space-4); }
-  .ven-windows__list > div { display: flex; gap: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); }
-  .ven-windows__list strong { color: var(--royal); min-width: 60px; }
-  .ven-windows__list span { color: var(--muted); }
-  .ven-windows__list p { color: var(--muted); font-size: var(--text-sm); margin-top: var(--space-3); }
-  @media (max-width: 780px) { .ven-windows__grid { grid-template-columns: 1fr; } }
+  .ven-windows {
+    background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .ven-windows__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .ven-windows__grid h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .ven-windows__grid h2 span {
+    color: var(--gold);
+  }
+  .ven-windows__list {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .ven-windows__list > div {
+    display: flex;
+    gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--line);
+  }
+  .ven-windows__list strong {
+    color: var(--royal);
+    min-width: 60px;
+  }
+  .ven-windows__list span {
+    color: var(--muted);
+  }
+  .ven-windows__list p {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    margin-top: var(--space-3);
+  }
+  @media (max-width: 780px) {
+    .ven-windows__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-  .ven-standards { background: var(--cream); padding-block: clamp(3rem, 6vw, 4.5rem); }
-  .ven-standards__grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-12); align-items: start; }
-  .ven-standards__grid h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .ven-standards__grid h2 span { color: var(--gold); }
-  .ven-standards__grid > div > p { color: var(--muted); }
-  .ven-standards__links { display: grid; gap: var(--space-3); }
-  .ven-standards__links a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-4); padding: var(--space-5); background: var(--white); border-radius: var(--radius); text-decoration: none; }
-  .ven-standards__links span { font-family: var(--font-label); color: var(--gold); }
-  .ven-standards__links strong { color: var(--royal); }
-  .ven-standards__links b { color: var(--gold-dark); }
-  @media (max-width: 820px) { .ven-standards__grid { grid-template-columns: 1fr; } }
+  .ven-standards {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .ven-standards__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .ven-standards__grid h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .ven-standards__grid h2 span {
+    color: var(--gold);
+  }
+  .ven-standards__grid > div > p {
+    color: var(--muted);
+  }
+  .ven-standards__links {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .ven-standards__links a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--white);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+  .ven-standards__links span {
+    font-family: var(--font-label);
+    color: var(--gold);
+  }
+  .ven-standards__links strong {
+    color: var(--royal);
+  }
+  .ven-standards__links b {
+    color: var(--gold-dark);
+  }
+  @media (max-width: 820px) {
+    .ven-standards__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-  .ven-rfp { background: var(--grad-royal); color: #fff; padding-block: clamp(2.5rem, 5vw, 3.5rem); }
-  .ven-rfp__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
-  .ven-rfp h2 { color: #fff; margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .ven-rfp p { color: rgba(255,255,255,0.85); margin-top: var(--space-3); max-width: 32rem; }
-  .eyebrow--light { color: var(--gold-bright); }
+  .ven-rfp {
+    background: var(--grad-royal);
+    color: #fff;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .ven-rfp__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+  .ven-rfp h2 {
+    color: #fff;
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .ven-rfp p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: var(--space-3);
+    max-width: 32rem;
+  }
+  .eyebrow--light {
+    color: var(--gold-bright);
+  }
 </style>

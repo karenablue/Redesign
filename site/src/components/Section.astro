@@ -35,10 +35,12 @@ const centered = align === "center";
 const showRule = rule ?? centered;
 const headingOnly = hasHeading && !Astro.slots.has("default");
 ---
+
 <section
   id={id}
   class:list={[
-    "section", `section--${tone}`,
+    "section",
+    `section--${tone}`,
     {
       "section--pad-tight": pad === "tight",
       "section--heading-only": headingOnly,
@@ -52,7 +54,17 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
       <div class:list={["s-head", { "s-head--center": centered, "s-head--bare": headingOnly }]}>
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         {showRule && eyebrow && <span class="s-head__rule" aria-hidden="true"></span>}
-        {title && <h2 class="s-head__title">{title}{highlight && <> <span>{highlight}</span></>}</h2>}
+        {title && (
+          <h2 class="s-head__title">
+            {title}
+            {highlight && (
+              <>
+                {" "}
+                <span>{highlight}</span>
+              </>
+            )}
+          </h2>
+        )}
         {lead && <p class="s-head__lead">{lead}</p>}
       </div>
     )}
@@ -61,9 +73,17 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
 </section>
 
 <style>
-  .s-head { margin-bottom: clamp(2.5rem, 4vw, 4rem); max-width: 52rem; }
-  .s-head--center { margin-inline: auto; text-align: center; }
-  .s-head--bare { margin-bottom: 0; }
+  .s-head {
+    margin-bottom: clamp(2.5rem, 4vw, 4rem);
+    max-width: 52rem;
+  }
+  .s-head--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+  .s-head--bare {
+    margin-bottom: 0;
+  }
 
   .s-head__rule {
     display: block;
@@ -72,7 +92,9 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
     margin: 0 0 var(--space-6);
     background: var(--gold);
   }
-  .s-head--center .s-head__rule { margin-inline: auto; }
+  .s-head--center .s-head__rule {
+    margin-inline: auto;
+  }
 
   .s-head__title {
     margin: 0;
@@ -82,7 +104,9 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
     line-height: 1.15;
     color: var(--royal);
   }
-  .s-head__title span { color: var(--gold); }
+  .s-head__title span {
+    color: var(--gold);
+  }
 
   .s-head__lead {
     margin: var(--space-5) 0 0;
@@ -93,9 +117,17 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
     color: var(--muted);
     max-width: 46rem;
   }
-  .s-head--center .s-head__lead { margin-inline: auto; }
+  .s-head--center .s-head__lead {
+    margin-inline: auto;
+  }
 
-  .section--navy .s-head__title { color: #fff; }
-  .section--navy .s-head__title span { color: var(--gold); }
-  .section--navy .s-head__lead { color: rgba(255, 255, 255, 0.88); }
+  .section--navy .s-head__title {
+    color: #fff;
+  }
+  .section--navy .s-head__title span {
+    color: var(--gold);
+  }
+  .section--navy .s-head__lead {
+    color: rgba(255, 255, 255, 0.88);
+  }
 </style>

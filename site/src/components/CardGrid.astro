@@ -16,12 +16,11 @@
  */
 const { min = "280px", cols, gap = "var(--space-8)", as = "div" } = Astro.props;
 const Tag = as;
-const style = [
-  `--card-min:${min}`,
-  `--card-gap:${gap}`,
-  cols && `--card-cols:${cols}`,
-].filter(Boolean).join(";");
+const style = [`--card-min:${min}`, `--card-gap:${gap}`, cols && `--card-cols:${cols}`]
+  .filter(Boolean)
+  .join(";");
 ---
+
 <Tag class:list={["card-grid", { "card-grid--capped": cols }]} style={style}>
   <slot />
 </Tag>
@@ -38,6 +37,8 @@ const style = [
   /* With a hard column count: exactly `cols` on wide screens, but still
      collapse one card at a time on narrow ones (never a fixed px total). */
   @media (min-width: 900px) {
-    .card-grid--capped { grid-template-columns: repeat(var(--card-cols), 1fr); }
+    .card-grid--capped {
+      grid-template-columns: repeat(var(--card-cols), 1fr);
+    }
   }
 </style>

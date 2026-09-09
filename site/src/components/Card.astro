@@ -20,6 +20,7 @@ const { eyebrow, title, href, image, imageAlt = "", as = "article" } = Astro.pro
 const Tag = as;
 const external = href && /^https?:/.test(href);
 ---
+
 <Tag class:list={["card", { "card--link": href }]}>
   {image && <img class="card__img" src={withBase(image)} alt={imageAlt} loading="lazy" />}
   <div class="card__body">
@@ -30,7 +31,9 @@ const external = href && /^https?:/.test(href);
           <a href={withBase(href)} {...(external ? { target: "_blank", rel: "noopener" } : {})}>
             {title}
           </a>
-        ) : title}
+        ) : (
+          title
+        )}
       </h3>
     )}
     <slot />
@@ -47,8 +50,17 @@ const external = href && /^https?:/.test(href);
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
-  .card__img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-  .card__body { padding: var(--space-6); display: flex; flex-direction: column; flex: 1; }
+  .card__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .card__body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
   .card__eyebrow {
     display: block;
     margin-bottom: var(--space-2);
@@ -57,13 +69,35 @@ const external = href && /^https?:/.test(href);
     font-size: var(--text-md);
     font-weight: 700;
   }
-  .card__title { margin: 0 0 var(--space-2); font-size: var(--text-lg); }
-  .card__title a { text-decoration: none; }
+  .card__title {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  .card__title a {
+    text-decoration: none;
+  }
   /* Make the whole card clickable while keeping the real <a> for a11y. */
-  .card--link { transition: transform .15s ease, box-shadow .15s ease; }
-  .card--link:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-  .card--link .card__title a::after { content: ""; position: absolute; inset: 0; }
-  .card--link { position: relative; }
-  .card :global(p:last-child) { margin-bottom: 0; }
-  .card :global(p) { color: var(--muted); }
+  .card--link {
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .card--link:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .card--link .card__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .card--link {
+    position: relative;
+  }
+  .card :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .card :global(p) {
+    color: var(--muted);
+  }
 </style>

@@ -9,6 +9,7 @@
  * it's a real visual variant, not a copy-paste duplicate.
  */
 ---
+
 <div class="sigma-rule" aria-hidden="true">
   <span class="sigma-line"></span>
   <span class="sigma-medallion">&Sigma;</span>
@@ -16,8 +17,30 @@
 </div>
 
 <style>
-  .sigma-rule { display: flex; align-items: center; gap: var(--space-5); max-width: 74rem; margin-inline: auto; padding-block: var(--space-8); }
-  .sigma-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
-  .sigma-line:last-child { background: linear-gradient(270deg, transparent, var(--gold)); }
-  .sigma-medallion { width: 3.25rem; height: 3.25rem; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold); font-size: 1.4rem; }
+  .sigma-rule {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    max-width: 74rem;
+    margin-inline: auto;
+    padding-block: var(--space-8);
+  }
+  .sigma-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .sigma-line:last-child {
+    background: linear-gradient(270deg, transparent, var(--gold));
+  }
+  .sigma-medallion {
+    width: 3.25rem;
+    height: 3.25rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 1.4rem;
+  }
 </style>

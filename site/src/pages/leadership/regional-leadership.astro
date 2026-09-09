@@ -5,66 +5,174 @@ import { withBase } from "../../lib/url.js";
 
 const regions = [
   {
-    id: "central", name: "Central", dark: false, logo: "/images/Central Region.png",
-    territory: "Illinois, Indiana, Iowa, Kansas, Kentucky, Michigan, Missouri, Minnesota, Nebraska, North Dakota, Ohio, South Dakota, Wisconsin; Canadian divisions from Windsor, Ontario west to Saskatchewan; Baffin Islands, Greenland, Iceland, Queen Elizabeth Islands, and Germany.",
-    site: "https://www.sgrhocentral.com/", fb: "https://www.facebook.com/SGRhoCentral/", ig: "https://www.instagram.com/sgrhocentral/", x: null,
+    id: "central",
+    name: "Central",
+    dark: false,
+    logo: "/images/Central Region.png",
+    territory:
+      "Illinois, Indiana, Iowa, Kansas, Kentucky, Michigan, Missouri, Minnesota, Nebraska, North Dakota, Ohio, South Dakota, Wisconsin; Canadian divisions from Windsor, Ontario west to Saskatchewan; Baffin Islands, Greenland, Iceland, Queen Elizabeth Islands, and Germany.",
+    site: "https://www.sgrhocentral.com/",
+    fb: "https://www.facebook.com/SGRhoCentral/",
+    ig: "https://www.instagram.com/sgrhocentral/",
+    x: null,
     leaders: [
-      { role: "Syntaktes (Regional Director)", name: "Nai V. Colton", img: "/images/regional-leadership-central-syntaktes.jpg" },
-      { role: "Undergraduate Chapter Coordinator", name: "Doni Walker", img: "/images/regional-leadership-central-ucc.jpg" },
-      { role: "Undergraduate Student Coordinator", name: "Joy Swanigan", img: "/images/regional-leadership-central-usc.jpg" },
+      {
+        role: "Syntaktes (Regional Director)",
+        name: "Nai V. Colton",
+        img: "/images/regional-leadership-central-syntaktes.jpg",
+      },
+      {
+        role: "Undergraduate Chapter Coordinator",
+        name: "Doni Walker",
+        img: "/images/regional-leadership-central-ucc.jpg",
+      },
+      {
+        role: "Undergraduate Student Coordinator",
+        name: "Joy Swanigan",
+        img: "/images/regional-leadership-central-usc.jpg",
+      },
     ],
   },
   {
-    id: "northeastern", name: "Northeastern", dark: true, logo: "/images/Northeastern Region.jpg",
-    territory: "Bermuda, Eastern Canada, Connecticut, Delaware, District of Columbia, Ghana, Korea, Maine, Maryland, Massachusetts, New Hampshire, New York, New Jersey, North Carolina, Pennsylvania, Rhode Island, Vermont, Virginia, and West Virginia.",
-    site: "https://www.sgrhoneregion.org/", fb: "https://www.facebook.com/SGRhoNE", ig: "https://www.instagram.com/sgrhoner/", x: null,
+    id: "northeastern",
+    name: "Northeastern",
+    dark: true,
+    logo: "/images/Northeastern Region.jpg",
+    territory:
+      "Bermuda, Eastern Canada, Connecticut, Delaware, District of Columbia, Ghana, Korea, Maine, Maryland, Massachusetts, New Hampshire, New York, New Jersey, North Carolina, Pennsylvania, Rhode Island, Vermont, Virginia, and West Virginia.",
+    site: "https://www.sgrhoneregion.org/",
+    fb: "https://www.facebook.com/SGRhoNE",
+    ig: "https://www.instagram.com/sgrhoner/",
+    x: null,
     leaders: [
-      { role: "Syntaktes (Regional Director)", name: "Dawne S. Stanton", img: "/images/regional-leadership-northeastern-syntaktes-300x300.jpg" },
-      { role: "Undergraduate Chapter Coordinator", name: "Keshia Butler-Thomas", img: "/images/regional-leadership-northeastern-ucc.jpg" },
-      { role: "Undergraduate Student Coordinator", name: "Ysland Brown", img: "/images/regional-leadership-northeastern-usc.jpg" },
+      {
+        role: "Syntaktes (Regional Director)",
+        name: "Dawne S. Stanton",
+        img: "/images/regional-leadership-northeastern-syntaktes-300x300.jpg",
+      },
+      {
+        role: "Undergraduate Chapter Coordinator",
+        name: "Keshia Butler-Thomas",
+        img: "/images/regional-leadership-northeastern-ucc.jpg",
+      },
+      {
+        role: "Undergraduate Student Coordinator",
+        name: "Ysland Brown",
+        img: "/images/regional-leadership-northeastern-usc.jpg",
+      },
     ],
   },
   {
-    id: "southeastern", name: "Southeastern", dark: false, logo: "/images/Southeastern Region.jpg",
-    territory: "Alabama, Florida, Georgia, Mississippi, South Carolina, Tennessee, The Bahamas, and the Virgin Islands.",
-    site: "https://www.seregionsgrho.org/", fb: "https://www.facebook.com/SERegionSGRho", ig: "https://www.instagram.com/seregionsgrho/", x: "https://x.com/seregionsgrho",
+    id: "southeastern",
+    name: "Southeastern",
+    dark: false,
+    logo: "/images/Southeastern Region.jpg",
+    territory:
+      "Alabama, Florida, Georgia, Mississippi, South Carolina, Tennessee, The Bahamas, and the Virgin Islands.",
+    site: "https://www.seregionsgrho.org/",
+    fb: "https://www.facebook.com/SERegionSGRho",
+    ig: "https://www.instagram.com/seregionsgrho/",
+    x: "https://x.com/seregionsgrho",
     leaders: [
-      { role: "Syntaktes (Regional Director)", name: "Tanya N. Batchelor-Judge", img: "/images/regional-leadership-southeastern-syntaktes-300x300.jpg" },
-      { role: "Undergraduate Chapter Coordinator", name: "Toni Gordon", img: "/images/regional-leadership-southeastern-ucc-300x300.jpg" },
-      { role: "Undergraduate Student Coordinator", name: "Ayden Headley", img: "/images/headshot-default.jpg" },
+      {
+        role: "Syntaktes (Regional Director)",
+        name: "Tanya N. Batchelor-Judge",
+        img: "/images/regional-leadership-southeastern-syntaktes-300x300.jpg",
+      },
+      {
+        role: "Undergraduate Chapter Coordinator",
+        name: "Toni Gordon",
+        img: "/images/regional-leadership-southeastern-ucc-300x300.jpg",
+      },
+      {
+        role: "Undergraduate Student Coordinator",
+        name: "Ayden Headley",
+        img: "/images/headshot-default.jpg",
+      },
     ],
   },
   {
-    id: "southwestern", name: "Southwestern", dark: true, logo: "/images/Southwestern Region.jpg",
+    id: "southwestern",
+    name: "Southwestern",
+    dark: true,
+    logo: "/images/Southwestern Region.jpg",
     territory: "Arkansas, Louisiana, Oklahoma, Texas, and Belize.",
-    site: "https://www.sigmaswregion.com/", fb: "https://www.facebook.com/sgrhoswregion/", ig: "https://www.instagram.com/sgrhoswregion/", x: "https://x.com/sgrhoswregion",
+    site: "https://www.sigmaswregion.com/",
+    fb: "https://www.facebook.com/sgrhoswregion/",
+    ig: "https://www.instagram.com/sgrhoswregion/",
+    x: "https://x.com/sgrhoswregion",
     leaders: [
-      { role: "Syntaktes (Regional Director)", name: "LaTisha S. Brandon", img: "/images/regional-leadership-southwestern-syntaktes-300x300.jpg" },
-      { role: "Undergraduate Chapter Coordinator", name: "Shawn Clemons", img: "/images/regional-leadership-southwestern-ucc-300x300.jpg" },
-      { role: "Undergraduate Student Coordinator", name: "Gabriela Lucas", img: "/images/headshot-default.jpg" },
+      {
+        role: "Syntaktes (Regional Director)",
+        name: "LaTisha S. Brandon",
+        img: "/images/regional-leadership-southwestern-syntaktes-300x300.jpg",
+      },
+      {
+        role: "Undergraduate Chapter Coordinator",
+        name: "Shawn Clemons",
+        img: "/images/regional-leadership-southwestern-ucc-300x300.jpg",
+      },
+      {
+        role: "Undergraduate Student Coordinator",
+        name: "Gabriela Lucas",
+        img: "/images/headshot-default.jpg",
+      },
     ],
   },
   {
-    id: "western", name: "Western", dark: false, logo: "/images/Western Region.jpg",
-    territory: "Alaska, Arizona, California, Colorado, Hawaii, Idaho, Montana, Nevada, New Mexico, Oregon, United Arab Emirates, Utah, Washington, Wyoming, and Japan.",
-    site: "https://www.westernsgrho.org/", fb: "https://www.facebook.com/westernsgrho", ig: "https://www.instagram.com/westernsgrho/", x: "https://x.com/WesternSGRho",
+    id: "western",
+    name: "Western",
+    dark: false,
+    logo: "/images/Western Region.jpg",
+    territory:
+      "Alaska, Arizona, California, Colorado, Hawaii, Idaho, Montana, Nevada, New Mexico, Oregon, United Arab Emirates, Utah, Washington, Wyoming, and Japan.",
+    site: "https://www.westernsgrho.org/",
+    fb: "https://www.facebook.com/westernsgrho",
+    ig: "https://www.instagram.com/westernsgrho/",
+    x: "https://x.com/WesternSGRho",
     leaders: [
-      { role: "Syntaktes (Regional Director)", name: "Andrea Magee Davis", img: "/images/regional-leadership-western-syntaktes-300x300.jpg" },
-      { role: "Undergraduate Chapter Coordinator", name: "Manina Johnson", img: "/images/regional-leadership-western-ucc.jpg" },
-      { role: "Undergraduate Student Coordinator", name: "Jazmine Bigornia", img: "/images/regional-leadership-western-usc.jpg" },
+      {
+        role: "Syntaktes (Regional Director)",
+        name: "Andrea Magee Davis",
+        img: "/images/regional-leadership-western-syntaktes-300x300.jpg",
+      },
+      {
+        role: "Undergraduate Chapter Coordinator",
+        name: "Manina Johnson",
+        img: "/images/regional-leadership-western-ucc.jpg",
+      },
+      {
+        role: "Undergraduate Student Coordinator",
+        name: "Jazmine Bigornia",
+        img: "/images/regional-leadership-western-usc.jpg",
+      },
     ],
   },
 ];
 ---
-<Base title="Regional Leadership" activeTop="Leadership" description="Regional leaders connecting international strategy with chapters across Sigma Gamma Rho's five regions.">
+
+<Base
+  title="Regional Leadership"
+  activeTop="Leadership"
+  description="Regional leaders connecting international strategy with chapters across Sigma Gamma Rho's five regions."
+>
   <section class="rl-hero">
     <div class="container rl-hero__inner">
       <p class="eyebrow">Leadership Across the Sisterhood</p>
-      <h1>Five Regions.<br /><span>One Standard.</span></h1>
+      <h1>
+        Five Regions.
+        <br />
+        <span>One Standard.</span>
+      </h1>
       <div class="gold-rule"></div>
-      <p>Regional leaders connect international strategy with chapters, undergraduate leadership, members, and communities across Sigma Gamma Rho's geographic structure.</p>
+      <p>
+        Regional leaders connect international strategy with chapters, undergraduate leadership,
+        members, and communities across Sigma Gamma Rho's geographic structure.
+      </p>
       <nav class="rl-jump">
-        {regions.map((r) => <a href={`#${r.id}`}>{r.name}</a>)}
+        {regions.map((r) => (
+          <a href={`#${r.id}`}>{r.name}</a>
+        ))}
       </nav>
     </div>
   </section>
@@ -81,10 +189,20 @@ const regions = [
             <h2>{r.name}</h2>
             <p class="region-territory">{r.territory}</p>
             <div class="region-socials">
-              <a href={r.site} target="_blank" rel="noopener" aria-label="Region website">🌐</a>
-              <a href={r.fb} target="_blank" rel="noopener" aria-label="Region Facebook">f</a>
-              <a href={r.ig} target="_blank" rel="noopener" aria-label="Region Instagram">◎</a>
-              {r.x && <a href={r.x} target="_blank" rel="noopener" aria-label="Region X (Twitter)">𝕏</a>}
+              <a href={r.site} target="_blank" rel="noopener" aria-label="Region website">
+                🌐
+              </a>
+              <a href={r.fb} target="_blank" rel="noopener" aria-label="Region Facebook">
+                f
+              </a>
+              <a href={r.ig} target="_blank" rel="noopener" aria-label="Region Instagram">
+                ◎
+              </a>
+              {r.x && (
+                <a href={r.x} target="_blank" rel="noopener" aria-label="Region X (Twitter)">
+                  𝕏
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -103,32 +221,136 @@ const regions = [
 </Base>
 
 <style>
-  .rl-hero { background: var(--grad-royal); color: #fff; }
-  .rl-hero__inner { padding-block: clamp(3.5rem, 6vw, 5rem); max-width: 46rem; }
-  .rl-hero h1 { color: #fff; margin: var(--space-2) 0 0; }
-  .rl-hero h1 span { color: var(--gold); }
-  .rl-hero > .container > p:not(.eyebrow) { color: rgba(255,255,255,0.85); }
-  .rl-jump { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-8); }
-  .rl-jump a { font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 999px; }
-  .rl-jump a:hover { background: rgba(255,255,255,0.12); border-color: var(--gold); }
+  .rl-hero {
+    background: var(--grad-royal);
+    color: #fff;
+  }
+  .rl-hero__inner {
+    padding-block: clamp(3.5rem, 6vw, 5rem);
+    max-width: 46rem;
+  }
+  .rl-hero h1 {
+    color: #fff;
+    margin: var(--space-2) 0 0;
+  }
+  .rl-hero h1 span {
+    color: var(--gold);
+  }
+  .rl-hero > .container > p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .rl-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+  }
+  .rl-jump a {
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+  }
+  .rl-jump a:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--gold);
+  }
 
-  .region-block { padding-block: clamp(2.5rem, 5vw, 3.5rem); background: var(--white); scroll-margin-top: 90px; }
-  .region-block--dark { background: var(--cream); }
-  .region-block__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: var(--space-12); align-items: start; }
-  .region-heading { display: flex; gap: var(--space-5); align-items: flex-start; }
-  .region-logo { width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; }
-  .region-heading h2 { margin: var(--space-1) 0 0; font-size: var(--text-h3); }
-  .region-territory { color: var(--muted); font-size: var(--text-sm); margin: var(--space-3) 0; }
-  .region-socials { display: flex; gap: var(--space-2); }
-  .region-socials a { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--royal); text-decoration: none; font-size: var(--text-sm); }
-  .region-socials a:hover { background: var(--royal); color: #fff; border-color: var(--royal); }
+  .region-block {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+    background: var(--white);
+    scroll-margin-top: 90px;
+  }
+  .region-block--dark {
+    background: var(--cream);
+  }
+  .region-block__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .region-heading {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+  .region-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .region-heading h2 {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-h3);
+  }
+  .region-territory {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    margin: var(--space-3) 0;
+  }
+  .region-socials {
+    display: flex;
+    gap: var(--space-2);
+  }
+  .region-socials a {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--royal);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+  .region-socials a:hover {
+    background: var(--royal);
+    color: #fff;
+    border-color: var(--royal);
+  }
 
-  .region-leaders { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
-  .region-leader { text-align: center; }
-  .region-leader img { width: 100%; aspect-ratio: 1; border-radius: 50%; object-fit: cover; margin-bottom: var(--space-3); }
-  .region-leader p { font-size: var(--text-xs); color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.04em; margin: 0; }
-  .region-leader h3 { margin: var(--space-1) 0 0; font-size: var(--text-sm); }
+  .region-leaders {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+  .region-leader {
+    text-align: center;
+  }
+  .region-leader img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--space-3);
+  }
+  .region-leader p {
+    font-size: var(--text-xs);
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+  .region-leader h3 {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-sm);
+  }
 
-  @media (max-width: 780px) { .region-block__inner { grid-template-columns: 1fr; } }
-  @media (max-width: 480px) { .region-leaders { grid-template-columns: 1fr; } }
+  @media (max-width: 780px) {
+    .region-block__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .region-leaders {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

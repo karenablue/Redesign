@@ -68,7 +68,12 @@ export const primaryNav = [
 
 /* Header action buttons (right side of the nav bar). */
 export const headerActions = [
-  { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true, variant: "solid" },
+  {
+    label: "Poodle Portal",
+    href: "https://portal.sgrho1922.org/",
+    external: true,
+    variant: "solid",
+  },
   { label: "Join ΣΓΡ", href: "/membership/become-a-member/", variant: "outline" },
 ];
 
@@ -116,9 +121,17 @@ export const footerContact = {
 
 export const socialLinks = [
   { label: "Facebook", href: "https://www.facebook.com/sgrhoupdates", external: true },
-  { label: "YouTube", href: "https://www.youtube.com/@ICHQofSigmaGammaRhoSororityInc", external: true },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@ICHQofSigmaGammaRhoSororityInc",
+    external: true,
+  },
   { label: "TikTok", href: "https://www.tiktok.com/@sgrhoupdates", external: true },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/sigma-gamma-rho-sorority-inc./", external: true },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/sigma-gamma-rho-sorority-inc./",
+    external: true,
+  },
   { label: "Instagram", href: "https://www.instagram.com/sgrhoupdates/", external: true },
 ];
 

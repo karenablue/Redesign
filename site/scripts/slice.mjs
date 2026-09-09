@@ -14,7 +14,10 @@ const ctx = await browser.newContext({ viewport: { width: 1440, height: SLICE } 
 const page = await ctx.newPage();
 await page.goto(target, { waitUntil: "load" });
 await page.evaluate(async () => {
-  for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 50)); }
+  for (let y = 0; y < document.body.scrollHeight; y += 500) {
+    window.scrollTo(0, y);
+    await new Promise((r) => setTimeout(r, 50));
+  }
   window.scrollTo(0, 0);
 });
 await page.waitForTimeout(600);

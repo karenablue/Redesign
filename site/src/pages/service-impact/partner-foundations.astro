@@ -5,60 +5,116 @@ import { withBase } from "../../lib/url.js";
 
 const foundations = [
   {
-    id: "nef", flip: false, dark: false,
-    logo: "/images/National Education Fund.jpg", abbrev: "National Education Fund",
-    label: "Education • Opportunity • Leadership", name: "National Education", highlight: "Fund",
+    id: "nef",
+    flip: false,
+    dark: false,
+    logo: "/images/National Education Fund.jpg",
+    abbrev: "National Education Fund",
+    label: "Education • Opportunity • Leadership",
+    name: "National Education",
+    highlight: "Fund",
     lead: "Expanding educational opportunity by helping students overcome financial barriers and preparing future leaders to thrive.",
     body: "The Sigma Gamma Rho Sorority National Education Fund, Inc. is the charitable foundation of Sigma Gamma Rho Sorority, Inc. Its work centers scholarships, leadership development, and community education designed to improve academic opportunity and quality of life.",
-    mission: "The National Education Fund provides scholarship assistance to students with financial need while supporting educational programs, workshops, symposiums, and forums that promote learning, leadership, and stronger communities.",
+    mission:
+      "The National Education Fund provides scholarship assistance to students with financial need while supporting educational programs, workshops, symposiums, and forums that promote learning, leadership, and stronger communities.",
     link: "https://www.sgrnationaleducationfund.org/",
     impact: [
-      { n: "01", title: "Scholarships", body: "Helping students pursue higher education by reducing financial barriers." },
-      { n: "02", title: "Leadership Development", body: "Supporting emerging leaders through mentoring, workshops, and professional development." },
-      { n: "03", title: "Community Impact", body: "Strengthening communities through educational initiatives, outreach, and symposiums." },
+      {
+        n: "01",
+        title: "Scholarships",
+        body: "Helping students pursue higher education by reducing financial barriers.",
+      },
+      {
+        n: "02",
+        title: "Leadership Development",
+        body: "Supporting emerging leaders through mentoring, workshops, and professional development.",
+      },
+      {
+        n: "03",
+        title: "Community Impact",
+        body: "Strengthening communities through educational initiatives, outreach, and symposiums.",
+      },
     ],
   },
   {
-    id: "spear", flip: true, dark: true,
-    logo: "/images/SPEAR.jpg", abbrev: "SPEAR Foundation",
-    label: "Research • Advocacy • Community Support", name: "SPEAR", highlight: "Foundation",
+    id: "spear",
+    flip: true,
+    dark: true,
+    logo: "/images/SPEAR.jpg",
+    abbrev: "SPEAR Foundation",
+    label: "Research • Advocacy • Community Support",
+    name: "SPEAR",
+    highlight: "Foundation",
     lead: "Helping communities turn vision into action through strategic support, public education, research, and sustainable partnerships.",
     body: "The Sigma Public Education and Research Foundation advances social, civic, cultural, economic, and educational progress by empowering vulnerable and at-risk families through service, education, advocacy, and research.",
     mission: null,
-    bodyExtra: "Through fiscal sponsorship and strategic partnerships, SPEAR supports Sigma Gamma Rho chapters and community-based organizations as they develop programs designed to reduce poverty and strengthen communities.",
+    bodyExtra:
+      "Through fiscal sponsorship and strategic partnerships, SPEAR supports Sigma Gamma Rho chapters and community-based organizations as they develop programs designed to reduce poverty and strengthen communities.",
     link: "https://www.spearfoundation.org/",
     impact: [
-      { n: "01", title: "Advocacy & Research", body: "Supporting evidence-based advocacy and research that informs solutions and expands opportunity." },
-      { n: "02", title: "Fiscal Sponsorship", body: "Equipping chapters and community organizations with resources to develop and sustain meaningful programs." },
-      { n: "03", title: "Community Impact", body: "Supporting public education and community-service initiatives that address the needs of vulnerable families." },
+      {
+        n: "01",
+        title: "Advocacy & Research",
+        body: "Supporting evidence-based advocacy and research that informs solutions and expands opportunity.",
+      },
+      {
+        n: "02",
+        title: "Fiscal Sponsorship",
+        body: "Equipping chapters and community organizations with resources to develop and sustain meaningful programs.",
+      },
+      {
+        n: "03",
+        title: "Community Impact",
+        body: "Supporting public education and community-service initiatives that address the needs of vulnerable families.",
+      },
     ],
   },
 ];
 ---
-<Base title="Partner Foundations" activeTop="Service & Impact" description="The National Education Fund and SPEAR Foundation — Sigma Gamma Rho's partner foundations expanding education, research, and community support.">
+
+<Base
+  title="Partner Foundations"
+  activeTop="Service & Impact"
+  description="The National Education Fund and SPEAR Foundation — Sigma Gamma Rho's partner foundations expanding education, research, and community support."
+>
   <section class="pf-hero">
     <div class="container pf-hero__inner">
       <p class="eyebrow">Service &amp; Impact</p>
-      <h1>Foundations That <span>Expand the Work</span></h1>
+      <h1>
+        Foundations That <span>Expand the Work</span>
+      </h1>
       <div class="gold-rule"></div>
-      <p>Through education, research, advocacy, fiscal support, and strategic partnerships, Sigma Gamma Rho's partner foundations help transform community vision into sustained impact.</p>
+      <p>
+        Through education, research, advocacy, fiscal support, and strategic partnerships, Sigma
+        Gamma Rho's partner foundations help transform community vision into sustained impact.
+      </p>
       <nav class="pf-jump">
         <a href="#nef">National Education Fund</a>
         <a href="#spear">SPEAR Foundation</a>
       </nav>
     </div>
-    <div class="pf-hero__mark" aria-hidden="true">FOUNDATIONS</div>
+    <div class="pf-hero__mark" aria-hidden="true">
+      FOUNDATIONS
+    </div>
   </section>
 
   <section class="pf-intro">
     <div class="container pf-intro__grid">
       <div>
         <p class="eyebrow">Extending Greater Service</p>
-        <h2>Purpose Backed by <span>Infrastructure</span></h2>
+        <h2>
+          Purpose Backed by <span>Infrastructure</span>
+        </h2>
       </div>
       <div class="pf-intro__copy">
-        <p>Community service grows stronger when it is supported by institutions designed to fund opportunity, develop leaders, strengthen programs, and turn ideas into sustainable action.</p>
-        <p>Two partner foundations play distinct but complementary roles in that work: the National Education Fund and the Sigma Public Education and Research Foundation.</p>
+        <p>
+          Community service grows stronger when it is supported by institutions designed to fund
+          opportunity, develop leaders, strengthen programs, and turn ideas into sustainable action.
+        </p>
+        <p>
+          Two partner foundations play distinct but complementary roles in that work: the National
+          Education Fund and the Sigma Public Education and Research Foundation.
+        </p>
       </div>
     </div>
   </section>
@@ -68,12 +124,16 @@ const foundations = [
       <section id={f.id} class:list={["pf-feature", { "pf-feature--dark": f.dark }]}>
         <div class:list={["container pf-feature__inner", { "pf-feature__inner--flip": f.flip }]}>
           <div class="pf-symbol">
-            <div class="pf-logo-card"><img src={withBase(f.logo)} alt={f.abbrev} /></div>
+            <div class="pf-logo-card">
+              <img src={withBase(f.logo)} alt={f.abbrev} />
+            </div>
             <span class="pf-abbrev">{f.abbrev}</span>
           </div>
           <div class="pf-copy">
             <p class="pf-label">{f.label}</p>
-            <h2>{f.name} <span>{f.highlight}</span></h2>
+            <h2>
+              {f.name} <span>{f.highlight}</span>
+            </h2>
             <p class="pf-lead">{f.lead}</p>
             <p>{f.body}</p>
             {f.mission && (
@@ -83,7 +143,9 @@ const foundations = [
               </div>
             )}
             {f.bodyExtra && <p>{f.bodyExtra}</p>}
-            <a class="pf-link" href={f.link} target="_blank" rel="noopener">Visit {f.abbrev} <span aria-hidden="true">&#8599;</span></a>
+            <a class="pf-link" href={f.link} target="_blank" rel="noopener">
+              Visit {f.abbrev} <span aria-hidden="true">&#8599;</span>
+            </a>
           </div>
           <div class="pf-impact">
             {f.impact.map((it) => (
@@ -100,7 +162,10 @@ const foundations = [
         <div class="pf-bridge">
           <div class="container pf-bridge__inner">
             <span class="pf-bridge__line"></span>
-            <p>One foundation expands access to education. <strong>The other strengthens the systems that sustain community action.</strong></p>
+            <p>
+              One foundation expands access to education.{" "}
+              <strong>The other strengthens the systems that sustain community action.</strong>
+            </p>
             <span class="pf-bridge__line"></span>
           </div>
         </div>
@@ -115,64 +180,255 @@ const foundations = [
     copy="Scholarships create access. Leadership development builds capacity. Research strengthens decisions. Fiscal sponsorship helps programs grow. Together, these foundations extend the infrastructure behind Greater Service."
     actions={[
       { label: "Explore National Programs", href: "/service-impact/national-programs/" },
-      { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/", variant: "outline" },
+      {
+        label: "Corporate Partnerships",
+        href: "/service-impact/corporate-partnerships/",
+        variant: "outline",
+      },
     ]}
   />
 </Base>
 
 <style>
-  .pf-hero { position: relative; overflow: hidden; background: var(--grad-royal); color: #fff; }
-  .pf-hero__inner { position: relative; z-index: 2; padding-block: clamp(3.5rem, 6vw, 5rem); max-width: 46rem; }
-  .pf-hero h1 { color: #fff; margin: var(--space-2) 0 0; }
-  .pf-hero h1 span { color: var(--gold); }
-  .pf-hero > .container > p:not(.eyebrow) { color: rgba(255,255,255,0.85); }
-  .pf-jump { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
-  .pf-jump a { font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 999px; }
-  .pf-jump a:hover { background: rgba(255,255,255,0.12); border-color: var(--gold); }
-  .pf-hero__mark { position: absolute; right: -0.5rem; bottom: -2rem; z-index: 1; color: rgba(255,255,255,0.04); font-size: clamp(4rem, 12vw, 9rem); font-family: var(--font-label); }
+  .pf-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--grad-royal);
+    color: #fff;
+  }
+  .pf-hero__inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(3.5rem, 6vw, 5rem);
+    max-width: 46rem;
+  }
+  .pf-hero h1 {
+    color: #fff;
+    margin: var(--space-2) 0 0;
+  }
+  .pf-hero h1 span {
+    color: var(--gold);
+  }
+  .pf-hero > .container > p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .pf-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+  .pf-jump a {
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+  }
+  .pf-jump a:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--gold);
+  }
+  .pf-hero__mark {
+    position: absolute;
+    right: -0.5rem;
+    bottom: -2rem;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.04);
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-family: var(--font-label);
+  }
 
-  .pf-intro { background: var(--white); padding-block: clamp(3rem, 5vw, 4rem); }
-  .pf-intro__grid { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: var(--space-12); align-items: start; }
-  .pf-intro__grid h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .pf-intro__grid h2 span { color: var(--gold); }
-  .pf-intro__copy p { color: var(--muted); }
-  @media (max-width: 780px) { .pf-intro__grid { grid-template-columns: 1fr; } }
+  .pf-intro {
+    background: var(--white);
+    padding-block: clamp(3rem, 5vw, 4rem);
+  }
+  .pf-intro__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .pf-intro__grid h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .pf-intro__grid h2 span {
+    color: var(--gold);
+  }
+  .pf-intro__copy p {
+    color: var(--muted);
+  }
+  @media (max-width: 780px) {
+    .pf-intro__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-  .pf-feature { background: var(--cream); padding-block: clamp(3rem, 6vw, 4.5rem); }
-  .pf-feature--dark { background: var(--grad-royal); color: #fff; }
-  .pf-feature--dark p:not(.pf-label) { color: rgba(255,255,255,0.85); }
-  .pf-feature__inner { display: grid; grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr) minmax(0, 0.8fr); gap: var(--space-10); align-items: start; }
-  .pf-feature__inner--flip { direction: rtl; }
-  .pf-feature__inner--flip > * { direction: ltr; }
-  .pf-symbol { text-align: center; }
-  .pf-logo-card { background: #fff; border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-md); }
-  .pf-logo-card img { width: 100%; }
-  .pf-abbrev { display: block; margin-top: var(--space-3); font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-dark); }
-  .pf-feature--dark .pf-abbrev { color: var(--gold-bright); }
-  .pf-label { font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-dark); }
-  .pf-feature--dark .pf-label { color: var(--gold-bright); }
-  .pf-copy h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .pf-copy h2 span { color: var(--gold); }
-  .pf-lead { font-weight: 600; color: var(--ink); }
-  .pf-feature--dark .pf-lead { color: #fff; }
-  .pf-mission { margin: var(--space-5) 0; padding: var(--space-5); background: rgba(255,255,255,0.5); border-left: 3px solid var(--gold); border-radius: var(--radius); }
-  .pf-mission__label { font-weight: 800; color: var(--royal); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 var(--space-2); }
-  .pf-link { display: inline-block; margin-top: var(--space-4); font-weight: 800; color: var(--royal); text-decoration: none; }
-  .pf-feature--dark .pf-link { color: var(--gold-bright); }
-  .pf-link:hover { color: var(--gold-dark); }
+  .pf-feature {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .pf-feature--dark {
+    background: var(--grad-royal);
+    color: #fff;
+  }
+  .pf-feature--dark p:not(.pf-label) {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .pf-feature__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: var(--space-10);
+    align-items: start;
+  }
+  .pf-feature__inner--flip {
+    direction: rtl;
+  }
+  .pf-feature__inner--flip > * {
+    direction: ltr;
+  }
+  .pf-symbol {
+    text-align: center;
+  }
+  .pf-logo-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+  }
+  .pf-logo-card img {
+    width: 100%;
+  }
+  .pf-abbrev {
+    display: block;
+    margin-top: var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .pf-feature--dark .pf-abbrev {
+    color: var(--gold-bright);
+  }
+  .pf-label {
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .pf-feature--dark .pf-label {
+    color: var(--gold-bright);
+  }
+  .pf-copy h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .pf-copy h2 span {
+    color: var(--gold);
+  }
+  .pf-lead {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .pf-feature--dark .pf-lead {
+    color: #fff;
+  }
+  .pf-mission {
+    margin: var(--space-5) 0;
+    padding: var(--space-5);
+    background: rgba(255, 255, 255, 0.5);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
+  }
+  .pf-mission__label {
+    font-weight: 800;
+    color: var(--royal);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 var(--space-2);
+  }
+  .pf-link {
+    display: inline-block;
+    margin-top: var(--space-4);
+    font-weight: 800;
+    color: var(--royal);
+    text-decoration: none;
+  }
+  .pf-feature--dark .pf-link {
+    color: var(--gold-bright);
+  }
+  .pf-link:hover {
+    color: var(--gold-dark);
+  }
 
-  .pf-impact { display: flex; flex-direction: column; gap: var(--space-5); }
-  .pf-impact article { background: rgba(255,255,255,0.6); border-radius: var(--radius-lg); padding: var(--space-5); }
-  .pf-feature--dark .pf-impact article { background: rgba(255,255,255,0.08); }
-  .pf-impact__num { font-family: var(--font-label); color: var(--gold); font-size: var(--text-md); }
-  .pf-impact h3 { margin: var(--space-2) 0 var(--space-1); font-size: var(--text-sm); }
-  .pf-feature--dark .pf-impact h3 { color: #fff; }
-  .pf-impact p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
-  @media (max-width: 900px) { .pf-feature__inner, .pf-feature__inner--flip { grid-template-columns: 1fr; direction: ltr; } }
+  .pf-impact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .pf-impact article {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+  .pf-feature--dark .pf-impact article {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .pf-impact__num {
+    font-family: var(--font-label);
+    color: var(--gold);
+    font-size: var(--text-md);
+  }
+  .pf-impact h3 {
+    margin: var(--space-2) 0 var(--space-1);
+    font-size: var(--text-sm);
+  }
+  .pf-feature--dark .pf-impact h3 {
+    color: #fff;
+  }
+  .pf-impact p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 900px) {
+    .pf-feature__inner,
+    .pf-feature__inner--flip {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+  }
 
-  .pf-bridge { background: var(--white); padding-block: var(--space-8); }
-  .pf-bridge__inner { display: flex; align-items: center; gap: var(--space-6); max-width: 50rem; margin-inline: auto; }
-  .pf-bridge__line { flex: 1; height: 1px; background: var(--line); }
-  .pf-bridge__inner p { text-align: center; color: var(--muted); margin: 0; }
-  .pf-bridge__inner strong { color: var(--royal); }
+  .pf-bridge {
+    background: var(--white);
+    padding-block: var(--space-8);
+  }
+  .pf-bridge__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    max-width: 50rem;
+    margin-inline: auto;
+  }
+  .pf-bridge__line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .pf-bridge__inner p {
+    text-align: center;
+    color: var(--muted);
+    margin: 0;
+  }
+  .pf-bridge__inner strong {
+    color: var(--royal);
+  }
 </style>

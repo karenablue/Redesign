@@ -181,7 +181,7 @@ Models drift toward a house style. This project has its own identity (a
 102-year-old sorority, royal/gold, LEMON MILK, editorial). Actively avoid the
 generic-AI-build tells:
 
-#### Visual / UI
+### Visual / UI
 
 - No "AI SaaS" look: no charcoal dark-mode default, no purple→blue gradients,
   no glowing borders (`box-shadow: 0 0 15px …`), no undifferentiated bento grids.
@@ -221,7 +221,7 @@ generic-AI-build tells:
 - No package hoarding — see §2. No library for a fade or a date format.
 - One way to do a thing per the patterns here; don't invent a third data or
   styling approach per file.
-- Comments explain *why*, not *what* (`// adds two numbers` is noise). Match the
+- Comments explain _why_, not _what_ (`// adds two numbers` is noise). Match the
   existing docstring density — useful, not robotic.
 - No orphaned code: remove unused imports, dead CSS classes, unreferenced
   helpers as you go.

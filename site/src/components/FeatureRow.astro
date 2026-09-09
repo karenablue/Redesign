@@ -18,9 +18,19 @@
  */
 import { withBase } from "../lib/url.js";
 
-const { eyebrow, title, image, imageAlt = "", fit = "cover", flip = false, index, tone = "white" } = Astro.props;
+const {
+  eyebrow,
+  title,
+  image,
+  imageAlt = "",
+  fit = "cover",
+  flip = false,
+  index,
+  tone = "white",
+} = Astro.props;
 const flipped = typeof index === "number" ? index % 2 === 1 : flip;
 ---
+
 <section class:list={["frow", `frow--${tone}`, { "frow--flip": flipped }]}>
   <div class="container frow__inner">
     <figure class:list={["frow__media", `frow__media--${fit}`]}>
@@ -35,23 +45,39 @@ const flipped = typeof index === "number" ? index % 2 === 1 : flip;
 </section>
 
 <style>
-  .frow { padding-block: clamp(2rem, 4.5vw, 3.25rem); }
-  .frow--white { background: var(--white); }
-  .frow--cream { background: var(--cream); }
+  .frow {
+    padding-block: clamp(2rem, 4.5vw, 3.25rem);
+  }
+  .frow--white {
+    background: var(--white);
+  }
+  .frow--cream {
+    background: var(--cream);
+  }
   .frow__inner {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     gap: clamp(2rem, 6vw, 4.5rem);
     align-items: center;
   }
-  .frow--flip .frow__media { order: 2; }
+  .frow--flip .frow__media {
+    order: 2;
+  }
   .frow__media {
     margin: 0;
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
-  .frow__media--cover { box-shadow: var(--shadow-md); }
-  .frow__media--cover img { width: 100%; aspect-ratio: 5 / 3.4; max-height: 360px; object-fit: cover; display: block; }
+  .frow__media--cover {
+    box-shadow: var(--shadow-md);
+  }
+  .frow__media--cover img {
+    width: 100%;
+    aspect-ratio: 5 / 3.4;
+    max-height: 360px;
+    object-fit: cover;
+    display: block;
+  }
   .frow__media--contain {
     background: var(--cream-2);
     border: 1px solid var(--line);
@@ -61,13 +87,33 @@ const flipped = typeof index === "number" ? index % 2 === 1 : flip;
     aspect-ratio: 5 / 3.4;
     max-height: 360px;
   }
-  .frow__media--contain img { max-width: 78%; max-height: 78%; object-fit: contain; display: block; }
-  .frow__copy :global(h3) { font-size: var(--text-h3); margin-bottom: var(--space-4); }
-  .frow__copy :global(p) { color: var(--muted); }
-  .frow__copy :global(p:last-child) { margin-bottom: 0; }
+  .frow__media--contain img {
+    max-width: 78%;
+    max-height: 78%;
+    object-fit: contain;
+    display: block;
+  }
+  .frow__copy :global(h3) {
+    font-size: var(--text-h3);
+    margin-bottom: var(--space-4);
+  }
+  .frow__copy :global(p) {
+    color: var(--muted);
+  }
+  .frow__copy :global(p:last-child) {
+    margin-bottom: 0;
+  }
   @media (max-width: 820px) {
-    .frow__inner { grid-template-columns: 1fr; gap: var(--space-6); }
-    .frow--flip .frow__media { order: 0; }
-    .frow__media--cover img, .frow__media--contain { max-height: 300px; }
+    .frow__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    .frow--flip .frow__media {
+      order: 0;
+    }
+    .frow__media--cover img,
+    .frow__media--contain {
+      max-height: 300px;
+    }
   }
 </style>
