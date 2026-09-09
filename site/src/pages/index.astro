@@ -752,11 +752,12 @@ const partners = [
     height: 100%;
     object-fit: cover;
     opacity: 0.55;
-    /* the clip has animated title text baked in that sweeps the full width —
-       CSS overlays can't fully hide it, so blur it to ambient texture.
-       (A text-free source clip would let this drop to blur(0).) */
-    filter: blur(10px) saturate(1.15);
-    transform: scale(1.12);
+    /* PLACEHOLDER: the current /images/sgrho video.mp4 has an animated title
+       sequence baked in. Blur is only here to keep that text from reading.
+       When the text-free replacement clip lands: set filter: none, transform:
+       none, and bump opacity toward 0.7. */
+    filter: blur(5px) saturate(1.15);
+    transform: scale(1.08);
   }
   .home-hero__scrim {
     position: absolute;
