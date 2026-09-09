@@ -936,18 +936,17 @@ const news = [
     padding-top: clamp(2rem, 4vw, 3rem);
     border-top: 1px solid var(--line);
   }
+  /* flex (not grid) so the 5 cards sit 3-over-2 with the bottom row centred */
   .prog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-6);
     margin-top: var(--space-8);
   }
-  @media (min-width: 900px) {
-    .prog-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
   .prog-card {
+    flex: 1 1 260px;
+    max-width: 380px;
     display: block;
     text-align: center;
     padding: 2rem 1.75rem;
@@ -963,6 +962,13 @@ const news = [
   .prog-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(223, 177, 54, 0.2);
+  }
+  /* 3 per row on desktop; the remaining 2 wrap and centre */
+  @media (min-width: 860px) {
+    .prog-card {
+      flex: 0 1 calc((100% - var(--space-6) * 2) / 3);
+      max-width: calc((100% - var(--space-6) * 2) / 3);
+    }
   }
   .prog-card__go {
     display: inline-block;
