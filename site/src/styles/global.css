@@ -1,7 +1,7 @@
 /* ==========================================================================
    Global base — reset, typography, shared primitives.
-   Type system (from redesign-feedback.md):
-     LEMON MILK → labels/eyebrows/numerals · Newsreader → headings · Montserrat → body
+   Type system (see AGENTS.md §6 — settled, no serif anywhere):
+     LEMON MILK → h1/h2 headings + labels/eyebrows/numerals · Montserrat → body
    ========================================================================== */
 
 @import "./tokens.css";
