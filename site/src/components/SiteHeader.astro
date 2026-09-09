@@ -89,12 +89,28 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
             </svg>
           </button>
           <div class="search-panel" hidden>
-            <input
-              type="search"
-              class="search-input"
-              placeholder="Search the site&hellip;"
-              aria-label="Search the site"
-            />
+            <div class="search-field">
+              <svg
+                class="search-field__icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="search"
+                class="search-input"
+                placeholder="Search the site&hellip;"
+                aria-label="Search the site"
+              />
+            </div>
             <div class="search-results" role="listbox" aria-label="Search results"></div>
           </div>
         </div>
@@ -345,40 +361,95 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .search-panel {
     position: absolute;
     right: 0;
-    top: calc(100% + 8px);
-    width: min(320px, 80vw);
+    top: calc(100% + 10px);
+    width: min(360px, calc(100vw - 2rem));
     padding: var(--space-3);
     background: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-md);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 18px 44px rgba(8, 22, 51, 0.22);
+  }
+  /* little caret pointing back up at the toggle */
+  .search-panel::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    background: var(--white);
+    border-left: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    transform: rotate(45deg);
+  }
+
+  .search-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-field__icon {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--muted-2);
+    pointer-events: none;
   }
   .search-input {
     width: 100%;
-    padding: 0.6rem 0.7rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    padding: 0.6rem 0.8rem 0.6rem 2.2rem;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: var(--tint);
     font: inherit;
+    font-size: var(--text-sm);
+    color: var(--ink);
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
   }
+  .search-input::placeholder {
+    color: var(--muted-2);
+  }
+  .search-input:focus {
+    outline: none;
+    background: var(--white);
+    border-color: var(--gold);
+  }
+  /* hide the browser's native clear (×) button */
+  .search-input::-webkit-search-cancel-button,
+  .search-input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
   .search-results {
     display: flex;
     flex-direction: column;
     margin-top: var(--space-2);
   }
-  .search-results a {
-    padding: 0.5rem 0.6rem;
+  .search-results:empty {
+    display: none;
+  }
+  /* Result rows are created at runtime by the inline script, so scoped
+     selectors can't reach them — pierce the scope with :global(). */
+  .search-results :global(a) {
+    display: block;
+    padding: 0.55rem 0.7rem;
     color: var(--ink);
     font-size: var(--text-sm);
+    font-weight: 600;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: var(--radius);
   }
-  .search-results a:hover,
-  .search-results a:focus {
-    background: #f5f7fc;
+  .search-results :global(a:hover),
+  .search-results :global(a:focus) {
+    background: var(--tint);
     color: var(--royal);
+    outline: none;
   }
-  .search-results__empty {
+  .search-results :global(.search-results__empty) {
     margin: 0;
-    padding: 0.5rem 0.6rem;
+    padding: 0.55rem 0.7rem;
     color: var(--muted);
     font-size: var(--text-sm);
   }
