@@ -15,7 +15,10 @@ const pages = [
 
 const base = process.env.BASE_URL || "http://localhost:4321";
 const browser = await chromium.launch();
-const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+const ctx = await browser.newContext({
+  viewport: { width: 1440, height: 900 },
+  deviceScaleFactor: 1,
+});
 const page = await ctx.newPage();
 
 for (const [name, path] of pages) {

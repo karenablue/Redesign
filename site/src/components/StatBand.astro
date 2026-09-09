@@ -11,12 +11,15 @@
 const { stats = [], tone = "navy", anchor } = Astro.props;
 const showAnchor = anchor ?? tone === "navy";
 ---
+
 <section class:list={["statband", `statband--${tone}`]}>
   <div class="container statband__inner">
     <dl class="statband__row">
       {stats.map((s, i) => (
         <div class="statband__item">
-          <dt class="statband__value" data-count data-value={s.value}>{s.value}</dt>
+          <dt class="statband__value" data-count data-value={s.value}>
+            {s.value}
+          </dt>
           <dd class="statband__label">{s.label}</dd>
         </div>
       ))}
@@ -32,18 +35,36 @@ const showAnchor = anchor ?? tone === "navy";
 </section>
 
 <style>
-  .statband--navy { color: #fff; background: var(--grad-royal); position: relative; }
+  .statband--navy {
+    color: #fff;
+    background: var(--grad-royal);
+    position: relative;
+  }
   .statband--navy::before,
   .statband--navy::after {
-    content: ""; position: absolute; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(223,177,54,0.5), transparent);
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(223, 177, 54, 0.5), transparent);
   }
-  .statband--navy::before { top: 0; }
-  .statband--navy::after { bottom: 0; }
-  .statband--white { background: var(--white); }
-  .statband--cream { background: var(--cream); }
+  .statband--navy::before {
+    top: 0;
+  }
+  .statband--navy::after {
+    bottom: 0;
+  }
+  .statband--white {
+    background: var(--white);
+  }
+  .statband--cream {
+    background: var(--cream);
+  }
 
-  .statband__inner { padding-block: clamp(3rem, 2rem + 4vw, 4rem); }
+  .statband__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 4rem);
+  }
 
   .statband__row {
     display: flex;
@@ -57,11 +78,18 @@ const showAnchor = anchor ?? tone === "navy";
     position: relative;
   }
   .statband__item + .statband__item::before {
-    content: ""; position: absolute; left: 0; top: 8%; bottom: 8%;
-    width: 1px; background: rgba(255, 255, 255, 0.12);
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8%;
+    bottom: 8%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.12);
   }
   .statband--white .statband__item + .statband__item::before,
-  .statband--cream .statband__item + .statband__item::before { background: var(--line); }
+  .statband--cream .statband__item + .statband__item::before {
+    background: var(--line);
+  }
 
   .statband__value {
     font-family: var(--font-label);
@@ -73,7 +101,9 @@ const showAnchor = anchor ?? tone === "navy";
     margin: 0 0 var(--space-3);
   }
   .statband--white .statband__value,
-  .statband--cream .statband__value { color: var(--royal); }
+  .statband--cream .statband__value {
+    color: var(--royal);
+  }
 
   .statband__label {
     margin: 0;
@@ -85,20 +115,44 @@ const showAnchor = anchor ?? tone === "navy";
     color: rgba(255, 255, 255, 0.6);
   }
   .statband--white .statband__label,
-  .statband--cream .statband__label { color: var(--muted); }
+  .statband--cream .statband__label {
+    color: var(--muted);
+  }
 
   .statband__anchor {
-    display: flex; align-items: center; justify-content: center;
-    gap: var(--space-4); margin-top: clamp(1.75rem, 3vw, 2.5rem); opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: clamp(1.75rem, 3vw, 2.5rem);
+    opacity: 0.5;
   }
-  .statband__anchor-line { width: 3rem; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
-  .statband__anchor-line--r { background: linear-gradient(270deg, transparent, var(--gold)); }
-  .statband__sigma { font-family: Georgia, serif; font-size: 1.75rem; line-height: 1; color: var(--gold); }
+  .statband__anchor-line {
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .statband__anchor-line--r {
+    background: linear-gradient(270deg, transparent, var(--gold));
+  }
+  .statband__sigma {
+    font-family: Georgia, serif;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--gold);
+  }
 
   @media (max-width: 720px) {
-    .statband__row { flex-wrap: wrap; gap: var(--space-8) 0; }
-    .statband__item { flex-basis: 50%; }
-    .statband__item + .statband__item::before { display: none; }
+    .statband__row {
+      flex-wrap: wrap;
+      gap: var(--space-8) 0;
+    }
+    .statband__item {
+      flex-basis: 50%;
+    }
+    .statband__item + .statband__item::before {
+      display: none;
+    }
   }
 </style>
 

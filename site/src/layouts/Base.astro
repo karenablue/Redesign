@@ -26,6 +26,7 @@ const fullTitle = title
   : "Sigma Gamma Rho Sorority, Incorporated";
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -53,14 +54,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
     <SiteHeader activeTop={activeTop} />
     <main id="main">
       <slot />
     </main>
     <SiteFooter />
 
-    <a class="donate-float" href="https://sgrho1922.org/donate" target="_blank" rel="noopener" aria-label="Donate" title="Donate">
+    <a
+      class="donate-float"
+      href="https://sgrho1922.org/donate"
+      target="_blank"
+      rel="noopener"
+      aria-label="Donate"
+      title="Donate"
+    >
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
         <path d="M12 21s-7.5-4.35-10-9C.5 8.5 2 4.5 6 4.5c2.2 0 3.8 1.3 4.6 2.7.8-1.4 2.4-2.7 4.6-2.7 4 0 5.5 4 3 7.5-2.5 4.65-10 9-10 9Z"></path>
       </svg>
@@ -82,22 +92,38 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
         z-index: 9999;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background-color 0.2s ease;
       }
       .donate-float:hover {
         transform: translateY(-3px) scale(1.04);
         box-shadow: 0 14px 30px rgba(0, 0, 0, 0.26);
         background: var(--gold-dark);
       }
-      .donate-float:active { transform: translateY(-1px) scale(0.98); }
-      .donate-float:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+      .donate-float:active {
+        transform: translateY(-1px) scale(0.98);
+      }
+      .donate-float:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: 3px;
+      }
       .donate-float svg {
         width: 26px;
         height: 26px;
       }
       @media (max-width: 768px) {
-        .donate-float { width: 58px; height: 58px; right: 18px; bottom: 18px; }
-        .donate-float svg { width: 22px; height: 22px; }
+        .donate-float {
+          width: 58px;
+          height: 58px;
+          right: 18px;
+          bottom: 18px;
+        }
+        .donate-float svg {
+          width: 22px;
+          height: 22px;
+        }
       }
 
       .skip-link {
@@ -111,9 +137,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
         font-size: var(--text-sm);
         line-height: 1;
         border-radius: 0 0 var(--radius) var(--radius);
-        transition: top .15s ease;
+        transition: top 0.15s ease;
       }
-      .skip-link:focus { top: 0; }
+      .skip-link:focus {
+        top: 0;
+      }
     </style>
   </body>
 </html>

@@ -15,15 +15,28 @@ import Button from "./Button.astro";
 
 const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 ---
+
 <section class="cta on-dark">
   <div class="container cta__inner">
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    {title && <h2 class="cta__title">{title}{highlight && <> <span>{highlight}</span></>}</h2>}
+    {title && (
+      <h2 class="cta__title">
+        {title}
+        {highlight && (
+          <>
+            {" "}
+            <span>{highlight}</span>
+          </>
+        )}
+      </h2>
+    )}
     {copy && <p class="cta__copy">{copy}</p>}
     {actions.length > 0 && (
       <div class="cta__actions">
         {actions.map((a) => (
-          <Button href={a.href} variant={a.variant ?? "solid"} onDark>{a.label}</Button>
+          <Button href={a.href} variant={a.variant ?? "solid"} onDark>
+            {a.label}
+          </Button>
         ))}
       </div>
     )}
@@ -49,7 +62,9 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
     line-height: 1.15;
     font-size: var(--text-h2);
   }
-  .cta__title span { color: var(--gold); }
+  .cta__title span {
+    color: var(--gold);
+  }
   .cta__copy {
     margin: var(--space-4) 0 0;
     font-size: var(--text-md);

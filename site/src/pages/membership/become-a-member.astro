@@ -17,68 +17,203 @@ import Carousel from "../../components/Carousel.astro";
 import { withBase } from "../../lib/url.js";
 
 const sigmaWoman = [
-  { q: "She takes scholarship seriously.", a: "A good Sigma woman respects academic excellence, intellectual discipline, and the responsibility to represent the Sorority well in every space." },
-  { q: "She is service-minded, not image-driven.", a: "She is motivated by real work in real communities. She is prepared to serve consistently — not only when service is visible or convenient." },
-  { q: "She values structure, accountability, and official process.", a: "She can follow direction, respect policy, and move with maturity. She does not look for shortcuts around standards, governance, or procedure." },
-  { q: "She understands sisterhood requires conduct.", a: "Sigma women should be able to build trust, show respect, handle conflict with maturity, and contribute to healthy chapter life." },
-  { q: "She is prepared for a lifelong commitment.", a: "Membership is not a short-term campus experience. A strong candidate understands that Sigma Gamma Rho calls for continued involvement, responsibility, and growth beyond initiation." },
+  {
+    q: "She takes scholarship seriously.",
+    a: "A good Sigma woman respects academic excellence, intellectual discipline, and the responsibility to represent the Sorority well in every space.",
+  },
+  {
+    q: "She is service-minded, not image-driven.",
+    a: "She is motivated by real work in real communities. She is prepared to serve consistently — not only when service is visible or convenient.",
+  },
+  {
+    q: "She values structure, accountability, and official process.",
+    a: "She can follow direction, respect policy, and move with maturity. She does not look for shortcuts around standards, governance, or procedure.",
+  },
+  {
+    q: "She understands sisterhood requires conduct.",
+    a: "Sigma women should be able to build trust, show respect, handle conflict with maturity, and contribute to healthy chapter life.",
+  },
+  {
+    q: "She is prepared for a lifelong commitment.",
+    a: "Membership is not a short-term campus experience. A strong candidate understands that Sigma Gamma Rho calls for continued involvement, responsibility, and growth beyond initiation.",
+  },
 ];
 
 const undergradRequirements = [
-  { n: "01", body: "Attend an eligible college or university accredited by an accrediting agency recognized by the U.S. Department of Education or the Council for Higher Education Accreditation (CHEA)." },
-  { n: "02", body: "Successfully complete at least one quarter, semester, or trimester before consideration for membership." },
-  { n: "03", body: "Maintain at least a 2.5 cumulative GPA on a 4.0 scale, or the higher standard required by the institution or applicable council." },
-  { n: "04", body: "Remain in good standing with the college or university and satisfy applicable institutional requirements." },
+  {
+    n: "01",
+    body: "Attend an eligible college or university accredited by an accrediting agency recognized by the U.S. Department of Education or the Council for Higher Education Accreditation (CHEA).",
+  },
+  {
+    n: "02",
+    body: "Successfully complete at least one quarter, semester, or trimester before consideration for membership.",
+  },
+  {
+    n: "03",
+    body: "Maintain at least a 2.5 cumulative GPA on a 4.0 scale, or the higher standard required by the institution or applicable council.",
+  },
+  {
+    n: "04",
+    body: "Remain in good standing with the college or university and satisfy applicable institutional requirements.",
+  },
 ];
-const undergradImages = ["/images/Lambda Psi.jpg", "/images/ug sorors 4.jpg", "/images/ug sorors 5.jpg", "/images/ug sorors 7.jpg"];
+const undergradImages = [
+  "/images/Lambda Psi.jpg",
+  "/images/ug sorors 4.jpg",
+  "/images/ug sorors 5.jpg",
+  "/images/ug sorors 7.jpg",
+];
 
 const alumnaeRequirements = [
-  { n: "01", body: "Hold a bachelor's degree or other qualifying degree from a four-year institution accredited by an accrediting agency recognized by the U.S. Department of Education or CHEA." },
+  {
+    n: "01",
+    body: "Hold a bachelor's degree or other qualifying degree from a four-year institution accredited by an accrediting agency recognized by the U.S. Department of Education or CHEA.",
+  },
   { n: "02", body: "There is no national GPA requirement for alumnae membership." },
-  { n: "03", body: "Demonstrate readiness to contribute through service, leadership, chapter participation, sisterhood, and organizational responsibility." },
-  { n: "04", body: "Follow the official membership instructions communicated by the appropriate chapter or regional membership leadership." },
+  {
+    n: "03",
+    body: "Demonstrate readiness to contribute through service, leadership, chapter participation, sisterhood, and organizational responsibility.",
+  },
+  {
+    n: "04",
+    body: "Follow the official membership instructions communicated by the appropriate chapter or regional membership leadership.",
+  },
 ];
-const alumnaeImages = ["/images/Beta Psi Sigma.jpg", "/images/alumnae sorors.jpg", "/images/alumnae sorors 2.jfif", "/images/alumnae sorors 3.jfif"];
+const alumnaeImages = [
+  "/images/Beta Psi Sigma.jpg",
+  "/images/alumnae sorors.jpg",
+  "/images/alumnae sorors 2.jfif",
+  "/images/alumnae sorors 3.jfif",
+];
 
 const prospectiveFaqA = [
-  { q: "Does meeting the minimum requirements guarantee membership?", a: "No. Meeting the published requirements establishes eligibility for consideration. It does not guarantee selection, acceptance, or an invitation to membership." },
-  { q: "What GPA is required for undergraduate membership?", a: "The national undergraduate minimum is a 2.5 cumulative GPA on a 4.0 scale. If the institution or applicable campus council requires a higher standard, the higher standard applies." },
-  { q: "Can I pursue membership during my first semester or quarter?", a: "An undergraduate candidate must successfully complete at least one quarter, semester, or trimester before being considered. Campus requirements may be more stringent." },
-  { q: "Can I pursue membership while attending a two-year or community college?", a: "Eligibility depends on whether the academic pathway satisfies Sigma Gamma Rho's current undergraduate membership requirements. Candidates should verify their institution and program with the appropriate regional or membership leadership before assuming eligibility." },
-  { q: "What if my college or university does not have an active Sigma Gamma Rho chapter?", a: "Use the Chapter Locator and regional undergraduate contacts to determine whether an authorized chapter or regional structure serves your institution. Do not assume that you may participate through another campus without official guidance." },
-  { q: "Can I participate through another school's chapter if my chapter is inactive?", a: "Do not make that determination independently. Undergraduate membership activity must follow official chapter, regional, and institutional guidance. Contact the appropriate regional undergraduate leadership for direction." },
-  { q: "What if I already earned a bachelor's degree but am enrolled for another undergraduate degree?", a: "Your membership pathway depends on Sigma Gamma Rho's current eligibility rules, not simply your present student classification. A candidate who has already earned a qualifying bachelor's degree should confirm whether alumnae membership is the appropriate path." },
-  { q: "Is there an age limit to pursue membership?", a: "Age alone is not presented here as the defining eligibility standard. Educational status, degree status, chapter jurisdiction, and the published membership requirements determine the appropriate pathway." },
+  {
+    q: "Does meeting the minimum requirements guarantee membership?",
+    a: "No. Meeting the published requirements establishes eligibility for consideration. It does not guarantee selection, acceptance, or an invitation to membership.",
+  },
+  {
+    q: "What GPA is required for undergraduate membership?",
+    a: "The national undergraduate minimum is a 2.5 cumulative GPA on a 4.0 scale. If the institution or applicable campus council requires a higher standard, the higher standard applies.",
+  },
+  {
+    q: "Can I pursue membership during my first semester or quarter?",
+    a: "An undergraduate candidate must successfully complete at least one quarter, semester, or trimester before being considered. Campus requirements may be more stringent.",
+  },
+  {
+    q: "Can I pursue membership while attending a two-year or community college?",
+    a: "Eligibility depends on whether the academic pathway satisfies Sigma Gamma Rho's current undergraduate membership requirements. Candidates should verify their institution and program with the appropriate regional or membership leadership before assuming eligibility.",
+  },
+  {
+    q: "What if my college or university does not have an active Sigma Gamma Rho chapter?",
+    a: "Use the Chapter Locator and regional undergraduate contacts to determine whether an authorized chapter or regional structure serves your institution. Do not assume that you may participate through another campus without official guidance.",
+  },
+  {
+    q: "Can I participate through another school's chapter if my chapter is inactive?",
+    a: "Do not make that determination independently. Undergraduate membership activity must follow official chapter, regional, and institutional guidance. Contact the appropriate regional undergraduate leadership for direction.",
+  },
+  {
+    q: "What if I already earned a bachelor's degree but am enrolled for another undergraduate degree?",
+    a: "Your membership pathway depends on Sigma Gamma Rho's current eligibility rules, not simply your present student classification. A candidate who has already earned a qualifying bachelor's degree should confirm whether alumnae membership is the appropriate path.",
+  },
+  {
+    q: "Is there an age limit to pursue membership?",
+    a: "Age alone is not presented here as the defining eligibility standard. Educational status, degree status, chapter jurisdiction, and the published membership requirements determine the appropriate pathway.",
+  },
 ];
 
 const prospectiveFaqB = [
-  { q: "Do I have to be African American to pursue membership?", a: "Sigma Gamma Rho is a historically Black sorority. Prospective candidates should review the published eligibility standards and be prepared to uphold the Sorority's mission, service tradition, values, and expectations of sisterhood." },
-  { q: "How do I know when a chapter is considering candidates?", a: "Rely on official chapter communications, authorized informational opportunities, and national or regional membership channels. Do not rely on rumors, private promises, or unofficial social-media posts." },
-  { q: "Should I attend public chapter events before pursuing membership?", a: "Public programs can help you understand how a chapter serves, leads, and engages its community. Attendance does not create an entitlement to membership or guarantee future selection." },
-  { q: "If I attend every public event, should I expect an invitation?", a: "No. Attendance at public events does not guarantee an invitation, selection, or membership opportunity." },
-  { q: "What should I do if a member privately asks me to attend secret meetings, study sessions, wear specific clothing, or complete tasks?", a: "Do not assume that private or unofficial activities are authorized membership activities. Verify the activity through official chapter, advisor, institutional, regional, or national channels before participating." },
-  { q: "What is considered a legacy candidate?", a: "Sigma Gamma Rho's official application includes a legacy designation. Because complete qualifying relationship criteria are not published on the public-facing application screen, candidates should confirm the current legacy definition and documentation requirements with the chapter or Membership Services." },
-  { q: "Does legacy status guarantee membership?", a: "No. Legacy status does not replace academic, institutional, character, or selection requirements." },
-  { q: "How can I verify that a membership activity is official?", a: "Use official Sigma Gamma Rho, regional, chapter, and institutional channels. For undergraduate matters, the university's fraternity and sorority life office or authorized chapter advisor can also help verify legitimacy." },
+  {
+    q: "Do I have to be African American to pursue membership?",
+    a: "Sigma Gamma Rho is a historically Black sorority. Prospective candidates should review the published eligibility standards and be prepared to uphold the Sorority's mission, service tradition, values, and expectations of sisterhood.",
+  },
+  {
+    q: "How do I know when a chapter is considering candidates?",
+    a: "Rely on official chapter communications, authorized informational opportunities, and national or regional membership channels. Do not rely on rumors, private promises, or unofficial social-media posts.",
+  },
+  {
+    q: "Should I attend public chapter events before pursuing membership?",
+    a: "Public programs can help you understand how a chapter serves, leads, and engages its community. Attendance does not create an entitlement to membership or guarantee future selection.",
+  },
+  {
+    q: "If I attend every public event, should I expect an invitation?",
+    a: "No. Attendance at public events does not guarantee an invitation, selection, or membership opportunity.",
+  },
+  {
+    q: "What should I do if a member privately asks me to attend secret meetings, study sessions, wear specific clothing, or complete tasks?",
+    a: "Do not assume that private or unofficial activities are authorized membership activities. Verify the activity through official chapter, advisor, institutional, regional, or national channels before participating.",
+  },
+  {
+    q: "What is considered a legacy candidate?",
+    a: "Sigma Gamma Rho's official application includes a legacy designation. Because complete qualifying relationship criteria are not published on the public-facing application screen, candidates should confirm the current legacy definition and documentation requirements with the chapter or Membership Services.",
+  },
+  {
+    q: "Does legacy status guarantee membership?",
+    a: "No. Legacy status does not replace academic, institutional, character, or selection requirements.",
+  },
+  {
+    q: "How can I verify that a membership activity is official?",
+    a: "Use official Sigma Gamma Rho, regional, chapter, and institutional channels. For undergraduate matters, the university's fraternity and sorority life office or authorized chapter advisor can also help verify legitimacy.",
+  },
 ];
 
 const familyFaq = [
-  { q: "How can I verify that a membership activity is official?", a: "Families should rely on the institution, authorized chapter advisor or leadership, regional leadership, and official Sigma Gamma Rho channels. If an activity appears secretive, coercive, or inconsistent with published policy, verify it before participation." },
-  { q: "Does Sigma Gamma Rho permit hazing?", a: "Hazing is prohibited and unauthorized. Concerns should be reported through official institutional and Sorority channels." },
-  { q: "What should I do if my student is being asked to keep membership activities secret?", a: "Secrecy, coercion, intimidation, or instructions that cannot be verified through authorized channels should be treated as warning signs. Contact the institution's fraternity and sorority life office, an authorized advisor, or appropriate Sorority leadership." },
-  { q: "Will pursuing membership interfere with academics?", a: "Scholarship is a core expectation. Undergraduate candidates must maintain the required academic standard, and students should not compromise coursework, attendance, health, or academic responsibilities for unofficial activities." },
-  { q: "Are there financial obligations?", a: "Membership carries financial responsibilities. Exact national, regional, and chapter assessments can vary. Candidates should rely only on official financial information provided for the applicable membership opportunity." },
-  { q: "Can parents contact the chapter if they have questions?", a: "Yes. For undergraduate matters, parents may also contact the university's fraternity and sorority life office or authorized chapter advisor when appropriate." },
-  { q: "Who should a parent contact with a safety or conduct concern?", a: "Begin with the institution for undergraduate concerns and use authorized Sigma Gamma Rho chapter, regional, or national channels for Sorority-related questions or reports." },
-  { q: "Does joining a sorority guarantee housing, scholarships, internships, or professional opportunities?", a: "No. Membership should be understood as a commitment to sisterhood, scholarship, leadership, and service — not as a guarantee of material or professional benefits." },
+  {
+    q: "How can I verify that a membership activity is official?",
+    a: "Families should rely on the institution, authorized chapter advisor or leadership, regional leadership, and official Sigma Gamma Rho channels. If an activity appears secretive, coercive, or inconsistent with published policy, verify it before participation.",
+  },
+  {
+    q: "Does Sigma Gamma Rho permit hazing?",
+    a: "Hazing is prohibited and unauthorized. Concerns should be reported through official institutional and Sorority channels.",
+  },
+  {
+    q: "What should I do if my student is being asked to keep membership activities secret?",
+    a: "Secrecy, coercion, intimidation, or instructions that cannot be verified through authorized channels should be treated as warning signs. Contact the institution's fraternity and sorority life office, an authorized advisor, or appropriate Sorority leadership.",
+  },
+  {
+    q: "Will pursuing membership interfere with academics?",
+    a: "Scholarship is a core expectation. Undergraduate candidates must maintain the required academic standard, and students should not compromise coursework, attendance, health, or academic responsibilities for unofficial activities.",
+  },
+  {
+    q: "Are there financial obligations?",
+    a: "Membership carries financial responsibilities. Exact national, regional, and chapter assessments can vary. Candidates should rely only on official financial information provided for the applicable membership opportunity.",
+  },
+  {
+    q: "Can parents contact the chapter if they have questions?",
+    a: "Yes. For undergraduate matters, parents may also contact the university's fraternity and sorority life office or authorized chapter advisor when appropriate.",
+  },
+  {
+    q: "Who should a parent contact with a safety or conduct concern?",
+    a: "Begin with the institution for undergraduate concerns and use authorized Sigma Gamma Rho chapter, regional, or national channels for Sorority-related questions or reports.",
+  },
+  {
+    q: "Does joining a sorority guarantee housing, scholarships, internships, or professional opportunities?",
+    a: "No. Membership should be understood as a commitment to sisterhood, scholarship, leadership, and service — not as a guarantee of material or professional benefits.",
+  },
 ];
 
 const accountabilityLinks = [
-  { n: "01", title: "Expulsions & Suspensions", note: "Official disciplinary status resource", href: "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx", external: true },
-  { n: "02", title: "Anti-Hazing Policy", note: "Safety, dignity, and prohibited conduct", href: "/resources/anti-hazing-policy/" },
-  { n: "03", title: "Report a Concern", note: "Contact the appropriate official channel", href: "/contact/" },
+  {
+    n: "01",
+    title: "Expulsions & Suspensions",
+    note: "Official disciplinary status resource",
+    href: "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx",
+    external: true,
+  },
+  {
+    n: "02",
+    title: "Anti-Hazing Policy",
+    note: "Safety, dignity, and prohibited conduct",
+    href: "/resources/anti-hazing-policy/",
+  },
+  {
+    n: "03",
+    title: "Report a Concern",
+    note: "Contact the appropriate official channel",
+    href: "/contact/",
+  },
 ];
 ---
+
 <Base
   title="Become a Member"
   activeTop="Membership"
@@ -88,18 +223,38 @@ const accountabilityLinks = [
     <div class="container mem-hero__grid">
       <div class="mem-hero__copy">
         <p class="eyebrow">Prospective Membership</p>
-        <h1 class="mem-hero__title">Membership<br /><span>with Weight.</span></h1>
+        <h1 class="mem-hero__title">
+          Membership
+          <br />
+          <span>with Weight.</span>
+        </h1>
         <div class="gold-rule"></div>
-        <p class="mem-hero__lead">Sigma Gamma Rho seeks women prepared for scholarship, service, discipline, and lifelong accountability.</p>
-        <p class="mem-hero__body">This is not casual affiliation. It is a serious commitment to the legacy built by seven Black educators in 1922 — women who understood that sisterhood must be matched by action, integrity, and public responsibility. If you are exploring membership, begin by understanding the standard.</p>
+        <p class="mem-hero__lead">
+          Sigma Gamma Rho seeks women prepared for scholarship, service, discipline, and lifelong
+          accountability.
+        </p>
+        <p class="mem-hero__body">
+          This is not casual affiliation. It is a serious commitment to the legacy built by seven
+          Black educators in 1922 — women who understood that sisterhood must be matched by action,
+          integrity, and public responsibility. If you are exploring membership, begin by
+          understanding the standard.
+        </p>
         <div class="mem-hero__actions">
-          <a class="btn" href="#sigma-woman">Who We Seek</a>
-          <a class="btn btn--outline on-dark" href="#eligibility">Review Eligibility</a>
+          <a class="btn" href="#sigma-woman">
+            Who We Seek
+          </a>
+          <a class="btn btn--outline on-dark" href="#eligibility">
+            Review Eligibility
+          </a>
         </div>
       </div>
       <aside class="mem-hero__side">
         <div class="mem-hero__side-rule"></div>
-        <p>Prospective members should leave this page with a clear understanding of the two membership pathways, the baseline requirements, the importance of official process, and the questions families most often ask.</p>
+        <p>
+          Prospective members should leave this page with a clear understanding of the two
+          membership pathways, the baseline requirements, the importance of official process, and
+          the questions families most often ask.
+        </p>
         <div class="mem-hero__statements">
           <span>Undergraduate Membership</span>
           <span>Alumnae Membership</span>
@@ -113,7 +268,12 @@ const accountabilityLinks = [
     </div>
     <div class="standards-strip">
       <div class="standards-strip__inner">
-        <span>Scholarship</span><span>Service</span><span>Leadership</span><span>Integrity</span><span>Sisterhood</span><span>Lifelong Commitment</span>
+        <span>Scholarship</span>
+        <span>Service</span>
+        <span>Leadership</span>
+        <span>Integrity</span>
+        <span>Sisterhood</span>
+        <span>Lifelong Commitment</span>
       </div>
     </div>
   </section>
@@ -123,10 +283,17 @@ const accountabilityLinks = [
   <section class="sigma-woman" id="sigma-woman">
     <div class="container sigma-woman__shell">
       <div class="section-heading">
-        <span class="heading-sigma" aria-hidden="true">&Sigma;</span>
+        <span class="heading-sigma" aria-hidden="true">
+          &Sigma;
+        </span>
         <p class="eyebrow">Character &amp; Fit</p>
-        <h2>Who Would Make <span>a Good Sigma Woman?</span></h2>
-        <p>Sigma Gamma Rho is best suited for women who understand that membership is not only an honor, but an obligation. The qualities below matter just as much as interest.</p>
+        <h2>
+          Who Would Make <span>a Good Sigma Woman?</span>
+        </h2>
+        <p>
+          Sigma Gamma Rho is best suited for women who understand that membership is not only an
+          honor, but an obligation. The qualities below matter just as much as interest.
+        </p>
       </div>
       <Faq items={sigmaWoman} variant="bordered" openFirst />
     </div>
@@ -137,44 +304,71 @@ const accountabilityLinks = [
   <section class="eligibility" id="eligibility">
     <div class="container">
       <div class="section-heading">
-        <span class="heading-sigma" aria-hidden="true">&Sigma;</span>
+        <span class="heading-sigma" aria-hidden="true">
+          &Sigma;
+        </span>
         <p class="eyebrow">Membership Pathways &amp; Eligibility</p>
-        <h2>Know the Standard <span>Before You Pursue It.</span></h2>
-        <p>The appropriate membership path depends on where you are in your educational journey. Minimum eligibility establishes whether a candidate may be considered. It does not guarantee selection or an invitation to membership.</p>
+        <h2>
+          Know the Standard <span>Before You Pursue It.</span>
+        </h2>
+        <p>
+          The appropriate membership path depends on where you are in your educational journey.
+          Minimum eligibility establishes whether a candidate may be considered. It does not
+          guarantee selection or an invitation to membership.
+        </p>
       </div>
 
       <div class="pathway-spread">
         <article class="pathway">
-          <span class="pathway__watermark" aria-hidden="true">UG</span>
+          <span class="pathway__watermark" aria-hidden="true">
+            UG
+          </span>
           <div class="pathway__header">
             <span class="pathway__index">01</span>
             <p>Collegiate Path</p>
             <h3>Undergraduate Membership</h3>
           </div>
-          <p class="pathway__lead">For women pursuing undergraduate study who meet Sigma Gamma Rho's academic and institutional eligibility standards.</p>
+          <p class="pathway__lead">
+            For women pursuing undergraduate study who meet Sigma Gamma Rho's academic and
+            institutional eligibility standards.
+          </p>
           <div class="requirement-list">
             {undergradRequirements.map((r) => (
-              <div class="requirement-row"><span>{r.n}</span><p set:html={r.body}></p></div>
+              <div class="requirement-row">
+                <span>{r.n}</span>
+                <p set:html={r.body} />
+              </div>
             ))}
           </div>
           <Carousel
             variant="mini"
-            images={undergradImages.map((src) => ({ src, alt: "Sigma Gamma Rho undergraduate members" }))}
+            images={undergradImages.map((src) => ({
+              src,
+              alt: "Sigma Gamma Rho undergraduate members",
+            }))}
             ariaLabel="Undergraduate membership gallery"
           />
         </article>
 
         <article class="pathway">
-          <span class="pathway__watermark" aria-hidden="true">A</span>
+          <span class="pathway__watermark" aria-hidden="true">
+            A
+          </span>
           <div class="pathway__header">
             <span class="pathway__index">02</span>
             <p>Graduate Path</p>
             <h3>Alumnae Membership</h3>
           </div>
-          <p class="pathway__lead">For women who have completed the qualifying collegiate degree and are prepared for active service, leadership, and lifelong chapter engagement.</p>
+          <p class="pathway__lead">
+            For women who have completed the qualifying collegiate degree and are prepared for
+            active service, leadership, and lifelong chapter engagement.
+          </p>
           <div class="requirement-list">
             {alumnaeRequirements.map((r) => (
-              <div class="requirement-row"><span>{r.n}</span><p set:html={r.body}></p></div>
+              <div class="requirement-row">
+                <span>{r.n}</span>
+                <p set:html={r.body} />
+              </div>
             ))}
           </div>
           <Carousel
@@ -192,10 +386,17 @@ const accountabilityLinks = [
   <section class="faq-section">
     <div class="container faq-shell">
       <aside class="section-heading">
-        <span class="heading-sigma" aria-hidden="true">&Sigma;</span>
+        <span class="heading-sigma" aria-hidden="true">
+          &Sigma;
+        </span>
         <p class="eyebrow">Prospective Member FAQ</p>
-        <h2>Questions Prospective Members <span>Actually Ask.</span></h2>
-        <p>Membership questions should be answered clearly and through official channels. Review the topics below before pursuing an opportunity through a chapter.</p>
+        <h2>
+          Questions Prospective Members <span>Actually Ask.</span>
+        </h2>
+        <p>
+          Membership questions should be answered clearly and through official channels. Review the
+          topics below before pursuing an opportunity through a chapter.
+        </p>
       </aside>
       <div class="faq-columns">
         <Faq items={prospectiveFaqA} variant="bordered" openFirst />
@@ -209,11 +410,16 @@ const accountabilityLinks = [
   <section class="family-section">
     <div class="container family-shell">
       <figure class="family-photo">
-        <img src={withBase("/images/Lambda Sigma Sigma.jpeg")} alt="Lambda Sigma Sigma chapter members" />
+        <img
+          src={withBase("/images/Lambda Sigma Sigma.jpeg")}
+          alt="Lambda Sigma Sigma chapter members"
+        />
       </figure>
       <div class="family-content">
         <p class="eyebrow">Parent &amp; Family FAQ</p>
-        <h2>What Parents and Families <span>Should Know.</span></h2>
+        <h2>
+          What Parents and Families <span>Should Know.</span>
+        </h2>
         <Faq items={familyFaq} variant="bordered" openFirst />
       </div>
     </div>
@@ -224,16 +430,31 @@ const accountabilityLinks = [
   <section class="accountability">
     <div class="container">
       <div class="section-heading">
-        <span class="heading-sigma" aria-hidden="true">&Sigma;</span>
+        <span class="heading-sigma" aria-hidden="true">
+          &Sigma;
+        </span>
         <p class="eyebrow eyebrow--light">Membership Standards &amp; Accountability</p>
-        <h2>Our Standards Continue <span>After Initiation.</span></h2>
-        <p>Membership carries responsibility to the Sorority, the chapter, and the reputation entrusted to every member. Official accountability resources should be easy to find — not hidden.</p>
+        <h2>
+          Our Standards Continue <span>After Initiation.</span>
+        </h2>
+        <p>
+          Membership carries responsibility to the Sorority, the chapter, and the reputation
+          entrusted to every member. Official accountability resources should be easy to find — not
+          hidden.
+        </p>
       </div>
       <div class="accountability-links">
         {accountabilityLinks.map((l) => (
-          <a href={l.external ? l.href : withBase(l.href)} target={l.external ? "_blank" : undefined} rel={l.external ? "noopener" : undefined}>
+          <a
+            href={l.external ? l.href : withBase(l.href)}
+            target={l.external ? "_blank" : undefined}
+            rel={l.external ? "noopener" : undefined}
+          >
             <span class="link-index">{l.n}</span>
-            <span class="link-body"><strong>{l.title}</strong><small>{l.note}</small></span>
+            <span class="link-body">
+              <strong>{l.title}</strong>
+              <small>{l.note}</small>
+            </span>
             <b aria-hidden="true">{l.external ? "↗" : "→"}</b>
           </a>
         ))}
@@ -244,80 +465,324 @@ const accountabilityLinks = [
 
 <style>
   /* ---- hero ---- */
-  .mem-hero { background: var(--grad-royal); color: #fff; }
-  .mem-hero__grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr); gap: var(--space-16); align-items: start; padding-block: clamp(3.5rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem); }
-  .mem-hero__title { margin: 0; font-family: var(--font-head); font-weight: 400; font-size: var(--text-hero); line-height: 1.05; color: #fff; }
-  .mem-hero__title span { color: var(--gold); }
-  .mem-hero__lead { font-size: var(--text-lg); font-weight: 600; color: #fff; max-width: 34rem; }
-  .mem-hero__body { max-width: 34rem; color: rgba(255, 255, 255, 0.82); }
-  .mem-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-6); }
-  .mem-hero__side { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: var(--radius-lg); padding: var(--space-8); }
-  .mem-hero__side-rule { width: 3rem; height: 2px; background: var(--gold); margin-bottom: var(--space-4); }
-  .mem-hero__side > p { color: rgba(255, 255, 255, 0.82); margin: 0 0 var(--space-6); }
-  .mem-hero__statements { display: grid; gap: var(--space-2); margin-bottom: var(--space-6); }
-  .mem-hero__statements span { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-bright); }
-  .mem-hero__side strong { color: #fff; font-family: var(--font-head); }
-  @media (max-width: 900px) { .mem-hero__grid { grid-template-columns: 1fr; } }
+  .mem-hero {
+    background: var(--grad-royal);
+    color: #fff;
+  }
+  .mem-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
+    gap: var(--space-16);
+    align-items: start;
+    padding-block: clamp(3.5rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .mem-hero__title {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: var(--text-hero);
+    line-height: 1.05;
+    color: #fff;
+  }
+  .mem-hero__title span {
+    color: var(--gold);
+  }
+  .mem-hero__lead {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: #fff;
+    max-width: 34rem;
+  }
+  .mem-hero__body {
+    max-width: 34rem;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .mem-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+  .mem-hero__side {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+  }
+  .mem-hero__side-rule {
+    width: 3rem;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: var(--space-4);
+  }
+  .mem-hero__side > p {
+    color: rgba(255, 255, 255, 0.82);
+    margin: 0 0 var(--space-6);
+  }
+  .mem-hero__statements {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+  .mem-hero__statements span {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+  }
+  .mem-hero__side strong {
+    color: #fff;
+    font-family: var(--font-head);
+  }
+  @media (max-width: 900px) {
+    .mem-hero__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-  .standards-strip { background: rgba(0, 0, 0, 0.18); border-top: 1px solid rgba(255, 255, 255, 0.12); }
-  .standards-strip__inner { width: min(var(--container), calc(100% - (var(--gutter) * 2))); margin-inline: auto; display: flex; flex-wrap: wrap; gap: var(--space-8); justify-content: center; padding-block: var(--space-4); }
-  .standards-strip__inner span { font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+  .standards-strip {
+    background: rgba(0, 0, 0, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .standards-strip__inner {
+    width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    justify-content: center;
+    padding-block: var(--space-4);
+  }
+  .standards-strip__inner span {
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+  }
 
   /* ---- shared section heading ---- */
-  .section-heading { position: relative; text-align: center; max-width: 46rem; margin: 0 auto var(--space-10); }
-  .heading-sigma { display: block; color: var(--gold); font-size: 1.5rem; margin-bottom: var(--space-4); }
-  .section-heading h2 { margin: var(--space-2) 0 0; font-size: var(--text-h3); }
-  .section-heading h2 span { color: var(--gold); }
-  .section-heading > p:not(.eyebrow) { color: var(--muted); margin-top: var(--space-4); }
-  .eyebrow--light { color: var(--gold-bright); }
+  .section-heading {
+    position: relative;
+    text-align: center;
+    max-width: 46rem;
+    margin: 0 auto var(--space-10);
+  }
+  .heading-sigma {
+    display: block;
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+  }
+  .section-heading h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
+  }
+  .section-heading h2 span {
+    color: var(--gold);
+  }
+  .section-heading > p:not(.eyebrow) {
+    color: var(--muted);
+    margin-top: var(--space-4);
+  }
+  .eyebrow--light {
+    color: var(--gold-bright);
+  }
 
-  .sigma-woman, .eligibility, .faq-section, .family-section, .accountability { padding-block: clamp(3rem, 6vw, 4.5rem); }
-  .sigma-woman { background: var(--white); }
-  .eligibility { background: var(--cream); }
-  .faq-section { background: var(--white); }
-  .family-section { background: var(--cream); }
-  .accountability { background: var(--grad-royal); color: #fff; }
-  .accountability .section-heading > p:not(.eyebrow) { color: rgba(255, 255, 255, 0.8); }
+  .sigma-woman,
+  .eligibility,
+  .faq-section,
+  .family-section,
+  .accountability {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .sigma-woman {
+    background: var(--white);
+  }
+  .eligibility {
+    background: var(--cream);
+  }
+  .faq-section {
+    background: var(--white);
+  }
+  .family-section {
+    background: var(--cream);
+  }
+  .accountability {
+    background: var(--grad-royal);
+    color: #fff;
+  }
+  .accountability .section-heading > p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.8);
+  }
 
   /* ---- pathways ---- */
-  .pathway-spread { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--space-10); }
-  .pathway { position: relative; background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: var(--radius-lg); padding: var(--space-8); overflow: hidden; }
-  .pathway__watermark { position: absolute; top: -0.2em; right: 0.2em; font-family: var(--font-label); font-size: 6rem; color: rgba(32, 65, 165, 0.05); line-height: 1; }
-  .pathway__header { position: relative; margin-bottom: var(--space-4); }
-  .pathway__index { font-family: var(--font-label); color: var(--gold); font-size: var(--text-lg); }
-  .pathway__header p { margin: var(--space-1) 0 0; font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); }
-  .pathway__header h3 { margin: var(--space-1) 0 0; }
-  .pathway__lead { position: relative; color: var(--ink); font-weight: 600; }
-  .requirement-list { position: relative; display: grid; gap: var(--space-4); margin: var(--space-6) 0; }
-  .requirement-row { display: grid; grid-template-columns: 28px 1fr; gap: var(--space-3); }
-  .requirement-row span { font-family: var(--font-label); color: var(--gold-dark); font-size: var(--text-sm); }
-  .requirement-row p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+  .pathway-spread {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-10);
+  }
+  .pathway {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--gold);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    overflow: hidden;
+  }
+  .pathway__watermark {
+    position: absolute;
+    top: -0.2em;
+    right: 0.2em;
+    font-family: var(--font-label);
+    font-size: 6rem;
+    color: rgba(32, 65, 165, 0.05);
+    line-height: 1;
+  }
+  .pathway__header {
+    position: relative;
+    margin-bottom: var(--space-4);
+  }
+  .pathway__index {
+    font-family: var(--font-label);
+    color: var(--gold);
+    font-size: var(--text-lg);
+  }
+  .pathway__header p {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .pathway__header h3 {
+    margin: var(--space-1) 0 0;
+  }
+  .pathway__lead {
+    position: relative;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .requirement-list {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+  }
+  .requirement-row {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: var(--space-3);
+  }
+  .requirement-row span {
+    font-family: var(--font-label);
+    color: var(--gold-dark);
+    font-size: var(--text-sm);
+  }
+  .requirement-row p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
 
   /* ---- FAQ columns ---- */
-  .faq-shell { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--space-16); align-items: start; }
-  .faq-shell .section-heading { text-align: left; margin: 0; }
-  .faq-columns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
-  @media (max-width: 900px) { .faq-shell, .faq-columns { grid-template-columns: 1fr; } }
+  .faq-shell {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+  .faq-shell .section-heading {
+    text-align: left;
+    margin: 0;
+  }
+  .faq-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .faq-shell,
+    .faq-columns {
+      grid-template-columns: 1fr;
+    }
+  }
 
   /* ---- family ---- */
-  .family-shell { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
-  .family-photo { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
-  .family-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-  .family-content h2 { margin: var(--space-2) 0 var(--space-6); font-size: var(--text-h3); }
-  .family-content h2 span { color: var(--gold); }
-  @media (max-width: 820px) { .family-shell { grid-template-columns: 1fr; } .family-photo { max-width: 320px; } }
+  .family-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .family-photo {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .family-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .family-content h2 {
+    margin: var(--space-2) 0 var(--space-6);
+    font-size: var(--text-h3);
+  }
+  .family-content h2 span {
+    color: var(--gold);
+  }
+  @media (max-width: 820px) {
+    .family-shell {
+      grid-template-columns: 1fr;
+    }
+    .family-photo {
+      max-width: 320px;
+    }
+  }
 
   /* ---- accountability ---- */
-  .accountability-links { display: grid; gap: var(--space-4); max-width: 50rem; margin-inline: auto; }
-  .accountability-links a {
-    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-5);
-    padding: var(--space-5) var(--space-6); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: var(--radius); color: #fff; text-decoration: none; transition: background 0.15s ease;
+  .accountability-links {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 50rem;
+    margin-inline: auto;
   }
-  .accountability-links a:hover { background: rgba(255, 255, 255, 0.12); }
-  .link-index { font-family: var(--font-label); color: var(--gold); }
-  .link-body { display: flex; flex-direction: column; }
-  .link-body small { color: rgba(255, 255, 255, 0.65); font-size: var(--text-xs); }
-  .accountability-links b { color: var(--gold); font-size: var(--text-lg); }
+  .accountability-links a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .accountability-links a:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .link-index {
+    font-family: var(--font-label);
+    color: var(--gold);
+  }
+  .link-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .link-body small {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: var(--text-xs);
+  }
+  .accountability-links b {
+    color: var(--gold);
+    font-size: var(--text-lg);
+  }
 </style>
-

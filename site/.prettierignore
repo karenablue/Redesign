@@ -1,0 +1,9 @@
+# build + generated
+dist/
+.astro/
+
+# symlink to ../images (not ours to format)
+public/images/
+
+# lockfile
+package-lock.json

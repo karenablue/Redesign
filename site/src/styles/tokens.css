@@ -12,23 +12,23 @@
 
 :root {
   /* --- Brand color ------------------------------------------------- */
-  --royal: #2041a5;         /* Royal Blue — Pantone 19-4053 TCX            */
-  --royal-2: #1a3580;       /* darker royal for gradients                 */
-  --royal-3: #2b4ea8;       /* lighter royal for gradients                */
-  --royal-dark: #17357f;    /* link hover                                 */
-  --navy: #081633;          /* deepest — hero base                        */
-  --deep-blue: #0f2555;     /* footer gradient start                      */
-  --gold: #dfb136;          /* Gold — Pantone 13-0757 TCX                 */
-  --gold-dark: #c9961a;     /* gold hover / gradient end                  */
-  --gold-bright: #f0cf5c;   /* lighter gold for legibility on navy/dark bands */
+  --royal: #2041a5; /* Royal Blue — Pantone 19-4053 TCX            */
+  --royal-2: #1a3580; /* darker royal for gradients                 */
+  --royal-3: #2b4ea8; /* lighter royal for gradients                */
+  --royal-dark: #17357f; /* link hover                                 */
+  --navy: #081633; /* deepest — hero base                        */
+  --deep-blue: #0f2555; /* footer gradient start                      */
+  --gold: #dfb136; /* Gold — Pantone 13-0757 TCX                 */
+  --gold-dark: #c9961a; /* gold hover / gradient end                  */
+  --gold-bright: #f0cf5c; /* lighter gold for legibility on navy/dark bands */
   --white: #ffffff;
-  --ink: #333333;           /* body text (Make uses #333)                 */
-  --muted: #555a66;         /* secondary text                             */
+  --ink: #333333; /* body text (Make uses #333)                 */
+  --muted: #555a66; /* secondary text                             */
   --muted-2: #6a7282;
-  --cream: #fffbf0;         /* warm card background (from the Make source) */
+  --cream: #fffbf0; /* warm card background (from the Make source) */
   --cream-2: #fef8ed;
   --tint: #f4f6fb;
-  --line: rgba(32, 65, 165, 0.12);        /* hairline on light            */
+  --line: rgba(32, 65, 165, 0.12); /* hairline on light            */
   --line-dark: rgba(255, 255, 255, 0.14); /* hairline on dark             */
 
   /* --- Type (matches the real site's own CSS) --------------------- */
@@ -38,16 +38,16 @@
   --font-display: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
 
   /* px-ish scale matching the Make source */
-  --text-xs: 0.6875rem;                        /* 11px  meta                */
-  --text-sm: 0.8125rem;                        /* 13px  labels, nav         */
-  --text-base: 1rem;                           /* 16px                      */
-  --text-md: 1.125rem;                         /* 18px                      */
-  --text-lg: 1.25rem;                          /* 20px  lead paragraphs     */
+  --text-xs: 0.6875rem; /* 11px  meta                */
+  --text-sm: 0.8125rem; /* 13px  labels, nav         */
+  --text-base: 1rem; /* 16px                      */
+  --text-md: 1.125rem; /* 18px                      */
+  --text-lg: 1.25rem; /* 20px  lead paragraphs     */
   --text-body: clamp(1rem, 0.9rem + 0.5vw, 1.25rem); /* 16→20 responsive body */
-  --text-h3: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);    /* 24–32 sub-headings  */
-  --text-h2: clamp(2rem, 1.4rem + 3vw, 3rem);        /* 32–48 section head  */
+  --text-h3: clamp(1.5rem, 1.2rem + 1.4vw, 2rem); /* 24–32 sub-headings  */
+  --text-h2: clamp(2rem, 1.4rem + 3vw, 3rem); /* 32–48 section head  */
   --text-hero: clamp(2.75rem, 1.8rem + 4.6vw, 4.5rem); /* 44–72 hero        */
-  --text-stat: clamp(3rem, 2rem + 5vw, 4.5rem);      /* 48–72 big numerals  */
+  --text-stat: clamp(3rem, 2rem + 5vw, 4.5rem); /* 48–72 big numerals  */
 
   /* --- Spacing ------------------------------------------------------ */
   --space-1: 0.25rem;
@@ -64,13 +64,13 @@
   --space-24: 6rem;
 
   /* --- Layout ---------------------------------------------------- */
-  --container: 1100px;       /* the Make source uses max-w-[1100px]        */
+  --container: 1100px; /* the Make source uses max-w-[1100px]        */
   --gutter: 24px;
   /* Make source uses py-20 / py-24 (80–96px) */
   --section-y: clamp(4rem, 3rem + 3vw, 6rem);
   --radius: 8px;
   --radius-lg: 16px;
-  --radius-2xl: 40px;        /* the rounded-b-[40px] membership block      */
+  --radius-2xl: 40px; /* the rounded-b-[40px] membership block      */
   --shadow-sm: 0 2px 14px rgba(8, 22, 51, 0.08);
   --shadow-md: 0 14px 34px rgba(8, 22, 51, 0.18);
 
