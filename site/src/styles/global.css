@@ -1,7 +1,10 @@
 /* ==========================================================================
    Global base — reset, typography, shared primitives.
-   Type system (see AGENTS.md §6 — settled, no serif anywhere):
-     LEMON MILK → h1/h2 headings + labels/eyebrows/numerals · Montserrat → body
+   Type system — four roles (see AGENTS.md §6), rolling out homepage-first:
+     LEMON MILK → display headers + numerals · Playfair Display → editorial
+     voice / quotes · Pinyon Script → accent kickers · Montserrat → body & UI
+   These global rules still carry the two-family defaults; per-page styles
+   opt sections onto the editorial/kicker faces.
    ========================================================================== */
 
 @import "./tokens.css";

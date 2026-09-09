@@ -265,6 +265,7 @@ const news = [
 <Base
   title="Home"
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
+  bodyClass="page-home"
 >
   <!-- 1. HERO — video, headline, two pill buttons (verified against the live Figma Make Hero.tsx) -->
   <section class="home-hero">
@@ -785,11 +786,41 @@ const news = [
 </script>
 
 <style>
+  /* ---- Four-role typography — homepage rollout ------------------------
+     Accent kicker  → Pinyon Script (script; never caps, never tracked)
+     Editorial voice → Playfair Display (multi-word headlines + quotes)
+     Display / body  → unchanged (LEMON MILK / Montserrat)
+     .eyebrow and .s-head__title are rendered by Section.astro, so they
+     need :global rules gated on body.page-home (other pages stay on the
+     two-family system). Everything else is edited in this file's own
+     scoped rules further down. */
+  :global(body.page-home .eyebrow) {
+    font-family: var(--font-kicker);
+    font-size: clamp(1.55rem, 1.15rem + 1.3vw, 2.1rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.05;
+    color: var(--gold-dark);
+  }
+  :global(body.page-home .eyebrow--rule::after) {
+    margin-top: var(--space-3);
+  }
+  :global(body.page-home .s-head__title) {
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
   /* shared bits used by scoped sections */
-  /* h2's base LEMON MILK / royal treatment already comes from global.css;
-     this class only adds the zero margin and the gold-highlight span. */
+  /* h2's base royal treatment comes from global.css; the homepage swaps the
+     display face for the editorial one (Playfair Display) and keeps the
+     gold-highlight span. */
   .feature-title {
     margin: 0;
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    letter-spacing: 0;
   }
   .feature-title span {
     color: var(--gold);
@@ -909,7 +940,10 @@ const news = [
   }
   .waw__sub {
     color: var(--royal);
-    font-weight: 700;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--text-lg);
     margin: 0.35rem 0 1rem;
   }
   .waw__pillars {
@@ -980,8 +1014,10 @@ const news = [
   }
   .motto__main {
     color: var(--royal);
-    font-weight: 700;
-    font-size: var(--text-lg);
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--text-h3);
     margin: 0.35rem 0 0;
   }
   .motto__aka {
@@ -1171,8 +1207,10 @@ const news = [
   }
   .basileus__quote p {
     color: var(--ink);
+    font-family: var(--font-editorial);
+    font-style: italic;
     font-size: var(--text-lg);
-    line-height: 1.65;
+    line-height: 1.7;
   }
   .basileus__quote p:last-child {
     margin-bottom: 0;
@@ -1571,8 +1609,10 @@ const news = [
   .vspeak__quote {
     margin: 0 0 var(--space-4);
     color: var(--ink);
+    font-family: var(--font-editorial);
+    font-style: italic;
     font-size: var(--text-lg);
-    line-height: 1.6;
+    line-height: 1.65;
   }
   .vspeak__role {
     margin: 0;
@@ -1635,7 +1675,8 @@ const news = [
   }
   .vspeak__cta p {
     margin: 0 0 var(--space-4);
-    font-family: var(--font-head);
+    font-family: var(--font-editorial);
+    font-weight: 600;
     font-size: var(--text-h3);
     color: var(--royal);
   }

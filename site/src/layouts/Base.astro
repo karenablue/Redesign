@@ -19,6 +19,7 @@ const {
   description = "Sigma Gamma Rho Sorority, Incorporated — Greater Service, Greater Progress.",
   activeTop,
   image = "/images/SGR-Logo-Shield.png",
+  bodyClass,
 } = Astro.props;
 
 const fullTitle = title
@@ -45,15 +46,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Design fonts: Montserrat (body). LEMON MILK (headings / eyebrows /
-         labels / stat numerals) is self-hosted via @font-face in
-         global.css; Oswald is its web fallback. -->
+    <!-- Design fonts:
+         · Montserrat — body / UI / nav / buttons
+         · Playfair Display — editorial voice (multi-word headlines, quotes)
+         · Pinyon Script — accent kicker (short eyebrows, formal touches)
+         LEMON MILK (display headers / stat numerals) is self-hosted via
+         @font-face in global.css; Oswald is its web fallback.
+         See AGENTS.md §6 for the four roles. -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Oswald:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Pinyon+Script&display=swap"
     />
   </head>
-  <body>
+  <body class={bodyClass}>
     <a class="skip-link" href="#main">
       Skip to content
     </a>

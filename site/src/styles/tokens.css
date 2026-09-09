@@ -1,13 +1,16 @@
 /* ==========================================================================
-   SGRho design tokens — verified against the site's own per-page CSS
-   (index.css, herstory.css, founders.css, becomeamember.css, and every
-   other exported stylesheet), which is unanimous and matches the official
-   FY2027 brand guidelines: LEMON MILK headings, no italic, anywhere. The
-   live Figma Make source's Playfair Display usage is an earlier/divergent
-   exploration that was superseded when these pages were actually built —
-   do not revert to it again without re-checking every static CSS file.
-     LEMON MILK   → h1/h2 headings, eyebrows/labels, big stat numerals
-     Montserrat   → body text, buttons, sub-heads
+   SGRho design tokens.
+
+   TYPE — four roles (see AGENTS.md §6). Extended beyond the FY2027 PDF's
+   two families by an explicit design decision for this rebuild, being
+   rolled out homepage-first:
+     LEMON MILK        → display headers: short section titles, stat numerals
+     Playfair Display  → editorial voice: multi-word headlines, pull quotes,
+                         storytelling subtitles (italic where quoted)
+     Pinyon Script     → accent kicker: 1–3 word eyebrows, formal touches
+     Montserrat        → body & UI: paragraphs, buttons, forms, nav
+   LEMON MILK is self-hosted (Oswald fallback); the other three load from
+   Google Fonts in Base.astro.
    ========================================================================== */
 
 :root {
@@ -31,11 +34,13 @@
   --line: rgba(32, 65, 165, 0.12); /* hairline on light            */
   --line-dark: rgba(255, 255, 255, 0.14); /* hairline on dark             */
 
-  /* --- Type (matches the real site's own CSS) --------------------- */
+  /* --- Type — four roles, see the header note + AGENTS.md §6 ------ */
   --font-body: "Montserrat", system-ui, Arial, sans-serif;
   --font-head: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-label: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-display: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-editorial: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-kicker: "Pinyon Script", "Snell Roundhand", "Segoe Script", cursive;
 
   /* px-ish scale matching the Make source */
   --text-xs: 0.6875rem; /* 11px  meta                */
