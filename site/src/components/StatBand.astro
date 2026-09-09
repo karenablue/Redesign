@@ -11,6 +11,7 @@
 interface Stat {
   value: string;
   label: string;
+  icon?: { viewBox: string; path: string };
 }
 interface Props {
   stats?: Stat[];
@@ -27,6 +28,13 @@ const showAnchor = anchor ?? tone === "navy";
     <dl class="statband__row">
       {stats.map((s) => (
         <div class="statband__item">
+          {s.icon && (
+            <span class="statband__icon" aria-hidden="true">
+              <svg viewBox={s.icon.viewBox} fill="currentColor" fill-rule="evenodd">
+                <path d={s.icon.path} />
+              </svg>
+            </span>
+          )}
           <dt class="statband__value" data-count data-value={s.value}>
             {s.value}
           </dt>
@@ -99,6 +107,23 @@ const showAnchor = anchor ?? tone === "navy";
   .statband--white .statband__item + .statband__item::before,
   .statband--cream .statband__item + .statband__item::before {
     background: var(--line);
+  }
+
+  .statband__icon {
+    display: block;
+    width: 26px;
+    height: 26px;
+    margin: 0 auto var(--space-3);
+    color: var(--gold);
+  }
+  .statband__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .statband--white .statband__icon,
+  .statband--cream .statband__icon {
+    color: var(--gold-dark);
   }
 
   .statband__value {
