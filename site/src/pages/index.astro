@@ -753,6 +753,10 @@ const partners = [
     object-fit: cover;
     opacity: 0.32;
     mix-blend-mode: luminosity;
+    /* the source clip has baked-in text — blur it out, scale up to hide the
+       soft edges the blur creates */
+    filter: blur(12px) saturate(1.1);
+    transform: scale(1.14);
   }
   .home-hero__scrim {
     position: absolute;
@@ -795,7 +799,7 @@ const partners = [
     color: rgba(255, 255, 255, 0.9);
   }
   .home-hero__actions {
-    margin-top: var(--space-10);
+    margin-top: clamp(3.5rem, 9vw, 6.5rem);
     display: flex;
     gap: var(--space-5);
     justify-content: center;
