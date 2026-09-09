@@ -15,7 +15,7 @@ const showAnchor = anchor ?? tone === "navy";
 <section class:list={["statband", `statband--${tone}`]}>
   <div class="container statband__inner">
     <dl class="statband__row">
-      {stats.map((s, i) => (
+      {stats.map((s) => (
         <div class="statband__item">
           <dt class="statband__value" data-count data-value={s.value}>
             {s.value}

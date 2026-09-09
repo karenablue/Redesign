@@ -114,17 +114,17 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
 <script is:inline define:vars={{ PAGES: search }}>
   (function () {
-    var toggle = document.querySelector(".search-toggle");
-    var panel = document.querySelector(".search-panel");
-    var input = document.querySelector(".search-input");
-    var results = document.querySelector(".search-results");
+    const toggle = document.querySelector(".search-toggle");
+    const panel = document.querySelector(".search-panel");
+    const input = document.querySelector(".search-input");
+    const results = document.querySelector(".search-results");
     if (toggle && panel && input && results) {
-      var open = function () {
+      const open = function () {
         panel.hidden = false;
         toggle.setAttribute("aria-expanded", "true");
         input.focus();
       };
-      var close = function () {
+      const close = function () {
         panel.hidden = true;
         toggle.setAttribute("aria-expanded", "false");
         input.value = "";
@@ -132,7 +132,8 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       };
       toggle.addEventListener("click", function (e) {
         e.stopPropagation();
-        panel.hidden ? open() : close();
+        if (panel.hidden) open();
+        else close();
       });
       document.addEventListener("click", function (e) {
         if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle) close();
@@ -141,10 +142,10 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
         if (e.key === "Escape") close();
       });
       input.addEventListener("input", function () {
-        var q = input.value.trim().toLowerCase();
+        const q = input.value.trim().toLowerCase();
         results.innerHTML = "";
         if (!q) return;
-        var hits = PAGES.filter(function (p) {
+        const hits = PAGES.filter(function (p) {
           return p.t.toLowerCase().indexOf(q) !== -1;
         }).slice(0, 8);
         if (!hits.length) {
@@ -152,7 +153,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
           return;
         }
         hits.forEach(function (p) {
-          var a = document.createElement("a");
+          const a = document.createElement("a");
           a.href = p.u;
           a.textContent = p.t;
           a.setAttribute("role", "option");
@@ -166,9 +167,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     document
       .querySelectorAll(".site-nav__item > .site-nav__link[aria-expanded]")
       .forEach(function (btn) {
-        var item = btn.parentElement;
+        const item = btn.parentElement;
         btn.addEventListener("click", function () {
-          var openNow = item.classList.toggle("is-open");
+          const openNow = item.classList.toggle("is-open");
           btn.setAttribute("aria-expanded", String(openNow));
         });
         item.addEventListener("focusout", function (e) {
