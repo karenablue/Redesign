@@ -1,0 +1,84 @@
+---
+import Base from "../../layouts/Base.astro";
+import { withBase } from "../../lib/url.js";
+
+const cards = [
+  { img: "/images/Boule Philos.jpg", tag: "Partnership", title: "PUMA Joins SGRho for the 61st Biennial Boule", body: "\"Purpose. Partnership. Progress.\" PUMA supported member experiences during Boule by the Bay, with a PUMA × Sigma Gamma Rho Sorority, Inc. collection coming this fall.", href: "https://www.facebook.com/sgrhoupdates/", external: true },
+  { img: "/images/Congressional Day on the Hill.jpg", tag: "Advocacy", title: "Sorors Return to Capitol Hill for Congressional Day", body: "Sigma Gamma Rho members joined national advocacy partners in Washington, D.C. to meet with lawmakers on issues affecting the communities the Sorority serves." },
+  { img: "/images/swim-1922-1-768x432.jpg", tag: "Program Update", title: "Swim 1922 Expands to New Chapters", body: "More undergraduate and alumnae chapters are hosting water-safety instruction this season through Swim 1922.", href: "/service-impact/national-programs/#swim" },
+  { img: "/images/operation-bigbookbag-2.jpg", tag: "Community Impact", title: "Operation BigBookBag Reaches Students Nationwide", body: "Chapters distributed school supplies and books to students as part of the Sorority's ongoing education initiative.", href: "/service-impact/national-programs/#bigbookbag" },
+  { img: "/images/youth-symposium-1-768x432.jpg", tag: "Youth Programs", title: "Annual Youth Symposium Brings Together Young Leaders", body: "The Youth Symposium continued its tradition of leadership development and mentorship for the next generation.", href: "/service-impact/national-programs/#youth" },
+  { img: "/images/project-cradle-care-3.jpg", tag: "Health & Wellness", title: "Project Cradle Care Supports Maternal Health", body: "Regional chapters continue partnering with local health providers to advance maternal and infant health awareness.", href: "/service-impact/national-programs/#cradle" },
+  { img: "/images/Women’s Wellness Initiative.png", tag: "Health & Wellness", title: "Women's Wellness Initiative Hosts Community Events", body: "Chapters hosted wellness screenings and education sessions as part of the Women's Wellness Initiative." },
+  { img: "/images/rho alpha sorors.jfif", tag: "Sisterhood", title: "Chapters Celebrate Founders' Day, November 12", body: "Sorors across the country marked the anniversary of the Sorority's 1922 founding at Butler University." },
+];
+---
+<Base title="Latest News" activeTop="News & Events" description="Announcements and updates from across the international sisterhood of Sigma Gamma Rho.">
+  <section class="ln-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href={withBase("/")}>Home</a> <span>/</span> <span>News &amp; Events</span> <span>/</span> <span>Latest News</span></p>
+      <p class="eyebrow">News &amp; Events</p>
+      <h1>Latest News</h1>
+      <p>Announcements and updates from across the international sisterhood.</p>
+    </div>
+  </section>
+
+  <section class="ln-main">
+    <div class="container">
+      <article class="ln-feature">
+        <figure><img src={withBase("/images/boule.jpg")} alt="Sigma Gamma Rho members at the 61st International Biennial Boule in Tampa" /></figure>
+        <div class="ln-feature__copy">
+          <span class="ln-tag">Featured</span>
+          <h2>Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boule</h2>
+          <p>Thousands of members, partners, and guests gathered at the Tampa Convention Center July 22&ndash;26 for the 61st International Biennial Boule &mdash; the first Sigma Gamma Rho international convention held in Tampa since 1976. The city projected the gathering would generate more than $5.1 million in direct regional economic impact, alongside on-the-ground service including 300 newborn care packages, 3,000 backpacks for K&ndash;8 students, and 300 free swim lessons for local youth. "Our presence in Tampa represents an investment in people, partnerships, and progress," said 26th International Grand Basileus Marica T. Harris.</p>
+          <a href={withBase("/news-events/highlights-stories/")}>See More Boule Highlights &rarr;</a>
+        </div>
+      </article>
+
+      <div class="ln-grid">
+        {cards.map((c) => {
+          const Tag = c.href ? "a" : "article";
+          const props = c.href ? { href: c.href.startsWith("http") ? c.href : withBase(c.href), ...(c.external ? { target: "_blank", rel: "noopener" } : {}) } : {};
+          return (
+            <Tag class="ln-card" {...props}>
+              <figure><img src={withBase(c.img)} alt={c.title} /></figure>
+              <span class="ln-tag">{c.tag}</span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </Tag>
+          );
+        })}
+      </div>
+
+      <p class="ln-more"><a href={withBase("/news-events/highlights-stories/")}>See More Stories &amp; Highlights &rarr;</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ln-hero { background: var(--cream); padding-block: clamp(3rem, 5vw, 4rem); }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-5); color: var(--muted-2); font-size: var(--text-xs); font-weight: 600; }
+  .breadcrumb a { color: inherit; }
+  .ln-hero h1 { margin: var(--space-2) 0 0; }
+  .ln-hero > .container > p:last-child { color: var(--muted); margin-top: var(--space-3); }
+
+  .ln-main { background: var(--white); padding-block: clamp(3rem, 6vw, 4.5rem); }
+  .ln-feature { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--space-12); align-items: center; margin-bottom: var(--space-14); padding-bottom: var(--space-14); border-bottom: 1px solid var(--line); }
+  .ln-feature figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .ln-feature img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .ln-tag { display: inline-block; font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: var(--space-2); }
+  .ln-feature__copy h2 { margin: 0 0 var(--space-4); font-size: var(--text-h3); }
+  .ln-feature__copy p { color: var(--muted); }
+  .ln-feature__copy a { color: var(--royal); font-weight: 700; text-decoration: none; }
+
+  .ln-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-8); }
+  .ln-card { display: block; text-decoration: none; color: inherit; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .ln-card figure { margin: 0; }
+  .ln-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .ln-card .ln-tag { margin: var(--space-5) var(--space-5) 0; }
+  .ln-card h3 { margin: var(--space-2) var(--space-5) var(--space-2); font-size: var(--text-md); }
+  .ln-card p { margin: 0 var(--space-5) var(--space-5); color: var(--muted); font-size: var(--text-sm); }
+
+  .ln-more { text-align: center; margin-top: var(--space-12); }
+  .ln-more a { color: var(--royal); font-weight: 700; text-decoration: none; }
+</style>

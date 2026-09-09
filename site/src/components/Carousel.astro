@@ -1,0 +1,138 @@
+---
+/**
+ * Carousel — lightweight image carousel shared by the program and membership
+ * pages. One script/markup shape, two visual dressings:
+ *
+ *   variant="panel"  card with a background, a caption topline + top-right
+ *                    prev/next buttons, and a per-slide caption overlay.
+ *                    (national-programs)
+ *   variant="mini"   bare stage with centered prev / dots / next controls
+ *                    beneath it, no caption. (become-a-member)
+ *
+ * props:
+ *   images     [{ src, alt?, caption?, fit? }] or plain src strings
+ *              (fit: "cover" default | "contain")
+ *   variant    "panel" (default) | "mini"
+ *   tone       "light" (default) | "navy" — panel background, for use on a
+ *              dark/navy section
+ *   label      topline text, panel variant only (e.g. "Program in Action")
+ *   ariaLabel  accessible label for the carousel region
+ */
+import { withBase } from "../lib/url.js";
+
+const {
+  images = [],
+  variant = "panel",
+  tone = "light",
+  label = "Gallery",
+  ariaLabel,
+} = Astro.props;
+const isPanel = variant === "panel";
+const slides = images.map((img) => (typeof img === "string" ? { src: img } : img));
+---
+<div
+  class:list={["carousel", `carousel--${variant}`, isPanel && `carousel--${tone}`]}
+  data-carousel
+  aria-label={ariaLabel}
+>
+  {isPanel && (
+    <div class="carousel__topline">
+      <span>{label}</span>
+      <div class="carousel__controls">
+        <button class="carousel__btn" type="button" data-dir="-1" aria-label="Previous image">&larr;</button>
+        <button class="carousel__btn" type="button" data-dir="1" aria-label="Next image">&rarr;</button>
+      </div>
+    </div>
+  )}
+
+  <div class="carousel__track">
+    {slides.map((img, i) => (
+      <figure class:list={["carousel__slide", { "is-active": i === 0 }]}>
+        <div class:list={["carousel__media", { "carousel__media--contain": img.fit === "contain" }]}>
+          <img src={withBase(img.src)} alt={img.alt ?? img.caption ?? ""} loading="lazy" />
+        </div>
+        {img.caption && <figcaption>{img.caption}</figcaption>}
+      </figure>
+    ))}
+  </div>
+
+  {!isPanel && (
+    <div class="carousel__controls carousel__controls--under">
+      <button class="carousel__btn carousel__btn--arrow" type="button" data-dir="-1" aria-label="Previous image">&lsaquo;</button>
+      <div class="carousel__dots"></div>
+      <button class="carousel__btn carousel__btn--arrow" type="button" data-dir="1" aria-label="Next image">&rsaquo;</button>
+    </div>
+  )}
+  {isPanel && <div class="carousel__dots"></div>}
+</div>
+
+<style>
+  .carousel__track { position: relative; overflow: hidden; }
+  .carousel__slide {
+    position: absolute; inset: 0; margin: 0; opacity: 0;
+    transition: opacity 0.35s ease; display: flex; flex-direction: column;
+  }
+  .carousel__slide.is-active { opacity: 1; }
+  .carousel__media { flex: 1; overflow: hidden; background: var(--navy); }
+  .carousel__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .carousel__media--contain { display: grid; place-items: center; background: var(--cream-2); }
+  .carousel__media--contain img { width: 80%; height: 80%; object-fit: contain; }
+
+  .carousel__dots { display: flex; justify-content: center; gap: 0.4rem; }
+  .carousel__dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .carousel__dots span.is-active { background: var(--gold); }
+
+  .carousel__btn {
+    border-radius: 50%; border: 1px solid var(--line); background: var(--white);
+    color: var(--royal); cursor: pointer; line-height: 1;
+  }
+  .carousel__btn:hover { background: var(--royal); color: #fff; border-color: var(--royal); }
+
+  /* ---- panel variant ---- */
+  .carousel--panel { border-radius: var(--radius-lg); padding: var(--space-5); box-shadow: var(--shadow-md); }
+  .carousel--panel.carousel--light { background: rgba(255, 255, 255, 0.9); }
+  .carousel--panel.carousel--navy { background: rgba(255, 255, 255, 0.08); }
+  .carousel--panel .carousel__topline { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); }
+  .carousel--panel .carousel__topline span { font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); }
+  .carousel--panel.carousel--navy .carousel__topline span { color: rgba(255, 255, 255, 0.6); }
+  .carousel--panel .carousel__controls { display: flex; gap: var(--space-2); }
+  .carousel--panel .carousel__btn { width: 32px; height: 32px; }
+  .carousel--panel .carousel__track { aspect-ratio: 4 / 3; border-radius: var(--radius); }
+  .carousel--panel .carousel__slide figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: var(--space-3) var(--space-4);
+    background: linear-gradient(0deg, rgba(8, 22, 51, 0.85), transparent);
+    color: #fff; font-size: var(--text-sm);
+  }
+  .carousel--panel .carousel__dots { margin-top: var(--space-4); }
+
+  /* ---- mini variant ---- */
+  .carousel--mini .carousel__track { aspect-ratio: 16 / 10; border-radius: var(--radius); }
+  .carousel--mini .carousel__controls--under { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-3); }
+  .carousel--mini .carousel__btn--arrow { width: 32px; height: 32px; font-size: 1.1rem; }
+</style>
+
+<script>
+  document.querySelectorAll("[data-carousel]").forEach((carousel) => {
+    const slides = Array.from(carousel.querySelectorAll(".carousel__slide"));
+    const dotsWrap = carousel.querySelector(".carousel__dots");
+    let index = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement("span");
+      if (i === 0) dot.classList.add("is-active");
+      dotsWrap?.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap?.children ?? []);
+
+    function show(i) {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, si) => s.classList.toggle("is-active", si === index));
+      dots.forEach((d, di) => d.classList.toggle("is-active", di === index));
+    }
+
+    carousel.querySelectorAll(".carousel__btn").forEach((btn) => {
+      btn.addEventListener("click", () => show(index + Number(btn.dataset.dir)));
+    });
+  });
+</script>

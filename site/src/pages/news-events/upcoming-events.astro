@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+import { withBase } from "../../lib/url.js";
+
+const events = [
+  { month: "Nov", day: "12", tag: "National", title: "Founders' Day", body: "Chapters worldwide mark the anniversary of the Sorority's 1922 founding at Butler University." },
+  { month: "Spring", day: "—", tag: "Regional", title: "Regional Leadership Conferences", body: "Each of the five regions hosts leadership training and fellowship for undergraduate and alumnae chapters." },
+  { month: "Summer", day: "—", tag: "National", title: "International Biennial Boulé", body: "Sorors from around the world gather for the Sorority's national governing conference." },
+  { month: "Ongoing", day: "—", tag: "Service", title: "Swim 1922 Season", body: "Chapters host water-safety instruction and awareness events throughout the program season." },
+  { month: "Spring", day: "—", tag: "Advocacy", title: "Congressional Day on the Hill", body: "Members meet with lawmakers in Washington, D.C. on issues affecting the communities we serve." },
+  { month: "Fall", day: "—", tag: "Youth", title: "Annual Youth Symposium", body: "Young leaders gather for mentorship, workshops, and leadership development programming." },
+];
+---
+<Base title="Upcoming Events" activeTop="News & Events" description="Connect, serve, and celebrate with Sigma Gamma Rho sorors across every region.">
+  <section class="ue-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href={withBase("/")}>Home</a> <span>/</span> <a href={withBase("/news-events/latest-news/")}>News &amp; Events</a> <span>/</span> <span>Upcoming Events</span></p>
+      <p class="eyebrow">News &amp; Events</p>
+      <h1>Upcoming Events</h1>
+      <p>Connect, serve, and celebrate with sorors across every region.</p>
+    </div>
+  </section>
+
+  <section class="ue-main">
+    <div class="container">
+      <div class="ue-grid">
+        {events.map((e) => (
+          <article class="ue-card">
+            <div class="ue-date"><span>{e.month}</span><strong>{e.day}</strong></div>
+            <div class="ue-body">
+              <span class="ue-tag">{e.tag}</span>
+              <h3>{e.title}</h3>
+              <p>{e.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="ue-cta">Looking for a chapter-level event near you? <a href={withBase("/membership/chapter-locator/")}>Find a Chapter &rarr;</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ue-hero { background: var(--cream); padding-block: clamp(3rem, 5vw, 4rem); }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-5); color: var(--muted-2); font-size: var(--text-xs); font-weight: 600; }
+  .breadcrumb a { color: inherit; }
+  .ue-hero h1 { margin: var(--space-2) 0 0; }
+  .ue-hero > .container > p:last-child { color: var(--muted); margin-top: var(--space-3); }
+
+  .ue-main { background: var(--white); padding-block: clamp(3rem, 6vw, 4.5rem); }
+  .ue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
+  .ue-card { display: flex; gap: var(--space-5); padding: var(--space-6); background: var(--tint); border-radius: var(--radius-lg); }
+  .ue-date { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 70px; height: 70px; background: var(--white); border-radius: var(--radius); }
+  .ue-date span { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-dark); }
+  .ue-date strong { font-size: var(--text-lg); color: var(--royal); }
+  .ue-tag { font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-dark); }
+  .ue-body h3 { margin: var(--space-2) 0 var(--space-1); font-size: var(--text-md); }
+  .ue-body p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+
+  .ue-cta { text-align: center; margin-top: var(--space-12); color: var(--muted); }
+  .ue-cta a { color: var(--royal); font-weight: 700; text-decoration: none; }
+</style>
