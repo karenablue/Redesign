@@ -7,7 +7,6 @@ import Base from "../layouts/Base.astro";
 import Section from "../components/Section.astro";
 import StatBand from "../components/StatBand.astro";
 import Button from "../components/Button.astro";
-import Faq from "../components/Faq.astro";
 import { withBase } from "../lib/url.js";
 
 const stats = [
@@ -78,25 +77,6 @@ const findHome = [
     title: "Rhoer Club & Philos",
     body: "Entry points for teen (Rhoer) and non-collegiate professional (Philo) affiliates.",
     href: "/membership/affiliates/",
-  },
-];
-
-const faqs = [
-  {
-    q: "What does the membership process entail?",
-    a: "The membership intake process, known as the T.O.R.C.H. process, is a rigorous educational experience designed to ensure prospective members comprehend the profound history, governing policies, and high expectations of Sigma Gamma Rho Sorority, Inc. It demands leadership development, intellectual discipline, and a proven readiness for community service.",
-  },
-  {
-    q: "Do I need to be invited or know a current member to join?",
-    a: "No. Attending a public event or knowing a member does not guarantee an invitation. Membership opportunities come through a chartered chapter's official intake process.",
-  },
-  {
-    q: "What are the financial obligations of membership?",
-    a: "Members pay national, regional, and local dues, plus one-time intake costs. Amounts vary by chapter and are shared during the official process.",
-  },
-  {
-    q: "I am no longer in college. Can I still join?",
-    a: "Yes. Women who hold a bachelor's degree from an accredited institution may pursue membership through a chartered alumnae chapter.",
   },
 ];
 
@@ -441,16 +421,6 @@ const partners = [
       </figure>
     </div>
   </section>
-
-  <!-- 9. FAQ -->
-  <Section
-    tone="white"
-    eyebrow="Frequently Asked Questions"
-    title="Thinking About"
-    highlight="Joining?"
-  >
-    <Faq items={faqs} openFirst width="narrow" />
-  </Section>
 
   <!-- 10. SISTERHOOD IN MOTION -->
   <Section
