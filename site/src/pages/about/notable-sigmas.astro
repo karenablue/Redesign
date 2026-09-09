@@ -579,9 +579,10 @@ const spotlight = [
     btn.addEventListener("click", () => {
       buttons.forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
-      const filter = btn.dataset.filter;
+      const filter = (btn as HTMLElement).dataset.filter;
       cards.forEach((card) => {
-        card.hidden = filter !== "all" && card.dataset.category !== filter;
+        const el = card as HTMLElement;
+        el.hidden = filter !== "all" && el.dataset.category !== filter;
       });
     });
   });

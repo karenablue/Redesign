@@ -13,6 +13,19 @@
  */
 import Button from "./Button.astro";
 
+interface CtaAction {
+  label: string;
+  href: string;
+  variant?: "solid" | "outline";
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlight?: string;
+  copy?: string;
+  actions?: CtaAction[];
+}
+
 const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 ---
 

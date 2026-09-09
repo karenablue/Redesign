@@ -201,7 +201,7 @@ const cards = [
 </style>
 
 <script>
-  const input = document.getElementById("help-search");
+  const input = document.getElementById("help-search") as HTMLInputElement | null;
   const cards = document.querySelectorAll("#hc-grid .hc-card");
   const empty = document.getElementById("hc-empty");
 
@@ -209,10 +209,11 @@ const cards = [
     const q = input.value.trim().toLowerCase();
     let visible = 0;
     cards.forEach((card) => {
-      const show = !q || card.dataset.search.includes(q);
-      card.hidden = !show;
+      const el = card as HTMLElement;
+      const show = !q || (el.dataset.search ?? "").includes(q);
+      el.hidden = !show;
       if (show) visible++;
     });
-    empty.hidden = visible !== 0;
+    if (empty) empty.hidden = visible !== 0;
   });
 </script>

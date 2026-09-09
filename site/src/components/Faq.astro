@@ -11,6 +11,17 @@
  *   openFirst  open the first item by default (default false)
  *   width      "default" | "narrow" (wraps in .container--narrow)
  */
+interface FaqItem {
+  q: string;
+  a: string;
+}
+interface Props {
+  items?: FaqItem[];
+  variant?: "soft" | "bordered";
+  openFirst?: boolean;
+  width?: "default" | "narrow";
+}
+
 const { items = [], variant = "soft", openFirst = false, width = "default" } = Astro.props;
 ---
 

@@ -405,15 +405,19 @@ const affiliates = [
   const panels = document.querySelectorAll(".aff-panel");
   const jumps = document.querySelectorAll("[data-jump]");
 
-  function activate(key) {
+  function activate(key: string) {
     tabs.forEach((t) => {
-      const on = t.dataset.tab === key;
+      const on = (t as HTMLElement).dataset.tab === key;
       t.classList.toggle("is-active", on);
       t.setAttribute("aria-selected", String(on));
     });
     panels.forEach((p) => p.classList.toggle("is-active", p.id === `panel-${key}`));
   }
 
-  tabs.forEach((tab) => tab.addEventListener("click", () => activate(tab.dataset.tab)));
-  jumps.forEach((link) => link.addEventListener("click", () => activate(link.dataset.jump)));
+  tabs.forEach((tab) =>
+    tab.addEventListener("click", () => activate((tab as HTMLElement).dataset.tab ?? ""))
+  );
+  jumps.forEach((link) =>
+    link.addEventListener("click", () => activate((link as HTMLElement).dataset.jump ?? ""))
+  );
 </script>
