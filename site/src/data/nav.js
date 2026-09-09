@@ -111,6 +111,13 @@ export const footerColumns = [
   },
 ];
 
+/* Bottom-bar legal links — site-wide utility pages, kept out of primaryNav
+   and footerColumns because they belong in the copyright row. */
+export const footerLegal = [
+  { label: "Privacy Policy", href: "/privacy/" },
+  { label: "Terms of Use", href: "/terms/" },
+];
+
 export const footerContact = {
   title: "Contact",
   lines: ["Headquarters", "1000 Southhill Dr STE 200", "Cary, NC 27513"],
