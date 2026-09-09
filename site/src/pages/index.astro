@@ -157,15 +157,6 @@ const news = [
     body: "The 61st Biennial Boule in Tampa left a lasting legacy through extensive community service initiatives, youth empowerment programs, and a significant economic impact on the local area.",
   },
 ];
-
-const partners = [
-  { i: "NEF", name: "Sigma Gamma Rho National Education Fund, Inc." },
-  { i: "SPEAR", name: "SPEAR Foundation" },
-  { i: "SJCRH", name: "St. Jude Children's Research Hospital" },
-  { i: "AA", name: "Alzheimer's Association" },
-  { i: "ACS", name: "American Cancer Society" },
-  { i: "NAMI", name: "National Alliance on Mental Illness" },
-];
 ---
 
 <Base
@@ -582,72 +573,6 @@ const partners = [
           </a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 14. PARTNERS -->
-  <Section
-    tone="white"
-    heading="plain"
-    centered={false}
-    eyebrow="Partnerships"
-    title="Working Together for Greater Impact"
-    lead="Organizations aligned with our mission of Greater Service, Greater Progress."
-  >
-    <div class="partners__tabs" role="tablist">
-      <span class="is-active">Foundations</span>
-      <span>Corporate</span>
-      <span>Community</span>
-    </div>
-    <div class="partners__grid">
-      {partners.map((p) => (
-        <article class="partner">
-          <span class="partner__badge" aria-hidden="true">
-            {p.i}
-          </span>
-          <h3>{p.name}</h3>
-        </article>
-      ))}
-    </div>
-    <p class="center-link">
-      <a href={withBase("/service-impact/corporate-partnerships/")}>
-        Partner with Sigma Gamma Rho <span aria-hidden="true">&rarr;</span>
-      </a>
-    </p>
-  </Section>
-
-  <!-- 15. VENDOR VERIFICATION — trademark defense -->
-  <section class="section section--cream vendor-check">
-    <div class="container vendor-check__inner">
-      <div>
-        <p class="eyebrow">Brand Protection</p>
-        <h2 class="feature-title">
-          Verify a Licensed Vendor <span>Before You Buy</span>
-        </h2>
-        <p>
-          Only officially licensed vendors may sell Sigma Gamma Rho&reg;-branded merchandise. Check
-          a shop name or store URL against the certified vendor registry.
-        </p>
-      </div>
-      <form class="vendor-check__bar" method="get" action={withBase("/resources/vendor/")}>
-        <label class="visually-hidden" for="vendor-query">
-          Vendor or store name
-        </label>
-        <input
-          id="vendor-query"
-          name="q"
-          type="search"
-          placeholder="Shop name or store URL&hellip;"
-          autocomplete="off"
-        />
-        <button class="btn" type="submit">
-          Verify
-        </button>
-      </form>
-      <p class="vendor-check__note">
-        The searchable registry is being connected. For now, Verify opens the full certified vendor
-        list.
-      </p>
     </div>
   </section>
 </Base>
@@ -1107,52 +1032,6 @@ const partners = [
     margin-top: var(--space-8);
   }
 
-  /* 15. VENDOR VERIFICATION */
-  .vendor-check__inner {
-    max-width: 760px;
-    margin-inline: auto;
-    text-align: center;
-  }
-  .vendor-check__inner > div > p {
-    margin: var(--space-4) auto 0;
-    max-width: 54ch;
-    color: var(--muted);
-  }
-  .vendor-check__bar {
-    display: flex;
-    gap: var(--space-3);
-    margin: var(--space-6) auto 0;
-    max-width: 30rem;
-  }
-  .vendor-check__bar input {
-    flex: 1;
-    min-width: 0;
-    padding: 0.75rem 1rem;
-    border: 1.5px solid var(--line);
-    border-radius: 999px;
-    background: var(--white);
-    font: inherit;
-    font-size: var(--text-sm);
-  }
-  .vendor-check__bar input:focus {
-    outline: none;
-    border-color: var(--gold);
-  }
-  .vendor-check__bar .btn {
-    flex-shrink: 0;
-    padding: 0.75rem 1.75rem;
-  }
-  .vendor-check__note {
-    margin: var(--space-3) 0 0;
-    font-size: var(--text-xs);
-    color: var(--muted-2);
-  }
-  @media (max-width: 520px) {
-    .vendor-check__bar {
-      flex-direction: column;
-    }
-  }
-
   /* 7. FIND A CHAPTER */
   .find__inner {
     text-align: center;
@@ -1484,56 +1363,6 @@ const partners = [
   }
   .news__body > p {
     color: var(--muted);
-    margin: 0;
-  }
-
-  /* 14. PARTNERS */
-  .partners__tabs {
-    display: flex;
-    gap: 1.5rem;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 2rem;
-  }
-  .partners__tabs span {
-    padding-bottom: 0.75rem;
-    color: var(--muted);
-    font-weight: 700;
-  }
-  .partners__tabs .is-active {
-    color: var(--royal);
-    border-bottom: 2px solid var(--royal);
-  }
-  .partners__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-6);
-  }
-  @media (min-width: 900px) {
-    .partners__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  .partner {
-    text-align: center;
-    padding: 2.5rem 1.5rem;
-    background: var(--cream-2);
-    border-radius: var(--radius-lg);
-  }
-  .partner__badge {
-    display: inline-grid;
-    place-items: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--gold);
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-  .partner h3 {
-    color: var(--royal);
-    font-size: var(--text-md);
     margin: 0;
   }
 </style>
