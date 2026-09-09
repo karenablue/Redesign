@@ -106,29 +106,36 @@ for a band that is genuinely one-of-a-kind.
 
 ---
 
-## 6. Typography — settled, do not re-open
+## 6. Typography — four roles
 
 ```
---font-head    LEMON MILK   → h1, h2, hero, section headings
---font-label   LEMON MILK   → eyebrows, labels, nav
---font-display LEMON MILK   → big stat numerals
---font-body    Montserrat   → body text, buttons, h3/h4 sub-heads
+--font-display   LEMON MILK        → display headers: short section titles,
+                 (--font-head,       big stat numerals, hero
+                  --font-label)
+--font-editorial Playfair Display  → editorial voice: multi-word headlines,
+                                     pull quotes, storytelling subtitles
+--font-kicker    Pinyon Script     → accent kicker: 1–3 word eyebrows,
+                                     formal sisterhood touches
+--font-body      Montserrat        → body & UI: paragraphs, buttons, forms,
+                                     nav, h3/h4 sub-heads
 ```
 
-- **Headings are LEMON MILK, upright, `font-weight: 400`. No italic.**
-- **There is NO serif in this design.** Not Playfair Display, not Newsreader,
-  not Georgia. If you see "Newsreader" or "Playfair" in an old comment, the
-  comment is stale — the token is correct, the comment is wrong.
-- Why this is locked: every exported per-page stylesheet in the root reference
-  (`index.css`, `herstory.css`, `founders.css`, `becomeamember.css`, …) uses
-  LEMON MILK headings, and that matches the **FY2027 brand guidelines**. The
-  Figma Make source briefly used Playfair italic; that was an early exploration
-  superseded when the real pages were built. This has been flip-flopped twice.
-  **Do not change `--font-head` without re-checking every static CSS file in
-  the root and getting a human's sign-off.**
+- This **extends** the FY2027 PDF's two families (LEMON MILK + Montserrat)
+  with two accent faces, by an explicit design decision for the rebuild
+  (Sept 2026). It is being rolled out **homepage-first** — other pages
+  still show the two-family system until each is converted. When you touch
+  a page, you may bring it onto the four-role system; keep `tokens.css`,
+  `global.css`, and this list in sync.
+- **LEMON MILK stays upright, `font-weight: 400`, never italic.** Playfair
+  Display carries the italic (quotes, subtitles); Pinyon Script is a script
+  face — never uppercase it, never letter-space it, size it up (~24–34px)
+  since its x-height is tiny.
+- `--font-head` and `--font-label` remain aliases of the LEMON MILK stack
+  for now; don't repoint them without a human's sign-off.
 - LEMON MILK is self-hosted (`@font-face` in `global.css`, files in
   `public/fonts/`); it is **not on Google Fonts**. Oswald is its web fallback.
-  Montserrat + Oswald load from Google Fonts in `Base.astro`.
+  Montserrat, Oswald, Playfair Display, and Pinyon Script load from Google
+  Fonts in `Base.astro`.
 - `--cream` (`#fffbf0`) is intentionally part of the system (from the Make
   design, used on program cards). Don't strip cream citing the brand PDF
   without a human decision — that's the other thing that keeps getting
