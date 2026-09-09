@@ -4,8 +4,7 @@
  *
  * Treatment: a dotted-cream breadcrumb hero ("Let's Talk Sisterhood."), then
  * four alternating FeatureRow sections routing each audience (Headquarters,
- * Membership, Media & Press, Vendors & Partners) to the right destination,
- * closing on the same donate CTA the original page used.
+ * Membership, Media & Press, Vendors & Partners) to the right destination.
  */
 import Base from "../layouts/Base.astro";
 import FeatureRow from "../components/FeatureRow.astro";
@@ -125,32 +124,6 @@ import { withBase } from "../lib/url.js";
       </li>
     </ul>
   </FeatureRow>
-
-  <section class="contact-cta">
-    <div class="container contact-cta__inner">
-      <div>
-        <p class="eyebrow">Support the Mission</p>
-        <h2>
-          Greater Service, <span class="gold">Greater Progress.</span>
-        </h2>
-        <p>
-          Every gift helps fund scholarships, community programs, and the next century of Sigma
-          Gamma Rho's work.
-        </p>
-      </div>
-      <a
-        class="gold-heart-btn"
-        href="https://sgrho1922.org/donate"
-        target="_blank"
-        rel="noopener"
-        aria-label="Donate"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-          <path d="M12 21s-7.5-4.35-10-9C.5 8.5 2 4.5 6 4.5c2.2 0 3.8 1.3 4.6 2.7.8-1.4 2.4-2.7 4.6-2.7 4 0 5.5 4 3 7.5-2.5 4.65-10 9-10 9Z"></path>
-        </svg>
-      </a>
-    </div>
-  </section>
 </Base>
 
 <style>
@@ -231,55 +204,5 @@ import { withBase } from "../lib/url.js";
   }
   .zigzag-link:hover {
     color: var(--gold);
-  }
-
-  .contact-cta {
-    background:
-      radial-gradient(circle at 20% 30%, rgba(72, 108, 207, 0.22), transparent 55%), #07142e;
-    color: #fff;
-  }
-  .contact-cta__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
-    padding-block: clamp(2.5rem, 5vw, 3.75rem);
-    flex-wrap: wrap;
-  }
-  .contact-cta h2 {
-    margin: var(--space-2) 0 0;
-    color: #fff;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-  }
-  .contact-cta p {
-    margin: var(--space-3) 0 0;
-    max-width: 460px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: var(--text-sm);
-  }
-  .gold-heart-btn {
-    flex-shrink: 0;
-    width: 54px;
-    height: 54px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--gold);
-    color: #fff;
-    transition: background 0.15s ease;
-  }
-  .gold-heart-btn:hover {
-    background: var(--gold-dark);
-  }
-  .gold-heart-btn svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 720px) {
-    .contact-cta__inner {
-      justify-content: center;
-      text-align: center;
-    }
   }
 </style>
