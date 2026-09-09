@@ -99,6 +99,28 @@ const standardLinks = [
         the official reporting process.
       </p>
     </div>
+    <div class="container ven-verify">
+      <p class="eyebrow">Verify a Licensed Vendor Before You Buy</p>
+      <form class="ven-verify__bar" method="get" action="https://sgrho1922.store/" target="_blank">
+        <label class="visually-hidden" for="vendor-query">
+          Vendor or store name
+        </label>
+        <input
+          id="vendor-query"
+          name="q"
+          type="search"
+          placeholder="Shop name or store URL&hellip;"
+          autocomplete="off"
+        />
+        <button class="btn" type="submit">
+          Verify
+        </button>
+      </form>
+      <p class="ven-verify__note">
+        The searchable registry is being connected. For now, Verify opens the Official Licensed
+        Vendor Directory.
+      </p>
+    </div>
   </section>
 
   <section class="ven-tiers">
@@ -252,6 +274,46 @@ const standardLinks = [
   @media (max-width: 780px) {
     .ven-intro__grid {
       grid-template-columns: 1fr;
+    }
+  }
+  .ven-verify {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .ven-verify__bar {
+    display: flex;
+    gap: var(--space-3);
+    margin: var(--space-4) auto 0;
+    max-width: 30rem;
+  }
+  .ven-verify__bar input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    font: inherit;
+    font-size: var(--text-sm);
+  }
+  .ven-verify__bar input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .ven-verify__bar .btn {
+    flex-shrink: 0;
+    padding: 0.75rem 1.75rem;
+  }
+  .ven-verify__note {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-xs);
+    color: var(--muted-2);
+  }
+  @media (max-width: 520px) {
+    .ven-verify__bar {
+      flex-direction: column;
     }
   }
 
