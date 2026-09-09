@@ -574,32 +574,39 @@ const news = [
     </p>
   </Section>
 
-  <!-- 13b. FOUNDATION ARM — tax-deductible giving channel -->
-  <section class="section section--navy foundation">
-    <div class="container foundation__inner">
-      <div class="foundation__copy">
-        <p class="eyebrow">The Giving Channel</p>
-        <h2 class="feature-title feature-title--light">
-          Invest in <span>Transformational Change</span>
-        </h2>
-        <p>
-          Sigma Gamma Rho Sorority, Incorporated is a 501(c)(7) organization and cannot receive
-          tax-deductible public contributions directly. Charitable giving flows through the
-          Sorority's 501(c)(3) foundation partners — the National Education Fund and the SPEAR
-          Foundation — which fund scholarships, program delivery, and community grants.
-        </p>
-        <p class="foundation__note">
-          Gifts to a 501(c)(3) foundation partner are tax-deductible to the extent allowed by law.
-        </p>
-        <div class="foundation__actions">
-          <a class="btn" href={withBase("/service-impact/partner-foundations/")}>
-            Give Through the Foundation
-          </a>
-          <a class="btn btn--outline" href={withBase("/service-impact/corporate-partnerships/")}>
-            Corporate Grants & DAFs
-          </a>
-        </div>
+  <!-- 13b. GIVING — two foundation-partner cards + fine print -->
+  <section class="section section--white section--pad-tight give">
+    <div class="container give__inner">
+      <p class="eyebrow">The Giving Channel</p>
+      <h2 class="feature-title give__title">
+        Invest in <span>Transformational Change</span>
+      </h2>
+      <div class="give__cards">
+        <a
+          class="give__card"
+          href="https://www.spearfoundation.org/"
+          target="_blank"
+          rel="noopener"
+        >
+          <strong>SPEAR Foundation</strong>
+          <span>Community grants &amp; program delivery</span>
+          <span class="give__go" aria-hidden="true">
+            Give to SPEAR &rarr;
+          </span>
+        </a>
+        <a class="give__card" href={withBase("/service-impact/partner-foundations/#nef")}>
+          <strong>National Education Fund</strong>
+          <span>Academic scholarships &amp; awards</span>
+          <span class="give__go" aria-hidden="true">
+            Give to NEF &rarr;
+          </span>
+        </a>
       </div>
+      <p class="give__fineprint">
+        Sigma Gamma Rho Sorority, Incorporated is a 501(c)(7). Tax-deductible charitable
+        contributions are directed through our 501(c)(3) foundation partners to the extent allowed
+        by law.
+      </p>
     </div>
   </section>
 </Base>
@@ -1078,27 +1085,69 @@ const news = [
     font-weight: 700;
   }
 
-  /* 13b. FOUNDATION ARM */
-  .foundation__inner {
-    max-width: 760px;
+  /* 13b. GIVING */
+  .give__inner {
+    max-width: 720px;
     margin-inline: auto;
     text-align: center;
   }
-  .foundation__copy p {
-    margin: var(--space-4) auto 0;
-    max-width: 60ch;
-    color: rgba(255, 255, 255, 0.85);
+  .give__title {
+    font-size: var(--text-h3);
   }
-  .foundation__copy p.foundation__note {
-    font-size: var(--text-sm);
-    color: rgba(255, 255, 255, 0.6);
-  }
-  .foundation__actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-4);
+  .give__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
     margin-top: var(--space-8);
+  }
+  .give__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    text-align: left;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .give__card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-sm);
+  }
+  .give__card strong {
+    font-family: var(--font-label);
+    font-size: var(--text-md);
+    color: var(--royal);
+  }
+  .give__card span {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .give__card span.give__go {
+    margin-top: var(--space-3);
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+  .give__card:hover span.give__go {
+    color: var(--royal);
+  }
+  .give__fineprint {
+    margin: var(--space-6) auto 0;
+    max-width: 54ch;
+    font-size: var(--text-xs);
+    color: var(--muted-2);
+  }
+  @media (max-width: 560px) {
+    .give__cards {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* 7. FIND A CHAPTER */
