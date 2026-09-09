@@ -118,27 +118,49 @@ const motion = [
   },
 ];
 
+// PLACEHOLDER member voices — swap in real, approved member stories + photos.
+// Deliberately a mix: collegiate members, alumnae professionals, business
+// owners, and public servants, spread across the five regions.
 const voices = [
   {
     initials: "AJ",
     name: "Dr. Alicia K. Jackson",
-    role: "Alumna, Educator & Civic Leader",
+    region: "Southeastern Region",
+    role: "Alumna & Educator",
     quote:
       "Sigma Gamma Rho is not just an organization I joined in college; it is a lifelong commitment to sisterhood, scholarship, and service that continues to shape my personal and professional journey every single day.",
   },
   {
     initials: "MV",
     name: "Michelle R. Vance",
-    role: "Life Member & Entrepreneur",
+    region: "Central Region",
+    role: "Life Member & Small-Business Owner",
     quote:
-      "The leadership training and mentorship I've received through our national programs gave me the confidence to excel in corporate spaces where Black women are often underrepresented. My sisters are my strongest network.",
+      "The mentorship pipeline in this Sorority is real. Sisters reviewed my business plan, opened doors, and showed up as my first customers. That is what Greater Progress looks like in practice.",
   },
   {
     initials: "LB",
     name: "Lauren T. Banks",
-    role: "Collegiate Member, Beta Chapter",
+    region: "Northeastern Region",
+    role: "Collegiate Member",
     quote:
-      "From Operation BigBookBag to Swim 1922, seeing the direct, tangible impact we have on our communities fills me with immense pride. We are women of action, rooted in a century-long legacy of true progress.",
+      "From Operation BigBookBag to SWIM 1922, seeing the direct, tangible impact we have on our communities fills me with pride. We are women of action, rooted in a century-long legacy of progress.",
+  },
+  {
+    initials: "CR",
+    name: "Hon. Carla Reeves",
+    region: "Southwestern Region",
+    role: "Life Member & City Council Member",
+    quote:
+      "Sigma Gamma Rho taught me that leadership is service made visible. The organizing skills and the sisterhood behind me shape how I show up for my constituents every day.",
+  },
+  {
+    initials: "TS",
+    name: "Toni Sherrill",
+    region: "Western Region",
+    role: "Alumna & Nonprofit Founder",
+    quote:
+      "The leadership training I received through our national programs gave me the confidence to build an organization of my own — and a network of sisters who never let me build it alone.",
   },
 ];
 
@@ -302,6 +324,13 @@ const news = [
     </div>
   </section>
 
+  <!-- 2a-ii. ONE SIGMA banner -->
+  <section class="one-sigma" aria-label="One Sigma">
+    <p class="container">
+      One Mission. One Vision. One Sisterhood. <span>One Sigma.</span>
+    </p>
+  </section>
+
   <!-- 2b. FIND YOUR HOME — audience routing engine -->
   <section class="section section--cream find-home">
     <div class="container">
@@ -435,38 +464,6 @@ const news = [
     </div>
   </section>
 
-  <!-- 8. BECOMING A MEMBER -->
-  <section class="section section--navy section--round-b becoming">
-    <div class="container becoming__grid">
-      <div class="becoming__copy">
-        <p class="eyebrow">✦ &nbsp; Join Our Sisterhood &nbsp; ✦</p>
-        <h2 class="feature-title feature-title--light">
-          Becoming a Member of Sigma Gamma Rho Sorority, Incorporated&reg; Is a Commitment
-        </h2>
-        <div class="gold-rule"></div>
-        <p>
-          A commitment to scholarship, uncompromising sisterhood, and the profound responsibility to
-          advance our communities. We seek women who understand that our legacy—forged by seven
-          Black educators in 1922—demands action, integrity, and lifelong dedication.
-        </p>
-        <p>
-          We invite candidates who are prepared to invest their time, intellectual rigor, and
-          leadership into tangible public service, with the academic standing and personal
-          accountability that sustain it.
-        </p>
-        <p>
-          Membership in Sigma Gamma Rho is an active pursuit of our founding mandate:{" "}
-          <strong class="gold">Greater Service, Greater Progress.</strong>
-        </p>
-        <Button href="/membership/become-a-member/">Explore Membership</Button>
-      </div>
-      <figure class="becoming__figure">
-        <span class="becoming__badge">Scholarship</span>
-        <img src={withBase("/images/rho alpha sorors.jfif")} alt="Sigma Gamma Rho members" />
-      </figure>
-    </div>
-  </section>
-
   <!-- 10. SISTERHOOD IN MOTION -->
   <Section
     tone="white"
@@ -496,25 +493,42 @@ const news = [
   </Section>
 
   <!-- 11. OUR SISTERS SPEAK -->
-  <Section tone="white" eyebrow="Member Voices" title="Our Sisters" highlight="Speak">
-    <div class="voices">
-      {voices.map((v) => (
-        <blockquote class="voice">
-          <span class="voice__mark" aria-hidden="true">
-            &ldquo;
-          </span>
-          <p class="voice__quote">{v.quote}</p>
-          <footer>
-            <span class="voice__avatar" aria-hidden="true">
+  <Section
+    tone="white"
+    eyebrow="Member Voices"
+    title="Our Sisters"
+    highlight="Speak"
+    lead="The strength of our legacy lives in our members — collegiate and alumnae, entrepreneurs and public servants — across all five regions."
+  >
+    <div class="vspeak" data-vspeak>
+      <button class="vspeak__nav vspeak__nav--prev" type="button" aria-label="Previous story">
+        &lsaquo;
+      </button>
+      <div class="vspeak__track">
+        {voices.map((v, i) => (
+          <article class:list={["vspeak__slide", { "is-active": i === 0 }]}>
+            <div class="vspeak__portrait" aria-hidden="true">
               {v.initials}
-            </span>
-            <span class="voice__who">
-              <strong>{v.name}</strong>
-              <span>{v.role}</span>
-            </span>
-          </footer>
-        </blockquote>
-      ))}
+            </div>
+            <div class="vspeak__content">
+              <p class="vspeak__name">{v.name}</p>
+              <p class="vspeak__region">{v.region}</p>
+              <p class="vspeak__quote">{v.quote}</p>
+              <p class="vspeak__role">{v.role}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <button class="vspeak__nav vspeak__nav--next" type="button" aria-label="Next story">
+        &rsaquo;
+      </button>
+      <div class="vspeak__dots" aria-label="Choose a member story"></div>
+    </div>
+    <div class="vspeak__cta">
+      <p>What's your Sigma Gamma Rho story?</p>
+      <a class="btn" href={withBase("/contact/")}>
+        Share It With Us
+      </a>
     </div>
   </Section>
 
@@ -637,6 +651,38 @@ const news = [
     </div>
   </section>
 </Base>
+
+<script>
+  // "Our Sisters Speak" carousel — one story at a time, prev/next + dots.
+  document.querySelectorAll<HTMLElement>("[data-vspeak]").forEach((root) => {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>(".vspeak__slide"));
+    const dotsWrap = root.querySelector<HTMLElement>(".vspeak__dots");
+    const prev = root.querySelector<HTMLButtonElement>(".vspeak__nav--prev");
+    const next = root.querySelector<HTMLButtonElement>(".vspeak__nav--next");
+    if (slides.length < 2 || !dotsWrap) return;
+
+    let index = 0;
+    const dots = slides.map((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "vspeak__dot";
+      dot.setAttribute("aria-label", `Story ${i + 1}`);
+      dot.addEventListener("click", () => show(i));
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+
+    function show(i: number) {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, si) => s.classList.toggle("is-active", si === index));
+      dots.forEach((d, di) => d.classList.toggle("is-active", di === index));
+    }
+
+    prev?.addEventListener("click", () => show(index - 1));
+    next?.addEventListener("click", () => show(index + 1));
+    show(0);
+  });
+</script>
 
 <style>
   /* shared bits used by scoped sections */
@@ -1067,6 +1113,23 @@ const news = [
     }
   }
 
+  /* ONE SIGMA banner */
+  .one-sigma {
+    background: var(--grad-royal);
+    color: #fff;
+    text-align: center;
+    padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .one-sigma p {
+    margin: 0;
+    font-family: var(--font-head);
+    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+    letter-spacing: 0.02em;
+  }
+  .one-sigma span {
+    color: var(--gold);
+  }
+
   /* 2b. FIND YOUR HOME */
   .find-home__head {
     max-width: 640px;
@@ -1250,51 +1313,6 @@ const news = [
     }
   }
 
-  /* 8. BECOMING A MEMBER */
-  .becoming__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-    gap: clamp(2rem, 6vw, 4.5rem);
-    align-items: center;
-  }
-  .becoming__copy p {
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .becoming__figure {
-    position: relative;
-    margin: 0;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-  }
-  .becoming__figure img {
-    width: 100%;
-    aspect-ratio: 4/5;
-    object-fit: cover;
-    display: block;
-  }
-  .becoming__badge {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: var(--gold);
-    color: var(--navy);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-  }
-  @media (max-width: 820px) {
-    .becoming__grid {
-      grid-template-columns: 1fr;
-    }
-    .becoming__figure {
-      max-width: 420px;
-    }
-  }
-
   /* 10. SISTERHOOD IN MOTION */
   .motion__head {
     display: flex;
@@ -1352,62 +1370,143 @@ const news = [
     }
   }
 
-  /* 11. VOICES */
-  .voices {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-6);
+  /* 11. OUR SISTERS SPEAK — carousel */
+  .vspeak {
+    position: relative;
+    max-width: 62rem;
+    margin-inline: auto;
+    padding-inline: clamp(0px, 5vw, 3.5rem);
   }
-  .voice {
-    margin: 0;
-    background: var(--cream-2);
-    border-radius: var(--radius-lg);
-    padding: 2rem 1.75rem;
-    display: flex;
-    flex-direction: column;
+  .vspeak__track {
+    position: relative;
+    min-height: clamp(22rem, 44vw, 24rem);
   }
-  .voice__mark {
-    color: var(--gold);
-    font-size: 2.5rem;
-    line-height: 0.6;
-    font-weight: 700;
-  }
-  .voice__quote {
-    color: var(--ink);
-    font-size: var(--text-base);
-    line-height: 1.65;
-    margin: 0.75rem 0 1.5rem;
-    flex: 1;
-  }
-  .voice footer {
+  .vspeak__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
   }
-  .voice__avatar {
+  .vspeak__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .vspeak__portrait {
+    flex-shrink: 0;
+    width: clamp(110px, 20vw, 180px);
+    aspect-ratio: 1;
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--navy);
+    border-radius: var(--radius-lg);
+    background: var(--grad-royal);
     color: #fff;
+    font-family: var(--font-label);
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    letter-spacing: 0.04em;
+  }
+  .vspeak__name {
+    margin: 0;
+    font-family: var(--font-label);
+    font-size: var(--text-md);
+    color: var(--royal);
+  }
+  .vspeak__region {
+    margin: 0.25rem 0 var(--space-4);
+    font-style: italic;
+    font-size: var(--text-sm);
+    color: var(--gold-dark);
+  }
+  .vspeak__quote {
+    margin: 0 0 var(--space-4);
+    color: var(--ink);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+  .vspeak__role {
+    margin: 0;
     font-size: var(--text-xs);
     font-weight: 700;
-  }
-  .voice__who {
-    display: flex;
-    flex-direction: column;
-    font-size: var(--text-xs);
-  }
-  .voice__who strong {
-    color: var(--royal);
-    font-size: var(--text-sm);
-  }
-  .voice__who span {
-    color: var(--muted);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    color: var(--muted-2);
+  }
+  .vspeak__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--royal);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .vspeak__nav:hover {
+    background: var(--royal);
+    color: #fff;
+    border-color: var(--royal);
+  }
+  .vspeak__nav--prev {
+    left: 0;
+  }
+  .vspeak__nav--next {
+    right: 0;
+  }
+  .vspeak__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: var(--space-6);
+  }
+  .vspeak__dots :global(.vspeak__dot) {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--line);
+    cursor: pointer;
+  }
+  .vspeak__dots :global(.vspeak__dot.is-active) {
+    background: var(--gold);
+  }
+  .vspeak__cta {
+    text-align: center;
+    margin-top: var(--space-10);
+  }
+  .vspeak__cta p {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-head);
+    font-size: var(--text-h3);
+    color: var(--royal);
+  }
+  @media (max-width: 720px) {
+    .vspeak__slide {
+      flex-direction: column;
+      text-align: center;
+    }
+    .vspeak__track {
+      min-height: clamp(30rem, 90vw, 34rem);
+    }
+    .vspeak__nav {
+      display: none;
+    }
   }
 
   /* 12. EVENTS */
