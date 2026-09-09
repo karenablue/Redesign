@@ -1,61 +1,442 @@
 ---
 import Base from "../layouts/Base.astro";
-import { withBase } from "../lib/url.js";
+import LegalDoc from "../components/LegalDoc.astro";
 
-const updated = "September 9, 2026";
+const updated = "July 2026";
+
+const intro = [
+  'Sigma Gamma Rho Sorority, Inc. ("Sigma Gamma Rho," "SGR," "we," "us," or "our") respects and is committed to protecting the privacy of our members, prospective members, volunteers, donors, program participants, visitors, and users of our websites, applications, and online services.',
+  'This Privacy Policy explains how we collect, use, disclose, protect, and otherwise process personal information obtained through our websites, membership platforms, mobile applications, event registration systems, educational programs, online services, and other digital platforms (collectively, the "Services").',
+  "By accessing or using our Services, you acknowledge that you have read and understand this Privacy Policy and agree to the collection, use, and disclosure of information as described herein.",
+  "Please review this Privacy Policy carefully. If you do not agree with this Privacy Policy, please discontinue the use of the Services.",
+];
 
 const sections = [
   {
     id: "information-we-collect",
-    title: "Information We Collect",
-    body: [
-      "We collect information you provide directly — such as your name, email address, mailing address, chapter affiliation, and payment details — when you join, reactivate, register for an event, make a donation, or contact us.",
-      "We also collect limited technical information automatically when you visit the site, including your IP address, browser type, pages viewed, and the date and time of your visit.",
+    title: "1. Information We Collect",
+    blocks: [
+      {
+        p: "We collect personal information directly from you, automatically through your use of our Services, and from authorized third-party sources.",
+      },
+      { subhead: "Information You Provide Directly" },
+      { p: "We may collect the following categories of information:" },
+      { subhead: "Personal Identifiers" },
+      {
+        list: [
+          "Name",
+          "Maiden or former names",
+          "Username and password",
+          "Email address",
+          "Mailing address",
+          "Telephone number",
+          "Date of birth",
+          "Membership identification numbers",
+        ],
+      },
+      { subhead: "Membership Information" },
+      {
+        list: [
+          "Membership applications",
+          "Chapter affiliation",
+          "Leadership positions held",
+          "Membership status",
+          "Certification information",
+          "Committee participation",
+          "Volunteer activities",
+          "Training and educational records",
+        ],
+      },
+      { subhead: "Financial Information" },
+      {
+        list: [
+          "Billing address",
+          "Payment card information",
+          "Bank account information when authorized",
+          "Donation records",
+          "Dues payment records",
+        ],
+      },
+      { p: "Payment processing may be performed by authorized third-party payment providers." },
+      { subhead: "Event and Program Information" },
+      {
+        list: [
+          "Event registrations",
+          "Attendance records",
+          "Dietary preferences",
+          "Emergency contact information",
+          "Accommodation requests",
+          "Travel-related information voluntarily submitted",
+        ],
+      },
+      { subhead: "Communications and Submissions" },
+      {
+        list: [
+          "Contact forms",
+          "Email communications",
+          "Help desk requests",
+          "Surveys",
+          "Scholarship applications",
+          "Grant applications",
+          "Forums and message boards",
+          "Social media interactions",
+          "Uploaded documents, photographs, videos, and other content",
+        ],
+      },
+      { subhead: "Sensitive Personal Information" },
+      {
+        p: "In limited circumstances, we may collect sensitive personal information when reasonably necessary to:",
+      },
+      {
+        list: [
+          "Administer membership programs",
+          "Process accommodations requests",
+          "Manage insurance and risk-related matters",
+          "Conduct disciplinary proceedings",
+          "Comply with legal obligations",
+          "Administer scholarships, grants, or benefits",
+        ],
+      },
+      {
+        p: "We process such information only as necessary for legitimate organizational purposes.",
+      },
+      { subhead: "Information Collected Automatically" },
+      { p: "When you use our Services, we may automatically collect:" },
+      {
+        list: [
+          "IP address",
+          "Device identifiers",
+          "Browser type",
+          "Operating system",
+          "Internet service provider",
+          "Pages viewed",
+          "Session information",
+          "Referring URLs",
+          "Clickstream data",
+        ],
+      },
+      { subhead: "Cookies and Similar Technologies" },
+      {
+        p: "We use cookies, pixels, web beacons, local storage, and similar technologies to authenticate users, maintain security, improve site functionality, measure performance, analyze usage patterns, and personalize user experiences.",
+      },
+      {
+        p: "You may manage cookie preferences through your browser settings; however, some features may not function properly if cookies are disabled. See our Cookie Notice for details.",
+      },
+      { subhead: "Analytics, Location, and Metadata" },
+      {
+        p: "We may use analytics providers to evaluate website performance and engagement. Where permitted by law and enabled by your device settings, we may collect GPS or approximate location to support event services, chapter information, and security. Metadata associated with uploaded content may include date and time information, file characteristics, and device or geographic information where available.",
+      },
     ],
   },
   {
     id: "how-we-use-information",
-    title: "How We Use Your Information",
-    body: [
-      "To process membership, dues, event registrations, and donations; to respond to your inquiries; to send Sorority communications you have asked to receive; and to maintain the security and integrity of our systems.",
-      "We do not sell your personal information.",
+    title: "2. How We Use Your Information",
+    blocks: [
+      { p: "We may use personal information for the following purposes:" },
+      { subhead: "Membership Administration" },
+      {
+        list: [
+          "Process membership applications",
+          "Verify eligibility",
+          "Maintain membership records",
+          "Facilitate chapter administration",
+          "Manage leadership appointments",
+        ],
+      },
+      { subhead: "Organizational Operations" },
+      {
+        list: [
+          "Deliver Services and provide customer support",
+          "Conduct educational programming",
+          "Administer scholarships and grants",
+          "Facilitate conferences and events",
+          "Process dues and donations",
+        ],
+      },
+      { subhead: "Communications" },
+      {
+        list: [
+          "Send account notifications",
+          "Provide membership updates",
+          "Deliver newsletters",
+          "Respond to inquiries",
+          "Share important organizational announcements",
+        ],
+      },
+      { subhead: "Improvement of Services" },
+      {
+        list: [
+          "Monitor system performance",
+          "Improve user experience",
+          "Conduct analytics",
+          "Develop new services and features",
+          "Maintain security",
+        ],
+      },
+      { subhead: "Compliance and Legal Obligations" },
+      {
+        list: [
+          "Enforce governing documents",
+          "Conduct risk-management activities",
+          "Resolve disputes",
+          "Investigate complaints",
+          "Comply with laws, regulations, and legal processes",
+        ],
+      },
+      { subhead: "Artificial Intelligence and Automated Technologies" },
+      {
+        p: "Sigma Gamma Rho may utilize artificial intelligence (AI), machine learning, and automation tools to support administrative functions, member services, communications, analytics, operational efficiency, and website management. Any personal information processed through such tools remains subject to this Privacy Policy and applicable contractual, legal, and security safeguards.",
+      },
+    ],
+  },
+  {
+    id: "legal-bases",
+    title: "3. Legal Bases for Processing",
+    blocks: [
+      {
+        p: "Where applicable under privacy laws, Sigma Gamma Rho processes personal information based upon:",
+      },
+      {
+        list: [
+          "Your consent",
+          "Performance of contractual obligations",
+          "Compliance with legal obligations",
+          "Protection of vital interests",
+          "Legitimate organizational interests",
+          "Other lawful bases permitted under applicable law",
+        ],
+      },
     ],
   },
   {
     id: "sharing",
-    title: "When We Share Information",
-    body: [
-      "We share information with service providers who process it on our behalf (for example, payment processors and email delivery services) under contracts that limit their use of it.",
-      "We may also disclose information when required by law, or to protect the rights, safety, and property of the Sorority, its members, or the public.",
+    title: "4. Sharing of Information",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho does not sell personal information. We may disclose personal information under the following circumstances:",
+      },
+      { subhead: "Service Providers and Vendors" },
+      {
+        list: [
+          "Membership management providers",
+          "Payment processors",
+          "Website hosting providers",
+          "Event management platforms",
+          "Cloud storage providers",
+          "Cybersecurity providers",
+          "Communication service providers",
+          "Legal, auditing, and accounting professionals",
+        ],
+      },
+      {
+        p: "Such providers are contractually required to protect personal information and use it only for authorized purposes.",
+      },
+      { subhead: "Affiliates and Organizational Entities" },
+      {
+        p: "Information may be shared among Sigma Gamma Rho entities, chapters, regions, committees, affiliates, and authorized volunteers as necessary for legitimate organizational operations.",
+      },
+      { subhead: "Legal Compliance" },
+      {
+        p: "We may disclose information when reasonably necessary to comply with legal obligations, respond to subpoenas or court orders, protect organizational rights, prevent fraud, protect health and safety, or investigate policy violations.",
+      },
+      { subhead: "Business Transactions" },
+      {
+        p: "Should Sigma Gamma Rho reorganize, merge, transfer assets, or undertake a similar institutional transaction, personal information may be transferred as permitted by law.",
+      },
+      { subhead: "Publicly Submitted Content" },
+      {
+        p: "Information voluntarily posted to public forums, message boards, social media pages, and similar areas may become publicly available.",
+      },
     ],
   },
   {
-    id: "your-choices",
-    title: "Your Choices",
-    body: [
-      "You may opt out of non-essential email at any time using the unsubscribe link in those messages, or by contacting International Corporate Headquarters.",
-      "You may request access to, correction of, or deletion of your personal information, subject to records we are required to retain.",
+    id: "sale-of-information",
+    title: "5. Sale or Sharing of Personal Information",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho does not sell personal information and does not knowingly disclose personal information to third parties in exchange for monetary compensation.",
+      },
+      {
+        p: "Any sharing of information with vendors or service providers is solely for authorized organizational purposes.",
+      },
+    ],
+  },
+  {
+    id: "data-retention",
+    title: "6. Data Retention",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho retains personal information only for as long as reasonably necessary to:",
+      },
+      {
+        list: [
+          "Fulfill the purposes described in this Privacy Policy",
+          "Comply with legal, tax, accounting, and regulatory requirements",
+          "Preserve organizational records",
+          "Resolve disputes",
+          "Enforce organizational policies",
+          "Protect legitimate business and governance interests",
+        ],
+      },
+      {
+        p: "Retention periods vary depending on the nature of the information and applicable legal requirements.",
+      },
     ],
   },
   {
     id: "data-security",
-    title: "Data Security & Retention",
-    body: [
-      "We use reasonable administrative, technical, and physical safeguards to protect personal information, and retain it only as long as needed for the purposes described here or as required by law.",
+    title: "7. Data Security",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho maintains reasonable administrative, technical, and physical safeguards designed to protect personal information against unauthorized access, use, disclosure, alteration, or destruction. Security measures may include:",
+      },
+      {
+        list: [
+          "Access controls",
+          "Multi-factor authentication where applicable",
+          "Encryption technologies",
+          "Vendor oversight",
+          "Security monitoring",
+          "Employee and volunteer training",
+          "Incident response planning",
+        ],
+      },
+      {
+        p: "No method of transmission or storage can be guaranteed as completely secure. Accordingly, we cannot guarantee absolute security.",
+      },
+    ],
+  },
+  {
+    id: "international-transfers",
+    title: "8. International Data Transfers",
+    blocks: [
+      {
+        p: "As an international organization, Sigma Gamma Rho may transfer personal information across state, national, and international boundaries.",
+      },
+      {
+        p: "When such transfers occur, we implement reasonable safeguards intended to protect personal information and comply with applicable legal requirements.",
+      },
+    ],
+  },
+  {
+    id: "your-rights",
+    title: "9. Your Privacy Rights",
+    blocks: [
+      { p: "Depending on your jurisdiction, you may have the right to:" },
+      {
+        list: [
+          "Access personal information we maintain about you",
+          "Request correction of inaccurate information",
+          "Request deletion of personal information",
+          "Request restrictions on processing",
+          "Object to certain processing activities",
+          "Request portability of eligible information",
+          "Withdraw consent when processing is based on consent",
+          "Appeal certain privacy-related decisions as permitted by law",
+        ],
+      },
+      {
+        p: "To exercise any applicable privacy rights, please contact us using the information provided below.",
+      },
+    ],
+  },
+  {
+    id: "communications-preferences",
+    title: "10. Communications Preferences",
+    blocks: [
+      {
+        p: "Promotional emails may include an unsubscribe option. Please note that you may still receive membership notices, governance communications, transaction confirmations, security notifications, legal notices, and administrative messages. These communications are considered essential to Services administration.",
+      },
+    ],
+  },
+  {
+    id: "membership-records",
+    title: "11. Membership Records",
+    blocks: [
+      { p: "Sigma Gamma Rho maintains membership-related information for purposes including:" },
+      {
+        list: [
+          "Membership verification",
+          "Dues administration",
+          "Governance administration",
+          "Leadership appointments",
+          "Insurance administration",
+          "Event participation",
+          "Educational programming",
+          "Compliance activities",
+          "Risk management",
+          "Disciplinary administration",
+        ],
+      },
+      {
+        p: "Such records are maintained in accordance with organizational policies and legal requirements.",
+      },
     ],
   },
   {
     id: "childrens-privacy",
-    title: "Children's Privacy",
-    body: [
-      "The site is not directed to children under 13, and we do not knowingly collect their personal information. Youth affiliate program data is provided and managed by a parent or guardian.",
+    title: "12. Children's Privacy",
+    blocks: [
+      {
+        p: "Our Services are not intended for children under the age of 18. We do not knowingly collect personal information from children under 18 without legally required parental consent.",
+      },
+      {
+        p: "If we learn that information has been collected from a child under 18 in violation of applicable law, we will take reasonable steps to delete the information. Parents or guardians who believe a child has provided personal information should contact us immediately.",
+      },
+    ],
+  },
+  {
+    id: "breach-notification",
+    title: "13. Data Breach Notification",
+    blocks: [
+      {
+        p: "In the event of a security incident involving personal information, Sigma Gamma Rho will investigate the incident and provide notifications to affected individuals and regulatory authorities when required by applicable law.",
+      },
+    ],
+  },
+  {
+    id: "do-not-track",
+    title: "14. Do Not Track Signals",
+    blocks: [
+      {
+        p: 'Some web browsers provide "Do Not Track" signals. Because there is no universally accepted standard governing such signals, our Services may not respond to all Do Not Track requests. We will continue to handle information in accordance with this Privacy Policy regardless of any Do Not Track signal received.',
+      },
+    ],
+  },
+  {
+    id: "third-party-websites",
+    title: "15. Third-Party Websites and Services",
+    blocks: [
+      {
+        p: "Our Services may contain links to third-party websites, platforms, or applications. Sigma Gamma Rho does not control and is not responsible for the privacy practices of third parties. We encourage users to review third-party privacy policies before providing personal information.",
+      },
     ],
   },
   {
     id: "changes",
-    title: "Changes to This Policy",
-    body: [
-      "We may update this policy from time to time. Material changes will be posted here with a revised effective date.",
+    title: "16. Changes to This Privacy Policy",
+    blocks: [
+      {
+        p: "We reserve the right to modify this Privacy Policy at any time. When material changes are made, we may post the updated policy on our website, update the “Last Updated” date, and/or provide additional notice where required by law.",
+      },
+      {
+        p: "Continued use of the Services after changes become effective constitutes acceptance of the revised Privacy Policy.",
+      },
+    ],
+  },
+  {
+    id: "contact",
+    title: "17. Contact Us",
+    blocks: [
+      { p: "For questions, concerns, or requests regarding this Privacy Policy, please contact:" },
+      {
+        address: [
+          "Sigma Gamma Rho Sorority, Inc.",
+          "International Headquarters — Legal Department",
+          "P.O. Box 27688",
+          "Raleigh, North Carolina 27611",
+        ],
+      },
     ],
   },
 ];
@@ -63,134 +444,7 @@ const sections = [
 
 <Base
   title="Privacy Policy"
-  description="How Sigma Gamma Rho Sorority, Incorporated collects, uses, and protects personal information on its national website."
+  description="How Sigma Gamma Rho Sorority, Incorporated collects, uses, discloses, and protects personal information across its websites and online services."
 >
-  <section class="legal-hero">
-    <div class="container container--narrow">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span aria-hidden="true">/</span>
-        <span>Privacy Policy</span>
-      </p>
-      <p class="eyebrow">Legal</p>
-      <h1>Privacy Policy</h1>
-      <p class="legal-hero__updated">Last updated {updated}</p>
-    </div>
-  </section>
-
-  <section class="legal-body">
-    <div class="container container--narrow">
-      <p class="legal-note" role="note">
-        This is a working draft for the site rebuild and is pending review by the Sorority's legal
-        counsel. It is not yet an official policy of Sigma Gamma Rho Sorority, Incorporated.
-      </p>
-
-      <p class="legal-intro">
-        Sigma Gamma Rho Sorority, Incorporated ("Sigma Gamma Rho," "we," or "us") respects your
-        privacy. This policy explains what information we collect through this website, how we use
-        it, and the choices you have.
-      </p>
-
-      <ol class="legal-toc" aria-label="Sections">
-        {sections.map((s) => (
-          <li>
-            <a href={`#${s.id}`}>{s.title}</a>
-          </li>
-        ))}
-      </ol>
-
-      {sections.map((s) => (
-        <section class="legal-section" id={s.id}>
-          <h2>{s.title}</h2>
-          {s.body.map((p) => (
-            <p>{p}</p>
-          ))}
-        </section>
-      ))}
-
-      <section class="legal-section" id="contact">
-        <h2>Contact Us</h2>
-        <p>
-          Questions about this policy can go to International Corporate Headquarters at{" "}
-          <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>, or through the{" "}
-          <a href={withBase("/contact/")}>contact page</a>.
-        </p>
-      </section>
-    </div>
-  </section>
+  <LegalDoc title="Privacy Policy" updated={updated} intro={intro} sections={sections} />
 </Base>
-
-<style>
-  .legal-hero {
-    background: var(--cream);
-    padding-block: clamp(3rem, 6vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
-  }
-  .legal-hero h1 {
-    margin: var(--space-2) 0 0;
-  }
-  .legal-hero__updated {
-    margin: var(--space-3) 0 0;
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-
-  .legal-body {
-    background: var(--white);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
-  }
-  .legal-note {
-    padding: var(--space-4) var(--space-5);
-    margin: 0 0 var(--space-8);
-    background: var(--tint);
-    border-left: 3px solid var(--gold);
-    border-radius: var(--radius);
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .legal-intro {
-    color: var(--muted);
-  }
-
-  .legal-toc {
-    margin: var(--space-8) 0 var(--space-12);
-    padding-left: 1.2rem;
-    display: grid;
-    gap: var(--space-2);
-    color: var(--royal);
-  }
-  .legal-toc a {
-    color: inherit;
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .legal-toc a:hover {
-    color: var(--gold-dark);
-  }
-
-  .legal-section {
-    scroll-margin-top: 100px;
-    margin-top: var(--space-10);
-  }
-  .legal-section h2 {
-    font-size: var(--text-h3);
-    margin: 0 0 var(--space-4);
-  }
-  .legal-section p {
-    color: var(--muted);
-  }
-  .legal-section a {
-    color: var(--royal-dark);
-    font-weight: 700;
-  }
-</style>

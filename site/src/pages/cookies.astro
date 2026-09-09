@@ -1,0 +1,278 @@
+---
+import Base from "../layouts/Base.astro";
+import LegalDoc from "../components/LegalDoc.astro";
+
+const updated = "July 2026";
+
+const intro = [
+  'This Cookie Notice explains how Sigma Gamma Rho Sorority, Inc. ("Sigma Gamma Rho," "SGR," "we," "us," or "our") uses cookies and similar technologies on our websites, mobile applications, membership portals, event registration platforms, and other online services (collectively, the "Services").',
+  "This Cookie Notice should be read together with our Privacy Policy and Terms of Use. The Privacy Policy explains how we collect, use, disclose, and protect personal information, while this Cookie Notice specifically addresses our use of cookies and similar technologies.",
+];
+
+const sections = [
+  {
+    id: "purpose",
+    title: "1. Purpose of This Cookie Notice",
+    blocks: [
+      {
+        p: "This Cookie Notice explains our use of cookies and similar technologies across the Services and should be read alongside our Privacy Policy and Terms of Use.",
+      },
+    ],
+  },
+  {
+    id: "what-are-cookies",
+    title: "2. What Are Cookies?",
+    blocks: [
+      {
+        p: "Cookies are small text files placed on a computer, mobile device, or other internet-connected device when you visit a website. Cookies help websites function properly and allow organizations to:",
+      },
+      {
+        list: [
+          "Recognize returning visitors",
+          "Remember user preferences and settings",
+          "Improve website performance",
+          "Enhance security",
+          "Measure website usage and engagement",
+          "Personalize website experiences",
+          "Support analytics and reporting activities",
+        ],
+      },
+      {
+        p: 'Cookies may be placed directly by Sigma Gamma Rho ("first-party cookies") or by authorized third-party providers ("third-party cookies").',
+      },
+    ],
+  },
+  {
+    id: "technologies",
+    title: "3. Technologies We Use",
+    blocks: [
+      { p: "In addition to cookies, Sigma Gamma Rho may use:" },
+      {
+        list: [
+          "Web beacons",
+          "Pixels",
+          "Tags",
+          "Local storage technologies",
+          "Session storage",
+          "Analytics tools",
+          "Similar tracking technologies",
+        ],
+      },
+      {
+        p: "These technologies help support functionality, security, communications, analytics, and website operations.",
+      },
+    ],
+  },
+  {
+    id: "types",
+    title: "4. Types of Cookies We Use",
+    blocks: [
+      { subhead: "A. Strictly Necessary Cookies" },
+      {
+        p: "These cookies are essential for the operation of our Services and cannot be disabled through our Cookie Settings tool. They support:",
+      },
+      {
+        list: [
+          "User authentication",
+          "Website security",
+          "Fraud prevention",
+          "Load balancing",
+          "Session management",
+          "Network management",
+          "Accessibility functionality",
+        ],
+      },
+      { p: "Without these cookies, certain website features may not function properly." },
+      { subhead: "B. Functional Cookies" },
+      { p: "These cookies enable enhanced functionality and personalization, such as:" },
+      {
+        list: [
+          "Remembering language preferences",
+          "Remembering login details where permitted",
+          "Saving user settings",
+          "Remembering accessibility preferences",
+          "Improving user experience across visits",
+        ],
+      },
+      { p: "If functional cookies are disabled, some features may not operate as intended." },
+      { subhead: "C. Analytics Cookies" },
+      {
+        p: "These cookies help Sigma Gamma Rho understand how visitors interact with our Services, including:",
+      },
+      {
+        list: [
+          "Tracking page views",
+          "Measuring website traffic",
+          "Understanding navigation patterns",
+          "Identifying popular content",
+          "Evaluating website performance",
+        ],
+      },
+      {
+        p: "Analytics information is generally used in aggregated form to improve the Services and user experience.",
+      },
+      { subhead: "D. Performance Cookies" },
+      {
+        p: "Performance cookies help us evaluate and improve the technical operation of our Services:",
+      },
+      {
+        list: [
+          "Website speed monitoring",
+          "Error tracking",
+          "Reliability measurements",
+          "System performance reporting",
+          "User experience optimization",
+        ],
+      },
+      { subhead: "E. Marketing and Advertising Cookies" },
+      { p: "Where used, these cookies may assist with:" },
+      {
+        list: [
+          "Personalized content",
+          "Campaign measurement",
+          "Social media integrations",
+          "Event marketing",
+          "Communication effectiveness",
+        ],
+      },
+      {
+        p: "Sigma Gamma Rho does not sell personal information. Any marketing-related technologies are used solely for legitimate organizational purposes consistent with our Privacy Policy.",
+      },
+    ],
+  },
+  {
+    id: "why",
+    title: "5. Why We Use Cookies",
+    blocks: [
+      { p: "We may use cookies and similar technologies to:" },
+      {
+        list: [
+          "Operate and secure our Services",
+          "Authenticate users and maintain account sessions",
+          "Provide requested functionality",
+          "Remember user preferences",
+          "Improve website usability",
+          "Measure website performance",
+          "Analyze visitor engagement",
+          "Detect fraud and security incidents",
+          "Support event registration and membership platforms",
+          "Facilitate communications",
+          "Improve organizational operations",
+        ],
+      },
+    ],
+  },
+  {
+    id: "third-party",
+    title: "6. Third-Party Cookies",
+    blocks: [
+      {
+        p: "Certain third-party providers may place cookies or similar technologies when you interact with our Services. These providers may include:",
+      },
+      {
+        list: [
+          "Website hosting providers",
+          "Analytics providers",
+          "Event registration vendors",
+          "Membership management platforms",
+          "Payment processing providers",
+          "Content delivery networks",
+          "Social media integrations",
+        ],
+      },
+      {
+        p: "Sigma Gamma Rho does not control the privacy practices of third-party providers. Users should review the privacy policies of those providers for additional information.",
+      },
+    ],
+  },
+  {
+    id: "consent",
+    title: "7. Cookie Consent and Your Choices",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho provides users with the ability to make informed choices regarding certain categories of cookies. When visiting our Services, users may be presented with options such as:",
+      },
+      { list: ["Accept All Cookies", "Reject Non-Essential Cookies", "Manage Preferences"] },
+      {
+        p: "Users may modify their preferences at any time through the Cookie Settings link available on applicable websites.",
+      },
+    ],
+  },
+  {
+    id: "browser-settings",
+    title: "8. Browser Settings",
+    blocks: [
+      { p: "Most web browsers allow users to:" },
+      {
+        list: [
+          "View stored cookies",
+          "Delete cookies",
+          "Block cookies",
+          "Restrict certain categories of cookies",
+          "Configure cookie permissions",
+        ],
+      },
+      {
+        p: "Instructions for managing cookies can typically be found within your browser's settings, preferences, or help menu. Please note that disabling certain cookies may affect website functionality and user experience.",
+      },
+    ],
+  },
+  {
+    id: "do-not-track",
+    title: "9. Do Not Track Signals",
+    blocks: [
+      {
+        p: 'Some web browsers offer a "Do Not Track" ("DNT") feature. Because there is currently no universally accepted standard governing DNT signals, Sigma Gamma Rho may not respond to all DNT requests. We will continue to process information in accordance with our Privacy Policy regardless of whether a DNT signal is received.',
+      },
+    ],
+  },
+  {
+    id: "international",
+    title: "10. International Visitors",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho is an international organization and may interact with users located in different jurisdictions.",
+      },
+      {
+        p: "Where required by applicable privacy laws, including laws governing cookie consent and online tracking technologies, Sigma Gamma Rho will seek to obtain appropriate consent before placing certain categories of cookies on users' devices.",
+      },
+    ],
+  },
+  {
+    id: "changes",
+    title: "11. Changes to This Cookie Notice",
+    blocks: [
+      {
+        p: "Sigma Gamma Rho may update this Cookie Notice from time to time. If material changes are made, we may update the “Last Updated” date, publish a revised Cookie Notice on our websites, update our Cookie Settings interface, and/or provide additional notice where required by law.",
+      },
+      {
+        p: "Continued use of the Services after changes become effective constitutes acceptance of the revised Cookie Notice.",
+      },
+    ],
+  },
+  {
+    id: "contact",
+    title: "12. Contact Us",
+    blocks: [
+      {
+        p: "If you have questions regarding this Cookie Notice or your cookie preferences, please contact:",
+      },
+      {
+        address: [
+          "Sigma Gamma Rho Sorority, Inc.",
+          "International Headquarters — Legal Department",
+          "P.O. Box 27688",
+          "Raleigh, North Carolina 27611",
+        ],
+      },
+    ],
+  },
+];
+---
+
+<Base
+  title="Cookie Notice"
+  description="How Sigma Gamma Rho Sorority, Incorporated uses cookies and similar technologies across its websites and online services."
+>
+  <LegalDoc title="Cookie Notice" updated={updated} intro={intro} sections={sections} />
+</Base>
