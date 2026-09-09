@@ -87,12 +87,14 @@ const showAnchor = anchor ?? tone === "navy";
   .statband__row {
     display: flex;
     align-items: stretch;
+    justify-content: center;
     margin: 0;
   }
   .statband__item {
     flex: 1;
+    min-width: 0;
     text-align: center;
-    padding-inline: var(--space-8);
+    padding-inline: clamp(0.5rem, 2vw, 1.75rem);
     position: relative;
   }
   .statband__item + .statband__item::before {
@@ -129,10 +131,12 @@ const showAnchor = anchor ?? tone === "navy";
   .statband__value {
     font-family: var(--font-label);
     font-weight: 500; /* LEMON MILK Medium — heaviest brand-allowed weight */
-    font-size: var(--text-stat);
+    /* sized to keep 4–5 stats on one row without wrapping */
+    font-size: clamp(1.6rem, 0.9rem + 2.6vw, 2.6rem);
     line-height: 1;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
     color: #fff;
     margin: 0 0 var(--space-3);
   }
