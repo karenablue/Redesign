@@ -140,7 +140,7 @@ const collabs = [
   activeTop="Service & Impact"
   description="Sigma Gamma Rho collaborates with corporations, nonprofits, and national organizations to strengthen programs and expand community impact."
 >
-  <section class="cp-hero">
+  <section class="cp-hero on-dark">
     <div class="container cp-hero__inner">
       <p class="eyebrow">Service &amp; Impact</p>
       <h1>
@@ -221,7 +221,7 @@ const collabs = [
         {partners.map((p) => (
           <div class="partner-card">
             <div class="partner-card__logo">
-              <img src={withBase(p.logo)} alt={`${p.name} logo`} />
+              <img src={withBase(p.logo)} alt={`${p.name} logo`} loading="lazy" decoding="async" />
             </div>
             <p class="partner-card__type">{p.type}</p>
             <h3>{p.name}</h3>
@@ -291,7 +291,7 @@ const collabs = [
     margin: var(--space-2) 0 0;
   }
   .cp-hero h1 span {
-    color: var(--gold-text);
+    color: var(--gold);
   }
   .cp-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);

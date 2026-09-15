@@ -156,7 +156,7 @@ const regions = [
   activeTop="Leadership"
   description="Regional leaders connecting international strategy with chapters across Sigma Gamma Rho's five regions."
 >
-  <section class="rl-hero">
+  <section class="rl-hero on-dark">
     <div class="container rl-hero__inner">
       <p class="eyebrow">Leadership Across the Sisterhood</p>
       <h1>
@@ -183,7 +183,7 @@ const regions = [
     <section id={r.id} class:list={["region-block", { "region-block--dark": r.dark }]}>
       <div class="container region-block__inner">
         <div class="region-heading">
-          <img class="region-logo" src={withBase(r.logo)} alt={`${r.name} Region logo`} />
+          <img class="region-logo" src={withBase(r.logo)} alt={`${r.name} Region logo`} loading="lazy" decoding="async" />
           <div>
             <p class="eyebrow">{r.name} Region</p>
             <h2>{r.name}</h2>
@@ -218,7 +218,7 @@ const regions = [
         <div class="region-leaders">
           {r.leaders.map((l) => (
             <article class="region-leader">
-              <img src={withBase(l.img)} alt={l.name} />
+              <img src={withBase(l.img)} alt={l.name} loading="lazy" decoding="async" />
               <p>{l.role}</p>
               <h3>{l.name}</h3>
             </article>
@@ -243,7 +243,7 @@ const regions = [
     margin: var(--space-2) 0 0;
   }
   .rl-hero h1 span {
-    color: var(--gold-text);
+    color: var(--gold);
   }
   .rl-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);

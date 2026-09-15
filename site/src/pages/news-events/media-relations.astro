@@ -44,7 +44,7 @@ const assets = [
   activeTop="News & Events"
   description="Official media resources for press, partners, and authorized use of the Sigma Gamma Rho brand."
 >
-  <section class="mr-hero">
+  <section class="mr-hero on-dark">
     <div class="container mr-hero__inner">
       <p class="eyebrow">News &amp; Events • Media Relations</p>
       <h1>
@@ -112,7 +112,7 @@ const assets = [
       <div class="mr-asset-grid">
         {assets.map((a) => (
           <a class="mr-asset" href={withBase(a.img)} download>
-            <img src={withBase(a.img)} alt={a.name} />
+            <img src={withBase(a.img)} alt={a.name} loading="lazy" decoding="async" />
             <span>
               {a.name} <i aria-hidden="true">&darr;</i>
             </span>
@@ -188,7 +188,7 @@ const assets = [
     margin: var(--space-2) 0 0;
   }
   .mr-hero h1 span {
-    color: var(--gold-text);
+    color: var(--gold);
   }
   .mr-hero > .mr-hero__inner > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);

@@ -157,6 +157,17 @@ strong {
   color: var(--gold);
 }
 
+/* --gold-text is the gold that is legible on LIGHT ground; inside a dark band
+   it is far too dark. Rather than make every page rule ask which ground it is
+   on, redefine the token for the dark subtree — custom properties inherit, so
+   any descendant that says var(--gold-text) now resolves to the gold that is
+   actually legible there. This is what makes the Two-Golds Rule enforceable
+   instead of a thing every author has to remember. */
+.on-dark,
+.section--navy {
+  --gold-text: var(--gold-bright);
+}
+
 /* --- Buttons (pill; content buttons dominate) -------------------- */
 .btn {
   --btn-bg: var(--gold);

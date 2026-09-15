@@ -20,6 +20,24 @@
         ],
         "createdAt": "2026-09-15T18:24:10.682Z",
         "reason": "Both hits are left rules on pull quotes: .hs-chapter__quote and a literal <blockquote> in .hs-legacy__copy. A left rule on a quotation is standard editorial typography, not a card side-tab accent — the rule targets cards. The rounded-card finding on .hs-region-card is deliberately NOT covered by this ignore."
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "2px",
+        "files": [
+          "src/styles/global.css"
+        ],
+        "createdAt": "2026-09-15T21:11:01.500Z",
+        "reason": "The 2px radius is the end-cap rounding on .gold-rule, a 4rem x 2px gold divider bar. DESIGN.md's rounded scale governs surfaces (cards, inputs, buttons); a 2px-tall hairline rule is not one."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "4rem",
+        "files": [
+          "src/pages/service-impact/partner-foundations.astro"
+        ],
+        "createdAt": "2026-09-15T21:11:01.650Z",
+        "reason": "Decorative watermark numeral at rgba(255,255,255,0.04) behind the section, same device as Hero's .hero__watermark. It is a faint graphic, not type on the hierarchy, so the type ramp does not apply."
       }
     ]
   }

@@ -86,6 +86,9 @@ const server = createServer(async (req, res) => {
     const body = await readFile(file);
     res.writeHead(200, {
       "content-type": TYPES[extname(file).toLowerCase()] ?? "application/octet-stream",
+      // Content-Length matters beyond correctness: without it, tooling that
+      // measures page weight from response headers reads every asset as 0.
+      "content-length": body.byteLength,
       "cache-control": "no-store",
     });
     res.end(body);

@@ -114,7 +114,7 @@ const cards = [
           return (
             <Tag class="ln-card" {...props}>
               <figure>
-                <img src={withBase(c.img)} alt={c.title} />
+                <img src={withBase(c.img)} alt={c.title} loading="lazy" decoding="async" />
               </figure>
               <span class="ln-tag">{c.tag}</span>
               <h3>{c.title}</h3>

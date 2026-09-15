@@ -168,7 +168,7 @@ const programs = [
   activeTop="Service & Impact"
   description="Sigma Gamma Rho's national programs in education, health, swimming access, maternal care, and youth leadership."
 >
-  <section class="programs-hero">
+  <section class="programs-hero on-dark">
     <div class="container programs-hero__inner">
       <p class="eyebrow">Service &amp; Impact</p>
       <h1 class="programs-hero__title">
@@ -225,7 +225,7 @@ const programs = [
       <div class:list={["container program__shell", { "program__shell--flip": p.flip }]}>
         <div class="program__copy">
           <p class="program__number">{p.number}</p>
-          <img class="program__logo" src={withBase(p.logo)} alt={p.name} />
+          <img class="program__logo" src={withBase(p.logo)} alt={p.name} loading="lazy" decoding="async" />
           <h2 class="visually-hidden">{p.name}</h2>
           <p class="program__lead">{p.lead}</p>
           {p.body.map((para) => (
