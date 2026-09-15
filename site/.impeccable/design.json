@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-15T20:49:39.853Z",
+  "title": "Design System: Sigma Gamma Rho Sorority, Incorporated",
+  "extensions": {
+    "colorMeta": {
+      "royal": {
+        "role": "primary",
+        "displayName": "Royal Blue (Pantone 19-4053 TCX)",
+        "canonical": "oklch(41.8% 0.1658 265.5)",
+        "tonalRamp": [
+          "oklch(15% 0.1658 265.5)",
+          "oklch(26.4% 0.1658 265.5)",
+          "oklch(37.9% 0.1658 265.5)",
+          "oklch(49.3% 0.1658 265.5)",
+          "oklch(60.7% 0.1658 265.5)",
+          "oklch(72.1% 0.1658 265.5)",
+          "oklch(83.6% 0.1658 265.5)",
+          "oklch(95% 0.1658 265.5)"
+        ]
+      },
+      "navy": {
+        "role": "primary",
+        "displayName": "Navy",
+        "canonical": "oklch(20.7% 0.0606 262.7)",
+        "tonalRamp": [
+          "oklch(15% 0.0606 262.7)",
+          "oklch(26.4% 0.0606 262.7)",
+          "oklch(37.9% 0.0606 262.7)",
+          "oklch(49.3% 0.0606 262.7)",
+          "oklch(60.7% 0.0606 262.7)",
+          "oklch(72.1% 0.0606 262.7)",
+          "oklch(83.6% 0.0606 262.7)",
+          "oklch(95% 0.0606 262.7)"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Gold (Pantone 13-0757 TCX)",
+        "canonical": "oklch(78.2% 0.143 87.1)",
+        "tonalRamp": [
+          "oklch(15% 0.143 87.1)",
+          "oklch(26.4% 0.143 87.1)",
+          "oklch(37.9% 0.143 87.1)",
+          "oklch(49.3% 0.143 87.1)",
+          "oklch(60.7% 0.143 87.1)",
+          "oklch(72.1% 0.143 87.1)",
+          "oklch(83.6% 0.143 87.1)",
+          "oklch(95% 0.143 87.1)"
+        ]
+      },
+      "gold-bright": {
+        "role": "secondary",
+        "displayName": "Gold Bright — gold type on dark ground",
+        "canonical": "oklch(86.1% 0.1378 93.3)",
+        "tonalRamp": [
+          "oklch(15% 0.1378 93.3)",
+          "oklch(26.4% 0.1378 93.3)",
+          "oklch(37.9% 0.1378 93.3)",
+          "oklch(49.3% 0.1378 93.3)",
+          "oklch(60.7% 0.1378 93.3)",
+          "oklch(72.1% 0.1378 93.3)",
+          "oklch(83.6% 0.1378 93.3)",
+          "oklch(95% 0.1378 93.3)"
+        ]
+      },
+      "gold-text": {
+        "role": "secondary",
+        "displayName": "Gold Text — gold type on light ground",
+        "canonical": "oklch(53.1% 0.1042 81.9)",
+        "tonalRamp": [
+          "oklch(15% 0.1042 81.9)",
+          "oklch(26.4% 0.1042 81.9)",
+          "oklch(37.9% 0.1042 81.9)",
+          "oklch(49.3% 0.1042 81.9)",
+          "oklch(60.7% 0.1042 81.9)",
+          "oklch(72.1% 0.1042 81.9)",
+          "oklch(83.6% 0.1042 81.9)",
+          "oklch(95% 0.1042 81.9)"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream",
+        "canonical": "oklch(98.8% 0.0151 90.2)",
+        "tonalRamp": [
+          "oklch(15% 0.0151 90.2)",
+          "oklch(26.4% 0.0151 90.2)",
+          "oklch(37.9% 0.0151 90.2)",
+          "oklch(49.3% 0.0151 90.2)",
+          "oklch(60.7% 0.0151 90.2)",
+          "oklch(72.1% 0.0151 90.2)",
+          "oklch(83.6% 0.0151 90.2)",
+          "oklch(95% 0.0151 90.2)"
+        ]
+      },
+      "tint": {
+        "role": "neutral",
+        "displayName": "Cool Slate",
+        "canonical": "oklch(97.3% 0.007 268.5)",
+        "tonalRamp": [
+          "oklch(15% 0.007 268.5)",
+          "oklch(26.4% 0.007 268.5)",
+          "oklch(37.9% 0.007 268.5)",
+          "oklch(49.3% 0.007 268.5)",
+          "oklch(60.7% 0.007 268.5)",
+          "oklch(72.1% 0.007 268.5)",
+          "oklch(83.6% 0.007 268.5)",
+          "oklch(95% 0.007 268.5)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(32.1% 0 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0 89.9)",
+          "oklch(26.4% 0 89.9)",
+          "oklch(37.9% 0 89.9)",
+          "oklch(49.3% 0 89.9)",
+          "oklch(60.7% 0 89.9)",
+          "oklch(72.1% 0 89.9)",
+          "oklch(83.6% 0 89.9)",
+          "oklch(95% 0 89.9)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "oklch(46.8% 0.0204 267.6)",
+        "tonalRamp": [
+          "oklch(15% 0.0204 267.6)",
+          "oklch(26.4% 0.0204 267.6)",
+          "oklch(37.9% 0.0204 267.6)",
+          "oklch(49.3% 0.0204 267.6)",
+          "oklch(60.7% 0.0204 267.6)",
+          "oklch(72.1% 0.0204 267.6)",
+          "oklch(83.6% 0.0204 267.6)",
+          "oklch(95% 0.0204 267.6)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page h1 and hero titles only. LEMON MILK."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2. LEMON MILK."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "h3/h4 and every card title. Montserrat 700 — deliberately not LEMON MILK."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All prose. Reading measure 600-700px."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Eyebrows and small caps labels, 0.28em tracking."
+      },
+      "editorial": {
+        "displayName": "Editorial",
+        "purpose": "Multi-word storytelling headlines and pull quotes. Playfair Display."
+      },
+      "accent": {
+        "displayName": "Accent",
+        "purpose": "Pinyon Script. At most one phrase per page, 30px or larger."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-sm",
+        "value": "0 2px 14px rgba(8,22,51,0.08)",
+        "purpose": "Rare. Only for something that genuinely floats above the page."
+      },
+      {
+        "name": "shadow-md",
+        "value": "0 14px 34px rgba(8,22,51,0.18)",
+        "purpose": "Feature imagery only. Known drift: several pages use this as a resting card state, which contradicts the tonal-layering decision."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-fast",
+        "value": "180ms ease",
+        "purpose": "Button background, colour and border transitions."
+      },
+      {
+        "name": "state-slow",
+        "value": "300ms ease",
+        "purpose": "Navigation colour and underline-reveal transitions."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Honoured, not decorative. The hero video must not play a frame under this preference, and its pause control stays operable."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "320px"
+      },
+      {
+        "name": "phone",
+        "value": "375px"
+      },
+      {
+        "name": "stack",
+        "value": "720px"
+      },
+      {
+        "name": "tablet",
+        "value": "768px"
+      },
+      {
+        "name": "nav-collapse",
+        "value": "1280px"
+      },
+      {
+        "name": "container",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Gold fill with navy text. The single loud element on a surface.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Become a Member</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:var(--space-2,.5rem);padding:.95em 2.2em;border:1.5px solid var(--gold,#dfb136);border-radius:999px;background:var(--gold,#dfb136);color:var(--navy,#081633);font-family:var(--font-body,Montserrat,system-ui,sans-serif);font-size:1rem;font-weight:700;text-decoration:none;cursor:pointer;transition:background .18s ease,border-color .18s ease}.ds-btn-primary:hover{background:var(--gold-dark,#c9961a);border-color:var(--gold-dark,#c9961a)}.ds-btn-primary:focus-visible{outline:3px solid var(--gold,#dfb136);outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Royal text on a gold hairline pill; fills gold with navy text on hover.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Find a Chapter</a>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.95em 2.2em;border:1.5px solid var(--gold,#dfb136);border-radius:999px;background:transparent;color:var(--royal,#2041a5);font-family:var(--font-body,Montserrat,system-ui,sans-serif);font-size:1rem;font-weight:700;text-decoration:none;cursor:pointer;transition:background .18s ease,color .18s ease}.ds-btn-outline:hover{background:var(--gold,#dfb136);color:var(--navy,#081633)}.ds-btn-outline:focus-visible{outline:3px solid var(--gold,#dfb136);outline-offset:2px}"
+    },
+    {
+      "name": "Navy Button",
+      "kind": "button",
+      "refersTo": "button-navy",
+      "description": "The quiet, serious variant. Navy fill lifting to royal on hover.",
+      "html": "<a class=\"ds-btn-navy\" href=\"#\">Our Impact</a>",
+      "css": ".ds-btn-navy{display:inline-flex;align-items:center;gap:.5rem;padding:.95em 2.2em;border:1.5px solid var(--navy,#081633);border-radius:999px;background:var(--navy,#081633);color:#fff;font-family:var(--font-body,Montserrat,system-ui,sans-serif);font-size:1rem;font-weight:700;text-decoration:none;transition:background .18s ease}.ds-btn-navy:hover{background:var(--royal,#2041a5);border-color:var(--royal,#2041a5)}.ds-btn-navy:focus-visible{outline:3px solid var(--gold,#dfb136);outline-offset:2px}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White surface, 16px radius, single royal hairline. Flat at rest — no shadow.",
+      "html": "<article class=\"ds-card\"><span class=\"ds-card-eyebrow\">National Program</span><h3 class=\"ds-card-title\">Operation BigBookBag</h3><p class=\"ds-card-body\">School supplies, books, and STEM exposure for students who need them.</p></article>",
+      "css": ".ds-card{display:flex;flex-direction:column;background:#fff;border:1px solid rgba(32,65,165,.12);border-radius:16px;padding:1.5rem;overflow:hidden}.ds-card-eyebrow{display:block;margin-bottom:.5rem;color:var(--gold-text,#8a6510);font-family:var(--font-label,\"LEMON MILK\",Oswald,sans-serif);font-size:.8125rem;letter-spacing:.28em;text-transform:uppercase}.ds-card-title{margin:0 0 .75rem;color:var(--royal,#2041a5);font-family:var(--font-body,Montserrat,sans-serif);font-weight:700;font-size:1.5rem;line-height:1.3}.ds-card-body{margin:0;color:var(--ink,#333);font-family:var(--font-body,Montserrat,sans-serif);line-height:1.7}"
+    },
+    {
+      "name": "Eyebrow",
+      "kind": "custom",
+      "refersTo": "eyebrow",
+      "description": "The system's most repeated gesture. Colour is context-bound: gold-text on light, gold on dark.",
+      "html": "<p class=\"ds-eyebrow\">Greater Service, Greater Progress</p>",
+      "css": ".ds-eyebrow{margin:0 0 1rem;color:var(--gold-text,#8a6510);font-family:var(--font-label,\"LEMON MILK\",Oswald,sans-serif);font-size:.8125rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase}"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "White Montserrat 700 on the royal bar, underline-reveal on hover, gold-bright when active.",
+      "html": "<div class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">About</a><a class=\"ds-nav-link ds-nav-link--active\" href=\"#\">Membership</a><a class=\"ds-nav-link\" href=\"#\">Service &amp; Impact</a></div>",
+      "css": ".ds-nav{display:flex;gap:1.5rem;background:var(--royal,#2041a5);padding:0 1.5rem}.ds-nav-link{display:flex;align-items:center;padding:.75rem 0;border-bottom:2px solid transparent;color:#fff;font-family:var(--font-body,Montserrat,sans-serif);font-size:1rem;font-weight:700;letter-spacing:.025em;text-decoration:none;transition:color .3s ease,border-color .3s ease}.ds-nav-link:hover{border-bottom-color:var(--gold,#dfb136)}.ds-nav-link--active{color:var(--gold-bright,#f0cf5c);border-bottom-color:var(--gold,#dfb136)}.ds-nav-link:focus-visible{outline:3px solid var(--gold,#dfb136);outline-offset:2px}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Borderless input inside a bordered wrapper with an inline icon. The wrapper owns the focus ring.",
+      "html": "<div class=\"ds-field\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"></circle><path d=\"M15.5 15.5 21 21\"></path></svg><input class=\"ds-field-input\" type=\"search\" placeholder=\"City, State, ZIP Code, or University\" aria-label=\"Search chapters\"></div>",
+      "css": ".ds-field{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;background:#fff;border:1px solid rgba(32,65,165,.12);border-radius:8px;color:var(--muted,#555a66)}.ds-field:focus-within{border-color:var(--royal,#2041a5);outline:3px solid var(--gold,#dfb136);outline-offset:2px}.ds-field-input{width:100%;border:0;outline:0;background:transparent;color:var(--navy,#081633);font:inherit;font-family:var(--font-body,Montserrat,sans-serif);font-size:.8125rem}"
+    },
+    {
+      "name": "Stat Band",
+      "kind": "custom",
+      "refersTo": "stat-band",
+      "description": "Signature component. Solid royal band of LEMON MILK numerals with tracked white labels, divided by thin rules.",
+      "html": "<div class=\"ds-statband\"><div class=\"ds-stat\"><span class=\"ds-stat-value\">500+</span><span class=\"ds-stat-label\">Chapters</span></div><div class=\"ds-stat\"><span class=\"ds-stat-value\">100,000+</span><span class=\"ds-stat-label\">Members</span></div><div class=\"ds-stat\"><span class=\"ds-stat-value\">1922</span><span class=\"ds-stat-label\">Founded</span></div></div>",
+      "css": ".ds-statband{display:flex;background:var(--royal,#2041a5);padding:2.5rem 1.5rem}.ds-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:.5rem;position:relative}.ds-stat+.ds-stat{border-left:1px solid rgba(255,255,255,.18)}.ds-stat-value{font-family:var(--font-head,\"LEMON MILK\",Oswald,sans-serif);font-size:clamp(2rem,5vw,3rem);line-height:1;color:#fff}.ds-stat-label{font-family:var(--font-body,Montserrat,sans-serif);font-size:.8125rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.72)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pearl Standard",
+    "overview": "Few elements, each one finished. A pearl earns attention by being small, complete and slightly luminous — not by being loud — and this system works the same way. Gold is the luster: rationed hard so that when it appears, on a rule, a numeral, an eyebrow, or one button, it still reads as precious. Royal blue carries the institutional weight. Everything else gets out of the way so photography of real sorors and real numbers can do the persuading.\n\nThe mood is warm and welcoming before it is impressive. A woman considering membership should feel invited, not audited; a foundation officer should find the evidence without hunting for it. Those two readings are not in tension here, because the warmth comes from generous space, unhurried line height (1.7 body), and real faces — not from soft language. Trust is earned with founding history, named leadership, and verified figures. Where a number does not exist, the layout accommodates its absence; it does not invent one.\n\nDepth is tonal, not cast. The page advances through bands — white, cool slate, cream, then a royal gradient — and that stack is what creates hierarchy. Shadows are close to eliminated by intent.",
+    "keyCharacteristics": [
+      "Gold as luster, never as surface — rationed to rules, numerals, labels and a single button",
+      "Royal and navy carry structure; the palette has no third accent",
+      "Depth from stacked tonal bands, not from shadow",
+      "Two display faces (LEMON MILK) over two text faces (Montserrat, Playfair), never more",
+      "Real photography and verified numbers over illustration and claims",
+      "AA contrast is a floor enforced by tests, not a review step"
+    ],
+    "rules": [
+      {
+        "name": "The Rationed Luster Rule",
+        "section": "colors",
+        "body": "Gold covers well under 10% of any screen. If a composition needs more gold to feel finished, the composition is the problem."
+      },
+      {
+        "name": "The Two-Golds Rule",
+        "section": "colors",
+        "body": "Gold that carries words is never --gold. It is --gold-text on light ground and --gold-bright on dark. --gold itself is for rules, fills, icons, and borders. Picking the wrong one is the single most common defect this system has produced."
+      },
+      {
+        "name": "The No Third Accent Rule",
+        "section": "colors",
+        "body": "Royal and gold. Any additional hue must be argued for, not assumed."
+      },
+      {
+        "name": "The Rhoer Reservation",
+        "section": "colors",
+        "body": "Yellow Gold #FFD700 belongs to the Rhoer Club only. Never use it in general design."
+      },
+      {
+        "name": "The Shouting Rule",
+        "section": "typography",
+        "body": "LEMON MILK is all-caps by nature. h1, h2, eyebrows and big numerals — nothing else. Card titles and sub-heads are Montserrat 700. Promoting a card title to h2 for outline reasons would silently change its typeface; add a visually-hidden h2 instead."
+      },
+      {
+        "name": "The One Signature Rule",
+        "section": "typography",
+        "body": "Pinyon Script appears at most once per page, at 30px or larger, on a high-emotion phrase. Never an eyebrow, a label, or body copy."
+      },
+      {
+        "name": "The Four Faces Rule",
+        "section": "typography",
+        "body": "Four families is the ceiling, and it is already reached. Any fifth face is a regression."
+      },
+      {
+        "name": "The No Fixed Track Rule",
+        "section": "layout",
+        "body": "Never size a grid track in bare pixels. Always minmax(min(Npx, 100%), 1fr)."
+      },
+      {
+        "name": "The 320 Rule",
+        "section": "layout",
+        "body": "320px is a supported width, not an edge case. A long unbreakable headline in a narrow column is a layout bug, not a content problem."
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "section": "elevation",
+        "body": "Surfaces are flat by default. If something needs to separate from its background, change the band tone or add a hairline before reaching for a shadow."
+      },
+      {
+        "name": "The Pill-or-Nothing Rule",
+        "section": "shapes",
+        "body": "Buttons are fully round. There are no 8px-radius buttons in this system."
+      },
+      {
+        "name": "The Hairline Rule",
+        "section": "shapes",
+        "body": "Borders separate; they do not decorate. A border thicker than 1px on a rounded card reads as a template accent."
+      }
+    ],
+    "dos": [
+      "Do use --gold-text (#8a6510) for gold type on white or cream, and --gold-bright (#f0cf5c) for gold type on royal or navy. Reserve plain --gold for rules, fills, icons and borders.",
+      "Do put navy text on any gold fill.",
+      "Do build separation from band tone and hairlines before reaching for a shadow.",
+      "Do write grid tracks as minmax(min(Npx, 100%), 1fr).",
+      "Do keep card titles and sub-heads in Montserrat 700, and add a visually-hidden h2 when an outline needs one.",
+      "Do use real SGRho photography — sisterhood, service, celebration.",
+      "Do cite real, verified numbers, and design around a number's absence rather than inventing it.",
+      "Do treat AA contrast as a build gate; the Playwright suite in tests/ enforces it across every route."
+    ],
+    "donts": [
+      "Don't let this look like a generic nonprofit template — stock smiling-people photography, three icon boxes in a row, a donate bar, vague mission language. This is the confirmed anti-reference.",
+      "Don't let this look collegiate or athletic — varsity type, diagonal cuts, team-brand energy. Confirmed anti-reference.",
+      "Don't use gold as a background for body content.",
+      "Don't use Yellow Gold #FFD700; it is Rhoer Club only.",
+      "Don't introduce a fifth type family, or a third accent hue.",
+      "Don't set eyebrow or highlight color in a page-scoped selector.",
+      "Don't put a thick accent border on a rounded card.",
+      "Don't add a decorative font, clip art, sticker, or overlay, and never stretch, recolor, crop, or overlap the Shield.",
+      "Don't ship AI-generated imagery that misrepresents the marks, or publish ritual photography."
+    ]
+  }
+}

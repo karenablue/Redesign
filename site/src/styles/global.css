@@ -199,7 +199,10 @@ strong {
 }
 .btn--outline:hover {
   --btn-bg: var(--gold);
-  --btn-fg: #fff;
+  /* navy, not white — filling with gold on hover puts this in exactly the
+     situation .btn is in, where white text is 2:1. Hover states are not
+     exempt from 1.4.3. */
+  --btn-fg: var(--navy);
   box-shadow: none;
 }
 
