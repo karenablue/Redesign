@@ -1,0 +1,2 @@
+# Per-developer Claude Code settings (tool permissions etc.) — local, not shared.
+.claude/settings.local.json

@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "tests/a11y.spec.ts"
+        ],
+        "createdAt": "2026-09-15T17:18:39.917Z",
+        "reason": "Playwright spec: the literal '<img>' appears inside an expect() failure-message string, not as markup. This test is what enforces the alt-text rule; no image ships from tests/."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/pages/about/herstory.astro"
+        ],
+        "createdAt": "2026-09-15T18:24:10.682Z",
+        "reason": "Both hits are left rules on pull quotes: .hs-chapter__quote and a literal <blockquote> in .hs-legacy__copy. A left rule on a quotation is standard editorial typography, not a card side-tab accent — the rule targets cards. The rounded-card finding on .hs-region-card is deliberately NOT covered by this ignore."
+      }
+    ]
+  }
+}
