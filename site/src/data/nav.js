@@ -50,7 +50,6 @@ export const primaryNav = [
     children: [
       { label: "Latest News", href: "/news-events/latest-news/" },
       { label: "Upcoming Events", href: "/news-events/upcoming-events/" },
-      { label: "Highlights & Stories", href: "/news-events/highlights-stories/" },
       { label: "Media Relations", href: "/news-events/media-relations/" },
     ],
   },
@@ -103,10 +102,10 @@ export const footerColumns = [
     title: "Programs",
     links: [
       { label: "National Programs", href: "/service-impact/national-programs/" },
-      { label: "Scholarships", href: "/service-impact/partner-foundations/" },
+      { label: "Scholarships", href: "/service-impact/partner-foundations/#nef" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
       { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
-      { label: "Community Impact", href: "/service-impact/" },
+      { label: "Community Impact", href: "/service-impact/national-programs/" },
     ],
   },
 ];

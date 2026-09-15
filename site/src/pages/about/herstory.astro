@@ -206,7 +206,9 @@ const regions = [
   description="Explore the history, milestones, regional development, and enduring legacy of Sigma Gamma Rho Sorority, Incorporated."
 >
   <!-- HERO -->
-  <section class="hs-hero">
+  {/* on-dark: this hero's ground is navy, so global.css needs to know to use
+      full-chroma gold for the eyebrow rather than the dark type-safe gold. */}
+  <section class="hs-hero on-dark">
     <div class="hs-hero__image"></div>
     <div class="hs-hero__overlay"></div>
     <div class="container hs-hero__content">
@@ -537,7 +539,7 @@ const regions = [
     color: #fff;
   }
   .hs-hero__title span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hs-hero__copy {
     max-width: 42rem;
@@ -572,7 +574,7 @@ const regions = [
     line-height: 1.12;
   }
   .hs-heading h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hs-heading > p:not(.eyebrow) {
     margin-top: var(--space-4);
@@ -594,7 +596,7 @@ const regions = [
   /* ---- THE BEGINNING split ---- */
   .hs-split {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(380px, 0.9fr);
+    grid-template-columns: minmax(0, 1fr) minmax(min(380px, 100%), 0.9fr);
     gap: clamp(2.5rem, 6vw, 4.75rem);
     align-items: center;
   }
@@ -607,7 +609,7 @@ const regions = [
     line-height: 1.12;
   }
   .hs-story-copy h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hs-story-copy p {
     color: #4c5565;
@@ -715,7 +717,7 @@ const regions = [
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
     margin: 0 0 var(--space-2);
   }
   .hs-fact-card h3 {
@@ -756,7 +758,7 @@ const regions = [
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
   .hs-firsts__heading h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hs-firsts__heading p:not(.eyebrow) {
     color: var(--muted);
@@ -780,7 +782,7 @@ const regions = [
   }
   .hs-firsts-num {
     font-family: var(--font-label);
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: var(--text-lg);
     line-height: 1;
   }
@@ -826,7 +828,7 @@ const regions = [
     font-size: clamp(1.6rem, 3vw, 2.375rem);
   }
   .hs-mv__inner article:last-child h2 {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hs-mv__inner p {
     margin: 0;
@@ -895,7 +897,7 @@ const regions = [
     position: relative;
     z-index: 2;
     align-self: start;
-    color: var(--gold);
+    color: var(--gold-text);
     font-family: var(--font-label);
     font-size: clamp(1.5rem, 2.4vw, 2.375rem);
     line-height: 1;
@@ -1044,7 +1046,7 @@ const regions = [
   }
   .hs-region-eyebrow {
     margin: 0 0 var(--space-1);
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: 0.55rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -1115,7 +1117,7 @@ const regions = [
     font-size: clamp(1.75rem, 3.4vw, 2.6rem);
   }
   .hs-legacy__copy h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hs-legacy__copy > p {
     color: #4c5565;
@@ -1131,7 +1133,7 @@ const regions = [
     line-height: 1.55;
   }
   .hs-motto {
-    color: var(--gold) !important;
+    color: var(--gold-text) !important;
     font-size: var(--text-xs) !important;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -1151,7 +1153,7 @@ const regions = [
     font-weight: 700;
   }
   .hs-text-button:hover {
-    color: var(--gold-dark);
+    color: var(--gold-text);
   }
   @media (max-width: 860px) {
     .hs-legacy {

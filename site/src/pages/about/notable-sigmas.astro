@@ -400,7 +400,7 @@ const spotlight = [
     font-size: var(--text-h3);
   }
   .ns-intro__grid h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .ns-intro__copy {
     color: var(--muted);
@@ -431,7 +431,7 @@ const spotlight = [
     font-size: var(--text-h3);
   }
   .ns-heading h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .ns-heading > p:not(.eyebrow) {
     color: var(--muted);
@@ -472,7 +472,7 @@ const spotlight = [
 
   .ns-mosaic {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
     gap: var(--space-6);
   }
   .ns-card {
@@ -482,6 +482,12 @@ const spotlight = [
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+  }
+  /* .ns-card's own `display: flex` above otherwise beats the browser's
+     `[hidden] { display: none }` UA rule (equal specificity, author wins) —
+     the filter script's `el.hidden = true` would do nothing without this. */
+  .ns-card[hidden] {
+    display: none;
   }
   .ns-card--dark {
     background: rgba(255, 255, 255, 0.08);
@@ -507,7 +513,7 @@ const spotlight = [
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
     margin: 0;
   }
   .ns-card--dark .ns-field {
@@ -553,7 +559,7 @@ const spotlight = [
   }
   .ns-spotlight__num {
     font-family: var(--font-label);
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: var(--text-lg);
   }
   .ns-spotlight h3 {

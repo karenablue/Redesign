@@ -105,7 +105,9 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
     color: var(--royal);
   }
   .s-head__title span {
-    color: var(--gold);
+    /* white / cream / mist tones — the .section--navy override below keeps
+       full-chroma gold where the ground is dark */
+    color: var(--gold-text);
   }
 
   .s-head__lead {

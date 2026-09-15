@@ -236,7 +236,7 @@ const basilei = [
     margin: var(--space-2) 0 0;
   }
   .past-hero h1 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .past-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
@@ -266,7 +266,7 @@ const basilei = [
     font-size: var(--text-h3);
   }
   .past-intro__grid h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .past-intro__copy p {
     color: var(--muted);
@@ -285,7 +285,7 @@ const basilei = [
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
-    color: var(--gold-dark);
+    color: var(--gold-text);
     margin: 0;
   }
   .past-note {
@@ -311,15 +311,22 @@ const basilei = [
     font-size: var(--text-h3);
   }
   .continuity h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .continuity a {
     color: var(--gold-bright);
     font-weight: 700;
     text-decoration: none;
-    white-space: nowrap;
+  }
+  /* Nowrap keeps the arrow glued to the last word on wide rows; below that
+     the full CTA no longer fits one line, so let it wrap instead of
+     overflowing the viewport. */
+  @media (min-width: 520px) {
+    .continuity a {
+      white-space: nowrap;
+    }
   }
   .continuity a:hover {
-    color: var(--gold);
+    color: var(--gold-text);
   }
 </style>

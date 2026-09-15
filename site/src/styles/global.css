@@ -143,7 +143,10 @@ strong {
 .eyebrow {
   margin: 0 0 var(--space-4);
   font-family: var(--font-label);
-  color: var(--gold);
+  /* Eyebrows sit on light ground by default, where --gold is only 2:1.
+     --gold-text is the type-safe member of the gold family; the .on-dark
+     override below restores full-chroma gold where the ground is dark. */
+  color: var(--gold-text);
   font-size: var(--text-sm); /* ~13px */
   font-weight: 400; /* LEMON MILK is single-weight */
   letter-spacing: 0.28em;
@@ -157,7 +160,10 @@ strong {
 /* --- Buttons (pill; content buttons dominate) -------------------- */
 .btn {
   --btn-bg: var(--gold);
-  --btn-fg: #ffffff;
+  /* Navy on gold, not white on gold: white is 2:1 against #dfb136 and 2.4:1
+     against the --gold-dark hover, both far below AA. Navy reads 8.9:1 and
+     6.7:1 on those same two fills, and keeps the gold as the loud element. */
+  --btn-fg: var(--navy);
   --btn-border: var(--gold);
   display: inline-flex;
   align-items: center;

@@ -188,7 +188,7 @@ const assets = [
     margin: var(--space-2) 0 0;
   }
   .mr-hero h1 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .mr-hero > .mr-hero__inner > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
@@ -247,11 +247,11 @@ const assets = [
     margin-bottom: var(--space-10);
   }
   .mr-heading h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .mr-asset-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
     gap: var(--space-6);
   }
   .mr-asset {
