@@ -27,3 +27,24 @@ pnpm-debug.log*
 
 # scratch screenshots
 _*.png
+
+# playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Third-party agent skills, vendored by `npx skills add`. Not committed:
+# they carry their own licences and are one command to restore —
+#   npx skills add emilkowalski/skill
+#   npx skills add Leonxlnx/taste-skill
+.agents/
+# .claude/skills/ is 26 symlinks INTO .agents/. Since .agents/ is ignored,
+# committing these would hand anyone cloning a folder of dangling symlinks.
+# They are recreated by the same two commands above.
+.claude/skills/
+
+# Impeccable's hook cache. config.json IS committed — it records the
+# sanctioned rule exceptions (see `impeccable hooks`) — but the cache is
+# machine-local derived state.
+.impeccable/hook.cache.json
