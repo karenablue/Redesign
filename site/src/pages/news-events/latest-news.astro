@@ -99,9 +99,6 @@ const cards = [
             an investment in people, partnerships, and progress," said 26th International Grand
             Basileus Marica T. Harris.
           </p>
-          <a href={withBase("/news-events/highlights-stories/")}>
-            See More Boule Highlights &rarr;
-          </a>
         </div>
       </article>
 
@@ -127,11 +124,6 @@ const cards = [
         })}
       </div>
 
-      <p class="ln-more">
-        <a href={withBase("/news-events/highlights-stories/")}>
-          See More Stories &amp; Highlights &rarr;
-        </a>
-      </p>
     </div>
   </section>
 </Base>
@@ -191,7 +183,7 @@ const cards = [
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
     margin-bottom: var(--space-2);
   }
   .ln-feature__copy h2 {
@@ -206,10 +198,22 @@ const cards = [
     font-weight: 700;
     text-decoration: none;
   }
+  /* Below ~720px the two columns leave the copy side about 100px wide, which
+     no headline can wrap into — the page then scrolled sideways by 50-70px.
+     Stack instead, image first. */
+  @media (max-width: 720px) {
+    .ln-feature {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .ln-feature figure {
+      order: -1;
+    }
+  }
 
   .ln-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: var(--space-8);
   }
   .ln-card {

@@ -63,7 +63,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
       Skip to content
     </a>
     <SiteHeader activeTop={activeTop} />
-    <main id="main">
+    {/* tabindex="-1" is what makes the skip link above actually work: a bare
+        <main id="main"> is not focusable, so browsers scroll to it but leave
+        focus on the link, and the next Tab continues through the header the
+        user just tried to skip. -1 keeps it out of the tab order while
+        allowing programmatic focus. */}
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <SiteFooter />
@@ -84,6 +89,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
       }
       .skip-link:focus {
         top: 0;
+      }
+      /* #main is focusable only as the skip link's destination. Without this,
+         the global `:focus-visible` rule draws a 3px gold outline around the
+         entire page body on arrival. The scroll jump is the visible feedback
+         here, and #main is not a tab stop, so no indicator is lost. */
+      main#main:focus,
+      main#main:focus-visible {
+        outline: none;
       }
     </style>
   </body>

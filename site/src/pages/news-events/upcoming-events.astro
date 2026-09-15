@@ -4,46 +4,124 @@ import { withBase } from "../../lib/url.js";
 
 const events = [
   {
-    month: "Nov",
+    month: "Sep",
     day: "12",
-    tag: "National",
-    title: "Founders' Day",
-    body: "Chapters worldwide mark the anniversary of the Sorority's 1922 founding at Butler University.",
+    tag: "Signature",
+    title: "Phenomenal Women of Excellence Gala",
+    location: "Atlanta, GA",
+    body: "International Officers open the Fall Into Greater tour with the season's flagship evening of recognition and Sigma excellence.",
   },
   {
-    month: "Spring",
+    month: "Sep",
+    day: "12",
+    tag: "Signature",
+    title: "Legacy & Unity Brunch",
+    location: "Atlanta, GA",
+    body: "Sorors gather to celebrate sisterhood and legacy alongside the International Officers.",
+  },
+  {
+    month: "Sep–Oct",
     day: "—",
     tag: "Regional",
-    title: "Regional Leadership Conferences",
-    body: "Each of the five regions hosts leadership training and fellowship for undergraduate and alumnae chapters.",
+    title: "Regional Fall Area Meetings",
+    location: "Various Locations",
+    body: "Chapters across every region convene for fall programming, training, and fellowship.",
   },
   {
-    month: "Summer",
+    month: "Sep",
+    day: "15–19",
+    tag: "Advocacy",
+    title: "Congressional Black Caucus",
+    location: "Washington, D.C.",
+    body: "International Officers represent Sigma Gamma Rho at the Congressional Black Caucus Annual Legislative Conference.",
+  },
+  {
+    month: "Sep",
+    day: "15",
+    tag: "Advocacy",
+    title: "Black Women's Agenda Annual Symposium",
+    location: "Washington, D.C.",
+    body: "Sigma joins coalition partners to advance policy priorities affecting Black women and girls.",
+  },
+  {
+    month: "Sep",
+    day: "16",
+    tag: "Advocacy",
+    title: "The LINKS Annual Legislative Luncheon",
+    location: "Washington, D.C.",
+    body: "Sorors join The Links, Incorporated for a legislative luncheon in the nation's capital.",
+  },
+  {
+    month: "Oct",
+    day: "21",
+    tag: "Wellness",
+    title: "Rhoyal Table Talk: Breast Health & Cancer Awareness",
+    location: "Virtual",
+    body: "The Women's Wellness Initiative opens the Rhoyal Table Talk Series with real conversations on breast health and cancer awareness. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
+  },
+  {
+    month: "Oct",
+    day: "22–25",
+    tag: "Coalition",
+    title: "National Council of Negro Women",
+    location: "Atlanta, GA",
+    body: "Sigma Gamma Rho stands alongside NCNW at its national convening.",
+  },
+  {
+    month: "Nov",
     day: "—",
     tag: "National",
-    title: "International Biennial Boulé",
-    body: "Sorors from around the world gather for the Sorority's national governing conference.",
+    title: "Greater Founders' Day Activations",
+    location: "Various Locations",
+    body: "Chapters worldwide mark the anniversary of the Sorority's 1922 founding with activations throughout the month.",
   },
   {
-    month: "Ongoing",
-    day: "—",
-    tag: "Service",
-    title: "Swim 1922 Season",
-    body: "Chapters host water-safety instruction and awareness events throughout the program season.",
+    month: "Nov",
+    day: "18",
+    tag: "Wellness",
+    title: "Rhoyal Table Talk: Uterine & Fibroid Awareness",
+    location: "Virtual",
+    body: "The Rhoyal Table Talk Series continues with a conversation on uterine and fibroid health. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
   },
   {
-    month: "Spring",
-    day: "—",
-    tag: "Advocacy",
-    title: "Congressional Day on the Hill",
-    body: "Members meet with lawmakers in Washington, D.C. on issues affecting the communities we serve.",
+    month: "Nov",
+    day: "25",
+    tag: "Community",
+    title: "Macy's Thanksgiving Day Parade",
+    location: "New York City, NY",
+    body: "Sigma Gamma Rho joins the nation's Thanksgiving tradition on the streets of New York City.",
   },
   {
-    month: "Fall",
-    day: "—",
-    tag: "Youth",
-    title: "Annual Youth Symposium",
-    body: "Young leaders gather for mentorship, workshops, and leadership development programming.",
+    month: "Dec",
+    day: "3–6",
+    tag: "Professional",
+    title: "Association of Fraternal Advisors",
+    location: "Chicago, IL",
+    body: "International Officers connect with fraternal and sorority advisors from across the country.",
+  },
+  {
+    month: "Feb",
+    day: "17",
+    tag: "Wellness",
+    title: "Rhoyal Table Talk: Healthy Heart Awareness",
+    location: "Virtual",
+    body: "The Rhoyal Table Talk Series turns to heart health and prevention. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
+  },
+  {
+    month: "Mar",
+    day: "17",
+    tag: "Wellness",
+    title: "Rhoyal Table Talk: Domestic Violence Awareness",
+    location: "Virtual",
+    body: "The Rhoyal Table Talk Series addresses domestic violence awareness and self-advocacy. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
+  },
+  {
+    month: "May",
+    day: "19",
+    tag: "Wellness",
+    title: "Rhoyal Table Talk: Men's Mental Health Awareness",
+    location: "Virtual",
+    body: "The Rhoyal Table Talk Series closes its first season with a conversation on men's mental health. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
   },
 ];
 ---
@@ -68,6 +146,11 @@ const events = [
 
   <section class="ue-main">
     <div class="container">
+      {/* The event titles below are h3. Without a real h2 between them and the
+          page h1, the outline jumps h1 -> h3, which screen-reader users
+          navigate by. Promoting them to h2 is not the fix: global h2 is LEMON
+          MILK and card titles are deliberately Montserrat. */}
+      <h2 class="visually-hidden">All upcoming events</h2>
       <div class="ue-grid">
         {events.map((e) => (
           <article class="ue-card">
@@ -78,6 +161,7 @@ const events = [
             <div class="ue-body">
               <span class="ue-tag">{e.tag}</span>
               <h3>{e.title}</h3>
+              <p class="ue-location">{e.location}</p>
               <p>{e.body}</p>
             </div>
           </article>
@@ -122,7 +206,7 @@ const events = [
   }
   .ue-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: var(--space-6);
   }
   .ue-card {
@@ -138,34 +222,43 @@ const events = [
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 70px;
+    gap: 0.15em;
+    min-width: 70px;
+    padding: 0.5em 0.4em;
     background: var(--white);
     border-radius: var(--radius);
+    text-align: center;
   }
   .ue-date span {
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
   }
   .ue-date strong {
     font-size: var(--text-lg);
     color: var(--royal);
+    white-space: nowrap;
   }
   .ue-tag {
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
   }
   .ue-body h3 {
     margin: var(--space-2) 0 var(--space-1);
     font-size: var(--text-md);
   }
-  .ue-body p {
+  .ue-location {
+    margin: 0 0 var(--space-2);
+    color: var(--royal);
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .ue-body > p:last-child {
     margin: 0;
     color: var(--muted);
     font-size: var(--text-sm);

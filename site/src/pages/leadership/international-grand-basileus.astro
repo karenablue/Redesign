@@ -187,7 +187,7 @@ const ledger = [
     color: #fff;
   }
   .gb-hero__title span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .gb-hero__title-line {
     font-weight: 700;
@@ -244,7 +244,7 @@ const ledger = [
     font-size: var(--text-h3);
   }
   .overview__label h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .overview__copy p {
     color: var(--muted);
@@ -259,7 +259,7 @@ const ledger = [
   /* ---- ledger ---- */
   .ledger {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
     gap: var(--space-8);
   }
   .ledger__item {
@@ -269,7 +269,7 @@ const ledger = [
   .ledger__num {
     font-family: var(--font-label);
     font-size: var(--text-xl);
-    color: var(--gold);
+    color: var(--gold-text);
     margin-bottom: var(--space-2);
   }
   .ledger__item strong {
@@ -298,7 +298,7 @@ const ledger = [
     display: block;
     font-family: var(--font-label);
     font-size: 3rem;
-    color: var(--gold);
+    color: var(--gold-text);
     line-height: 1;
   }
   .profile__aside p {
@@ -314,7 +314,7 @@ const ledger = [
     font-size: var(--text-h3);
   }
   .profile__body h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .profile__body p:not(.eyebrow) {
     color: var(--muted);
@@ -333,7 +333,7 @@ const ledger = [
   /* ---- leadership nav ---- */
   .leadership-nav {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     border-top: 1px solid var(--line);
   }
   .leadership-nav a {
@@ -355,14 +355,14 @@ const ledger = [
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
   }
   .leadership-nav strong {
     font-size: var(--text-lg);
     color: var(--royal);
   }
   .leadership-nav b {
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: var(--text-lg);
   }
 </style>

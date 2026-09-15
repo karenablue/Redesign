@@ -83,7 +83,9 @@ const showAnchor = anchor ?? tone === "navy";
   }
 
   .statband__inner {
-    padding-block: clamp(3rem, 2rem + 4vw, 4rem);
+    /* Tightened ~18% — there was a lot of empty blue below the stats before
+       the Sigma ornament. Monumental, not full-screen. */
+    padding-block: clamp(2.5rem, 1.7rem + 3.2vw, 3.25rem);
   }
 
   .statband__row {
@@ -103,8 +105,11 @@ const showAnchor = anchor ?? tone === "navy";
     content: "";
     position: absolute;
     left: 0;
-    top: 8%;
-    bottom: 8%;
+    /* Extended from 8%/8% — the line stopped near the label baseline;
+       running it closer to the full height frames each stat more
+       deliberately. */
+    top: 2%;
+    bottom: 2%;
     width: 1px;
     background: rgba(255, 255, 255, 0.12);
   }

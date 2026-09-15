@@ -291,7 +291,7 @@ const collabs = [
     margin: var(--space-2) 0 0;
   }
   .cp-hero h1 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .cp-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
@@ -318,7 +318,7 @@ const collabs = [
     font-size: var(--text-h3);
   }
   .cp-intro__grid h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .cp-intro__copy p {
     color: var(--muted);
@@ -364,7 +364,7 @@ const collabs = [
     font-size: var(--text-h3);
   }
   .cp-heading h2 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .cp-heading > p {
     color: var(--muted);
@@ -395,7 +395,7 @@ const collabs = [
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gold-dark);
+    color: var(--gold-text);
     margin: 0;
   }
   .partner-card h3 {
@@ -424,7 +424,7 @@ const collabs = [
   }
   .cp-collabs__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: var(--space-8);
   }
   .cp-collab {
@@ -435,7 +435,7 @@ const collabs = [
   }
   .cp-collab__num {
     font-family: var(--font-label);
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: var(--text-lg);
   }
   .cp-collab__kicker {
@@ -460,7 +460,7 @@ const collabs = [
     text-decoration: none;
   }
   .cp-collab a:hover {
-    color: var(--gold-dark);
+    color: var(--gold-text);
   }
 
   .cp-crosslink {

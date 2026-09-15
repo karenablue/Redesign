@@ -79,6 +79,9 @@ const cards = [
 
   <section class="hc-main">
     <div class="container">
+      {/* see the note in upcoming-events.astro — h2 for outline continuity,
+          hidden because the card titles keep their Montserrat h3 styling */}
+      <h2 class="visually-hidden">Help topics</h2>
       <div class="hc-grid" id="hc-grid">
         {cards.map((c) => (
           <article class="hc-card" data-search={`${c.title} ${c.body}`.toLowerCase()}>
@@ -132,7 +135,7 @@ const cards = [
     margin: var(--space-2) 0 0;
   }
   .hc-hero h1 span {
-    color: var(--gold);
+    color: var(--gold-text);
   }
   .hc-hero > .container > p:not(.eyebrow):not(.breadcrumb) {
     color: rgba(255, 255, 255, 0.85);
@@ -165,7 +168,7 @@ const cards = [
   }
   .hc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: var(--space-6);
   }
   .hc-card {
@@ -187,7 +190,7 @@ const cards = [
     text-decoration: none;
   }
   .hc-card a:hover {
-    color: var(--gold-dark);
+    color: var(--gold-text);
   }
   .hc-empty {
     text-align: center;
