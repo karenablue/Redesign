@@ -24,7 +24,7 @@ for (const route of ROUTES) {
       // performance problem, tracked separately from this assertion.)
       await page.goto(route, { waitUntil: "load" });
 
-      const result = await page.evaluate((vw) => {
+      const result = await page.evaluate(() => {
         const de = document.documentElement;
         if (de.scrollWidth <= de.clientWidth + 1) return null;
 
@@ -47,7 +47,7 @@ for (const route of ROUTES) {
           scrollWidth: de.scrollWidth,
           culprits: culprits.slice(-4), // innermost are the most specific
         };
-      }, width);
+      });
 
       if (result) {
         problems.push(
