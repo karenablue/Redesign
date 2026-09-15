@@ -1,0 +1,48 @@
+# Security headers for Cloudflare Pages.
+#
+# Cloudflare Pages reads this file from the root of the build output. Astro
+# copies everything in public/ to dist/, so this lands at dist/_headers.
+# Netlify uses the same format; a move to Vercel would need vercel.json instead.
+#
+# Every source below was derived from the built output rather than assumed:
+# the only external subresources are the Google Fonts stylesheet and its font
+# files, there are no iframes, objects or embeds, nothing fetches at runtime,
+# and the single off-site form is vendor.astro's GET to the store.
+
+/*
+  # HTTPS only, for a year. Deliberately no includeSubDomains: this would also
+  # bind portal.sgrho1922.org and any other subdomain HQ runs, which are not
+  # ours to make promises about. No preload, since that is hard to undo.
+  Strict-Transport-Security: max-age=31536000
+
+  # Stop browsers guessing a response is a different type than it says.
+  X-Content-Type-Options: nosniff
+
+  # Send the origin, not the full path, to other sites.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # No framing. X-Frame-Options for older browsers, frame-ancestors below for
+  # current ones. Nothing here is meant to be embedded.
+  X-Frame-Options: DENY
+
+  # Turn off device APIs the site does not use. Verified: no geolocation,
+  # camera, microphone, payment or USB calls anywhere in src/.
+  Permissions-Policy: accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
+  # Content-Security-Policy.
+  #
+  # Honest limitation: script-src and style-src both need 'unsafe-inline'.
+  # Astro emits 41 inline <script> blocks and 28 inline <style> blocks in this
+  # build, and Cloudflare Pages cannot compute per-response hashes from a
+  # static header file. So this policy constrains WHERE code and assets may
+  # come from, and blocks framing, plugins and stray form posts — but it is
+  # not XSS-proof on its own. Tightening it means either nonces from an edge
+  # function or building with external-only scripts.
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; form-action 'self' https://sgrho1922.store; frame-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+# Fingerprinted build assets are immutable, so they can be cached hard.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

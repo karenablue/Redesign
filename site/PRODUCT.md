@@ -63,11 +63,22 @@ one a peer organization cannot truthfully copy.
   proxied, or wrapped.
 - **HQ staff must be able to self-edit content** — at minimum news, events,
   and leadership, which are the pages that go stale.
-- **Static output is acceptable.** Combined with the requirement above, this
-  means a static build fed by a git-based or headless CMS rather than a plain
-  developer-edited static site. **Open decision: which CMS.** Nothing in the
-  current codebase commits to one, and future work must not assume a plain
-  static site with no editing path.
+- **Static output is acceptable**, and combined with the requirement above it
+  means a static build fed by a CMS rather than a developer-edited static site.
+- **Content source: headless WordPress.** HQ already runs WordPress, so this
+  keeps staff in the editor they know rather than retraining them. Verified
+  from the live site on 2026-09-15: `sgrho1922.org` serves WordPress on PHP
+  8.4.25 behind Cloudflare, from a Plesk-managed Linux origin (a general
+  VPS or reseller account, not managed WordPress hosting), with email on
+  Microsoft 365 and a custom theme at `wp-content/themes/sigma-gamma-rho`.
+  `https://www.sgrho1922.org/wp-json/` answers `200` with JSON, so the REST
+  API is reachable and Astro can read content at build time.
+  *Only HQ can confirm who holds the hosting account and who may change it.*
+- **Deploy target: Cloudflare Pages.** HQ's DNS is already on Cloudflare
+  (`sara`/`noah.ns.cloudflare.com`), so this needs no nameserver change, and
+  security headers ship in-repo as `public/_headers`. Note the live site
+  returns `cf-cache-status: DYNAMIC` — its HTML is not edge-cached today, so
+  every view reaches that Plesk server; a static build removes that hop.
 - Organization vocabulary is not interchangeable with generic equivalents:
   *Herstory* (not History), *Soror*, *Boulé*, *Basileus* / *Grand Basileus*,
   *Philos®*, *Rhoer Club®*, *EE-YIP®*. Full legal name on first use.
