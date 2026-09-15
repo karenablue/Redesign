@@ -62,7 +62,7 @@ const affiliates = [
   activeTop="Membership"
   description="Rhosebuds, Rhoers, and Philos — Sigma Gamma Rho's three affiliate experiences for youth development, leadership, and community partnership."
 >
-  <section class="aff-hero">
+  <section class="aff-hero on-dark">
     <div class="container aff-hero__inner">
       <p class="eyebrow">Membership • Affiliates</p>
       <h1>
@@ -128,7 +128,7 @@ const affiliates = [
           role="tabpanel"
         >
           <figure class="aff-panel__media">
-            <img src={withBase(a.logo)} alt={`Sigma Gamma Rho ${a.name} Affiliate logo`} />
+            <img src={withBase(a.logo)} alt={`Sigma Gamma Rho ${a.name} Affiliate logo`} loading="lazy" decoding="async" />
           </figure>
           <div class="aff-panel__body">
             <div class="aff-panel__copy">
@@ -191,7 +191,7 @@ const affiliates = [
     margin: var(--space-2) 0 0;
   }
   .aff-hero h1 span {
-    color: var(--gold-text);
+    color: var(--gold);
   }
   .aff-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);

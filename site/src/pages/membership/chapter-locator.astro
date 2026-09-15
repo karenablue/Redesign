@@ -56,7 +56,7 @@ const regions = [
   activeTop="Membership"
   description="Find Sigma Gamma Rho Sorority, Incorporated undergraduate and alumnae chapters across the Sorority's five regions."
 >
-  <section class="locator-hero">
+  <section class="locator-hero on-dark">
     <div class="locator-hero__grid" aria-hidden="true"></div>
     <div class="container hero-inner">
       <p class="eyebrow">Membership &bull; Chapter Locator</p>
@@ -202,7 +202,7 @@ const regions = [
       {regions.map((r) => (
         <article class:list={["region-card", { "region-card--dark": r.dark }]}>
           <div class="region-art">
-            <img src={withBase(r.img)} alt={`Sigma Gamma Rho ${r.name} Region logo`} />
+            <img src={withBase(r.img)} alt={`Sigma Gamma Rho ${r.name} Region logo`} loading="lazy" decoding="async" />
           </div>
           <div class="region-copy">
             <span class="region-number">{r.n}</span>
@@ -218,7 +218,7 @@ const regions = [
     </div>
   </section>
 
-  <section class="membership-bridge">
+  <section class="membership-bridge on-dark">
     <div class="container membership-bridge__inner">
       <div>
         <p class="eyebrow eyebrow--light">Prospective Membership</p>

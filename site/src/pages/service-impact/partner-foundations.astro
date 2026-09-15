@@ -77,7 +77,7 @@ const foundations = [
   activeTop="Service & Impact"
   description="The National Education Fund and SPEAR Foundation — Sigma Gamma Rho's partner foundations expanding education, research, and community support."
 >
-  <section class="pf-hero">
+  <section class="pf-hero on-dark">
     <div class="container pf-hero__inner">
       <p class="eyebrow">Service &amp; Impact</p>
       <h1>
@@ -121,11 +121,13 @@ const foundations = [
 
   {foundations.map((f, fi) => (
     <>
-      <section id={f.id} class:list={["pf-feature", { "pf-feature--dark": f.dark }]}>
+      {/* on-dark rides along with the dark variant so global.css resolves
+          --gold-text to the legible gold inside it */}
+      <section id={f.id} class:list={["pf-feature", { "pf-feature--dark": f.dark, "on-dark": f.dark }]}>
         <div class:list={["container pf-feature__inner", { "pf-feature__inner--flip": f.flip }]}>
           <div class="pf-symbol">
             <div class="pf-logo-card">
-              <img src={withBase(f.logo)} alt={f.abbrev} />
+              <img src={withBase(f.logo)} alt={f.abbrev} loading="lazy" decoding="async" />
             </div>
             <span class="pf-abbrev">{f.abbrev}</span>
           </div>
@@ -207,7 +209,7 @@ const foundations = [
     margin: var(--space-2) 0 0;
   }
   .pf-hero h1 span {
-    color: var(--gold-text);
+    color: var(--gold);
   }
   .pf-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
@@ -344,7 +346,11 @@ const foundations = [
     margin: var(--space-5) 0;
     padding: var(--space-5);
     background: rgba(255, 255, 255, 0.5);
-    border-left: 3px solid var(--gold);
+    /* The tonal fill already separates this callout; a 3px gold side-tab on a
+       rounded surface is the template accent DESIGN.md's Hairline Rule
+       rejects. (Unlike herstory's left rules, this is a labelled card with a
+       background, not a pull quote.) */
+    border: 1px solid var(--line);
     border-radius: var(--radius);
   }
   .pf-mission__label {

@@ -53,16 +53,20 @@ const hasActions = Astro.slots.has("default");
       {watermark}
     </span>
   )}
+  {/* The <video> below carries no `autoplay` attribute and uses
+      preload="none" on purpose: the clip is large, and whether it is worth
+      streaming depends on the visitor (reduced motion, Save-Data, a 2G
+      connection, a phone). The script at the bottom of this file decides and
+      starts playback itself; until then the poster carries the hero. */}
   {variant === "image" && (video || image) && (
     <div class="hero__media">
       {video ? (
         <video
           class="hero__video"
-          autoplay
           muted
           loop
           playsinline
-          preload="auto"
+          preload="none"
           poster={image ? withBase(image) : undefined}
           aria-hidden="true"
           data-hero-video
@@ -100,11 +104,10 @@ const hasActions = Astro.slots.has("default");
       <figure class="hero__figure">
         {video ? (
           <video
-            autoplay
             muted
             loop
             playsinline
-            preload="auto"
+            preload="none"
             poster={image ? withBase(image) : undefined}
             aria-hidden="true"
             data-hero-video
@@ -397,35 +400,51 @@ const hasActions = Astro.slots.has("default");
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    // Set once the visitor asks for motion via the toggle, which overrides the
-    // OS preference for the rest of the visit.
+    // Set once the visitor asks for motion via the toggle, which overrides
+    // every check below for the rest of the visit.
     let optedIn = false;
 
-    if (reduce.matches) {
-      video.removeAttribute("autoplay");
-      video.pause();
-      video.currentTime = 0;
-      paint(true);
+    /**
+     * Is this visit worth streaming the clip for? The file is measured in tens
+     * of megabytes, and most of this site's traffic is on a phone. Anyone the
+     * answer is "no" for still gets the poster frame and a control to start it
+     * deliberately, so nothing is hidden — it is just not downloaded unasked.
+     */
+    function worthStreaming() {
+      if (reduce.matches) return false;
+      const conn = (navigator as any).connection;
+      if (conn?.saveData) return false;
+      if (conn?.effectiveType && /2g$/.test(conn.effectiveType)) return false;
+      if (window.matchMedia("(max-width: 900px)").matches) return false;
+      return true;
+    }
 
-      // Removing the attribute does NOT cancel an autoplay the browser has
-      // already committed to: if enough data arrives after this script runs,
-      // it starts playing anyway. Guarding the play event is what actually
-      // holds. (Caught by tests/motion.spec.ts — the attribute-only version
-      // passed or failed depending on network timing.)
-      video.addEventListener("play", () => {
-        if (reduce.matches && !optedIn) {
-          video.pause();
-          video.currentTime = 0;
-          paint(true);
-        }
-      });
+    // A late autoplay cannot be cancelled by touching attributes, so guard the
+    // event itself: anything that starts playing without an explicit opt-in,
+    // while we have decided not to stream, gets stopped.
+    video.addEventListener("play", () => {
+      if (!optedIn && !worthStreaming()) {
+        video.pause();
+        video.currentTime = 0;
+        paint(true);
+      }
+    });
+
+    if (worthStreaming()) {
+      video.preload = "auto";
+      paint(false);
+      void video.play().catch(() => paint(true));
+    } else {
+      // Poster stays; the control reads "Play", so the motion is opt-in.
+      paint(true);
     }
 
     toggle?.addEventListener("click", () => {
       if (video.paused) {
         optedIn = true;
-        video.play();
+        video.preload = "auto";
         paint(false);
+        void video.play().catch(() => paint(true));
       } else {
         optedIn = false;
         video.pause();

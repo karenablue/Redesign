@@ -294,8 +294,7 @@ const nextSteps = [
             <img
               src={withBase(defaultProgram.img)}
               alt={`${defaultProgram.title} program photo`}
-              style={defaultProgram.imgFit === "contain" ? "object-fit:contain" : ""}
-            />
+              style={defaultProgram.imgFit === "contain" ? "object-fit:contain" : ""} loading="lazy" decoding="async" />
           </figure>
           <div class="program-spotlight__copy">
             <h4 class="program-spotlight__eyebrow">{defaultProgram.title}</h4>

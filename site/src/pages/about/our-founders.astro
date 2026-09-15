@@ -227,7 +227,7 @@ const profiles = [
       <article id={p.id} class:list={["profile", { "profile--flip": i % 2 === 1 }]}>
         <div class="container profile__inner">
           <figure class="profile__figure">
-            <img src={withBase(p.img)} alt={`${p.name} ${p.highlight}`} />
+            <img src={withBase(p.img)} alt={`${p.name} ${p.highlight}`} loading="lazy" decoding="async" />
           </figure>
           <div class="profile__copy">
             <p class="profile__label">{p.label}</p>

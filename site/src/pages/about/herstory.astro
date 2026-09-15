@@ -344,7 +344,7 @@ const regions = [
   </section>
 
   <!-- CENTURY IN MOTION -->
-  <section class="hs-century">
+  <section class="hs-century on-dark">
     <div class="container hs-century__inner">
       <div class="hs-heading hs-heading--centered hs-heading--dark">
         <p class="eyebrow">Our Journey</p>
@@ -1034,8 +1034,11 @@ const regions = [
     overflow: hidden;
     padding: var(--space-6);
     border: 1px solid rgba(32, 65, 165, 0.1);
-    border-top: 3px solid var(--gold);
-    border-radius: 13px;
+    /* No gold top-bar: a thick accent border on a rounded card is the
+       template tell DESIGN.md's Hairline Rule rejects. Gold still reads here
+       through the eyebrow and the region index. Radius aligned to
+       --radius-lg; 13px was off the two-step scale. */
+    border-radius: var(--radius-lg);
     background: linear-gradient(180deg, #fffdf8, #fff);
     min-height: 280px;
   }

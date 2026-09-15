@@ -7,19 +7,23 @@ import { test, expect } from "@playwright/test";
  */
 
 test.describe("hero video, default motion settings", () => {
-  test("autoplays, and the toggle pauses and resumes it", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
+  test("autoplays on a wide viewport, and the toggle pauses and resumes it", async ({ page }) => {
+    test.skip(
+      (page.viewportSize()?.width ?? 0) < 900,
+      "narrow viewports deliberately do not stream the clip — covered by the next test"
+    );
+    await page.goto("/", { waitUntil: "load" });
 
     const video = page.locator("video[data-hero-video]");
     await expect(video).toHaveCount(1);
     await expect(video).toHaveAttribute("aria-hidden", "true");
 
-    await page.waitForTimeout(400);
-    expect(await video.evaluate((v: HTMLVideoElement) => v.paused), "should autoplay").toBe(false);
-
     const toggle = page.locator("[data-hero-motion]");
     await expect(toggle).toBeVisible();
     await expect(toggle).toHaveAttribute("aria-pressed", "false");
+    await expect
+      .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused), { timeout: 15_000 })
+      .toBe(false);
 
     // The control itself must be operable: 44px is the 2.5.5 target size.
     const box = await toggle.boundingBox();
@@ -31,9 +35,41 @@ test.describe("hero video, default motion settings", () => {
     await expect(toggle).toContainText(/play/i);
 
     await toggle.click();
-    expect(await video.evaluate((v: HTMLVideoElement) => v.paused), "click should resume").toBe(false);
+    await expect
+      .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused), { timeout: 15_000 })
+      .toBe(false);
     await expect(toggle).toHaveAttribute("aria-pressed", "false");
     await expect(toggle).toContainText(/pause/i);
+  });
+
+  test("a phone does not download the clip unasked, but can opt in", async ({ page }) => {
+    test.skip(
+      (page.viewportSize()?.width ?? 0) >= 900,
+      "wide viewports stream it — covered by the previous test"
+    );
+    await page.goto("/", { waitUntil: "load" });
+    const video = page.locator("video[data-hero-video]");
+
+    // preload="none" plus no autoplay attribute: nothing should be buffered.
+    await page.waitForTimeout(1200);
+    const state = await video.evaluate((v: HTMLVideoElement) => ({
+      paused: v.paused,
+      networkState: v.networkState, // 0 EMPTY / 1 IDLE — not 2 LOADING
+      buffered: v.buffered.length,
+      hasPoster: !!v.getAttribute("poster"),
+    }));
+    expect(state.paused, "a phone must not autoplay the hero clip").toBe(true);
+    expect(state.buffered, "nothing should be buffered before the visitor asks").toBe(0);
+    expect(state.hasPoster, "the poster carries the hero instead").toBe(true);
+
+    // Opting in must still work.
+    const toggle = page.locator("[data-hero-motion]");
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect(toggle).toContainText(/play/i);
+    await toggle.click();
+    await expect
+      .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused), { timeout: 20_000 })
+      .toBe(false);
   });
 });
 
