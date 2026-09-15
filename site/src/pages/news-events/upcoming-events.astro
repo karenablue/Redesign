@@ -1,129 +1,16 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
+import { getCollection, render } from "astro:content";
 
-const events = [
-  {
-    month: "Sep",
-    day: "12",
-    tag: "Signature",
-    title: "Phenomenal Women of Excellence Gala",
-    location: "Atlanta, GA",
-    body: "International Officers open the Fall Into Greater tour with the season's flagship evening of recognition and Sigma excellence.",
-  },
-  {
-    month: "Sep",
-    day: "12",
-    tag: "Signature",
-    title: "Legacy & Unity Brunch",
-    location: "Atlanta, GA",
-    body: "Sorors gather to celebrate sisterhood and legacy alongside the International Officers.",
-  },
-  {
-    month: "Sep–Oct",
-    day: "—",
-    tag: "Regional",
-    title: "Regional Fall Area Meetings",
-    location: "Various Locations",
-    body: "Chapters across every region convene for fall programming, training, and fellowship.",
-  },
-  {
-    month: "Sep",
-    day: "15–19",
-    tag: "Advocacy",
-    title: "Congressional Black Caucus",
-    location: "Washington, D.C.",
-    body: "International Officers represent Sigma Gamma Rho at the Congressional Black Caucus Annual Legislative Conference.",
-  },
-  {
-    month: "Sep",
-    day: "15",
-    tag: "Advocacy",
-    title: "Black Women's Agenda Annual Symposium",
-    location: "Washington, D.C.",
-    body: "Sigma joins coalition partners to advance policy priorities affecting Black women and girls.",
-  },
-  {
-    month: "Sep",
-    day: "16",
-    tag: "Advocacy",
-    title: "The LINKS Annual Legislative Luncheon",
-    location: "Washington, D.C.",
-    body: "Sorors join The Links, Incorporated for a legislative luncheon in the nation's capital.",
-  },
-  {
-    month: "Oct",
-    day: "21",
-    tag: "Wellness",
-    title: "Rhoyal Table Talk: Breast Health & Cancer Awareness",
-    location: "Virtual",
-    body: "The Women's Wellness Initiative opens the Rhoyal Table Talk Series with real conversations on breast health and cancer awareness. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
-  },
-  {
-    month: "Oct",
-    day: "22–25",
-    tag: "Coalition",
-    title: "National Council of Negro Women",
-    location: "Atlanta, GA",
-    body: "Sigma Gamma Rho stands alongside NCNW at its national convening.",
-  },
-  {
-    month: "Nov",
-    day: "—",
-    tag: "National",
-    title: "Greater Founders' Day Activations",
-    location: "Various Locations",
-    body: "Chapters worldwide mark the anniversary of the Sorority's 1922 founding with activations throughout the month.",
-  },
-  {
-    month: "Nov",
-    day: "18",
-    tag: "Wellness",
-    title: "Rhoyal Table Talk: Uterine & Fibroid Awareness",
-    location: "Virtual",
-    body: "The Rhoyal Table Talk Series continues with a conversation on uterine and fibroid health. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
-  },
-  {
-    month: "Nov",
-    day: "25",
-    tag: "Community",
-    title: "Macy's Thanksgiving Day Parade",
-    location: "New York City, NY",
-    body: "Sigma Gamma Rho joins the nation's Thanksgiving tradition on the streets of New York City.",
-  },
-  {
-    month: "Dec",
-    day: "3–6",
-    tag: "Professional",
-    title: "Association of Fraternal Advisors",
-    location: "Chicago, IL",
-    body: "International Officers connect with fraternal and sorority advisors from across the country.",
-  },
-  {
-    month: "Feb",
-    day: "17",
-    tag: "Wellness",
-    title: "Rhoyal Table Talk: Healthy Heart Awareness",
-    location: "Virtual",
-    body: "The Rhoyal Table Talk Series turns to heart health and prevention. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
-  },
-  {
-    month: "Mar",
-    day: "17",
-    tag: "Wellness",
-    title: "Rhoyal Table Talk: Domestic Violence Awareness",
-    location: "Virtual",
-    body: "The Rhoyal Table Talk Series addresses domestic violence awareness and self-advocacy. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
-  },
-  {
-    month: "May",
-    day: "19",
-    tag: "Wellness",
-    title: "Rhoyal Table Talk: Men's Mental Health Awareness",
-    location: "Virtual",
-    body: "The Rhoyal Table Talk Series closes its first season with a conversation on men's mental health. Open to the public, 5pm PST / 7pm CST / 8pm EST.",
-  },
-];
+// Events are markdown files in src/content/events/, so HQ can edit them
+// through a CMS after handover without anyone touching this page. `order`
+// carries the curated season sequence: it cannot be derived by sorting,
+// because several entries have fuzzy dates ("Sep–Oct", a day of "—").
+const entries = (await getCollection("events")).sort((a, b) => a.data.order - b.data.order);
+const events = await Promise.all(
+  entries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content })),
+);
 ---
 
 <Base
@@ -162,7 +49,7 @@ const events = [
               <span class="ue-tag">{e.tag}</span>
               <h3>{e.title}</h3>
               <p class="ue-location">{e.location}</p>
-              <p>{e.body}</p>
+              <e.Body />
             </div>
           </article>
         ))}
