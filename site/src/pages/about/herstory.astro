@@ -1125,16 +1125,22 @@ const regions = [
     font-size: var(--text-sm);
     line-height: 1.85;
   }
+  /* Editorial note card (Karena, Sept 2026): square corners, a solid brand
+     gold bar on the left, a hairline shadow. This deliberately overrides
+     DESIGN.md's Hairline and Flat-At-Rest rules for this one component, at
+     the client's request, so it reads as a curated pull-note rather than a
+     rounded bubble. */
   .hs-chapter__aside {
     align-self: start;
-    padding: var(--space-5);
-    border: 1px solid var(--line);
-    border-radius: 14px;
+    padding: var(--space-4) var(--space-5);
+    border: 0;
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
     background: var(--white);
+    box-shadow: 0 1px 2px rgba(8, 22, 51, 0.08);
   }
   .hs-chapter__aside--gold {
-    border-color: rgba(223, 177, 54, 0.5);
-    background: #fcf6e6;
+    background: var(--cream);
   }
   .hs-chapter__kind {
     margin: 0 0 var(--space-2);
