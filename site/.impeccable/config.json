@@ -19,7 +19,7 @@
           "src/pages/about/herstory.astro"
         ],
         "createdAt": "2026-09-15T18:24:10.682Z",
-        "reason": "Both hits are left rules on pull quotes: .hs-chapter__quote and a literal <blockquote> in .hs-legacy__copy. A left rule on a quotation is standard editorial typography, not a card side-tab accent — the rule targets cards. The rounded-card finding on .hs-region-card is deliberately NOT covered by this ignore."
+        "reason": "User confirmed (Karena, Sept 2026): editorial timeline note cards with a 4px brand-gold left bar were explicitly requested. Also covers the gold rule beside the timeline quote (.hs-chapter__quote), a pull-quote convention."
       },
       {
         "rule": "design-system-radius",
