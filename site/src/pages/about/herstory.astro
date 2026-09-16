@@ -153,8 +153,8 @@ const timeline = [
   {
     side: "right",
     year: "1930s",
-    label: "Depression-Era Economic Aid & Global Literacy",
-    head: "Vocational Defense and Cross-Border Support",
+    label: "Depression-Era Economic Aid",
+    head: "Vocational Defense & Global Literacy",
     body: "Confronting economic collapse, the Sorority created an internal Employment Aid Bureau to secure teaching placements for Black women, mandated permanent chapter scholarship funds, and launched the African Book Shower Project to send educational supplies to the Wilberforce Institute in South Africa.",
     note: {
       style: "plain",
@@ -167,7 +167,7 @@ const timeline = [
     year: "1939–1943",
     label: "Multigenerational Pipelines",
     head: "Pioneering Youth & Community Affiliates",
-    body: "Redefining Greek auxiliaries, Sigma Gamma Rho established the Rhoer Club (1939) as the first national NPHC youth affiliate for teens, followed by the Philo Affiliate (originating in 1943) to welcome non-degreed community women into active civic leadership.",
+    body: "Redefining Greek auxiliaries, Sigma Gamma Rho established the Rhoer Club (1939) as the first national NPHC youth auxiliary for teens, followed by the Philo Affiliate (originating in 1943) to welcome non-degreed community women into active civic leadership.",
     note: {
       style: "gold",
       kind: "Firsts",
@@ -202,13 +202,12 @@ const timeline = [
     side: "right",
     year: "1972",
     label: "Public Health Leadership",
-    head: "Project Reassurance with March of Dimes",
-    // Conservative wording until HQ confirms the "first" claim. Original copy,
-    // to restore once verified: "Sigma Gamma Rho became the first Black
-    // Greek-letter organization to enter an official nationwide partnership
-    // with a major national public health foundation…" / note: "First NPHC
-    // nationwide partnership with a national health foundation."
-    body: "In 1972, Sigma Gamma Rho established Project Reassurance in partnership with the March of Dimes, launching a groundbreaking nationwide campaign targeting maternal health disparities, prenatal care, and infant mortality prevention in vulnerable communities.",
+    head: "Project Reassurance & Maternal Health",
+    // HQ VERIFICATION FLAG (blueprint): confirm the nationwide March of Dimes
+    // partnership details. Earlier unverified "first" wording, for reference:
+    // "the first Black Greek-letter organization to enter an official
+    // nationwide partnership with a major national public health foundation".
+    body: "In 1972, Sigma Gamma Rho established Project Reassurance in nationwide partnership with the March of Dimes, mobilizing chapters across the country to combat infant mortality and address systemic maternal health disparities in underserved communities.",
     note: {
       style: "quote",
       kind: "Milestone",
@@ -218,14 +217,13 @@ const timeline = [
   },
   {
     side: "left",
-    year: "1990s–2000s",
+    year: "1990s–2010s",
     label: "Global Footprint & Swim 1922",
     head: "Global Charters & Aquatic Safety",
-    // Conservative wording until HQ confirms the "first" claim. Original note,
-    // to restore once verified: "…and first African American national partner
-    // of USA Swimming." Also unresolved: Swim 1922 launched in 2012, outside
-    // this row's 1990s–2000s range.
-    body: "The Sorority expanded internationally across the Caribbean, Europe, and Africa. Through the historic Swim 1922 campaign, it formed a pioneering nationwide alliance with USA Swimming, breaking cultural barriers and generational trauma to bring essential water safety and swim clinics to minority youth across the country.",
+    // HQ VERIFICATION FLAG (blueprint): confirm the 2012 USA Swimming
+    // alliance. Earlier unverified note, for reference: "first African
+    // American national partner of USA Swimming."
+    body: "The Sorority expanded internationally across the Caribbean, Europe, and Africa. In 2012, it forged a landmark national alliance with USA Swimming to launch Swim 1922, directly combating generational drowning disparities and water access barriers in minority communities.",
     note: {
       style: "plain",
       kind: "Impact",
@@ -237,7 +235,7 @@ const timeline = [
     year: "Today",
     label: "The Centenary & Beyond",
     head: "Unbroken Legacy, Boundless Future",
-    body: "With over 100 years of documented leadership, thousands of members across hundreds of chapters carry the founders’ standard forward — advancing social justice, women’s health, education, and community self-reliance.",
+    body: "With over 100 years of documented leadership, thousands of members across hundreds of chapters carry the founders’ standard forward — advancing social justice, women’s health, education, and community self-reliance under the banner: “Greater Women, Greater World.”",
     note: {
       style: "quote",
       kind: "Movement",
@@ -298,14 +296,14 @@ const regions = [
     <div class="hs-hero__image"></div>
     <div class="hs-hero__overlay"></div>
     <div class="container hs-hero__content">
-      <p class="eyebrow">Our History. Our Legacy. Our Future.</p>
+      <p class="eyebrow">MCMXXII</p>
       <h1 class="hs-hero__title">
         Her<span>story</span>
       </h1>
       <div class="gold-rule"></div>
       <p class="hs-hero__copy">
-        Founded by seven educators in 1922, Sigma Gamma Rho has spent more than a century turning
-        scholarship, sisterhood, leadership, and service into sustained progress.
+        Seven educators in Indianapolis. Over a century of scholarship, civic action, and unbroken
+        sisterhood.
       </p>
     </div>
     <div class="hs-hero__date" aria-hidden="true">
@@ -441,9 +439,9 @@ const regions = [
   </section>
 
   <!-- CENTURY IN MOTION -->
-  <section class="hs-century on-dark">
+  <section class="hs-century">
     <div class="container hs-century__inner">
-      <div class="hs-heading hs-heading--centered hs-heading--dark">
+      <div class="hs-heading hs-heading--centered">
         <p class="eyebrow">Our Journey</p>
         <h2>
           More than a century <span>in motion</span>
@@ -457,6 +455,7 @@ const regions = [
         {timeline.map((t) => (
           <div class:list={["hs-chapter", t.side === "right" && "hs-chapter--right"]}>
             <div class="hs-chapter__year">
+              <span class="hs-chapter__pill">
               {/* Ranges break after the dash so "1950s–1960s" fits the rail. */}
               {t.year.split("–").map((part, i, all) => (
                 <span>
@@ -473,6 +472,7 @@ const regions = [
                   {i < all.length - 1 && "–"}
                 </span>
               ))}
+              </span>
             </div>
             <div class="hs-chapter__copy">
               <p class="hs-chapter__label">
@@ -565,22 +565,17 @@ const regions = [
       <h2>
         History That Still <span>Requires Something of Us</span>
       </h2>
-      <p>
-        Sigma Gamma Rho's history is not preserved merely to be admired. It establishes a standard.
-      </p>
-      <p>
-        Each generation inherits the responsibility to strengthen the institution, serve communities
-        with purpose, and leave the sisterhood more capable than it found it.
-      </p>
-      <blockquote>
-        "Our story did not start with a moment. It started with a decision. And it continues with
-        each of us."
-      </blockquote>
       <p class="hs-motto">Greater Service, Greater Progress.</p>
+      <p>
+        From a small gathering of educators at Butler University to an international sisterhood
+        spanning generations, the story is still in motion.
+      </p>
       <div class="hs-button-row">
-        <Button href="/about/our-founders/">Meet Our Founders</Button>
-        <a class="hs-text-button" href={withBase("/service-impact/national-programs/")}>
-          Explore Service &amp; Impact <span aria-hidden="true">→</span>
+        <Button href="/service-impact/national-programs/">
+          Explore National Programs <span aria-hidden="true">&rarr;</span>
+        </Button>
+        <a class="hs-text-button" href={withBase("/service-impact/partner-foundations/#nef")}>
+          Support the Legacy <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
     </div>
@@ -708,12 +703,6 @@ const regions = [
     max-width: 48rem;
     margin: 0 auto var(--space-12);
   }
-  .hs-heading--centered.hs-heading--dark p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.82);
-  }
-  .hs-heading--centered.hs-heading--dark h2 {
-    color: #fff;
-  }
 
   /* ---- THE BEGINNING split ---- */
   .hs-split {
@@ -817,16 +806,14 @@ const regions = [
   .hs-facts-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
+    gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
   }
+  /* Data sheet, not boxes (Karena, Sept 2026): each fact is set off by a
+     thin gold rule above it and sits directly on the cream band. */
   .hs-fact-card {
     position: relative;
-    padding: clamp(1.25rem, 2.5vw, 1.875rem);
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    background: #fff;
-    min-height: 190px;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--gold);
     /* Column flow so a card's link row sits on the card's bottom edge, level
        with its neighbours' link rows. */
     display: flex;
@@ -985,18 +972,20 @@ const regions = [
     position: relative;
     overflow: hidden;
     padding-block: clamp(4rem, 8vw, 6.5rem);
-    color: #fff;
-    background:
-      radial-gradient(circle at 84% 14%, rgba(63, 99, 191, 0.28), transparent 26%),
-      linear-gradient(145deg, #081633 0%, var(--royal-mid) 45%, #17377f 100%);
-    border-block: 4px solid var(--gold);
+    /* Light timeline (Karena, Sept 2026): white ground, royal type, gold
+       for the rails, dots and year pills. Gold never carries small text
+       here — pills are gold fills with navy text, since gold on white fails
+       the FY2027 guidelines' own WCAG AA requirement. */
+    color: var(--ink);
+    background: var(--white);
+    border-block: 2px solid var(--gold);
   }
   .hs-century::before {
     content: "1922";
     position: absolute;
     top: 4rem;
     left: -1.5rem;
-    color: rgba(255, 255, 255, 0.025);
+    color: rgba(32, 65, 165, 0.04);
     font-family: var(--font-label);
     font-size: clamp(8rem, 16vw, 17.5rem);
     line-height: 1;
@@ -1015,7 +1004,7 @@ const regions = [
     grid-template-columns: 170px minmax(0, 1fr) 260px;
     gap: clamp(1.5rem, 3vw, 2.75rem);
     padding-block: clamp(2rem, 4vw, 3.5rem);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--line);
   }
   .hs-chapter:last-child {
     border-bottom: 0;
@@ -1043,7 +1032,9 @@ const regions = [
   .hs-chapter--right > :last-child {
     order: 1;
   }
-  .hs-chapter__year > span {
+  /* Range lines stack inside the pill; the pill itself stays inline so it
+     hugs the year instead of filling the column. */
+  .hs-chapter__pill > span {
     display: block;
   }
   .hs-chapter__decade {
@@ -1056,28 +1047,36 @@ const regions = [
     position: relative;
     z-index: 2;
     align-self: start;
-    color: var(--gold-text);
     font-family: var(--font-label);
-    font-size: clamp(1.5rem, 2.4vw, 2.375rem);
-    line-height: 1;
+    font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+    line-height: 1.1;
     text-align: right;
     padding-right: 2.25rem;
+  }
+  /* The year pill: a gold fill carrying navy type (8.9:1). */
+  .hs-chapter__pill {
+    display: inline-block;
+    padding: 0.5em 0.8em 0.45em;
+    border-radius: var(--radius-lg);
+    background: var(--gold);
+    color: var(--navy);
+    text-align: center;
   }
   .hs-chapter__year::after {
     content: "";
     width: 13px;
     height: 13px;
     position: absolute;
-    top: 8px;
+    top: 14px;
     right: -6px;
-    border: 3px solid var(--royal-mid);
+    border: 3px solid var(--white);
     border-radius: 50%;
     background: var(--gold);
     box-shadow: 0 0 0 1px rgba(223, 177, 54, 0.5);
   }
   .hs-chapter__label {
     margin: 0 0 var(--space-2);
-    color: var(--gold-bright);
+    color: var(--gold-text);
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -1085,7 +1084,7 @@ const regions = [
   }
   .hs-chapter__copy h3 {
     margin: 0 0 var(--space-4);
-    color: #fff;
+    color: var(--royal);
     font-family: var(--font-label);
     font-weight: 400;
     font-size: clamp(1.15rem, 2vw, 1.7rem);
@@ -1093,23 +1092,24 @@ const regions = [
   }
   .hs-chapter__copy p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.85;
   }
   .hs-chapter__aside {
     align-self: start;
     padding: var(--space-5);
-    border: 1px solid rgba(223, 177, 54, 0.24);
+    border: 1px solid var(--line);
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.055);
+    background: var(--white);
   }
   .hs-chapter__aside--gold {
-    background: linear-gradient(145deg, rgba(223, 177, 54, 0.14), rgba(255, 255, 255, 0.04));
+    border-color: rgba(223, 177, 54, 0.5);
+    background: #fcf6e6;
   }
   .hs-chapter__kind {
     margin: 0 0 var(--space-2);
-    color: var(--gold-bright);
+    color: var(--gold-text);
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -1117,7 +1117,7 @@ const regions = [
   }
   .hs-chapter__note {
     margin: 0;
-    color: #fff;
+    color: var(--navy);
     font-size: var(--text-md);
     line-height: 1.45;
   }
@@ -1127,19 +1127,6 @@ const regions = [
     font-size: var(--text-sm);
     line-height: 1.5;
   }
-  .hs-impact-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-  .hs-impact-list > div {
-    padding: 0.7rem 0.75rem;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.85);
-    font-size: var(--text-xs);
-  }
   .hs-chapter__quote {
     align-self: center;
     padding: clamp(1rem, 3vw, 1.8rem);
@@ -1147,17 +1134,19 @@ const regions = [
   }
   .hs-chapter__quote span {
     display: block;
-    color: rgba(255, 255, 255, 0.76);
+    color: var(--royal);
     font-family: var(--font-label);
     font-size: var(--text-md);
   }
   .hs-chapter__quote strong {
     display: block;
     margin-top: 5px;
-    color: var(--gold-bright);
+    /* Display gold passes only as large text, so this never drops below
+       24px. */
+    color: var(--gold-display);
     font-family: var(--font-label);
     font-weight: 400;
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
   }
   .hs-chapter__stat {
     align-self: center;
@@ -1330,18 +1319,24 @@ const regions = [
   .hs-legacy {
     min-height: 500px;
     display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
+    grid-template-columns: 1fr 1fr;
     background: var(--cream);
   }
+  /* The window depicts the coat of arms, and the FY2027 guidelines forbid a
+     cropped Shield. So it is shown whole (contain, not cover), centred with
+     clear space around it rather than bled to the edges. */
   .hs-legacy__image {
     margin: 0;
-    overflow: hidden;
+    padding: clamp(2rem, 5vw, 4rem);
+    display: grid;
+    place-items: center;
   }
   .hs-legacy__image img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 620px;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
   }
   .hs-legacy__copy {
     padding: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 7vw, 6.9rem);
@@ -1357,18 +1352,12 @@ const regions = [
   .hs-legacy__copy h2 span {
     color: var(--gold-display);
   }
-  .hs-legacy__copy > p {
+  /* Body paragraphs only: this used to catch the eyebrow too, turning
+     "A Living Legacy" grey and body-sized. */
+  .hs-legacy__copy > p:not(.eyebrow):not(.hs-motto) {
     color: #4c5565;
     font-size: var(--text-base);
     line-height: 1.9;
-  }
-  .hs-legacy__copy blockquote {
-    margin: var(--space-6) 0 var(--space-4);
-    padding-left: var(--space-6);
-    border-left: 3px solid var(--gold);
-    color: var(--royal);
-    font-size: var(--text-lg);
-    line-height: 1.55;
   }
   /* The One Signature Rule (DESIGN.md): Pinyon Script, once per page, on the
      page's highest-emotion phrase. This is that one use on this site — the
@@ -1382,7 +1371,7 @@ const regions = [
      they were fighting `.hs-legacy__copy > p`, which this now outranks on
      specificity alone. */
   .hs-legacy__copy .hs-motto {
-    margin-top: var(--space-6);
+    margin: var(--space-2) 0 var(--space-4);
     font-family: var(--font-kicker);
     font-size: clamp(2.25rem, 1.6rem + 2vw, 3rem);
     font-weight: 400;
@@ -1399,9 +1388,11 @@ const regions = [
     margin-top: var(--space-5);
   }
   .hs-text-button {
+    display: inline-block;
+    padding-block: var(--space-2);
     color: var(--royal);
     text-decoration: none;
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-weight: 700;
   }
   .hs-text-button:hover {
