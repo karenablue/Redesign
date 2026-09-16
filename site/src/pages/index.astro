@@ -20,6 +20,7 @@ import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import StatBand from "../components/StatBand.astro";
 import { withBase } from "../lib/url.js";
+import { getCollection } from "astro:content";
 
 // ACT I — organizational scale.
 const reachStats = [
@@ -125,9 +126,17 @@ const defaultProgram = programs[2]; // Operation BigBookBag
 // ACT III — the range of women who call Sigma Gamma Rho home.
 const memberJourney = ["Collegiate Women", "Professionals", "Community Leaders", "Lifelong Members"];
 
-// ACT IV — one of each: a featured story, an upcoming event, and a news
-// item. Mirrors the real entries on news-events/latest-news and
-// news-events/upcoming-events so the homepage never drifts from them.
+// The next five events, read from the same collection the upcoming-events
+// page renders, so this column cannot drift from it. It previously showed a
+// single hardcoded entry. Five rather than three because the column sits
+// beside a tall featured-news card, and five rows stand up to it.
+const upcoming = (await getCollection("events"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 5)
+  .map((e) => e.data);
+
+// ACT IV — a featured story and a news item, mirroring the real entries on
+// news-events/latest-news. The events beside them come from `upcoming` above.
 const happening = [
   {
     tag: "Featured Story",
@@ -136,13 +145,6 @@ const happening = [
     title: "Sigma Gamma Rho Inducts 21 Honorary Members at 61st Biennial Boule",
     body: "A historic class of 21 honorary members joined the Sorority at its 61st Biennial Boule in Tampa.",
     href: "/news-events/latest-news/",
-  },
-  {
-    m: "AUG",
-    d: "28",
-    title: "Fall Cluster Conferences Begin",
-    body: "Various Regional Locations",
-    href: "/news-events/upcoming-events/",
   },
   {
     img: "/images/Congressional Day on the Hill.jpg",
@@ -432,27 +434,34 @@ const nextSteps = [
       </article>
 
       <div class="happening-secondary">
-        <a
-          class="happening-secondary__item happening-secondary__item--event"
-          href={withBase(happening[1].href)}
-        >
+        <div class="happening-secondary__item happening-secondary__item--event">
           <p class="happening-secondary__label">Upcoming</p>
-          <span class="happening-secondary__date">
-            <span>{happening[1].m}</span>
-            <strong>{happening[1].d}</strong>
-          </span>
-          <h4>{happening[1].title}</h4>
-          <p>{happening[1].body}</p>
-          <span class="happening-secondary__go" aria-hidden="true">
-            View Calendar &rarr;
-          </span>
-        </a>
-        <a class="happening-secondary__item" href={withBase(happening[2].href)}>
+          <ul class="upcoming-list">
+            {upcoming.map((e) => (
+              <li>
+                <a href={withBase("/news-events/upcoming-events/")}>
+                  <span class="happening-secondary__date">
+                    <span>{e.month}</span>
+                    <strong>{e.day}</strong>
+                  </span>
+                  <span class="upcoming-list__text">
+                    <h4>{e.title}</h4>
+                    <p>{e.location}</p>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a class="happening-secondary__go" href={withBase("/news-events/upcoming-events/")}>
+            View Calendar <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+        <a class="happening-secondary__item" href={withBase(happening[1].href)}>
           <p class="happening-secondary__label">Latest News</p>
           <div class="happening-secondary__img">
-            <img src={withBase(happening[2].img)} alt="" />
+            <img src={withBase(happening[1].img)} alt="" />
           </div>
-          <h4>{happening[2].title}</h4>
+          <h4>{happening[1].title}</h4>
           <span class="happening-secondary__go" aria-hidden="true">
             Read Story &rarr;
           </span>
@@ -852,13 +861,21 @@ const nextSteps = [
   }
   .act-women__figure img {
     width: 100%;
-    aspect-ratio: 4/5;
+    /* 4/3, not 4/5. At ~590px wide a 4/5 portrait stands ~737px tall beside
+       ~180px of copy, and `align-items: center` then leaves ~275px of void
+       above AND below the text in each of the three beats. Landscape keeps
+       the section image-led while the columns stay in the same league.
+       `align-items: start` would only move that emptiness, not remove it.
+       Keep in step with --archival below, which sets its own ratio. */
+    aspect-ratio: 4/3;
     object-fit: cover;
     display: block;
   }
   .act-women__figure--archival {
     position: relative;
-    aspect-ratio: 4/5;
+    /* Matches .act-women__figure img above; this beat is sized by the
+       container because its child is `aspect-ratio: auto; height: 100%`. */
+    aspect-ratio: 4/3;
   }
   .act-women__figure--archival img {
     aspect-ratio: auto;
@@ -972,7 +989,14 @@ const nextSteps = [
   }
   .happening-feature__copy {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    /* 32rem matches the max-width on the paragraph below. A 1fr track here
+       is ~1390px wide at desktop while the text fills only 512px of it,
+       stranding the arrow link against the right margin. */
+    grid-template-columns: minmax(0, 32rem) auto;
+    /* Grid stretches an `auto` track into free space by default, which
+       dragged the arrow link's underline ~860px to the page edge. This
+       sizes the track to its content and leaves the slack at the end. */
+    justify-content: start;
     gap: var(--space-6);
     align-items: start;
   }
@@ -993,6 +1017,10 @@ const nextSteps = [
   .happening-secondary {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    /* Not stretch. These items have no card background, so equal heights buy
+       nothing visually while giving __go's `margin-top: auto` slack to push
+       the link far below the content it belongs to. */
+    align-items: start;
     gap: var(--space-6);
     padding-top: clamp(1.5rem, 3vw, 2rem);
     border-top: 1px solid var(--line);
@@ -1029,6 +1057,41 @@ const nextSteps = [
     font-size: var(--text-sm);
   }
   .happening-secondary__item:hover .happening-secondary__go {
+    color: var(--gold-text);
+  }
+  /* The stacked event rows. The date badge keeps its established 58px
+     treatment; only its bottom margin goes, since it now sits beside the
+     text rather than above it. */
+  .upcoming-list {
+    margin: 0 0 var(--space-2);
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .upcoming-list a {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+  }
+  .upcoming-list .happening-secondary__date {
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+  .happening-secondary__item .upcoming-list h4 {
+    margin: 0 0 var(--space-1);
+  }
+  .happening-secondary__item .upcoming-list a:hover h4 {
+    color: var(--gold-text);
+  }
+  a.happening-secondary__go {
+    text-decoration: none;
+  }
+  a.happening-secondary__go:hover {
     color: var(--gold-text);
   }
   .happening-secondary__date {
