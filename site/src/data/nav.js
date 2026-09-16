@@ -73,7 +73,7 @@ export const headerActions = [
     external: true,
     variant: "solid",
   },
-  { label: "Join ΣΓΡ", href: "/membership/become-a-member/", variant: "outline" },
+  { label: "Join ΣΓΡ®", href: "/membership/become-a-member/", variant: "outline" },
 ];
 
 /* Footer link columns. Kept separate from primaryNav because the footer

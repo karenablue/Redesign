@@ -134,6 +134,13 @@ one a peer organization cannot truthfully copy.
      page lists `HEX #FCFFFE` but `Digital: R-241 G-242 B-241`, which is
      `#F1F2F1` — a visibly different, greyer white. The site uses `#ffffff`.
      HQ should say which is authoritative before anyone "corrects" it.
+- **® placement (Sept 2026):** the FY2027 word-mark register shows ® on every
+  entry (verified in the PDF text as U+00AE). Each mark carries ® at its
+  **first prominent use on a page**; later mentions on the same page do not.
+  The site header's wordmark and "Join ΣΓΡ®", and the footer tagline, mark every
+  page. In headings, labels and buttons the ® is rendered raised via
+  `src/lib/reg.js`; plain body copy uses the character. The registered form
+  is **SGRHO** (caps) — "SGRho" in running prose is the colloquial name.
 - Registered marks to preserve: "Greater Service, Greater Progress"®,
   "Greater Women, Greater World"®, ΣΓΡ®, SGRHO®, SGRHO1922®, MCMXXII®,
   Philos®, EE-YIP®, Rhoer Club®, Philo Affiliate®.

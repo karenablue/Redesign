@@ -10,6 +10,7 @@
  *              highlight the matching nav item.
  */
 import { primaryNav, headerActions, searchIndex } from "../data/nav.js";
+import { reg } from "../lib/reg.js";
 import { withBase } from "../lib/url.js";
 import Button from "./Button.astro";
 
@@ -129,7 +130,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
               variant={a.variant === "solid" ? "solid" : "outline"}
               class="header-actions__btn"
             >
-              {a.label}
+              {/* one inline element: .btn is a flex row with a gap, so a bare
+                  <sup> would be spaced away from the label */}
+              <span set:html={reg(a.label)} />
             </Button>
           ))}
         </div>
@@ -520,6 +523,13 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     font-size: var(--text-sm);
     font-weight: 700;
     white-space: nowrap;
+  }
+  /* Just above the 1280px collapse the bar has almost no slack; the ® on
+     "Join ΣΓΡ®" pushed it 6px over. Slightly tighter buttons absorb that. */
+  @media (max-width: 1360px) {
+    .header-actions :global(.header-actions__btn) {
+      padding-inline: 1.2rem;
+    }
   }
   /* solid = Poodle Portal: gold fill, navy text */
   .header-actions :global(.header-actions__btn:not(.btn--outline)) {
