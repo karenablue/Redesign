@@ -4,56 +4,14 @@ import Hero from "../../components/Hero.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import Card from "../../components/Card.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import { getCollection } from "astro:content";
 
-const board = [
-  {
-    name: "Marica Harris",
-    role: "International Grand Basileus",
-    note: "Chair, International Board of Directors",
-    img: "/images/international-grand-basileus-marica-harris-704x1024.jpg",
-    featured: true,
-  },
-  {
-    name: "Miranda Moore",
-    role: "International First Grand Anti-Basileus",
-    img: "/images/first-grand-anti-basileus-miranda-moore-704x1024.jpg",
-  },
-  {
-    name: "Le'Davia Terry",
-    role: "International Second Grand Anti-Basileus",
-    img: "/images/second-grand-anti-basileus-ledaviah-terry.jpg",
-  },
-  {
-    name: "Sharron Barnes",
-    role: "International Grand Grammateus",
-    img: "/images/International-Grand-Grammateus-Sharron-Barnes-Headshot-2024-300x300.jpg",
-  },
-  {
-    name: "Jasmine Ervin",
-    role: "International Grand Anti-Grammateus",
-    img: "/images/International-Grand-Anti-Grammateus-Jasmine-Ervin-Headshot-2026.jpg",
-  },
-  {
-    name: "Debbie Wilburn",
-    role: "International Grand Tamiochus",
-    img: "/images/International-Grand-Tamiochus-Debbie-Wilburn-2026.jpg",
-  },
-  {
-    name: "Shira Amos",
-    role: "International Editor-in-Chief of the Aurora",
-    img: "/images/International-Editor-in-Chief-Aurora-Shira-Amos-Headshot-2024-300x300.jpg",
-  },
-  {
-    name: "Elaina Hamilton",
-    role: "International Grand Epistoleus",
-    img: "/images/International-Grand-Epistoleus-Elaina-Hamilton-Headshot-2024-300x300.jpg",
-  },
-  {
-    name: "Joyvan Malbon-Griffin",
-    role: "International Legal Advisor",
-    img: "/images/International-Legal-Advisor-Joyvan-Malbon-Griffin-2026.jpg",
-  },
-];
+// Officers are markdown in src/content/board/ so HQ can update the board
+// after each Boule without editing this page. Frontmatter only: every
+// field is structured, so there is no markdown body to render.
+const board = (await getCollection("board"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data);
 ---
 
 <Base
@@ -100,7 +58,7 @@ const board = [
       </div>
       <CardGrid min="240px" cols={3}>
         {board.map((b) => (
-          <Card image={b.img} imageAlt={b.name} title={b.name}>
+          <Card image={b.image} imageAlt={b.name} title={b.name}>
             <p class="ibd-role">{b.role}</p>
             {b.note && <p class="ibd-note">{b.note}</p>}
           </Card>

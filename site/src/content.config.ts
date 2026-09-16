@@ -47,4 +47,40 @@ const events = defineCollection({
   }),
 });
 
-export const collections = { events };
+/** Latest news. Prose lives in the markdown body, like events. */
+const news = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/news" }),
+  schema: z.object({
+    title: z.string().min(1),
+    tag: z.string().min(1),
+    image: z.string().min(1),
+    /** Optional link. Absolute URLs open in a new tab when `external` is set;
+     *  site-relative paths are passed through withBase() by the page. */
+    href: z.string().optional(),
+    external: z.boolean().optional(),
+    order: z.number().int().positive(),
+  }),
+});
+
+/**
+ * International Board of Directors. No markdown body — every field is
+ * structured, so these files are frontmatter only.
+ *
+ * Regional leadership is deliberately NOT a collection: each region nests a
+ * leaders[] array plus four social URLs, territory prose and a presentation
+ * flag, which would hand an editor a deeply nested form for content that
+ * changes on a known cadence. It stays a single data array in its page.
+ */
+const board = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/board" }),
+  schema: z.object({
+    name: z.string().min(1),
+    role: z.string().min(1),
+    image: z.string().min(1),
+    note: z.string().optional(),
+    featured: z.boolean().optional(),
+    order: z.number().int().positive(),
+  }),
+});
+
+export const collections = { events, news, board };

@@ -1,63 +1,15 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
+import { getCollection, render } from "astro:content";
 
-const cards = [
-  {
-    img: "/images/Boule Philos.jpg",
-    tag: "Partnership",
-    title: "PUMA Joins SGRho for the 61st Biennial Boule",
-    body: '"Purpose. Partnership. Progress." PUMA supported member experiences during Boule by the Bay, with a PUMA × Sigma Gamma Rho Sorority, Inc. collection coming this fall.',
-    href: "https://www.facebook.com/sgrhoupdates/",
-    external: true,
-  },
-  {
-    img: "/images/Congressional Day on the Hill.jpg",
-    tag: "Advocacy",
-    title: "Sorors Return to Capitol Hill for Congressional Day",
-    body: "Sigma Gamma Rho members joined national advocacy partners in Washington, D.C. to meet with lawmakers on issues affecting the communities the Sorority serves.",
-  },
-  {
-    img: "/images/swim-1922-1-768x432.jpg",
-    tag: "Program Update",
-    title: "Swim 1922 Expands to New Chapters",
-    body: "More undergraduate and alumnae chapters are hosting water-safety instruction this season through Swim 1922.",
-    href: "/service-impact/national-programs/#swim",
-  },
-  {
-    img: "/images/operation-bigbookbag-2.jpg",
-    tag: "Community Impact",
-    title: "Operation BigBookBag Reaches Students Nationwide",
-    body: "Chapters distributed school supplies and books to students as part of the Sorority's ongoing education initiative.",
-    href: "/service-impact/national-programs/#bigbookbag",
-  },
-  {
-    img: "/images/youth-symposium-1-768x432.jpg",
-    tag: "Youth Programs",
-    title: "Annual Youth Symposium Brings Together Young Leaders",
-    body: "The Youth Symposium continued its tradition of leadership development and mentorship for the next generation.",
-    href: "/service-impact/national-programs/#youth",
-  },
-  {
-    img: "/images/project-cradle-care-3.jpg",
-    tag: "Health & Wellness",
-    title: "Project Cradle Care Supports Maternal Health",
-    body: "Regional chapters continue partnering with local health providers to advance maternal and infant health awareness.",
-    href: "/service-impact/national-programs/#cradle",
-  },
-  {
-    img: "/images/Women’s Wellness Initiative.png",
-    tag: "Health & Wellness",
-    title: "Women's Wellness Initiative Hosts Community Events",
-    body: "Chapters hosted wellness screenings and education sessions as part of the Women's Wellness Initiative.",
-  },
-  {
-    img: "/images/rho alpha sorors.jfif",
-    tag: "Sisterhood",
-    title: "Chapters Celebrate Founders' Day, November 12",
-    body: "Sorors across the country marked the anniversary of the Sorority's 1922 founding at Butler University.",
-  },
-];
+// News items are markdown in src/content/news/, so HQ can post an update
+// after handover without touching this page. `order` is the display order;
+// prose lives in each file's markdown body.
+const newsEntries = (await getCollection("news")).sort((a, b) => a.data.order - b.data.order);
+const cards = await Promise.all(
+  newsEntries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content })),
+);
 ---
 
 <Base
@@ -114,11 +66,11 @@ const cards = [
           return (
             <Tag class="ln-card" {...props}>
               <figure>
-                <img src={withBase(c.img)} alt={c.title} loading="lazy" decoding="async" />
+                <img src={withBase(c.image)} alt={c.title} loading="lazy" decoding="async" />
               </figure>
               <span class="ln-tag">{c.tag}</span>
               <h3>{c.title}</h3>
-              <p>{c.body}</p>
+              <c.Body />
             </Tag>
           );
         })}
