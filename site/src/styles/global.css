@@ -1,10 +1,10 @@
 /* ==========================================================================
    Global base — reset, typography, shared primitives.
-   Type system — four roles (see AGENTS.md §6), rolling out homepage-first:
+   Type system — three roles (see AGENTS.md §6), rolling out homepage-first:
      LEMON MILK → display headers + numerals · Playfair Display → editorial
-     voice / quotes · Pinyon Script → accent kickers · Montserrat → body & UI
+     voice / quotes · Montserrat → body & UI
    These global rules still carry the two-family defaults; per-page styles
-   opt sections onto the editorial/kicker faces.
+   opt sections onto the editorial face.
    ========================================================================== */
 
 @import "./tokens.css";

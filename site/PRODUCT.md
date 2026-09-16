@@ -104,9 +104,10 @@ one a peer organization cannot truthfully copy.
   2026) is the authoritative source. Where anything else disagrees, it wins.
 - Official type is **LEMON MILK** (display) and **Montserrat** (body) — the
   guidelines name only these two and explicitly reject decorative fonts.
-  The rebuild extends this to four roles by an explicit client decision
-  (Playfair Display for editorial voice, Pinyon Script as a rationed accent);
-  that extension is deliberate and documented, not drift.
+  The rebuild adds one editorial face by an explicit client decision
+  (Playfair Display for multi-word headlines and quotes); that extension is
+  deliberate and documented, not drift. A script accent (Pinyon Script) was
+  tried and retired in Sept 2026 as a decorative font.
 - Color: Royal Blue `#2041A5` (Pantone 19-4053), Gold `#DFB136` (Pantone
   13-0757), Bright White `#FCFFFE`, Black. **Yellow Gold `#FFD700` is Rhoer
   Club only.** The official palette contains no cream.

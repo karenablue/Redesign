@@ -49,13 +49,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <!-- Design fonts:
          · Montserrat — body / UI / nav / buttons
          · Playfair Display — editorial voice (multi-word headlines, quotes)
-         · Pinyon Script — accent kicker (short eyebrows, formal touches)
          LEMON MILK (display headers / stat numerals) is self-hosted via
          @font-face in global.css; Oswald is its web fallback.
-         See AGENTS.md §6 for the four roles. -->
+         See AGENTS.md §6 for the three roles. -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Pinyon+Script&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap"
     />
   </head>
   <body class={bodyClass}>
