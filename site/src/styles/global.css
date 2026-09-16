@@ -171,6 +171,7 @@ strong {
 .on-dark,
 .section--navy {
   --gold-text: var(--gold-bright);
+  --gold-display: var(--gold-bright);
 }
 
 /* --- Buttons (pill; content buttons dominate) -------------------- */

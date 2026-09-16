@@ -33,6 +33,13 @@
      gold carries words on a light background; keep --gold/--gold-dark for
      rules, fills, icons, and gold-on-navy text. */
   --gold-text: #8a6510;
+  /* Display gold: the brand hue (H44/S73), darkened only as far as large text
+     needs. WCAG 1.4.3 asks 3:1 for text >=24px, and this clears it on every
+     light ground the site uses (worst case 3.26:1 on the cool tint), so big
+     two-tone headlines read as gold instead of bronze. Small text keeps
+     --gold-text, which needs 4.5:1. Chosen by computation, not by eye: the
+     first candidate, #b58c1c, fails on --tint at 2.85:1. */
+  --gold-display: #a8821a;
   --white: #ffffff;
   --ink: #333333; /* body text (Make uses #333)                 */
   --muted: #555a66; /* secondary text                             */
