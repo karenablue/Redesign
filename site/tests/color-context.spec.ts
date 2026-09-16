@@ -112,13 +112,48 @@ async function installColorUtils(page: Page) {
         const cs = getComputedStyle(cur);
         const bi = cs.backgroundImage;
         if (bi && bi !== "none") {
-          const stops = Array.from(bi.matchAll(/rgba?\(([^)]+)\)/g))
-            .map((m) => m[1].split(",").map(Number))
-            .filter((c) => c.length >= 3 && (c.length < 4 || c[3] > 0))
-            .map((c) => c.slice(0, 3));
-          if (stops.length) {
-            const mean = [0, 1, 2].map((i) => stops.reduce((s, c) => s + c[i], 0) / stops.length);
-            return acc ? composite(acc.rgb, acc.a, mean) : mean;
+          // Gradients are weighted by their alpha, and a translucent gradient
+          // does NOT end the walk. Treating every gradient as opaque once
+          // misread a 14% gold wash on Herstory's navy band as solid pale gold.
+          // A layer counts as opaque when its stops average to full alpha, so
+          // an opaque linear under a translucent radial still ends the walk.
+          const layers: string[] = [];
+          let depth = 0;
+          let start = 0;
+          for (let i = 0; i < bi.length; i++) {
+            const ch = bi[i];
+            if (ch === "(") depth++;
+            else if (ch === ")") depth--;
+            else if (ch === "," && depth === 0) {
+              layers.push(bi.slice(start, i));
+              start = i + 1;
+            }
+          }
+          layers.push(bi.slice(start));
+          const sum = [0, 0, 0];
+          let weight = 0;
+          let alpha = 0;
+          for (const layer of layers) {
+            const stops = Array.from(layer.matchAll(/rgba?\(([^)]+)\)/g)).map((m) =>
+              m[1].split(",").map(Number)
+            );
+            if (!stops.length) continue;
+            let layerAlpha = 0;
+            for (const s of stops) {
+              const a = s.length >= 4 ? s[3] : 1;
+              layerAlpha += a;
+              weight += a;
+              for (let k = 0; k < 3; k++) sum[k] += s[k] * a;
+            }
+            alpha = Math.max(alpha, layerAlpha / stops.length);
+          }
+          if (weight > 0) {
+            const mean = sum.map((v) => v / weight);
+            acc =
+              acc === null
+                ? { rgb: mean, a: alpha }
+                : { rgb: composite(acc.rgb, acc.a, mean), a: Math.min(1, acc.a + alpha) };
+            if (acc.a >= 0.999) return acc.rgb;
           }
         }
         const c = parse(cs.backgroundColor);
@@ -157,13 +192,16 @@ async function auditTwoGolds(page: Page): Promise<GoldViolation[]> {
     // Read the golds from the live tokens rather than hard-coding them, so the
     // check follows DESIGN.md if a value ever changes.
     const darkGold = token("--gold-text");
+    // --gold-display is the large-text member of the light-ground golds, so it
+    // obeys the same rule as --gold-text: never on a dark ground.
+    const displayGold = token("--gold-display");
     const lightGolds = [token("--gold"), token("--gold-bright")];
     const fillOnlyGold = token("--gold-dark");
     // If a token failed to resolve, every comparison below would miss and the
     // test would pass vacuously. Fail loudly instead.
-    if (!darkGold || !fillOnlyGold || lightGolds.some((g) => !g)) {
+    if (!darkGold || !displayGold || !fillOnlyGold || lightGolds.some((g) => !g)) {
       throw new Error(
-        "Two-Golds audit could not resolve --gold, --gold-bright, --gold-text or --gold-dark on :root"
+        "Two-Golds audit could not resolve --gold, --gold-bright, --gold-text, --gold-display or --gold-dark on :root"
       );
     }
 
@@ -183,7 +221,7 @@ async function auditTwoGolds(page: Page): Promise<GoldViolation[]> {
       const fg = C.parse(cs.color);
       if (!fg) continue;
       const key = fg.rgb.map(Math.round).join(",");
-      const isDarkGold = key === darkGold;
+      const isDarkGold = key === darkGold || key === displayGold;
       const isLightGold = lightGolds.includes(key);
       const isFillOnlyGold = key === fillOnlyGold;
       if (!isDarkGold && !isLightGold && !isFillOnlyGold) continue;
@@ -195,7 +233,7 @@ async function auditTwoGolds(page: Page): Promise<GoldViolation[]> {
         const groundIsDark = C.luminance(C.groundOf(el)) < 0.2;
         verdict =
           isDarkGold && groundIsDark
-            ? "dark gold (--gold-text) on a dark ground"
+            ? "dark gold (--gold-text / --gold-display) on a dark ground"
             : isLightGold && !groundIsDark
               ? "light gold (--gold / --gold-bright) on a light ground"
               : null;
@@ -340,6 +378,22 @@ test.describe("canaries: each check must catch a deliberately broken page", () =
     const violations = await auditTwoGolds(page);
     expect(
       violations.some((v) => v.selector.startsWith("p.eyebrow") && v.verdict.startsWith("dark gold")),
+      `the injected violation was not detected; the audit returned:\n${describeGold(violations)}`
+    ).toBe(true);
+  });
+
+  test("two golds still flags light gold on a translucent tint over a LIGHT ground", async ({ page }) => {
+    // Guards the alpha-weighted gradient fix: a faint wash must not make a
+    // light page read as dark. Same tint as Herstory's gold timeline card.
+    await installColorUtils(page);
+    await page.goto("/privacy/", { waitUntil: "load" });
+    await page.addStyleTag({
+      content:
+        ".legal-toc a { color: #f0cf5c !important; background-image: linear-gradient(145deg, rgba(223,177,54,.14), rgba(255,255,255,.04)) !important; }",
+    });
+    const violations = await auditTwoGolds(page);
+    expect(
+      violations.some((v) => v.verdict.startsWith("light gold")),
       `the injected violation was not detected; the audit returned:\n${describeGold(violations)}`
     ).toBe(true);
   });

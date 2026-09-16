@@ -61,103 +61,175 @@ const facts = [
 const firsts = [
   {
     n: "01",
-    title: "Founded at a Predominantly White Institution",
-    body: "Sigma Gamma Rho is the only NPHC sorority founded at a predominantly white institution — Butler University in Indianapolis.",
+    title: "Founded at a PWI",
+    body: "The only NPHC sorority established at a predominantly white institution — Butler University in Indianapolis, Indiana — in 1922.",
   },
   {
     n: "02",
-    title: "Professional-Educator Roots",
-    body: "The Sorority began as a professional organization created by Black women educators whose work centered education, advancement, and service.",
+    title: "Educator-Led Origins",
+    body: "The only NPHC sorority founded solely by working educators, beginning as a professional society centered on scholarship, training, and service.",
   },
   {
     n: "03",
-    title: "Early NPHC Organizing Participation",
-    body: "Sigma Gamma Rho participated in the 1928 Indianapolis discussions that preceded the permanent National Pan-Hellenic Council and became a full NPHC member in 1937.",
+    title: "Beyond Howard University",
+    body: "The only historically Black sorority within the NPHC founded outside of Howard University, establishing an autonomous Midwest lineage.",
   },
   {
     n: "04",
-    title: "Affiliate Tradition",
-    body: "One of few NPHC sororities to sustain a multi-tier affiliate system — Rhosebuds, Rhoers, and Philos — across generations.",
+    title: "1928 Pan-Hellenic Precursor",
+    body: "Shaped the pivotal 1928 Indianapolis roundtables that laid the Midwestern groundwork for the National Pan-Hellenic Council before full membership in 1937.",
   },
   {
     n: "05",
-    title: "Philo Affiliate",
-    body: "Established a national affiliate for professional, non-collegiate women who support the Sorority's mission without full membership.",
+    title: "First Official Youth Affiliate",
+    body: "Pioneered the Rhoer Club in 1939, becoming the first NPHC organization to establish a chartered national leadership auxiliary for teenage girls.",
   },
   {
     n: "06",
-    title: "Rhoer Club",
-    body: "Sponsored one of the longest-running Black Greek youth-development programs, active since 1939.",
+    title: "Non-Degreed Women’s Pipeline",
+    body: "Pioneered the Philo Affiliate (originating in 1943), breaking traditional collegiate elitism to provide non-degreed women official national service status.",
   },
 ];
 
-// Timeline chapters, each paired with an aside variant matching the original
-// page's mix of quote / stat / impact-list / plain callouts.
+/**
+ * The century timeline. Rows alternate sides (`side`) and each closes with a
+ * typed note. The note's `style` varies on purpose — plain card, gold card,
+ * stat block, quote — because a repeating aside is what would make ten rows
+ * read as one long scroll (see the herstory benchmark in DESIGN notes).
+ */
 const timeline = [
   {
+    n: "01",
+    side: "left",
     year: "1922",
-    label: "Founding",
-    head: "Seven educators build an institution.",
-    body: "Sigma Gamma Rho Sorority, Inc. was founded on November 12, 1922, in Indianapolis, Indiana, by seven African American educators.",
-    aside: {
-      type: "plain",
-      title: "Butler University",
-      body: "The only NPHC sorority founded at a predominantly white institution.",
+    label: "The Bold Inception",
+    head: "Seven Educators Defy the Odds",
+    body: "Founded on November 12, 1922, at Butler University in Indianapolis, Indiana, by seven trailblazing schoolteachers. In an era of intense midwestern racial hostility, they built an autonomous, educator-led sisterhood.",
+    note: {
+      style: "plain",
+      kind: "Key Distinction",
+      text: "The only NPHC sorority founded at a predominantly white institution (PWI).",
     },
   },
   {
+    n: "02",
+    side: "right",
     year: "1925",
-    label: "Structure & Identity",
-    head: "The first Boulé establishes a national rhythm.",
-    body: "The Sorority's first national conference — the Boulé — established the governing rhythm and traditions the organization still follows today, including the motto Greater Service, Greater Progress.",
-    aside: { type: "quote", line: "GREATER SERVICE,", strong: "GREATER PROGRESS." },
-  },
-  {
-    year: "1929",
-    label: "National Expansion",
-    head: "A broader mission takes shape.",
-    body: "On December 30, 1929, Sigma Gamma Rho became an incorporated national collegiate sorority, when a charter was granted to the Alpha chapter at Butler University, formalizing its structure and reach.",
-    aside: {
-      type: "impact",
-      title: "Institutional Roots",
-      items: ["Professional-educator founders", "Employment support"],
+    label: "Codifying the Vision",
+    head: "The First National Boulé",
+    body: "Convening its first national convention, the Sorority established its democratic governance, national officers, and cultural traditions, officially adopting the motto: “Greater Service, Greater Progress.”",
+    note: {
+      style: "gold",
+      kind: "Milestone",
+      text: "Formal adoption of national leadership and organizational constitution.",
     },
   },
   {
-    year: "1928–37",
-    label: "National Pan-Hellenic Council",
-    head: "Part of the early effort to coordinate Black Greek-letter organizations.",
-    body: "Sigma Gamma Rho participated in the 1928 Indianapolis discussions that preceded the permanent National Pan-Hellenic Council, and became a full NPHC member in 1937.",
-    aside: { type: "stat", number: "1937", label: "Full NPHC Membership" },
+    n: "03",
+    side: "left",
+    year: "1928–1937",
+    label: "Expanding the Reach",
+    head: "Collegiate Charter & NPHC Unity",
+    body: "After shaping the 1928 Indianapolis roundtables that laid the groundwork for the National Pan-Hellenic Council, the Sorority incorporated as a national collegiate body with Alpha Chapter (1929) and joined the NPHC as a full member in 1937.",
+    note: {
+      style: "stat",
+      number: "1937",
+      kind: "Milestone",
+      text: "Transition from professional society to chartered national collegiate body.",
+    },
   },
   {
+    n: "04",
+    side: "right",
     year: "1930s",
-    label: "The Great Depression",
-    head: "Service responds to the realities of the moment.",
-    body: "Even through the Great Depression, chapters continued to organize around education, mutual aid, and community service, adapting the founders' original commitments to a harder economic reality.",
-    aside: {
-      type: "plain",
-      title: "Educational Access",
-      body: "Chapters prioritized keeping members and neighbors in school and employed.",
+    label: "Depression-Era Economic Aid & Global Literacy",
+    head: "Vocational Defense and Cross-Border Support",
+    body: "Confronting economic collapse, the Sorority created an internal Employment Aid Bureau to secure teaching placements for Black women, mandated permanent chapter scholarship funds, and launched the African Book Shower Project to send educational supplies to the Wilberforce Institute in South Africa.",
+    note: {
+      style: "plain",
+      kind: "Impact",
+      text: "Economic resilience, educational defense, and early international educational diplomacy.",
     },
   },
   {
+    n: "05",
+    side: "left",
+    year: "1939–1943",
+    label: "Multigenerational Pipelines",
+    head: "Pioneering Youth & Community Affiliates",
+    body: "Redefining Greek auxiliaries, Sigma Gamma Rho established the Rhoer Club (1939) as the first national NPHC youth affiliate for teens, followed by the Philo Affiliate (originating in 1943) to welcome non-degreed community women into active civic leadership.",
+    note: {
+      style: "gold",
+      kind: "Firsts",
+      text: "First national teen auxiliary and inclusive non-degreed women’s affiliate.",
+    },
+  },
+  {
+    n: "06",
+    side: "right",
     year: "1940s",
-    label: "World War II & Youth Development",
-    head: "Service expands from wartime support to youth development.",
-    body: "During World War II, Sigma Gamma Rho supported service members and their families while laying the groundwork for the youth affiliate programs — the Rhoer Club and, later, Rhosebuds — that continue today.",
-    aside: {
-      type: "plain",
-      title: "National Purpose",
-      body: "Local adaptation of national priorities across every region.",
+    label: "“Teen Towns” & Wartime Youth Welfare",
+    head: "Safe Havens for the Next Generation",
+    body: "In response to World War II community disruption and rapid migration, chapters pioneered “Teen Towns” — dedicated recreational and vocational centers providing wholesome mentorship, creative arts, and social development to protect Black youth from delinquency and neglect.",
+    note: {
+      style: "plain",
+      kind: "Milestone",
+      text: "Grassroots civic innovation in urban youth welfare.",
     },
   },
   {
+    n: "07",
+    side: "left",
+    year: "1950s–1960s",
+    label: "Civil Rights & Literacy Action",
+    head: "Direct Action and Desegregation Advocacy",
+    body: "Sorors mobilized across the South and urban centers, funding civil rights legal defense campaigns, organizing voter registration drives, and running regional book drives and mobile bookmobiles to supply underfunded, segregated schools and libraries.",
+    note: {
+      style: "gold",
+      kind: "Impact",
+      text: "Active participation in voter defense, legal relief, and literacy access.",
+    },
+  },
+  {
+    n: "08",
+    side: "right",
+    year: "1972",
+    label: "Public Health Leadership",
+    head: "Project Reassurance with March of Dimes",
+    body: "Sigma Gamma Rho became the first Black Greek-letter organization to enter an official nationwide partnership with a major national public health foundation, targeting maternal health disparities, prenatal education, and infant mortality prevention in vulnerable communities.",
+    note: {
+      style: "stat",
+      number: "1st",
+      kind: "First",
+      text: "First NPHC nationwide partnership with a national health foundation.",
+    },
+  },
+  {
+    n: "09",
+    side: "left",
+    year: "1990s–2000s",
+    label: "Global Footprint & Swim 1922",
+    head: "Global Charters & Aquatic Safety",
+    body: "The Sorority expanded internationally across the Caribbean, Europe, and Africa. It later forged a historic alliance with USA Swimming to launch Swim 1922, directly combating generational drowning disparities and water access barriers in minority communities.",
+    note: {
+      style: "plain",
+      kind: "Impact",
+      text: "Worldwide charter expansion and first African American national partner of USA Swimming.",
+    },
+  },
+  {
+    n: "10",
+    side: "right",
     year: "Today",
-    label: "The Work Continues",
-    head: "A century later, the responsibility remains.",
-    body: "Each generation inherits that work — to organize, advocate, educate, serve, and expand without abandoning the founding principles.",
-    aside: { type: "quote", line: "THE STORY IS", strong: "STILL IN MOTION." },
+    label: "The Centenary & Beyond",
+    head: "Unbroken Legacy, Boundless Future",
+    body: "With over 100 years of documented leadership, thousands of members across hundreds of chapters carry the founders’ standard forward — advancing social justice, women’s health, education, and community self-reliance.",
+    note: {
+      style: "quote",
+      kind: "Movement",
+      line: "A century of sisterhood.",
+      text: "Greater Service. Greater Progress. Still in motion.",
+    },
   },
 ];
 
@@ -358,39 +430,56 @@ const regions = [
       </div>
       <div class="hs-century__story">
         {timeline.map((t) => (
-          <div class="hs-chapter">
-            <div class="hs-chapter__year">{t.year}</div>
+          <div class:list={["hs-chapter", t.side === "right" && "hs-chapter--right"]}>
+            <div class="hs-chapter__year">
+              {/* Ranges break after the dash so "1950s–1960s" fits the rail. */}
+              {t.year.split("–").map((part, i, all) => (
+                <span>
+                  {/* LEMON MILK has no lowercase, so "1930s" would read
+                      "1930S". The decade's s is set in Montserrat instead. */}
+                  {part.endsWith("s") ? (
+                    <>
+                      {part.slice(0, -1)}
+                      <span class="hs-chapter__decade">s</span>
+                    </>
+                  ) : (
+                    part
+                  )}
+                  {i < all.length - 1 && "–"}
+                </span>
+              ))}
+            </div>
             <div class="hs-chapter__copy">
-              <p class="hs-chapter__label">{t.label}</p>
+              <p class="hs-chapter__label">
+                {t.n} &middot; {t.label}
+              </p>
               <h3>{t.head}</h3>
               <p>{t.body}</p>
             </div>
-            {t.aside.type === "plain" && (
+            {t.note.style === "plain" && (
               <div class="hs-chapter__aside">
-                <h4>{t.aside.title}</h4>
-                <p>{t.aside.body}</p>
+                <p class="hs-chapter__kind">{t.note.kind}</p>
+                <p class="hs-chapter__note">{t.note.text}</p>
               </div>
             )}
-            {t.aside.type === "quote" && (
-              <div class="hs-chapter__quote">
-                <span>{t.aside.line}</span>
-                <strong>{t.aside.strong}</strong>
-              </div>
-            )}
-            {t.aside.type === "stat" && (
-              <div class="hs-chapter__stat">
-                <span class="hs-stat-number">{t.aside.number}</span>
-                <span class="hs-stat-label">{t.aside.label}</span>
-              </div>
-            )}
-            {t.aside.type === "impact" && (
+            {t.note.style === "gold" && (
               <div class="hs-chapter__aside hs-chapter__aside--gold">
-                <h4>{t.aside.title}</h4>
-                <div class="hs-impact-list">
-                  {t.aside.items?.map((it) => (
-                    <div>{it}</div>
-                  ))}
-                </div>
+                <p class="hs-chapter__kind">{t.note.kind}</p>
+                <p class="hs-chapter__note">{t.note.text}</p>
+              </div>
+            )}
+            {t.note.style === "stat" && (
+              <div class="hs-chapter__stat">
+                <span class="hs-stat-number">{t.note.number}</span>
+                {t.note.kind !== "First" && <span class="hs-stat-label">{t.note.kind}</span>}
+                <p class="hs-stat-note">{t.note.text}</p>
+              </div>
+            )}
+            {t.note.style === "quote" && (
+              <div class="hs-chapter__quote">
+                <p class="hs-chapter__kind">{t.note.kind}</p>
+                <span>{t.note.line}</span>
+                <strong>{t.note.text}</strong>
               </div>
             )}
           </div>
@@ -539,7 +628,7 @@ const regions = [
     color: #fff;
   }
   .hs-hero__title span {
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-hero__copy {
     max-width: 42rem;
@@ -574,7 +663,7 @@ const regions = [
     line-height: 1.12;
   }
   .hs-heading h2 span {
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-heading > p:not(.eyebrow) {
     margin-top: var(--space-4);
@@ -609,7 +698,7 @@ const regions = [
     line-height: 1.12;
   }
   .hs-story-copy h2 span {
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-story-copy p {
     color: #4c5565;
@@ -757,7 +846,7 @@ const regions = [
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
   .hs-firsts__heading h2 span {
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-firsts__heading p:not(.eyebrow) {
     color: var(--muted);
@@ -827,7 +916,7 @@ const regions = [
     font-size: clamp(1.6rem, 3vw, 2.375rem);
   }
   .hs-mv__inner article:last-child h2 {
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-mv__inner p {
     margin: 0;
@@ -884,13 +973,45 @@ const regions = [
   .hs-chapter {
     position: relative;
     display: grid;
-    grid-template-columns: 150px minmax(0, 1fr) 260px;
+    grid-template-columns: 170px minmax(0, 1fr) 260px;
     gap: clamp(1.5rem, 3vw, 2.75rem);
     padding-block: clamp(2rem, 4vw, 3.5rem);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .hs-chapter:last-child {
     border-bottom: 0;
+  }
+  /* Right-hand rows mirror the grid: note | copy | year. Only the visual order
+     changes — the DOM stays year, copy, note, so screen readers and the
+     mobile stack read the same sequence on every row. */
+  .hs-chapter--right {
+    grid-template-columns: 260px minmax(0, 1fr) 170px;
+  }
+  .hs-chapter--right .hs-chapter__year {
+    order: 3;
+    text-align: left;
+    padding-right: 0;
+    padding-left: 2.25rem;
+  }
+  .hs-chapter--right .hs-chapter__year::after {
+    right: auto;
+    left: -6px;
+  }
+  .hs-chapter--right .hs-chapter__copy {
+    order: 2;
+    text-align: right;
+  }
+  .hs-chapter--right > :last-child {
+    order: 1;
+  }
+  .hs-chapter__year > span {
+    display: block;
+  }
+  .hs-chapter__decade {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.82em;
+    text-transform: none;
   }
   .hs-chapter__year {
     position: relative;
@@ -947,11 +1068,25 @@ const regions = [
   .hs-chapter__aside--gold {
     background: linear-gradient(145deg, rgba(223, 177, 54, 0.14), rgba(255, 255, 255, 0.04));
   }
-  .hs-chapter__aside h4 {
-    margin: 0 0 var(--space-3);
+  .hs-chapter__kind {
+    margin: 0 0 var(--space-2);
+    color: var(--gold-bright);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .hs-chapter__note {
+    margin: 0;
     color: #fff;
     font-size: var(--text-md);
     line-height: 1.45;
+  }
+  .hs-stat-note {
+    margin: var(--space-3) 0 0;
+    color: var(--navy);
+    font-size: var(--text-sm);
+    line-height: 1.5;
   }
   .hs-impact-list {
     display: flex;
@@ -1015,6 +1150,20 @@ const regions = [
     }
     .hs-chapter__year {
       text-align: left;
+    }
+    .hs-chapter--right .hs-chapter__year,
+    .hs-chapter--right .hs-chapter__copy,
+    .hs-chapter--right > :last-child {
+      order: 0;
+      text-align: left;
+    }
+    .hs-chapter--right .hs-chapter__year {
+      padding-left: 0;
+      padding-right: 2.25rem;
+    }
+    .hs-chapter--right .hs-chapter__year::after {
+      left: auto;
+      right: -6px;
     }
   }
 
@@ -1119,7 +1268,7 @@ const regions = [
     font-size: clamp(1.75rem, 3.4vw, 2.6rem);
   }
   .hs-legacy__copy h2 span {
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-legacy__copy > p {
     color: #4c5565;
@@ -1153,7 +1302,7 @@ const regions = [
     line-height: 1.15;
     letter-spacing: normal;
     text-transform: none;
-    color: var(--gold-text);
+    color: var(--gold-display);
   }
   .hs-button-row {
     display: flex;

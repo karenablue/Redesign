@@ -180,6 +180,13 @@ accent; extra hues would break the Pearl Standard.
 - **Gold Text** (`#8a6510`): gold's legible form on white and cream. Plain
   `gold` is 2:1 against white and fails AA badly; this token exists so gold
   can still carry small type on light ground.
+- **Gold Display** (`#a8821a`): the same brand hue (H44/S73), darkened only as
+  far as *large* text needs — 3:1 at 24px and up, worst case 3.26:1 on the cool
+  tint. Used for two-tone headline highlights and the Herstory motto so they
+  read as gold, not bronze. Small text stays on Gold Text. Both are
+  light-ground golds and both flip to Gold Bright inside `.on-dark`. The FY2027
+  guidelines require WCAG 2.1 AA for digital color, so these two tokens are
+  how the brand gold complies, not departures from it.
 
 ### Neutral
 
