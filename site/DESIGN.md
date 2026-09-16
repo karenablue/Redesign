@@ -73,7 +73,7 @@ components:
   button-primary:
     backgroundColor: "{colors.gold}"
     textColor: "{colors.navy}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.sm}"
     padding: "0.95em 2.2em"
     typography: "{typography.body}"
   button-primary-hover:
@@ -82,7 +82,7 @@ components:
   button-outline:
     backgroundColor: "transparent"
     textColor: "{colors.royal}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.sm}"
     padding: "0.95em 2.2em"
   button-outline-hover:
     backgroundColor: "{colors.gold}"
@@ -90,12 +90,12 @@ components:
   button-navy:
     backgroundColor: "{colors.navy}"
     textColor: "{colors.white}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.sm}"
     padding: "0.95em 2.2em"
   button-ghost-light:
     backgroundColor: "rgba(255, 255, 255, 0.96)"
     textColor: "{colors.royal}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.sm}"
     padding: "0.95em 2.2em"
   card:
     backgroundColor: "{colors.white}"
@@ -307,8 +307,8 @@ reaching for a shadow.
 ## Shapes
 
 Two radii and one pill. Cards and media use `16px` (`--radius-lg`); inputs,
-chips and small surfaces use `8px` (`--radius`); every button is a full pill
-(`999px`). One structural exception exists: the membership block's `40px`
+chips and small surfaces use `8px` (`--radius`); every button uses `8px`
+(`--radius`); `999px` pills are reserved for chips, tags and jump links. One structural exception exists: the membership block's `40px`
 bottom-only radius.
 
 Borders are hairlines — `1px solid rgba(32,65,165,.12)` on light, the white
@@ -332,7 +332,7 @@ borders, minimal ornament. Components recede; content does the work.
 
 ### Buttons
 
-- **Shape:** full pill (`999px`), `1.5px` border, padding `0.95em 2.2em`,
+- **Shape:** `8px` corners (`--radius`; pills retired Sept 2026), `1.5px` border, padding `0.95em 2.2em`,
   Montserrat 700 at 16px.
 - **Primary:** gold fill with **navy** text. Never white text on gold — white
   is 2:1 against `#dfb136`. Hover switches to a royal fill with white text

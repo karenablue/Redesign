@@ -184,7 +184,9 @@ strong {
   gap: var(--space-2);
   padding: 0.95em 2.2em;
   border: 1.5px solid var(--btn-border);
-  border-radius: 999px;
+  /* 8px, not a pill (Karena, Sept 2026): buttons site-wide. Chips, tags and
+     jump-nav links keep their pill shape — they are not buttons. */
+  border-radius: var(--radius);
   background: var(--btn-bg);
   color: var(--btn-fg);
   font-family: var(--font-body);
