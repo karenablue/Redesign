@@ -35,7 +35,7 @@ const facts: Fact[] = [
     body: "Historically recognized and embraced by sisterhood and community as SGRho and Sigma.",
   },
   {
-    label: "National Conference",
+    label: "National Council",
     title: "National Pan-Hellenic Council",
     body: "Admitted in 1937 to the national governing council uniting the Divine Nine historically Black Greek-letter organizations.",
   },
@@ -1101,7 +1101,9 @@ const regions = [
     background: var(--gold);
     box-shadow: 0 0 0 1px rgba(223, 177, 54, 0.5);
   }
-  .hs-chapter__label {
+  /* Scoped under __copy: the generic `.hs-chapter__copy p` rule (0,1,1)
+     otherwise overrides this label's colour and turns it grey. */
+  .hs-chapter__copy .hs-chapter__label {
     margin: 0 0 var(--space-2);
     color: var(--accent-text);
     font-size: var(--text-xs);
