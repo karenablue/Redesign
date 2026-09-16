@@ -110,6 +110,29 @@ one a peer organization cannot truthfully copy.
 - Color: Royal Blue `#2041A5` (Pantone 19-4053), Gold `#DFB136` (Pantone
   13-0757), Bright White `#FCFFFE`, Black. **Yellow Gold `#FFD700` is Rhoer
   Club only.** The official palette contains no cream.
+- **The guidelines themselves mandate WCAG 2.1 AA for digital color**, verbatim:
+  "All uses of this color on websites and digital products must comply with
+  WCAG 2.1 AA accessibility requirements for color contrast." Acceptable Use
+  additionally requires "high contrast between background and text", and
+  Unacceptable Use names "text that is difficult to read due to poor color
+  contrast". This matters because brand Gold is 1.9:1 on white and **fails that
+  clause as text**. So `--gold-text` (`#8a6510`) and `--gold-bright`
+  (`#f0cf5c`) are not departures from the brand — they are how the brand's own
+  accessibility requirement is met. Cite this clause, not general a11y
+  practice, if the gold tokens are ever questioned.
+- **Two items for HQ to ratify at handover** (both deliberate, neither a
+  mistake, and neither blocking):
+  1. **Cream** (`#fffbf0`, `#fef8ed`) is outside the official palette but used
+     38 times across 20 files. It came from the Figma Make source and it is
+     what supplies the site's warmth and its alternating-band rhythm — most
+     visibly the Key Facts band on *Herstory*. Removing it is a visual
+     decision, not a cleanup; see `AGENTS.md` §6, which says not to strip it
+     without a human decision. Same status for `--tint` (`#f4f6fb`), the cool
+     slate band.
+  2. **The Bright White definition contradicts itself in the PDF.** The color
+     page lists `HEX #FCFFFE` but `Digital: R-241 G-242 B-241`, which is
+     `#F1F2F1` — a visibly different, greyer white. The site uses `#ffffff`.
+     HQ should say which is authoritative before anyone "corrects" it.
 - Registered marks to preserve: "Greater Service, Greater Progress"®,
   "Greater Women, Greater World"®, ΣΓΡ®, SGRHO®, SGRHO1922®, MCMXXII®,
   Philos®, EE-YIP®, Rhoer Club®, Philo Affiliate®.
