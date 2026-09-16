@@ -130,7 +130,11 @@ const { title, updated, draftNote, intro = [], sections } = Astro.props;
     padding: var(--space-4) var(--space-5);
     margin: 0 0 var(--space-8);
     background: var(--tint);
-    border-left: 3px solid var(--gold);
+    /* A hairline, not a 3px gold side-tab. This is a filled, rounded callout
+       surface, so DESIGN.md's Hairline Rule applies exactly as it did to
+       .pf-mission; the tint fill already separates it. (Unlike herstory's
+       left rules, which sit on actual pull quotes and are sanctioned.) */
+    border: 1px solid var(--line);
     border-radius: var(--radius);
     color: var(--muted);
     font-size: var(--text-sm);
