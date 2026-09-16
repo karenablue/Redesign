@@ -56,6 +56,18 @@ const facts = [
     title: "Cary, North Carolina",
     body: "Home of the International Corporate Headquarters.",
   },
+  {
+    n: "09",
+    label: "Official Mascot",
+    title: "The Poodle",
+    body: "A symbol of elegance, intelligence, and resilience within the sisterhood.",
+  },
+  {
+    n: "10",
+    label: "Official Publication",
+    title: "The Aurora",
+    body: "Established in 1930 to document national achievements, voice, and chapter progress.",
+  },
 ];
 
 const firsts = [
@@ -196,12 +208,17 @@ const timeline = [
     year: "1972",
     label: "Public Health Leadership",
     head: "Project Reassurance with March of Dimes",
-    body: "Sigma Gamma Rho became the first Black Greek-letter organization to enter an official nationwide partnership with a major national public health foundation, targeting maternal health disparities, prenatal education, and infant mortality prevention in vulnerable communities.",
+    // Conservative wording until HQ confirms the "first" claim. Original copy,
+    // to restore once verified: "Sigma Gamma Rho became the first Black
+    // Greek-letter organization to enter an official nationwide partnership
+    // with a major national public health foundation…" / note: "First NPHC
+    // nationwide partnership with a national health foundation."
+    body: "In 1972, Sigma Gamma Rho established Project Reassurance in partnership with the March of Dimes, launching a groundbreaking nationwide campaign targeting maternal health disparities, prenatal care, and infant mortality prevention in vulnerable communities.",
     note: {
-      style: "stat",
-      number: "1st",
-      kind: "First",
-      text: "First NPHC nationwide partnership with a national health foundation.",
+      style: "quote",
+      kind: "Milestone",
+      line: "A Landmark",
+      text: "Health Alliance.",
     },
   },
   {
@@ -210,11 +227,15 @@ const timeline = [
     year: "1990s–2000s",
     label: "Global Footprint & Swim 1922",
     head: "Global Charters & Aquatic Safety",
-    body: "The Sorority expanded internationally across the Caribbean, Europe, and Africa. It later forged a historic alliance with USA Swimming to launch Swim 1922, directly combating generational drowning disparities and water access barriers in minority communities.",
+    // Conservative wording until HQ confirms the "first" claim. Original note,
+    // to restore once verified: "…and first African American national partner
+    // of USA Swimming." Also unresolved: Swim 1922 launched in 2012, outside
+    // this row's 1990s–2000s range.
+    body: "The Sorority expanded internationally across the Caribbean, Europe, and Africa. Through the historic Swim 1922 campaign, it formed a pioneering nationwide alliance with USA Swimming, breaking cultural barriers and generational trauma to bring essential water safety and swim clinics to minority youth across the country.",
     note: {
       style: "plain",
       kind: "Impact",
-      text: "Worldwide charter expansion and first African American national partner of USA Swimming.",
+      text: "Worldwide charter expansion and a pioneering national alliance with USA Swimming.",
     },
   },
   {
@@ -471,7 +492,7 @@ const regions = [
             {t.note.style === "stat" && (
               <div class="hs-chapter__stat">
                 <span class="hs-stat-number">{t.note.number}</span>
-                {t.note.kind !== "First" && <span class="hs-stat-label">{t.note.kind}</span>}
+                <span class="hs-stat-label">{t.note.kind}</span>
                 <p class="hs-stat-note">{t.note.text}</p>
               </div>
             )}
@@ -778,9 +799,12 @@ const regions = [
   .hs-key-facts {
     background: var(--cream);
   }
+  /* Ten facts: 5 x 2 wide, 2 x 5 below. Only 5 and 2 divide ten evenly, so
+     there is deliberately no 3- or 4-column step — either would strand a card
+     alone on the last row. */
   .hs-facts-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     border-top: 1px solid var(--line);
     border-left: 1px solid var(--line);
   }
@@ -820,7 +844,7 @@ const regions = [
     font-size: var(--text-sm);
     line-height: 1.65;
   }
-  @media (max-width: 900px) {
+  @media (max-width: 1080px) {
     .hs-facts-grid {
       grid-template-columns: repeat(2, 1fr);
     }
