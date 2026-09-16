@@ -1,0 +1,12 @@
+---
+name: "Louise Beavers"
+field: "Arts & Entertainment"
+cat: "arts"
+note: "Film and television actress."
+honorary: true
+order: 81
+initials: "LB"
+image: "/images/notable/louise-beavers.jpg"
+license: "Public domain"
+credit: "Photofest"
+---

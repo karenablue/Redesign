@@ -1,15 +1,25 @@
 ---
 /**
- * Notable Sigmas — ported from about/notable-sigmas/notablesigmas.html.
+ * Notable Sigmas.
  *
- * None of the referenced notable-*.jpg source images exist in images/ (the
- * original page relies entirely on its onerror->initials fallback), so this
- * page uses initials avatars as the primary treatment rather than pointing
- * at photos that would just 404.
+ * The roster lives in the `notableSigmas` content collection rather than in
+ * arrays here, because it is now ~112 people and because `honorary` is a
+ * factual claim about a real woman that HQ must be able to correct without
+ * touching code. See src/content.config.ts for why the schema is strict.
+ *
+ * Portraits: 54 of the entries carry a freely-licensed photograph sourced
+ * from Wikimedia Commons; the rest render an initials monogram. Any entry
+ * with an image also carries `license` and `credit`, enforced by the schema,
+ * because CC BY and CC BY-SA require attribution — rendered in the
+ * Photography credits section at the foot of this page. Portraits are NOT
+ * hotlinked: they are copied into images/notable/, so the site's
+ * `img-src 'self'` policy holds and Commons is not serving our traffic.
  */
 import Base from "../../layouts/Base.astro";
 import Hero from "../../components/Hero.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import { withBase } from "../../lib/url.js";
+import { getCollection } from "astro:content";
 
 const filters = [
   { key: "all", label: "All" },
@@ -20,199 +30,43 @@ const filters = [
   { key: "public", label: "Public Service" },
   { key: "advocacy", label: "Advocacy" },
   { key: "literature", label: "Literature & Journalism" },
+  { key: "medicine", label: "Medicine" },
+  { key: "religion", label: "Religion" },
   { key: "athletics", label: "Athletics" },
 ];
 
-const famousSorors = [
-  {
-    initials: "HM",
-    field: "Arts & Entertainment",
-    cat: "arts",
-    name: "Hattie McDaniel",
-    note: "First African American to win an Academy Award; charter member of Sigma Sigma Chapter in Los Angeles.",
-    chapter: "Sigma Sigma Chapter",
-  },
-  {
-    initials: "AMH",
-    field: "Arts & Entertainment",
-    cat: "arts",
-    name: "Anna Maria Horsford",
-    note: "Veteran actress known for Amen, The Wayans Bros., Friday, Set It Off, and The Bold and the Beautiful.",
-  },
-  {
-    initials: "MR",
-    field: "Arts & Entertainment",
-    cat: "arts",
-    name: "Martha Reeves",
-    note: "Legendary Motown singer and lead vocalist of Martha and the Vandellas.",
-  },
-  {
-    initials: "VR",
-    field: "Arts & Entertainment",
-    cat: "arts",
-    name: "Vickilyn Reynolds",
-    note: "Actress, singer, and stage performer known for Friday and an extensive career in theater.",
-  },
-  {
-    initials: "SB",
-    field: "Advocacy",
-    cat: "advocacy",
-    name: "Sandra Bland",
-    note: "Civil-rights activist whose life and death became central to national conversations about policing, racial justice, and Black women's safety.",
-  },
-  {
-    initials: "DRS",
-    field: "Education & Civic Leadership",
-    cat: "education",
-    name: "Dr. Rosa Slade Gragg",
-    note: "Educator and civil-rights leader who built Detroit's 'Tuskegee of the North' and advised three U.S. presidents.",
-    chapter: "Rho Sigma Alumnae Chapter",
-  },
-  {
-    initials: "SSB",
-    field: "Education",
-    cat: "education",
-    name: "Selena Sloan Butler",
-    note: "Founder of the first Black parent-teacher association and a major force in the national parent-teacher movement.",
-  },
-  {
-    initials: "RWW",
-    field: "Law",
-    cat: "law",
-    name: "Ruth Whitehead Whaley",
-    note: "First Black woman admitted to the North Carolina Bar and a former Legal Advisor to Sigma Gamma Rho.",
-  },
-  {
-    initials: "MTW",
-    field: "Business",
-    cat: "business",
-    name: "Mary T. Washington Wylie",
-    note: "First Black woman in the United States to earn a Certified Public Accountant license.",
-  },
-  {
-    initials: "GC",
-    field: "Public Service",
-    cat: "public",
-    name: "Gwen Cherry",
-    note: "First African American woman elected to the Florida House of Representatives.",
-  },
-  {
-    initials: "MEC",
-    field: "Public Service",
-    cat: "public",
-    name: "Mary Eugenia Charles",
-    note: "First woman to serve as Prime Minister of Dominica.",
-  },
-  {
-    initials: "GDP",
-    field: "Advocacy & Public Service",
-    cat: "advocacy",
-    name: "Georgia Davis Powers",
-    note: "Civil-rights leader and the first Black woman elected to the Kentucky Senate.",
-  },
-  {
-    initials: "AAD",
-    field: "Literature & Journalism",
-    cat: "literature",
-    name: "Alice Allison Dunnigan",
-    note: "First African American woman credentialed to cover the White House.",
-  },
-  {
-    initials: "JCT",
-    field: "Literature & Journalism",
-    cat: "literature",
-    name: "Joyce Carol Thomas",
-    note: "Award-winning children's and young-adult author whose work centered Black life, history, family, and imagination.",
-  },
-  {
-    initials: "MRC",
-    field: "Athletics",
-    cat: "athletics",
-    name: "Maritza “Ritz” Correia",
-    note: "First African American woman to make the U.S. Olympic swim team and win an Olympic medal.",
-  },
-  {
-    initials: "CJ",
-    field: "Athletics",
-    cat: "athletics",
-    name: "Carmelita Jeter",
-    note: "Olympic medalist and world-class sprinter.",
-  },
-  {
-    initials: "RP",
-    field: "Athletics",
-    cat: "athletics",
-    name: "Renee Powell",
-    note: "PGA Hall of Fame golfer and second Black woman to compete on the LPGA Tour.",
-  },
-  {
-    initials: "YMM",
-    field: "Athletics",
-    cat: "athletics",
-    name: "Yolett McPhee-McCuin",
-    note: "Head coach of Ole Miss women's basketball and a national leader in collegiate athletics.",
-  },
-  {
-    initials: "BJ",
-    field: "Literature & Journalism",
-    cat: "literature",
-    name: "Beverly Jenkins",
-    note: "Acclaimed author of historical and contemporary romance novels centered on Black life and history.",
-  },
-  {
-    initials: "TMC",
-    field: "Education & Writing",
-    cat: "education",
-    name: "Tressie McMillan Cottom",
-    note: "Writer, sociologist, professor, and public intellectual.",
-  },
-];
+const roster = (await getCollection("notableSigmas"))
+  .map((e) => e.data)
+  .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 
-const honoraryMembers = [
-  {
-    initials: "ML",
-    field: "Arts & Entertainment",
-    name: "MC Lyte",
-    note: "Pioneering rapper, actress, entrepreneur, and influential figure in hip-hop and entertainment.",
-  },
-  {
-    initials: "FB",
-    field: "Arts & Entertainment",
-    name: "Fantasia Barrino",
-    note: "Grammy-winning singer and actress.",
-  },
-  {
-    initials: "MA",
-    field: "Arts & Entertainment",
-    name: "Marsha Ambrosius",
-    note: "Grammy-nominated singer, songwriter, and producer.",
-  },
-  {
-    initials: "WRR",
-    field: "Arts & Entertainment",
-    name: "Wendy Raquel Robinson",
-    note: "Actress, producer, and co-founder of Amazing Grace Conservatory.",
-  },
-  {
-    initials: "BL",
-    field: "Public Service",
-    name: "Barbara Lee",
-    note: "Former U.S. Representative and elected Mayor of Oakland, California.",
-  },
-  {
-    initials: "SS",
-    field: "Athletics",
-    name: "Sheryl Swoopes",
-    note: "Basketball icon, three-time WNBA MVP, and first player signed by the WNBA.",
-  },
-  {
-    initials: "KR",
-    field: "Business",
-    name: "Kim Roxie",
-    note: "Founder of LAMIK Beauty and breast-cancer advocate.",
-  },
-];
+// The page's organising principle: Sorors who crossed, kept apart from women
+// inducted as honorary members.
+const famousSorors = roster.filter((p) => !p.honorary);
+const honoraryMembers = roster.filter((p) => p.honorary);
 
+/** Monogram fallback for entries that predate the `initials` field. */
+function monogram(name: string) {
+  return name
+    .replace(/[“”’"']/g, "")
+    .split(/\s+/)
+    .filter((w) => /^[A-Za-z]/.test(w) && !/^(of|the|and|de|von)$/i.test(w))
+    .map((w) => w[0].toUpperCase())
+    .slice(0, 3)
+    .join("");
+}
+
+// Public-domain images carry no attribution obligation; Creative Commons ones
+// do. Only the latter are listed, so the credits are a real legal notice
+// rather than a decorative wall of names.
+const credits = roster
+  .filter((p) => p.image && p.license && !/public domain|no restrictions/i.test(p.license))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+/**
+ * Member Spotlight stays hand-curated here rather than moving into the
+ * collection: it is an editorial selection of three, rewritten per rotation,
+ * not a record of who is a member.
+ */
 const spotlight = [
   {
     n: "01",
@@ -249,15 +103,9 @@ const spotlight = [
     accent="navy"
     align="left"
   >
-    <a href="#famous-sorors" class="btn btn--outline on-dark">
-      Famous Sorors
-    </a>
-    <a href="#honorary-members" class="btn btn--outline on-dark">
-      Honorary Members
-    </a>
-    <a href="#member-spotlight" class="btn btn--outline on-dark">
-      Member Spotlight
-    </a>
+    <a href="#famous-sorors" class="btn btn--outline on-dark"> Famous Sorors </a>
+    <a href="#honorary-members" class="btn btn--outline on-dark"> Honorary Members </a>
+    <a href="#member-spotlight" class="btn btn--outline on-dark"> Member Spotlight </a>
   </Hero>
 
   <section class="ns-intro">
@@ -285,32 +133,50 @@ const spotlight = [
         </h2>
         <p>
           Sorors whose work became nationally or internationally visible across culture, public
-          service, education, law, business, journalism, advocacy, and sport.
+          service, education, law, business, journalism, advocacy, medicine, religion, and sport.
+          These are initiated members — women who crossed into Sigma Gamma Rho.
         </p>
+        <p class="ns-count">{famousSorors.length} Sorors</p>
       </div>
 
       <div class="ns-filters" role="group" aria-label="Filter Famous Sorors">
-        {filters.map((f) => (
-          <button
-            class:list={["filter", { "is-active": f.key === "all" }]}
-            type="button"
-            data-filter={f.key}
-          >
-            {f.label}
-          </button>
-        ))}
+        {
+          filters.map((f) => (
+            <button
+              class:list={["filter", { "is-active": f.key === "all" }]}
+              type="button"
+              data-filter={f.key}
+            >
+              {f.label}
+            </button>
+          ))
+        }
       </div>
 
       <div class="ns-mosaic" id="soror-mosaic">
-        {famousSorors.map((s) => (
-          <article class="ns-card" data-category={s.cat}>
-            <span class="ns-avatar">{s.initials}</span>
-            <p class="ns-field">{s.field}</p>
-            <h3>{s.name}</h3>
-            <p class="ns-note">{s.note}</p>
-            {s.chapter && <span class="ns-chapter">{s.chapter}</span>}
-          </article>
-        ))}
+        {
+          famousSorors.map((p) => (
+            <article class="ns-card" data-category={p.cat}>
+              {p.image ? (
+                <img
+                  class="ns-avatar ns-avatar--photo"
+                  src={withBase(p.image)}
+                  alt={p.name}
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="ns-avatar">{p.initials || monogram(p.name)}</span>
+              )}
+              <p class="ns-field">{p.field}</p>
+              <h3>{p.name}</h3>
+              <p class="ns-note">{p.note}</p>
+              {p.chapter && <span class="ns-chapter">{p.chapter}</span>}
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -324,18 +190,34 @@ const spotlight = [
         </h2>
         <p>
           Honorary membership is presented separately from Soror profiles so the distinction remains
-          clear and historically accurate.
+          clear and historically accurate. These women were inducted rather than initiated.
         </p>
+        <p class="ns-count ns-count--light">{honoraryMembers.length} honorary members</p>
       </div>
       <div class="ns-mosaic ns-mosaic--honorary">
-        {honoraryMembers.map((h) => (
-          <article class="ns-card ns-card--dark">
-            <span class="ns-avatar">{h.initials}</span>
-            <p class="ns-field">{h.field}</p>
-            <h3>{h.name}</h3>
-            <p class="ns-note">{h.note}</p>
-          </article>
-        ))}
+        {
+          honoraryMembers.map((p) => (
+            <article class="ns-card ns-card--dark">
+              {p.image ? (
+                <img
+                  class="ns-avatar ns-avatar--photo"
+                  src={withBase(p.image)}
+                  alt={p.name}
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="ns-avatar">{p.initials || monogram(p.name)}</span>
+              )}
+              <p class="ns-field">{p.field}</p>
+              <h3>{p.name}</h3>
+              <p class="ns-note">{p.note}</p>
+              {p.chapter && <span class="ns-chapter ns-chapter--light">{p.chapter}</span>}
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -353,26 +235,52 @@ const spotlight = [
         </p>
       </div>
       <ol class="ns-spotlight">
-        {spotlight.map((s) => (
-          <li>
-            <span class="ns-spotlight__num">{s.n}</span>
-            <span class="ns-avatar">
-              {s.name
-                .split(" ")
-                .map((w) => w[0])
-                .slice(0, 3)
-                .join("")}
-            </span>
-            <div>
-              <p class="ns-field">{s.field}</p>
-              <h3>{s.name}</h3>
-              <p>{s.note}</p>
-            </div>
-          </li>
-        ))}
+        {
+          spotlight.map((s) => (
+            <li>
+              <span class="ns-spotlight__num">{s.n}</span>
+              <span class="ns-avatar">{monogram(s.name)}</span>
+              <div>
+                <p class="ns-field">{s.field}</p>
+                <h3>{s.name}</h3>
+                <p>{s.note}</p>
+              </div>
+            </li>
+          ))
+        }
       </ol>
     </div>
   </section>
+
+  {
+    credits.length > 0 && (
+      <section class="ns-section ns-credits" id="photography-credits">
+        <div class="container">
+          <h2 class="ns-credits__title">Photography credits</h2>
+          <p class="ns-credits__intro">
+            Portraits are reproduced under Creative Commons licences, which require attribution.
+            Photographs not listed here are in the public domain. Where no freely licensed
+            photograph exists, a monogram is shown rather than an unlicensed image.
+          </p>
+          <ul class="ns-credits__list">
+            {credits.map((p) => (
+              <li>
+                <strong>{p.name}</strong> — {p.credit},{" "}
+                {p.licenseUrl ? (
+                  <a href={p.licenseUrl} rel="license noopener" target="_blank">
+                    {p.license}
+                  </a>
+                ) : (
+                  p.license
+                )}
+                , via Wikimedia Commons
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
 
   <CtaBand
     eyebrow="Greater Service, Greater Progress"
@@ -443,6 +351,19 @@ const spotlight = [
   .eyebrow--light {
     color: var(--gold-bright);
   }
+  /* Roster size, stated plainly. A page that claims to be a record should say
+     how large the record is. */
+  .ns-count {
+    font-family: var(--font-label);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--royal);
+    margin-top: var(--space-4);
+  }
+  .ns-count--light {
+    color: var(--gold-bright);
+  }
 
   .ns-filters {
     display: flex;
@@ -492,9 +413,11 @@ const spotlight = [
   .ns-card--dark {
     background: rgba(255, 255, 255, 0.08);
   }
+  /* 64px, not 48px: at 48 a cropped portrait reads as a smudge. Monograms and
+     photographs must be the same size or the grid loses its baseline. */
   .ns-avatar {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -503,10 +426,20 @@ const spotlight = [
     font-family: var(--font-label);
     font-size: var(--text-sm);
     margin-bottom: var(--space-2);
+    flex: none;
+  }
+  .ns-avatar--photo {
+    object-fit: cover;
+    /* Faces sit high in a portrait, so bias the crop upward. */
+    object-position: 50% 20%;
+    background: var(--tint);
   }
   .ns-card--dark .ns-avatar {
     background: var(--gold);
     color: var(--navy);
+  }
+  .ns-card--dark .ns-avatar--photo {
+    background: rgba(255, 255, 255, 0.12);
   }
   .ns-field {
     font-size: var(--text-xs);
@@ -540,6 +473,9 @@ const spotlight = [
     color: var(--royal);
     font-weight: 700;
   }
+  .ns-chapter--light {
+    color: var(--gold-bright);
+  }
 
   .ns-spotlight {
     list-style: none;
@@ -550,7 +486,7 @@ const spotlight = [
   }
   .ns-spotlight li {
     display: grid;
-    grid-template-columns: 40px 56px 1fr;
+    grid-template-columns: 40px 64px 1fr;
     gap: var(--space-5);
     align-items: center;
     padding: var(--space-6);
@@ -575,6 +511,38 @@ const spotlight = [
       grid-template-columns: 1fr;
       text-align: center;
     }
+    .ns-spotlight .ns-avatar {
+      margin-inline: auto;
+    }
+  }
+
+  /* Attribution is a licence condition, so it is legible body copy on the
+     page, not a hidden comment or a tooltip. */
+  .ns-credits {
+    border-top: 1px solid var(--line);
+    background: var(--tint);
+  }
+  .ns-credits__title {
+    font-size: var(--text-h3);
+    margin: 0;
+  }
+  .ns-credits__intro {
+    color: var(--muted);
+    max-width: 46rem;
+    margin: var(--space-4) 0 var(--space-6);
+  }
+  .ns-credits__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+    gap: var(--space-3) var(--space-8);
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .ns-credits__list strong {
+    color: var(--ink);
   }
 </style>
 
