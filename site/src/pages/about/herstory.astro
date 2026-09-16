@@ -12,7 +12,16 @@ import Button from "../../components/Button.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
-const facts = [
+/** `link.external` decides the arrow: ↗ leaves the site, → stays on it. */
+type Fact = {
+  n: string;
+  label: string;
+  title: string;
+  body: string;
+  link?: { label: string; href: string; external: boolean; srSuffix?: string };
+};
+
+const facts: Fact[] = [
   { n: "01", label: "Founded", title: "November 12, 1922", body: "Indianapolis, Indiana" },
   {
     n: "02",
@@ -42,31 +51,41 @@ const facts = [
     n: "06",
     label: "Official Colors",
     title: "Royal Blue & Gold",
-    body: "Colors carried across generations of the sisterhood.",
+    body: "Reflecting a glorious wealth of values, truth, and purity. An enduring hallmark of regal character and unwavering commitment to sisterhood.",
   },
   {
     n: "07",
     label: "Official Flower",
     title: "Yellow Tea Rose",
-    body: "A longstanding symbol within the Sorority's visual identity.",
+    body: "Symbolic of beauty, resilience, and radiance. Delicate yet enduring through life’s trials, it mirrors the Sigma woman’s lasting fragrance of charm, dignity, and concern.",
   },
   {
     n: "08",
     label: "Headquarters",
     title: "Cary, North Carolina",
     body: "Home of the International Corporate Headquarters.",
+    link: { label: "Visit International HQ", href: "/about/headquarters/", external: false },
   },
   {
     n: "09",
     label: "Official Mascot",
     title: "The Poodle",
-    body: "A symbol of elegance, intelligence, and resilience within the sisterhood.",
+    body: "Introduced by 8th Southwestern Region Syntaktes Quindonell S. Robertson. Selected for its sophisticated bearing, beauty, and keen intellect, standing as an enduring symbol of poise and grace.",
   },
   {
     n: "10",
     label: "Official Publication",
     title: "The Aurora",
-    body: "Established in 1930 to document national achievements, voice, and chapter progress.",
+    // 1927, not 1930: The Aurora's own Issuu profile and the PALNI Butler
+    // centennial archive both date its launch to 1927 (first editor-in-chief
+    // Gertrude Murchison).
+    body: "Established in 1927 to document national achievements, voice, and chapter progress.",
+    link: {
+      label: "Read Latest Issue",
+      href: "https://issuu.com/sgrho.theauroramagazine",
+      external: true,
+      srSuffix: " of The Aurora on Issuu (opens in a new tab)",
+    },
   },
 ];
 
@@ -379,10 +398,27 @@ const regions = [
             <span class="hs-fact-number">{f.n}</span>
             <p class="hs-fact-label">{f.label}</p>
             <h3>{f.title}</h3>
-            <p>{f.body}</p>
+            <p class="hs-fact-body">{f.body}</p>
+            {f.link && (
+              <a
+                class="hs-fact-link"
+                href={f.link.external ? f.link.href : withBase(f.link.href)}
+                target={f.link.external ? "_blank" : undefined}
+                rel={f.link.external ? "noopener" : undefined}
+              >
+                {f.link.label}
+                {f.link.srSuffix && <span class="visually-hidden">{f.link.srSuffix}</span>}
+                <span aria-hidden="true">{f.link.external ? " ↗" : " →"}</span>
+              </a>
+            )}
           </article>
         ))}
       </div>
+      <p class="hs-facts-utility">
+        <a href={withBase("/membership/chapter-locator/")}>
+          Locate Your Region &amp; Chapters <span aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
     </div>
   </section>
 
@@ -815,6 +851,10 @@ const regions = [
     border-bottom: 1px solid var(--line);
     background: #fff;
     min-height: 190px;
+    /* Column flow so a card's link row sits on the card's bottom edge, level
+       with its neighbours' link rows. */
+    display: flex;
+    flex-direction: column;
   }
   .hs-fact-number {
     position: absolute;
@@ -838,11 +878,45 @@ const regions = [
     font-size: 1.1rem;
     line-height: 1.35;
   }
-  .hs-fact-card > p:last-child {
+  .hs-fact-body {
     margin: var(--space-3) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.65;
+  }
+  .hs-fact-link {
+    align-self: flex-start;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    padding-bottom: 2px;
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .hs-fact-link:hover {
+    color: var(--gold-text);
+    border-bottom-color: currentColor;
+  }
+  /* The one utility action for this section: most visitors arrive looking for
+     their own region. */
+  .hs-facts-utility {
+    margin: var(--space-8) 0 0;
+    text-align: center;
+  }
+  .hs-facts-utility a {
+    display: inline-block;
+    padding-block: var(--space-2);
+    color: var(--royal);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 6px;
+  }
+  .hs-facts-utility a:hover {
+    color: var(--gold-text);
   }
   @media (max-width: 1080px) {
     .hs-facts-grid {
