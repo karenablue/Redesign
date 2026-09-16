@@ -16,7 +16,8 @@ import { withBase } from "../../lib/url.js";
 type Fact = {
   label: string;
   title: string;
-  body: string;
+  /** Optional: some facts are complete in their title alone. */
+  body?: string;
   link?: { label: string; href: string; external: boolean; srSuffix?: string };
 };
 
@@ -52,12 +53,7 @@ const facts: Fact[] = [
     title: "Yellow Tea Rose",
     body: "Symbolic of beauty, resilience, and radiance. Delicate yet enduring through life’s trials, it mirrors the Sigma woman’s lasting fragrance of charm, dignity, and concern.",
   },
-  {
-    label: "Headquarters",
-    title: "Cary, North Carolina",
-    body: "Home of the International Corporate Headquarters, previously located in Chicago, Illinois.",
-    link: { label: "Visit International HQ", href: "/about/headquarters/", external: false },
-  },
+  { label: "Sorority Call", title: "EE-yip!" },
   {
     label: "Official Mascot",
     title: "The Poodle",
@@ -371,7 +367,7 @@ const regions = [
           <article class="hs-fact-card">
             <p class="hs-fact-label">{f.label}</p>
             <h3>{f.title}</h3>
-            <p class="hs-fact-body">{f.body}</p>
+            {f.body && <p class="hs-fact-body">{f.body}</p>}
             {f.link && (
               <a
                 class="hs-fact-link"
@@ -424,8 +420,9 @@ const regions = [
         <p>
           It is the mission of Sigma Gamma Rho Sorority, Inc. to enhance the quality of life for
           women and their families in the U.S. and globally through community service, civil, and
-          social action — achieving greater progress in education, health awareness, and leadership
-          development.
+          social action. Our goal is to achieve greater progress in the areas of education, health
+          awareness, and leadership development. Our members, affiliates, staff, and community
+          partners work to create and support initiatives that align with our vision.
         </p>
       </article>
       <div class="hs-mv__divider"></div>
