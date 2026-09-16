@@ -26,11 +26,6 @@ const socialPaths: Record<string, string> = {
 ---
 
 <footer class="site-footer on-dark">
-  <div class="site-footer__curve" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 60C240 20 480 0 720 0C960 0 1200 20 1440 60V0H0V60Z" fill="#ffffff" />
-    </svg>
-  </div>
   <div class="container site-footer__top">
     <div class="site-footer__brand">
       <a href={withBase("/")} class="site-footer__logo" aria-label="Sigma Gamma Rho home">
@@ -113,19 +108,6 @@ const socialPaths: Record<string, string> = {
     color: rgba(255, 255, 255, 0.82);
     background: linear-gradient(135deg, var(--deep-blue) 0%, var(--royal) 100%);
   }
-  .site-footer__curve {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    line-height: 0;
-  }
-  .site-footer__curve svg {
-    width: 100%;
-    height: clamp(32px, 4vw, 60px);
-    display: block;
-  }
-
   .site-footer__top {
     display: grid;
     grid-template-columns: 1.3fr repeat(4, 1fr);
@@ -136,7 +118,9 @@ const socialPaths: Record<string, string> = {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-4);
+    /* Clear space under the Shield (FY2027: no crowding) — a third of its
+       72px height. */
+    gap: var(--space-6);
     text-decoration: none;
     color: var(--white);
   }

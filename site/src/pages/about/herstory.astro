@@ -297,8 +297,8 @@ const regions = [
   description="Explore the history, milestones, regional development, and enduring legacy of Sigma Gamma Rho Sorority, Incorporated."
 >
   <!-- HERO -->
-  {/* on-dark: this hero's ground is navy, so global.css needs to know to use
-      full-chroma gold for the eyebrow rather than the dark type-safe gold. */}
+  {/* on-dark: this hero's ground is navy, so the accent tokens resolve to
+      brand gold here (global.css). */}
   <section class="hs-hero on-dark">
     <div class="hs-hero__image"></div>
     <div class="hs-hero__overlay"></div>
@@ -307,14 +307,10 @@ const regions = [
       <h1 class="hs-hero__title">
         Her<span>story</span>
       </h1>
-      <div class="gold-rule"></div>
       <p class="hs-hero__copy">
         Seven educators in Indianapolis. Over a century of scholarship, civic action, and unbroken
         sisterhood.
       </p>
-    </div>
-    <div class="hs-hero__date" aria-hidden="true">
-      1922
     </div>
   </section>
 
@@ -601,12 +597,6 @@ const regions = [
     width: min(1180px, calc(100% - 48px));
     margin-inline: auto;
   }
-  .gold-rule {
-    width: 84px;
-    height: 2px;
-    margin: 34px 0 24px;
-    background: var(--gold);
-  }
   .eyebrow--rule {
     position: relative;
   }
@@ -671,21 +661,12 @@ const regions = [
   }
   .hs-hero__copy {
     max-width: 42rem;
-    margin: 0;
+    /* the spacing the removed gold rule used to provide */
+    margin: var(--space-8) 0 0;
     color: rgba(255, 255, 255, 0.88);
     font-size: var(--text-md);
     line-height: 1.75;
     font-weight: 400;
-  }
-  .hs-hero__date {
-    position: absolute;
-    left: 0;
-    bottom: -2.5rem;
-    z-index: 1;
-    color: rgba(255, 255, 255, 0.035);
-    font-family: var(--font-label);
-    font-size: clamp(6rem, 14vw, 13rem);
-    letter-spacing: -0.05em;
   }
 
   /* ---- shared heading pattern ---- */
