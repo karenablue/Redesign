@@ -1134,12 +1134,26 @@ const regions = [
     font-size: var(--text-lg);
     line-height: 1.55;
   }
-  .hs-motto {
-    color: var(--gold-text) !important;
-    font-size: var(--text-xs) !important;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  /* The One Signature Rule (DESIGN.md): Pinyon Script, once per page, on the
+     page's highest-emotion phrase. This is that one use on this site — the
+     registered motto closing the legacy section.
+
+     It was previously an 11px uppercase tracked label, which is the exact
+     treatment AGENTS.md §6 forbids for this face ("never uppercased or
+     letter-spaced"). So the rule is rebuilt rather than reskinned: no
+     uppercase, no tracking, and sized well past the 30px floor because
+     Pinyon's x-height is tiny. The two !important flags are gone with it —
+     they were fighting `.hs-legacy__copy > p`, which this now outranks on
+     specificity alone. */
+  .hs-legacy__copy .hs-motto {
+    margin-top: var(--space-6);
+    font-family: var(--font-kicker);
+    font-size: clamp(2.25rem, 1.6rem + 2vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--gold-text);
   }
   .hs-button-row {
     display: flex;

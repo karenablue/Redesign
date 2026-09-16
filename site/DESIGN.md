@@ -250,7 +250,10 @@ visually-hidden h2 instead.
 
 **The One Signature Rule.** Pinyon Script appears at most once per page, at
 30px or larger, on a high-emotion phrase. It is never an eyebrow, a label, or
-body copy.
+body copy. In practice it appears **once on the whole site**: the registered
+"Greater Service, Greater Progress." line closing *Herstory*'s legacy section.
+Once is the ceiling, not a target — a page with no phrase that earns it gets
+none, which is most pages.
 
 **The Four Faces Rule.** Four families is the ceiling, and it is already
 reached. Any fifth face is a regression.

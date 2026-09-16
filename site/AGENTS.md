@@ -134,6 +134,17 @@ for a band that is genuinely one-of-a-kind.
   the eyebrow on every section. One use per page, sized ≥30px (its
   x-height is tiny), never uppercased or letter-spaced. Functional
   eyebrows are Montserrat bold caps.
+  - **Where it actually lives (Sept 2026):** exactly one place —
+    `.hs-legacy__copy .hs-motto` on `about/herstory.astro`, the registered
+    "Greater Service, Greater Progress." line closing the legacy section.
+    Before this it was loaded on all 28 pages and rendered **zero glyphs**,
+    so every visitor downloaded a face that drew nothing. If you remove that
+    one use, drop Pinyon from the Google Fonts link in `Base.astro` too.
+  - **"At most once per page" is a ceiling, not a quota.** Do not go looking
+    for a slot on other pages. The homepage has none that qualify: its motto
+    is a `CtaBand` eyebrow, `.act-women__sign` is an attribution label — both
+    banned above — and the Grand Basileus pull quote is body-length copy
+    already carrying Playfair italic, where Pinyon is illegible.
 - `--font-head` and `--font-label` remain aliases of the LEMON MILK stack
   for now; don't repoint them without a human's sign-off.
 - LEMON MILK is self-hosted (`@font-face` in `global.css`, files in
