@@ -38,6 +38,33 @@
         ],
         "createdAt": "2026-09-15T21:11:01.650Z",
         "reason": "Decorative watermark numeral at rgba(255,255,255,0.04) behind the section, same device as Hero's .hero__watermark. It is a faint graphic, not type on the hierarchy, so the type ramp does not apply."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          "src/pages/about/herstory.astro"
+        ],
+        "createdAt": "2026-09-16T16:07:31.306Z",
+        "reason": "herstory.astro is bespoke by design: its file header records that it recreates the original about/herstory/herstory.css exactly, rather than composing from shared primitives. Its one-off sizes, greys and radii are that recreation, not drift, and tokenising them would change a page deliberately matched to the prior design."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          "src/pages/about/herstory.astro"
+        ],
+        "createdAt": "2026-09-16T16:07:31.491Z",
+        "reason": "herstory.astro is bespoke by design: its file header records that it recreates the original about/herstory/herstory.css exactly, rather than composing from shared primitives. Its one-off sizes, greys and radii are that recreation, not drift, and tokenising them would change a page deliberately matched to the prior design."
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          "src/pages/about/herstory.astro"
+        ],
+        "createdAt": "2026-09-16T16:07:31.688Z",
+        "reason": "herstory.astro is bespoke by design: its file header records that it recreates the original about/herstory/herstory.css exactly, rather than composing from shared primitives. Its one-off sizes, greys and radii are that recreation, not drift, and tokenising them would change a page deliberately matched to the prior design."
       }
     ]
   }

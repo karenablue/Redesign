@@ -1,0 +1,87 @@
+# Sveltia CMS — the editing UI HQ staff use after handover.
+#
+# Sveltia is Decap-compatible, ships as a single script (no build step), and
+# edits the markdown files in site/src/content/ directly. Saving commits to
+# the repository, which triggers a Cloudflare Pages build, so an edit is live
+# in a minute or two without anyone touching git or a terminal.
+#
+# BEFORE THIS WORKS, two things must exist that only the account owner can
+# create (see the handover notes in PRODUCT.md):
+#   1. This repository on GitHub, under an SGRho organisation.
+#   2. A GitHub OAuth app, so editors can sign in. Sveltia can use a hosted
+#      auth relay, or a Cloudflare Worker in the same account.
+# Until then this page loads and shows the collections but cannot save.
+
+backend:
+  name: github
+  repo: OWNER/REPO # replace with the SGRho org + repository
+  branch: main
+
+# Editors get a preview link rather than an embedded preview pane, because the
+# real pages are Astro-rendered and cannot be reproduced faithfully in an
+# iframe preview.
+site_url: https://www.sgrho1922.org
+display_url: https://www.sgrho1922.org
+
+# Uploads land in the published images folder and are referenced by the same
+# /images/... paths the pages already use.
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: events
+    label: Events
+    label_singular: Event
+    folder: site/src/content/events
+    create: true
+    slug: "{{slug}}"
+    description: >-
+      Upcoming events, newest first on the page by the Order field. Dates are
+      free text on purpose so entries like "Sep–Oct" or a dash for month-long
+      activations still work.
+    sortable_fields: [order, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: month, label: Month, widget: string, hint: 'e.g. "Sep" or "Sep–Oct"' }
+      - { name: day, label: Day, widget: string, hint: 'e.g. "12", "15–19", or "—" for all month' }
+      - { name: tag, label: Category, widget: string, hint: "e.g. Signature, Regional, Advocacy, Wellness" }
+      - { name: location, label: Location, widget: string, hint: 'City, State — or "Virtual"' }
+      - { name: order, label: Order on page, widget: number, value_type: int, min: 1 }
+      - { name: body, label: Description, widget: markdown }
+
+  - name: news
+    label: Latest News
+    label_singular: News item
+    folder: site/src/content/news
+    create: true
+    slug: "{{slug}}"
+    description: >-
+      News cards. Leave Link empty and the card renders as plain content
+      instead of a clickable card.
+    sortable_fields: [order, title]
+    fields:
+      - { name: title, label: Headline, widget: string }
+      - { name: tag, label: Category, widget: string }
+      - { name: image, label: Image, widget: image }
+      - { name: href, label: Link, widget: string, required: false, hint: "A full https:// URL, or a site path like /service-impact/national-programs/" }
+      - { name: external, label: Opens in a new tab, widget: boolean, required: false, default: false }
+      - { name: order, label: Order on page, widget: number, value_type: int, min: 1 }
+      - { name: body, label: Summary, widget: markdown }
+
+  - name: board
+    label: International Board
+    label_singular: Officer
+    folder: site/src/content/board
+    create: true
+    slug: "{{order}}-{{slug}}"
+    description: >-
+      The International Board of Directors, in the order shown on the page.
+      Update after each Boulé.
+    sortable_fields: [order, name]
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: role, label: Office, widget: string }
+      - { name: image, label: Photo, widget: image }
+      - { name: note, label: Additional note, widget: string, required: false }
+      - { name: featured, label: Featured, widget: boolean, required: false, default: false }
+      - { name: order, label: Order on page, widget: number, value_type: int, min: 1 }

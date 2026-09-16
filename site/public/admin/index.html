@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Content Editor — Sigma Gamma Rho</title>
+    <style>
+      /* Shown only if the editor script fails to load — otherwise Sveltia
+         replaces the body. Kept deliberately plain: this is a utility page. */
+      body {
+        margin: 0;
+        font-family: Montserrat, system-ui, Arial, sans-serif;
+        color: #333;
+        background: #fffbf0;
+      }
+      .fallback {
+        max-width: 34rem;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+        line-height: 1.7;
+      }
+      .fallback h1 {
+        font-size: 1.5rem;
+        color: #2041a5;
+      }
+      .fallback code {
+        background: #f4f6fb;
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fallback" id="fallback">
+      <h1>Content editor</h1>
+      <p>
+        The editor could not start. That is expected until two one-time setup steps are done, both
+        of which need the account owner:
+      </p>
+      <ol>
+        <li>This site's repository exists on GitHub under the Sigma Gamma Rho organisation.</li>
+        <li>
+          A GitHub OAuth app exists so editors can sign in, and <code>public/admin/config.yml</code>
+          has its <code>repo:</code> line filled in.
+        </li>
+      </ol>
+      <p>
+        Until then, content can still be edited directly as text files in
+        <code>site/src/content/</code>.
+      </p>
+    </div>
+
+    <!--
+      Sveltia CMS. Chosen over Decap because it needs no build step, reads the
+      same config format, and has a far better editing experience on a phone —
+      which matters when the people maintaining this are volunteers.
+
+      The version is major-pinned here; pin it to an exact version before
+      launch so an upstream release cannot change the editor under HQ.
+
+      Note: the site's Content-Security-Policy restricts script-src to 'self',
+      so public/_headers carries an /admin/* block that admits this one CDN.
+      Without that block this script is silently refused.
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@sveltia/cms@0/dist/sveltia-cms.js"></script>
+    <script>
+      // If the editor mounted, drop the fallback copy.
+      window.addEventListener("load", () => {
+        const fb = document.getElementById("fallback");
+        if (fb && document.querySelector("#nc-root, #app, [data-sveltia]")) fb.remove();
+      });
+    </script>
+  </body>
+</html>
