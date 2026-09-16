@@ -530,7 +530,11 @@ const regions = [
           <article class="hs-region-card">
             <div class="hs-region-top">
               <div>
-                <p class="hs-region-eyebrow">{r.meta}</p>
+                <p class="hs-region-eyebrow">
+                  {r.meta.split(" • ").map((line) => (
+                    <span>{line}</span>
+                  ))}
+                </p>
                 <h3>{r.name}</h3>
               </div>
             </div>
@@ -1242,13 +1246,22 @@ const regions = [
     justify-content: space-between;
     gap: var(--space-3);
   }
+  /* Two date lines ("Established …" / "Organized …"), broken at the bullet
+     rather than wherever the column runs out. The reserved two-line height
+     keeps every region name on the same baseline, including Northeastern,
+     which has a single date. */
   .hs-region-eyebrow {
+    min-height: 3.2em;
+    line-height: 1.6;
     margin: 0 0 var(--space-1);
     color: var(--gold-text);
     font-size: 0.55rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+  .hs-region-eyebrow span {
+    display: block;
   }
   .hs-region-card h3 {
     margin: 0;
