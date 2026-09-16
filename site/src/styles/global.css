@@ -269,7 +269,9 @@ strong {
   /* Montserrat, not the display face: LEMON MILK's ® is wide enough to push
      trailing punctuation visibly away at hero sizes. */
   font-family: var(--font-body);
-  font-weight: 400;
+  /* Match the surrounding weight: a 400-weight ® beside bold 11px caps is so
+     thin it reads as a smudge rather than a mark. */
+  font-weight: inherit;
   font-size: max(0.4em, 9px);
   line-height: 0;
   vertical-align: super;
