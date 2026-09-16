@@ -65,15 +65,30 @@ one a peer organization cannot truthfully copy.
   and leadership, which are the pages that go stale.
 - **Static output is acceptable**, and combined with the requirement above it
   means a static build fed by a CMS rather than a developer-edited static site.
-- **Content source: headless WordPress.** HQ already runs WordPress, so this
-  keeps staff in the editor they know rather than retraining them. Verified
-  from the live site on 2026-09-15: `sgrho1922.org` serves WordPress on PHP
-  8.4.25 behind Cloudflare, from a Plesk-managed Linux origin (a general
-  VPS or reseller account, not managed WordPress hosting), with email on
-  Microsoft 365 and a custom theme at `wp-content/themes/sigma-gamma-rho`.
-  `https://www.sgrho1922.org/wp-json/` answers `200` with JSON, so the REST
-  API is reachable and Astro can read content at build time.
-  *Only HQ can confirm who holds the hosting account and who may change it.*
+- **Delivery model: build and hand over.** Confirmed by the client — this is
+  not a retained engagement, so HQ must be able to operate the site with no
+  developer on call. Every account (GitHub organisation, Cloudflare, domain
+  registrar, CMS) should be created in SGRho's name with Karena added as an
+  admin, never under personal accounts, or the handover becomes a migration
+  and she stays a single point of failure.
+- **Content source: markdown in this repository**, exposed through Astro
+  content collections (`src/content.config.ts`). Events are migrated;
+  news and leadership are the remaining candidates. Content is therefore
+  plain text that survives any CMS being abandoned, and the choice of editor
+  is deliberately deferred: Decap, Sveltia and Tina all edit these same
+  files. **Open decision: which CMS UI**, weighted toward one with email
+  logins so staff never touch git (Tina Cloud does this; Decap's old
+  no-account path depended on Netlify Identity and is no longer viable).
+- **Headless WordPress was considered and dropped.** Verified from the live
+  site on 2026-09-15: `sgrho1922.org` serves WordPress on PHP 8.4.25 behind
+  Cloudflare, from a Plesk-managed Linux origin (a general VPS or reseller
+  account, not managed WordPress hosting), with email on Microsoft 365 and a
+  custom theme at `wp-content/themes/sigma-gamma-rho`. `/wp-json/` answers
+  `200` with JSON, so the REST API is reachable. But it holds **1 published
+  post, 30 pages, and no custom post types** — the structure lives in theme
+  templates, not in queryable fields. So it offers almost no structured
+  content to preserve, while costing two systems and two bills to maintain
+  forever. *Only HQ can confirm who holds the hosting account.*
 - **Deploy target: Cloudflare Pages.** HQ's DNS is already on Cloudflare
   (`sara`/`noah.ns.cloudflare.com`), so this needs no nameserver change, and
   security headers ship in-repo as `public/_headers`. Note the live site
