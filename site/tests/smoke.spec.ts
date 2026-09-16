@@ -57,6 +57,11 @@ test("a bad URL gets the custom 404, not a blank page", async ({ page }) => {
 });
 
 test("no internal link 404s, and every #anchor resolves", async ({ page }) => {
+  // One test crawls every route with `networkidle`. That normally takes
+  // 16–22s, and the default 30s budget failed twice under full-suite load
+  // (Sept 2026) with no broken link involved. The budget is raised; the
+  // assertions are unchanged.
+  test.setTimeout(90_000);
   const checked = new Map<string, number>();
   const brokenAnchors: string[] = [];
 
