@@ -50,10 +50,6 @@ typography:
     fontSize: "clamp(1.5rem, 1.2rem + 1.4vw, 2rem)"
     fontWeight: 400
     lineHeight: 1.35
-  accent:
-    fontFamily: "Pinyon Script, Snell Roundhand, Segoe Script, cursive"
-    fontSize: "2rem"
-    fontWeight: 400
 rounded:
   sm: "8px"
   lg: "16px"
@@ -219,13 +215,12 @@ only. Never use it in general design.
 **Display Font:** LEMON MILK (fallback Oswald, Arial Narrow) — self-hosted
 **Body Font:** Montserrat (fallback system-ui, Arial)
 **Editorial Font:** Playfair Display (fallback Georgia)
-**Accent Font:** Pinyon Script (fallback Snell Roundhand) — rationed
 
 **Character:** LEMON MILK is a narrow, single-weight, all-caps display face —
 it has authority but shouts if overused, so it is confined to h1/h2 and
 numerals. Montserrat does all the work a reader actually spends time in.
 Playfair supplies an editorial register for multi-word headlines and pull
-quotes. Pinyon is a signature, not a tool.
+quotes. There is no script face.
 
 ### Hierarchy
 
@@ -241,7 +236,6 @@ quotes. Pinyon is a signature, not a tool.
   small caps labels.
 - **Editorial** (Playfair Display 400, italic where quoted): multi-word
   storytelling headlines and pull quotes.
-- **Accent** (Pinyon Script, ≥30px): at most one phrase per page.
 
 ### Named Rules
 
@@ -251,15 +245,12 @@ because LEMON MILK everywhere reads as shouting. Promoting a card title to h2
 for outline reasons would silently change its typeface; add a
 visually-hidden h2 instead.
 
-**The One Signature Rule.** Pinyon Script appears at most once per page, at
-30px or larger, on a high-emotion phrase. It is never an eyebrow, a label, or
-body copy. In practice it appears **once on the whole site**: the registered
-"Greater Service, Greater Progress." line closing *Herstory*'s legacy section.
-Once is the ceiling, not a target — a page with no phrase that earns it gets
-none, which is most pages.
+**The No Script Rule.** No script or decorative face, anywhere. The FY2027
+guidelines list decorative fonts as unacceptable; Pinyon Script, once used for
+the Herstory motto, was retired in Sept 2026 and is no longer loaded.
 
-**The Four Faces Rule.** Four families is the ceiling, and it is already
-reached. Any fifth face is a regression.
+**The Three Faces Rule.** LEMON MILK, Montserrat and Playfair Display are the
+ceiling. Any further face is a regression.
 
 ## Layout
 

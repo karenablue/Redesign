@@ -1,18 +1,18 @@
 /* ==========================================================================
    SGRho design tokens.
 
-   TYPE — four roles (see AGENTS.md §6). Extended beyond the FY2027 PDF's
+   TYPE — three roles (see AGENTS.md §6). Extended beyond the FY2027 PDF's
    two families by an explicit design decision for this rebuild, being
    rolled out homepage-first:
      LEMON MILK        → display headers: short section titles, stat numerals
      Playfair Display  → editorial voice: multi-word headlines, pull quotes,
                          storytelling subtitles (italic where quoted)
-     Pinyon Script     → RESERVED accent — one signature / high-emotion phrase
-                         per page, sized ≥30px. NOT eyebrows or labels.
      Montserrat        → body & UI: paragraphs, buttons, forms, nav, and
                          eyebrows (bold, uppercase, 11px, 0.15em tracked)
-   LEMON MILK is self-hosted (Oswald fallback); the other three load from
-   Google Fonts in Base.astro.
+   LEMON MILK is self-hosted (Oswald fallback); the other two load from
+   Google Fonts in Base.astro. Pinyon Script (a decorative script) was
+   retired in Sept 2026: the guidelines list decorative fonts as
+   unacceptable.
    ========================================================================== */
 
 :root {
@@ -49,7 +49,6 @@
   --font-label: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-display: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-editorial: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-kicker: "Pinyon Script", "Snell Roundhand", "Segoe Script", cursive;
 
   /* px-ish scale matching the Make source */
   --text-xs: 0.6875rem; /* 11px  meta                */

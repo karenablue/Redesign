@@ -563,7 +563,7 @@ const regions = [
   <section class="hs-legacy">
     <figure class="hs-legacy__image">
       <img
-        src={withBase("/images/Sigma Gamma Rho 75th Anniversary Stained Glass Window.jpg")}
+        src={withBase("/images/sgr-75th-stained-glass-cropped.jpg")}
         alt="Sigma Gamma Rho commemorative stained glass"
       />
     </figure>
@@ -581,9 +581,9 @@ const regions = [
         <Button href="/service-impact/national-programs/">
           Explore National Programs <span aria-hidden="true">&rarr;</span>
         </Button>
-        <a class="hs-text-button" href={withBase("/service-impact/partner-foundations/#nef")}>
+        <Button href="/service-impact/partner-foundations/#nef" variant="outline">
           Support the Legacy <span aria-hidden="true">&rarr;</span>
-        </a>
+        </Button>
       </div>
     </div>
   </section>
@@ -1359,6 +1359,7 @@ const regions = [
     min-height: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: center;
     background: var(--cream);
   }
   /* The window depicts the coat of arms, and the FY2027 guidelines forbid a
@@ -1370,15 +1371,18 @@ const regions = [
     display: grid;
     place-items: center;
   }
+  /* Tight-cropped asset (no white matte), sized to its own proportions so
+     the frame sits directly on the cream band with no letterbox around it. */
   .hs-legacy__image img {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
     max-height: 620px;
     display: block;
-    object-fit: contain;
+    background: transparent;
   }
   .hs-legacy__copy {
-    padding: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 7vw, 6.9rem);
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4.5vw, 4.5rem);
     align-self: center;
   }
   .hs-legacy__copy h2 {
@@ -1388,12 +1392,10 @@ const regions = [
     font-weight: 400;
     font-size: clamp(1.75rem, 3.4vw, 2.6rem);
   }
+  /* No underline here (Karena): it crowded the descenders of this heading. */
   .hs-legacy__copy h2 span {
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+    text-decoration: none;
   }
   /* Body paragraphs only: this used to catch the eyebrow too, turning
      "A Living Legacy" grey and body-sized. */
@@ -1402,26 +1404,26 @@ const regions = [
     font-size: var(--text-base);
     line-height: 1.9;
   }
-  /* The One Signature Rule (DESIGN.md): Pinyon Script, once per page, on the
-     page's highest-emotion phrase. This is that one use on this site — the
-     registered motto closing the legacy section.
-
-     It was previously an 11px uppercase tracked label, which is the exact
-     treatment AGENTS.md §6 forbids for this face ("never uppercased or
-     letter-spaced"). So the rule is rebuilt rather than reskinned: no
-     uppercase, no tracking, and sized well past the 30px floor because
-     Pinyon's x-height is tiny. The two !important flags are gone with it —
-     they were fighting `.hs-legacy__copy > p`, which this now outranks on
-     specificity alone. */
+  /* The motto in the brand's display face. It was Pinyon Script, but the
+     FY2027 guidelines list decorative fonts as unacceptable (Karena, Sept
+     2026), so the one script use on the site is retired. */
   .hs-legacy__copy .hs-motto {
     margin: var(--space-2) 0 var(--space-4);
-    font-family: var(--font-kicker);
-    font-size: clamp(2.25rem, 1.6rem + 2vw, 3rem);
+    font-family: var(--font-head);
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.6rem);
     font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: normal;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
     text-transform: none;
     color: var(--accent-text);
+  }
+  /* The two actions as a matched pair: less rounded than the site's pills,
+     primary gold with navy text (8.9:1; royal on gold is only 4.44:1),
+     secondary outlined. */
+  .hs-legacy :global(.btn) {
+    border-radius: var(--radius);
+    /* narrower than the site default so the pair fits side by side */
+    padding-inline: 1.3em;
   }
   .hs-button-row {
     display: flex;
@@ -1429,19 +1431,6 @@ const regions = [
     flex-wrap: wrap;
     gap: var(--space-5);
     margin-top: var(--space-5);
-  }
-  .hs-text-button {
-    display: inline-block;
-    padding-block: var(--space-2);
-    color: var(--royal);
-    text-decoration: none;
-    font-size: var(--text-sm);
-    font-weight: 700;
-  }
-  .hs-text-button:hover {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
   }
   @media (max-width: 860px) {
     .hs-legacy {

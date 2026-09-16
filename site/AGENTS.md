@@ -106,7 +106,7 @@ for a band that is genuinely one-of-a-kind.
 
 ---
 
-## 6. Typography — four roles
+## 6. Typography — three roles
 
 ```
 --font-display   LEMON MILK        → display headers: short section titles,
@@ -114,43 +114,30 @@ for a band that is genuinely one-of-a-kind.
                   --font-label)
 --font-editorial Playfair Display  → editorial voice: multi-word headlines,
                                      pull quotes, storytelling subtitles
---font-kicker    Pinyon Script     → RESERVED accent only — a signature line
-                                     or one high-emotion phrase per page.
-                                     NOT eyebrows, NOT any repeating label.
 --font-body      Montserrat        → body & UI: paragraphs, buttons, forms,
                                      nav, h3/h4 sub-heads, AND eyebrows
                                      (bold, uppercase, 11px, 0.15em tracked)
 ```
 
 - This **extends** the FY2027 PDF's two families (LEMON MILK + Montserrat)
-  with two accent faces, by an explicit design decision for the rebuild
+  with one editorial face, by an explicit design decision for the rebuild
   (Sept 2026). It is being rolled out **homepage-first** — other pages
   still show the two-family system until each is converted. When you touch
-  a page, you may bring it onto the four-role system; keep `tokens.css`,
+  a page, you may bring it onto the three-role system; keep `tokens.css`,
   `global.css`, and this list in sync.
 - **LEMON MILK stays upright, `font-weight: 400`, never italic.** Playfair
   Display carries the italic (quotes, subtitles).
-- **Pinyon Script is rationed.** It read as fussy and amateur when used as
-  the eyebrow on every section. One use per page, sized ≥30px (its
-  x-height is tiny), never uppercased or letter-spaced. Functional
-  eyebrows are Montserrat bold caps.
-  - **Where it actually lives (Sept 2026):** exactly one place —
-    `.hs-legacy__copy .hs-motto` on `about/herstory.astro`, the registered
-    "Greater Service, Greater Progress." line closing the legacy section.
-    Before this it was loaded on all 28 pages and rendered **zero glyphs**,
-    so every visitor downloaded a face that drew nothing. If you remove that
-    one use, drop Pinyon from the Google Fonts link in `Base.astro` too.
-  - **"At most once per page" is a ceiling, not a quota.** Do not go looking
-    for a slot on other pages. The homepage has none that qualify: its motto
-    is a `CtaBand` eyebrow, `.act-women__sign` is an attribution label — both
-    banned above — and the Grand Basileus pull quote is body-length copy
-    already carrying Playfair italic, where Pinyon is illegible.
+- **No script or decorative faces.** Pinyon Script was the fourth role until
+  Sept 2026. It was rationed to a single use (the Herstory motto) and then
+  retired: the FY2027 guidelines list "unapproved fonts or decorative fonts"
+  under Unacceptable Use, and Karena asked for the motto in the brand face.
+  It is no longer loaded. Do not reintroduce a script.
 - `--font-head` and `--font-label` remain aliases of the LEMON MILK stack
   for now; don't repoint them without a human's sign-off.
 - LEMON MILK is self-hosted (`@font-face` in `global.css`, files in
   `public/fonts/`); it is **not on Google Fonts**. Oswald is its web fallback.
-  Montserrat, Oswald, Playfair Display, and Pinyon Script load from Google
-  Fonts in `Base.astro`.
+  Montserrat, Oswald, and Playfair Display load from Google Fonts in
+  `Base.astro`.
 - `--cream` (`#fffbf0`) is intentionally part of the system (from the Make
   design, used on program cards). Don't strip cream citing the brand PDF
   without a human decision — that's the other thing that keeps getting
