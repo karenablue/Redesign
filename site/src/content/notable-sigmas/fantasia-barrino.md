@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Grammy-winning singer and actress."
 honorary: true
-order: 59
 initials: "FB"
 image: "/images/notable/fantasia-barrino.jpg"
 license: "CC BY-SA 2.0"

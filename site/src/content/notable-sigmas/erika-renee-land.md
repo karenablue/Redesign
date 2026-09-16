@@ -4,7 +4,6 @@ field: "Literature & Journalism"
 cat: "literature"
 note: "War poet, author, and spoken-word performer."
 honorary: false
-order: 44
 initials: "ERL"
 chapter: "Lambda Delta"
 image: "/images/notable/erika-renee-land.jpg"

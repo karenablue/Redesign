@@ -153,8 +153,10 @@ const notableSigmas = defineCollection({
       /** Photographer / attribution string. */
       credit: z.string().optional(),
 
-      /** Sort position within a section; lower first, unset sorts last. */
-      order: z.number().int().positive().optional(),
+      // Deliberately no `order` field. The page sorts alphabetically by name,
+      // so a stored position would be dead weight — and worse, it would mean
+      // an editor had to pick a number to slot someone into the right place.
+      // Sorting in the page means a new entry lands correctly on its own.
     })
     .refine((d) => !d.image || (d.license && d.credit), {
       message:

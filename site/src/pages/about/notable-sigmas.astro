@@ -35,9 +35,26 @@ const filters = [
   { key: "athletics", label: "Athletics" },
 ];
 
+/**
+ * Alphabetical sort key.
+ *
+ * Honorifics are stripped, or the four "Dr." entries would all cluster under
+ * D instead of sorting on their own names. Quoted nicknames are stripped too,
+ * so Maritza "Ritz" Correia sorts on Maritza and Sharon "MC Sha-Rock" Jackson
+ * on Sharon. Stage names that are the whole name — MC Lyte, DJ Spinderella,
+ * Ezinma — are left alone, because that IS the name.
+ */
+function sortKey(name: string) {
+  return name
+    .replace(/[“”‘’"']/g, "")
+    .replace(/^(Dr|Dame|Mrs|Ms|Mr|Hon)\.?\s+/i, "")
+    .trim()
+    .toLowerCase();
+}
+
 const roster = (await getCollection("notableSigmas"))
   .map((e) => e.data)
-  .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
+  .sort((a, b) => sortKey(a.name).localeCompare(sortKey(b.name)));
 
 // The page's organising principle: Sorors who crossed, kept apart from women
 // inducted as honorary members.
@@ -60,7 +77,10 @@ function monogram(name: string) {
 // rather than a decorative wall of names.
 const credits = roster
   .filter((p) => p.image && p.license && !/public domain|no restrictions/i.test(p.license))
-  .sort((a, b) => a.name.localeCompare(b.name));
+  // Same key as the roster above. Sorting on the raw name here put "Dame Lisa
+  // Simone" under D and sorted "Ta'Rhonda Jones" on its curly apostrophe,
+  // so the credits ran in a different order from the cards they credit.
+  .sort((a, b) => sortKey(a.name).localeCompare(sortKey(b.name)));
 
 /**
  * Member Spotlight stays hand-curated here rather than moving into the

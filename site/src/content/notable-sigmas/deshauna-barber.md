@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Miss USA 2016."
 honorary: true
-order: 80
 initials: "DB"
 chapter: "Alpha Zeta"
 image: "/images/notable/deshauna-barber.jpg"

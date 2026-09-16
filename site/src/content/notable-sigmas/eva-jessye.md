@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Conductor and composer."
 honorary: false
-order: 34
 initials: "EJ"
 image: "/images/notable/eva-jessye.jpg"
 license: "CC BY-SA 4.0"

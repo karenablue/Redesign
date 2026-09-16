@@ -4,7 +4,6 @@ field: "Athletics"
 cat: "athletics"
 note: "Olympic champion bobsledder and the most decorated Black athlete in Winter Olympic history."
 honorary: true
-order: 111
 initials: "EMT"
 source: "Honorary, 61st Boule, 2026."
 image: "/images/notable/elana-meyers-taylor.jpg"
