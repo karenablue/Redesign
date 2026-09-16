@@ -1,8 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
-import CardGrid from "../../components/CardGrid.astro";
-import Card from "../../components/Card.astro";
 import { withBase } from "../../lib/url.js";
 
 const basilei = [
@@ -134,6 +132,37 @@ const basilei = [
     img: "/images/past-grand-basilei-rasheeda-liberty-300x300.jpg",
   },
 ];
+
+/**
+ * Eras are fixed date brackets, and each leader is placed by the first year
+ * of her term — from the dates above, nothing added (Karena, Sept 2026).
+ * Mary Lou Allison Gardner Little's "1922–1925 / 1925–1926 Acting" starts
+ * 1922; Helen J. Owens's 2000–2004 starts 2000.
+ */
+const ERAS = [
+  { id: "era-1922-1940", label: "1922\u20131940", from: 1922, to: 1940 },
+  { id: "era-1941-1970", label: "1941\u20131970", from: 1941, to: 1970 },
+  { id: "era-1971-1999", label: "1971\u20131999", from: 1971, to: 1999 },
+  { id: "era-2000-2024", label: "2000\u20132024", from: 2000, to: 2024 },
+];
+
+const yearsOf = (years: string) => (years.match(/\d{4}/g) ?? []).map(Number);
+
+const leaders = basilei.map((b) => {
+  const ys = yearsOf(b.years);
+  return { ...b, from: Math.min(...ys), to: Math.max(...ys) };
+});
+
+const eras = ERAS.map((e) => ({
+  ...e,
+  leaders: leaders.filter((b) => b.from >= e.from && b.from <= e.to),
+}));
+
+// Every Grand Basileus must land in exactly one era, or the build fails.
+const placed = eras.reduce((n, e) => n + e.leaders.length, 0);
+if (placed !== basilei.length) {
+  throw new Error(`Past Grand Basilei: ${placed} of ${basilei.length} leaders placed in an era`);
+}
 ---
 
 <Base
@@ -190,14 +219,44 @@ const basilei = [
 
   <section class="past-grid-section">
     <div class="container">
-      <CardGrid min="220px" cols={4}>
-        {basilei.map((b) => (
-          <Card image={b.img} imageAlt={b.name} title={b.name}>
-            <p class="past-years">{b.years}</p>
-            {b.note && <p class="past-note">{b.note}</p>}
-          </Card>
-        ))}
-      </CardGrid>
+      <div class="pgb-tools" id="archive">
+        <nav class="pgb-eras" aria-label="Jump to an era">
+          {eras.map((e) => <a href={`#${e.id}`}>{e.label}</a>)}
+        </nav>
+        {/* Revealed by the script below; without JavaScript the era links and
+            full archive still work. */}
+        <div class="pgb-search" data-pgb-search hidden>
+          <label for="pgb-q">Find a Grand Basileus</label>
+          <input id="pgb-q" type="search" placeholder="Name or year, e.g. 1968" autocomplete="off" />
+          <p class="pgb-status" aria-live="polite"></p>
+        </div>
+      </div>
+
+      {eras.map((e) => (
+        <section class="pgb-era" id={e.id} aria-labelledby={`${e.id}-h`} data-era>
+          <h2 class="pgb-era__title" id={`${e.id}-h`}>{e.label}</h2>
+          <ul class="pgb-grid">
+            {e.leaders.map((b) => (
+              <li class="pgb-card" data-name={b.name.toLowerCase()} data-from={b.from} data-to={b.to}>
+                <img
+                  class="pgb-card__img"
+                  src={withBase(b.img)}
+                  alt={b.name}
+                  width="300"
+                  height="300"
+                  loading="lazy"
+                />
+                <span class="pgb-card__years">{b.years}</span>
+                <h3 class="pgb-card__name">{b.name}</h3>
+                {b.note && <p class="pgb-card__note">{b.note}</p>}
+              </li>
+            ))}
+          </ul>
+          <a class="pgb-back" href="#archive">
+            Back to eras <span aria-hidden="true">&uarr;</span>
+          </a>
+        </section>
+      ))}
     </div>
   </section>
 
@@ -285,16 +344,183 @@ const basilei = [
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .past-years {
+
+  /* Toolbar: era jump links and the name/year finder. Deliberately not
+     sticky — the site header is already pinned (~190px), and a second
+     pinned bar would take a quarter of a phone screen. Each era ends with a
+     "Back to eras" link instead. */
+  .pgb-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+    scroll-margin-top: 220px;
+  }
+  .pgb-eras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .pgb-eras a {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .pgb-eras a:hover {
+    border-color: var(--royal);
+    background: var(--tint);
+  }
+  .pgb-search {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: min(100%, 18rem);
+  }
+  .pgb-search[hidden] {
+    display: none;
+  }
+  .pgb-search label {
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--accent-text);
-    margin: 0;
   }
-  .past-note {
+  .pgb-search input {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font: inherit;
+    color: var(--navy);
+    background: var(--white);
+  }
+  .pgb-search input:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 1px;
+  }
+  .pgb-status {
+    min-height: 1.4em;
+    margin: 0;
     color: var(--muted);
     font-size: var(--text-sm);
+  }
+
+  .pgb-era {
+    scroll-margin-top: 220px;
+  }
+  .pgb-era + .pgb-era {
+    margin-top: var(--space-12);
+  }
+  .pgb-era[hidden] {
+    display: none;
+  }
+  /* Date-bracket divider: the label, then a hairline to the edge. */
+  .pgb-era__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0 0 var(--space-6);
+    color: var(--royal);
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: var(--text-h3);
+  }
+  .pgb-era__title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* Flex, not grid, so a short last row centres instead of stranding one
+     card at the left edge. */
+  .pgb-grid {
+    --pgb-gap: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--pgb-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pgb-card {
+    flex: 0 1 calc((100% - 3 * var(--pgb-gap)) / 4);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+  }
+  .pgb-card[hidden] {
+    display: none;
+  }
+  /* Square, top-anchored: the source headshots are 300x300, and the old
+     16:10 crop could cut through faces. */
+  .pgb-card__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: var(--radius);
+    margin-bottom: var(--space-4);
+  }
+  .pgb-card__years {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(32, 65, 165, 0.08);
+    color: var(--royal);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .pgb-card__name {
+    margin: var(--space-2) 0 0;
+    color: var(--royal);
+    font-size: var(--text-md);
+    line-height: 1.35;
+  }
+  .pgb-card__note {
+    margin: var(--space-1) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .pgb-back {
+    display: inline-block;
+    margin-top: var(--space-4);
+    padding-block: var(--space-2);
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .pgb-back:hover {
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
+  }
+  @media (max-width: 1000px) {
+    .pgb-card {
+      flex-basis: calc((100% - 2 * var(--pgb-gap)) / 3);
+    }
+  }
+  @media (max-width: 680px) {
+    .pgb-grid {
+      --pgb-gap: var(--space-4);
+    }
+    .pgb-card {
+      flex-basis: calc((100% - var(--pgb-gap)) / 2);
+    }
   }
 
   .continuity {
@@ -340,3 +566,44 @@ const basilei = [
     text-decoration-color: var(--gold);
   }
 </style>
+
+<script>
+  // Name/year finder. A 4-digit year matches any term containing it; a
+  // shorter run of digits matches terms with a year starting that way; any
+  // other text matches names.
+  const box = document.querySelector<HTMLElement>("[data-pgb-search]");
+  const input = document.getElementById("pgb-q") as HTMLInputElement | null;
+  if (box && input) {
+    box.hidden = false;
+    const cards = Array.from(document.querySelectorAll<HTMLElement>(".pgb-card"));
+    const eraEls = Array.from(document.querySelectorAll<HTMLElement>("[data-era]"));
+    const status = box.querySelector<HTMLElement>(".pgb-status");
+    const matches = (card: HTMLElement, q: string) => {
+      if (!q) return true;
+      if (/^\d+$/.test(q)) {
+        const from = Number(card.dataset.from);
+        const to = Number(card.dataset.to);
+        for (let y = from; y <= to; y++) if (String(y).startsWith(q)) return true;
+        return false;
+      }
+      return (card.dataset.name ?? "").includes(q);
+    };
+    input.addEventListener("input", () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const card of cards) {
+        const ok = matches(card, q);
+        card.hidden = !ok;
+        if (ok) shown++;
+      }
+      for (const era of eraEls) era.hidden = !era.querySelector(".pgb-card:not([hidden])");
+      if (status) {
+        status.textContent = !q
+          ? ""
+          : shown
+            ? `${shown} of ${cards.length} shown`
+            : "No Grand Basileus matches that name or year.";
+      }
+    });
+  }
+</script>
