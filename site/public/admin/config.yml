@@ -68,6 +68,102 @@ collections:
       - { name: order, label: Order on page, widget: number, value_type: int, min: 1 }
       - { name: body, label: Summary, widget: markdown }
 
+  - name: notableSigmas
+    label: Notable Sigmas
+    label_singular: Notable Sigma
+    folder: site/src/content/notable-sigmas
+    create: true
+    slug: "{{slug}}"
+    description: >-
+      Famous Sorors and honorary members. IMPORTANT: "Honorary member" must be
+      set correctly — Famous Sorors are women who crossed into the Sorority,
+      honorary members were inducted without pledging. Getting it wrong is a
+      factual error about a real person. Leave Photo empty to show her
+      initials instead; if you add a photo you must also fill in Licence and
+      Photo credit, or the site will not build.
+    sortable_fields: [order, name, honorary]
+    fields:
+      - { name: name, label: Name, widget: string }
+      - {
+          name: field,
+          label: Field shown on the card,
+          widget: string,
+          hint: 'e.g. "Arts & Entertainment", "Public Service", "Athletics"',
+        }
+      - name: cat
+        label: Filter category
+        widget: select
+        hint: Controls which filter button shows her. Must be one of these.
+        options:
+          - { label: "Arts & Entertainment", value: arts }
+          - { label: "Education", value: education }
+          - { label: "Law", value: law }
+          - { label: "Business", value: business }
+          - { label: "Public Service", value: public }
+          - { label: "Advocacy", value: advocacy }
+          - { label: "Literature & Journalism", value: literature }
+          - { label: "Medicine", value: medicine }
+          - { label: "Religion", value: religion }
+          - { label: "Athletics", value: athletics }
+      - { name: note, label: Why she is notable, widget: text }
+      - {
+          name: honorary,
+          label: Honorary member,
+          widget: boolean,
+          default: false,
+          hint: "On = inducted as an honorary member. Off = initiated Soror who crossed.",
+        }
+      - {
+          name: order,
+          label: Order on page,
+          widget: number,
+          value_type: int,
+          min: 1,
+        }
+      - {
+          name: initials,
+          label: Initials,
+          widget: string,
+          required: false,
+          hint: "Up to 4 letters, shown when there is no photo. Leave blank and the site works them out.",
+        }
+      - {
+          name: chapter,
+          label: Chapter,
+          widget: string,
+          required: false,
+          hint: "Only where documented. Never guess.",
+        }
+      - {
+          name: source,
+          label: Source / notes,
+          widget: text,
+          required: false,
+          hint: "Where the honorary-or-initiated determination came from, or a note that it still needs confirming.",
+        }
+      - { name: image, label: Photo, widget: image, required: false }
+      - {
+          name: license,
+          label: Photo licence,
+          widget: string,
+          required: false,
+          hint: 'Required if there is a photo. e.g. "Public domain", "CC BY-SA 4.0".',
+        }
+      - {
+          name: licenseUrl,
+          label: Licence URL,
+          widget: string,
+          required: false,
+          hint: "Link to the licence deed, for Creative Commons photos.",
+        }
+      - {
+          name: credit,
+          label: Photo credit,
+          widget: string,
+          required: false,
+          hint: "Required if there is a photo. The photographer's name — Creative Commons licences require attribution.",
+        }
+
   - name: board
     label: International Board
     label_singular: Officer

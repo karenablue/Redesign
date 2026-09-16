@@ -83,4 +83,84 @@ const board = defineCollection({
   }),
 });
 
-export const collections = { events, news, board };
+/**
+ * Notable Sigmas — the famous Soror and honorary member roster.
+ *
+ * A collection rather than the page's former hardcoded arrays for three
+ * reasons beyond the usual editability:
+ *
+ *   1. `honorary` is the page's whole organising principle. Famous Sorors
+ *      crossed; honorary members were inducted without pledging. Getting a
+ *      real woman's category wrong is a factual error about a person, so the
+ *      distinction is a required boolean, not an optional tag.
+ *   2. `cat` is an enum, so a typo'd or invented category fails the build by
+ *      name instead of quietly rendering a card no filter button can reach.
+ *   3. Photographs carry licence obligations. CC BY and CC BY-SA REQUIRE
+ *      attribution, so any entry with an image must also carry its licence
+ *      and credit — enforced below rather than left to whoever adds the next
+ *      portrait.
+ */
+const notableSigmas = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/notable-sigmas" }),
+  schema: z
+    .object({
+      name: z.string().min(1),
+
+      /** Human-readable field label shown on the card, e.g. "Arts & Entertainment". */
+      field: z.string().min(1),
+
+      /** Filter key. Must match a button in the page's `filters` array. */
+      cat: z.enum([
+        "arts",
+        "education",
+        "law",
+        "business",
+        "public",
+        "advocacy",
+        "literature",
+        "athletics",
+        "medicine",
+        "religion",
+      ]),
+
+      /** One-line description of why she is notable. */
+      note: z.string().min(1),
+
+      /**
+       * Monogram shown when there is no portrait. Optional because an editor
+       * adding someone through the CMS should not have to work it out; the
+       * page derives it from the name when this is absent.
+       */
+      initials: z.string().min(1).max(4).optional(),
+
+      /** Chapter, only where documented. Never inferred. */
+      chapter: z.string().optional(),
+
+      /**
+       * True = honorary member (inducted). False = initiated Soror who
+       * crossed. Required: there is no defensible default.
+       */
+      honorary: z.boolean(),
+
+      /** Where the honorary/initiated determination came from. */
+      source: z.string().optional(),
+
+      /** Portrait, relative to public/. Omit and the card uses initials. */
+      image: z.string().optional(),
+      /** Licence name exactly as the file's metadata states it. */
+      license: z.string().optional(),
+      licenseUrl: z.string().optional(),
+      /** Photographer / attribution string. */
+      credit: z.string().optional(),
+
+      /** Sort position within a section; lower first, unset sorts last. */
+      order: z.number().int().positive().optional(),
+    })
+    .refine((d) => !d.image || (d.license && d.credit), {
+      message:
+        "An entry with an image must also carry `license` and `credit` — CC BY and CC BY-SA require attribution.",
+      path: ["credit"],
+    }),
+});
+
+export const collections = { events, news, board, notableSigmas };
