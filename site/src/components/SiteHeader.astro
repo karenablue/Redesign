@@ -543,8 +543,11 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     justify-content: center;
     align-items: center;
     gap: 5px;
-    width: 40px;
-    height: 40px;
+    /* 44px, not 40: WCAG 2.5.5 (AAA) asks for 44x44, and this is the only
+       control on a phone that opens the whole navigation. It already passed
+       AA's 24px floor at 40px, so this is polish rather than a fix. */
+    width: 44px;
+    height: 44px;
     padding: 0;
     border: 0;
     background: transparent;
