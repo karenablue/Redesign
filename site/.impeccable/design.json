@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-15T20:49:39.853Z",
+  "generatedAt": "2026-09-16T16:02:53.228951+00:00",
   "title": "Design System: Sigma Gamma Rho Sorority, Incorporated",
   "extensions": {
     "colorMeta": {
@@ -159,7 +159,7 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Eyebrows and small caps labels, 0.28em tracking."
+        "purpose": "Eyebrows and small caps labels. Montserrat 700, 11px, 0.15em tracking, uppercase — per the four-role type decision recorded in tokens.css."
       },
       "editorial": {
         "displayName": "Editorial",
@@ -179,7 +179,7 @@
       {
         "name": "shadow-md",
         "value": "0 14px 34px rgba(8,22,51,0.18)",
-        "purpose": "Feature imagery only. Known drift: several pages use this as a resting card state, which contradicts the tonal-layering decision."
+        "purpose": "Feature imagery only. The 20 resting card/media shadows that once contradicted the Flat-At-Rest Rule have been removed; what remains is genuinely floating UI (sticky header, dropdown, search panel, map search)."
       }
     ],
     "motion": [
@@ -263,9 +263,9 @@
       "name": "Eyebrow",
       "kind": "custom",
       "refersTo": "eyebrow",
-      "description": "The system's most repeated gesture. Colour is context-bound: gold-text on light, gold on dark.",
+      "description": "The system's most repeated gesture. Montserrat 700 at 11px with 0.15em tracking; colour is context-bound (gold-text on light, gold on dark).",
       "html": "<p class=\"ds-eyebrow\">Greater Service, Greater Progress</p>",
-      "css": ".ds-eyebrow{margin:0 0 1rem;color:var(--gold-text,#8a6510);font-family:var(--font-label,\"LEMON MILK\",Oswald,sans-serif);font-size:.8125rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase}"
+      "css": ".ds-eyebrow{margin:0 0 1rem;color:var(--gold-text,#8a6510);font-family:var(--font-body,Montserrat,system-ui,sans-serif);font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}"
     },
     {
       "name": "Navigation Link",
