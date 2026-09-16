@@ -63,7 +63,7 @@ const facts: Fact[] = [
     n: "08",
     label: "Headquarters",
     title: "Cary, North Carolina",
-    body: "Home of the International Corporate Headquarters.",
+    body: "Home of the International Corporate Headquarters, previously located in Chicago, Illinois.",
     link: { label: "Visit International HQ", href: "/about/headquarters/", external: false },
   },
   {
@@ -278,36 +278,36 @@ const regions = [
     n: "01",
     meta: "Established 1925 • Organized 1940",
     name: "Central",
-    lead: "The first region to form — and the region in which Sigma Gamma Rho itself was born.",
-    body: "Sorors here originated many of the Sorority's defining elements: the Pledge, National Hymn, Slogan, Badge, Coat of Arms, Flower, and Colors.",
+    lead: "The birthplace of Sigma Gamma Rho, where seven educators established the sorority in Indianapolis. Formally organized under Sorors Homer Woods and Ruth Armstrong.",
+    body: "Sorors here originated the core of our cultural identity: the Pledge, National Hymn, Slogan, Official Badge, Coat of Arms, Yellow Tea Rose, and Official Colors.",
   },
   {
     n: "02",
-    meta: "December 29, 1939",
+    meta: "Established December 29, 1939",
     name: "Northeastern",
-    lead: "Organized at the 14th Boulé when the Sorority expanded from two regions to four.",
-    body: "Soror Edna F. Browne, “The Mother of the Northeastern Region,” became its first Syntaktes.",
+    lead: "Organized in New York City at the 14th International Boulé when national leadership restructured the Sorority into four distinct regions.",
+    body: "Led by Soror Edna F. Browne — honored as “The Mother of the Northeastern Region” — who served as its pioneering first Syntaktes to expand collegiate and alumnae chapters along the Eastern Seaboard.",
   },
   {
     n: "03",
-    meta: "Established 1939",
+    meta: "Established 1939 • Organized 1940",
     name: "Southeastern",
-    lead: "Created during the Sorority's 1939 regional restructuring.",
-    body: "Soror Elizabeth Lemon served as the first Syntaktes as the Sorority strengthened its leadership structure throughout the Southeast.",
+    lead: "Created during the landmark 1939 regional restructuring at the 14th Boulé, establishing a dedicated governing body to anchor growth across the Southeast.",
+    body: "Organized under Soror Elizabeth Lemon as its first Syntaktes, rapidly mobilizing educators and community advocates across the South to champion civil rights and youth welfare.",
   },
   {
     n: "04",
-    meta: "Voted 1939 • Organized 1940",
+    meta: "Established 1939 • Organized 1940",
     name: "Southwestern",
-    lead: "Organized under first Syntaktes Soror Mary Scales Greenwood of Houston.",
-    body: "Contributed enduring traditions including the Poodle as official mascot and the development of the Philo Affiliate.",
+    lead: "Formally established during the 1939 restructuring and organized under its first Syntaktes, Soror Mary Scales Greenwood of Houston, Texas.",
+    body: "Pioneered lasting cultural staples, including the introduction of the Poodle mascot by 8th Syntaktes Quindonell S. Robertson and the Galveston roots of the Philo Affiliate.",
   },
   {
     n: "05",
-    meta: "December 1952",
+    meta: "Established December 1952 • Organized 1953",
     name: "Western",
-    lead: "The fifth and most recently established of today's regions.",
-    body: "Formerly part of Southwestern Region, organized under first Syntaktes Soror Lessie B. Crossland; first conference in 1953.",
+    lead: "The fifth and most recently established region, created to unite chapters spanning the Pacific Coast and Mountain West following post-war expansion.",
+    body: "Transitioned out of the Southwestern Region under first Syntaktes Soror Lessie B. Crossland, officially convening its historic first regional conference in 1953.",
   },
 ];
 ---
@@ -1329,6 +1329,11 @@ const regions = [
   @media (max-width: 1050px) {
     .hs-region-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+    /* Five regions in two columns leave the fifth alone; let it span the
+       row instead of sitting beside an empty cell. */
+    .hs-region-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
     }
   }
   @media (max-width: 560px) {
