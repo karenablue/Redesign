@@ -251,30 +251,35 @@ const regions = [
   {
     meta: "Established 1925 • Organized 1940",
     name: "Central",
+    site: "https://www.sgrhocentral.com/",
     lead: "The birthplace of Sigma Gamma Rho, where seven educators established the sorority in Indianapolis. Formally organized under Sorors Homer Woods and Ruth Armstrong.",
     body: "Sorors here originated the core of our cultural identity: the Pledge, National Hymn, Slogan, Official Badge, Coat of Arms, Yellow Tea Rose, and Official Colors.",
   },
   {
     meta: "Established December 29, 1939",
     name: "Northeastern",
+    site: "https://www.sgrhoneregion.org/",
     lead: "Organized in New York City at the 14th International Boulé when national leadership restructured the Sorority into four distinct regions.",
     body: "Led by Soror Edna F. Browne — honored as “The Mother of the Northeastern Region” — who served as its pioneering first Syntaktes to expand collegiate and alumnae chapters along the Eastern Seaboard.",
   },
   {
     meta: "Established 1939 • Organized 1940",
     name: "Southeastern",
+    site: "https://www.seregionsgrho.org/",
     lead: "Created during the landmark 1939 regional restructuring at the 14th Boulé, establishing a dedicated governing body to anchor growth across the Southeast.",
     body: "Organized under Soror Elizabeth Lemon as its first Syntaktes, rapidly mobilizing educators and community advocates across the South to champion civil rights and youth welfare.",
   },
   {
     meta: "Established 1939 • Organized 1940",
     name: "Southwestern",
+    site: "https://www.sigmaswregion.com/",
     lead: "Formally established during the 1939 restructuring and organized under its first Syntaktes, Soror Mary Scales Greenwood of Houston, Texas.",
     body: "Pioneered lasting cultural staples, including the introduction of the Poodle mascot by 8th Syntaktes Quindonell S. Robertson and the Galveston roots of the Philo Affiliate.",
   },
   {
     meta: "Established December 1952 • Organized 1953",
     name: "Western",
+    site: "https://www.westernsgrho.org/",
     lead: "The fifth and most recently established region, created to unite chapters spanning the Pacific Coast and Mountain West following post-war expansion.",
     body: "Transitioned out of the Southwestern Region under first Syntaktes Soror Lessie B. Crossland, officially convening its historic first regional conference in 1953.",
   },
@@ -382,11 +387,6 @@ const regions = [
           </article>
         ))}
       </div>
-      <p class="hs-facts-utility">
-        <a href={withBase("/membership/chapter-locator/")}>
-          Locate Your Region &amp; Chapters <span aria-hidden="true">&rarr;</span>
-        </a>
-      </p>
     </div>
   </section>
 
@@ -539,7 +539,12 @@ const regions = [
               </div>
             </div>
             <p class="hs-region-lead">{r.lead}</p>
-            <p>{r.body}</p>
+            <p class="hs-region-body">{r.body}</p>
+            <a class="hs-region-link" href={r.site} target="_blank" rel="noopener">
+              Visit the {r.name} Region
+              <span class="visually-hidden"> website (opens in a new tab)</span>
+              <span aria-hidden="true"> ↗</span>
+            </a>
           </article>
         ))}
       </div>
@@ -861,24 +866,6 @@ const regions = [
   .hs-fact-link:hover {
     color: var(--gold-text);
     border-bottom-color: currentColor;
-  }
-  /* The one utility action for this section: most visitors arrive looking for
-     their own region. */
-  .hs-facts-utility {
-    margin: var(--space-8) 0 0;
-    text-align: center;
-  }
-  .hs-facts-utility a {
-    display: inline-block;
-    padding-block: var(--space-2);
-    color: var(--royal);
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-color: var(--gold);
-    text-underline-offset: 6px;
-  }
-  .hs-facts-utility a:hover {
-    color: var(--gold-text);
   }
   @media (max-width: 1080px) {
     .hs-facts-grid {
@@ -1240,6 +1227,24 @@ const regions = [
     border-radius: var(--radius-lg);
     background: linear-gradient(180deg, #fffdf8, #fff);
     min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  /* The whole card is the link (via .hs-region-link::after), so it shows
+     that it is actionable. No thick accent bar: see the Hairline note above. */
+  .hs-region-card:hover,
+  .hs-region-card:focus-within {
+    border-color: rgba(32, 65, 165, 0.45);
+    transform: translateY(-3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hs-region-card,
+    .hs-region-card:hover,
+    .hs-region-card:focus-within {
+      transition: none;
+      transform: none;
+    }
   }
   .hs-region-top {
     display: flex;
@@ -1276,11 +1281,33 @@ const regions = [
     font-size: var(--text-sm);
     line-height: 1.55;
   }
-  .hs-region-card > p:last-child {
+  .hs-region-body {
     margin: 0;
     color: #606979;
     font-size: var(--text-xs);
     line-height: 1.72;
+  }
+  /* Short, specific link text for screen readers; the ::after stretches its
+     hit area over the whole card so any click on the card follows it. */
+  .hs-region-link {
+    align-self: flex-start;
+    margin-top: auto;
+    padding-top: var(--space-5);
+    padding-bottom: 2px;
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .hs-region-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .hs-region-card:hover .hs-region-link {
+    color: var(--gold-text);
+    border-bottom-color: currentColor;
   }
   @media (max-width: 1050px) {
     .hs-region-grid {
