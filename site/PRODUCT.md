@@ -141,6 +141,13 @@ one a peer organization cannot truthfully copy.
   page. In headings, labels and buttons the ® is rendered raised via
   `src/lib/reg.js`; plain body copy uses the character. The registered form
   is **SGRHO** (caps) — "SGRho" in running prose is the colloquial name.
+- **Beyond the brand PDF:** the USPTO confirms **THE AURORA** (Reg. No.
+  4692203, live, renewed) as a Sigma Gamma Rho registration, so The Aurora
+  also carries ®. Public records list about 33 marks owned by the Sorority,
+  more than the PDF's register; the full list could not be retrieved
+  (Justia and Trademarkia block automated access). **Ask HQ for its current
+  trademark schedule** before assuming any other name is or is not
+  registered.
 - Registered marks to preserve: "Greater Service, Greater Progress"®,
   "Greater Women, Greater World"®, ΣΓΡ®, SGRHO®, SGRHO1922®, MCMXXII®,
   Philos®, EE-YIP®, Rhoer Club®, Philo Affiliate®.
