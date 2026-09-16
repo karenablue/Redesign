@@ -620,13 +620,10 @@ const nextSteps = [
      specificity, which rendered the hero's "1922 — Today" royal-on-navy at
      2.01:1 (invisible). Same trap produced the earlier invisible
      `feature-title--light` heading on the navy band. */
-  :global(body.page-home .eyebrow) {
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
+  /* The eyebrow typography override that used to live here is gone: these
+     exact values (Montserrat 700, 11px, 0.15em, uppercase) are now the global
+     `.eyebrow` rule, so all 27 pages match the type decision in tokens.css
+     instead of just this one. */
   /* Colour is deliberately NOT set here. global.css now pairs
      `.eyebrow { color: var(--gold-text) }` with an `.on-dark` override, which
      gives every page the accessible pairing. A `body.page-home .eyebrow`

@@ -44,10 +44,10 @@ typography:
     fontWeight: 400
     lineHeight: 1.7
   label:
-    fontFamily: "LEMON MILK, Oswald, Arial Narrow, system-ui, sans-serif"
-    fontSize: "0.8125rem"
-    fontWeight: 400
-    letterSpacing: "0.28em"
+    fontFamily: "Montserrat, system-ui, Arial, sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 700
+    letterSpacing: "0.15em"
   editorial:
     fontFamily: "Playfair Display, Georgia, Times New Roman, serif"
     fontSize: "clamp(1.5rem, 1.2rem + 1.4vw, 2rem)"
@@ -234,7 +234,7 @@ quotes. Pinyon is a signature, not a tool.
   h3/h4 and every card title. Deliberately *not* LEMON MILK.
 - **Body** (Montserrat 400, `clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`, lh 1.7):
   all prose. Reading measure 600–700px.
-- **Label** (LEMON MILK 400, 13px, tracking 0.28em, uppercase): eyebrows and
+- **Label** (Montserrat 700, 11px, tracking 0.15em, uppercase): eyebrows and
   small caps labels.
 - **Editorial** (Playfair Display 400, italic where quoted): multi-word
   storytelling headlines and pull quotes.

@@ -142,15 +142,20 @@ strong {
 /* --- Eyebrow / label ---------------------------------------------- */
 .eyebrow {
   margin: 0 0 var(--space-4);
-  font-family: var(--font-label);
+  /* Montserrat, not LEMON MILK. The four-role type decision recorded at the
+     top of tokens.css assigns eyebrows to Montserrat (bold, uppercase, 11px,
+     0.15em tracked); the homepage followed it while every other page rendered
+     LEMON MILK 13px/0.28em from here. This rule is the one that was wrong, so
+     the homepage's per-page override is now redundant and removed. */
+  font-family: var(--font-body);
   /* Eyebrows sit on light ground by default, where --gold is only 2:1.
      --gold-text is the type-safe member of the gold family; the .on-dark
      override below restores full-chroma gold where the ground is dark. */
   color: var(--gold-text);
-  font-size: var(--text-sm); /* ~13px */
-  font-weight: 400; /* LEMON MILK is single-weight */
-  letter-spacing: 0.28em;
-  text-transform: uppercase; /* for the Oswald fallback */
+  font-size: var(--text-xs); /* 11px */
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 .on-dark .eyebrow,
 .eyebrow.on-dark {
