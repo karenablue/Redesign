@@ -4,7 +4,6 @@ field: "Athletics"
 cat: "athletics"
 note: "Olympic medalist and world-class sprinter."
 honorary: false
-order: 15
 initials: "CJ"
 image: "/images/notable/carmelita-jeter.jpg"
 license: "CC BY-SA 2.0"

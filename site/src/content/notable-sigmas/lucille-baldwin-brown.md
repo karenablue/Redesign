@@ -4,7 +4,6 @@ field: "Education"
 cat: "education"
 note: "First Black public county librarian in Florida."
 honorary: false
-order: 22
 initials: "LBB"
 image: "/images/notable/lucille-baldwin-brown.jpg"
 license: "Public domain"

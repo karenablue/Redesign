@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Singer, actress, and television presenter."
 honorary: false
-order: 36
 initials: "MM"
 image: "/images/notable/marilyn-mccoo.jpg"
 license: "CC BY-SA 3.0"

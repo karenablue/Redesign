@@ -80,8 +80,10 @@ collections:
       honorary members were inducted without pledging. Getting it wrong is a
       factual error about a real person. Leave Photo empty to show her
       initials instead; if you add a photo you must also fill in Licence and
-      Photo credit, or the site will not build.
-    sortable_fields: [order, name, honorary]
+      Photo credit, or the site will not build. The page lists everyone
+      alphabetically on its own, so there is no position to set — a new entry
+      appears in the right place automatically.
+    sortable_fields: [name, honorary]
     fields:
       - { name: name, label: Name, widget: string }
       - {
@@ -112,13 +114,6 @@ collections:
           widget: boolean,
           default: false,
           hint: "On = inducted as an honorary member. Off = initiated Soror who crossed.",
-        }
-      - {
-          name: order,
-          label: Order on page,
-          widget: number,
-          value_type: int,
-          min: 1,
         }
       - {
           name: initials,

@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Singer, entrepreneur, and television personality; founding member of Destiny's Child."
 honorary: true
-order: 98
 initials: "LR"
 source: "Honorary, 2024 class."
 image: "/images/notable/latavia-roberson.jpg"

@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Actress."
 honorary: true
-order: 93
 initials: "TJ"
 source: "Honorary, 2024 class."
 image: "/images/notable/ta-rhonda-jones.jpg"

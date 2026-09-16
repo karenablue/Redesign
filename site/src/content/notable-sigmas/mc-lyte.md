@@ -4,7 +4,6 @@ field: "Arts & Entertainment"
 cat: "arts"
 note: "Pioneering rapper, actress, entrepreneur, and influential figure in hip-hop and entertainment."
 honorary: true
-order: 58
 initials: "ML"
 source: "Honorary, inducted 2004; confirmed by MC Lyte's own public statement. Wikipedia's list marks her as a regular member, which is incorrect."
 image: "/images/notable/mc-lyte.jpg"
