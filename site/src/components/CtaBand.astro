@@ -12,6 +12,7 @@
  *   actions  [{ label, href, variant? }]  variant "solid" (default) | "outline"
  */
 import Button from "./Button.astro";
+import { reg } from "../lib/reg.js";
 
 interface CtaAction {
   label: string;
@@ -31,7 +32,7 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 
 <section class="cta on-dark">
   <div class="container cta__inner">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
     {title && (
       <h2 class="cta__title">
         {title}

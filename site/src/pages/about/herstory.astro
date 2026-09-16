@@ -11,6 +11,7 @@ import Base from "../../layouts/Base.astro";
 import Button from "../../components/Button.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
+import { reg } from "../../lib/reg.js";
 
 /** `link.external` decides the arrow: ↗ leaves the site, → stays on it. */
 type Fact = {
@@ -29,7 +30,8 @@ const facts: Fact[] = [
   },
   {
     label: "Official Wordmark & Identity",
-    title: "SGRho® • Sigma",
+    // SGRHO is the registered form (FY2027 word-mark register).
+    title: "SGRHO® • Sigma",
     body: "Historically recognized and embraced by sisterhood and community as SGRho and Sigma.",
   },
   {
@@ -44,7 +46,7 @@ const facts: Fact[] = [
   },
   {
     label: "Motto",
-    title: "Greater Service, Greater Progress",
+    title: "Greater Service, Greater Progress®",
     body: "A century-long standard for service and institutional responsibility.",
   },
   {
@@ -59,7 +61,7 @@ const facts: Fact[] = [
   },
   {
     label: "Official Call",
-    title: "EE-yip!",
+    title: "EE-YIP®",
     body: "A distinctive, high-spirited greeting echoing the elegance and alertness of the mascot. Shared across generations as an immediate acoustic hallmark of sisterhood and pride.",
   },
   {
@@ -102,11 +104,11 @@ const firsts = [
   },
   {
     title: "First Official Youth Affiliate",
-    body: "Pioneered the Rhoer Club in 1939, becoming the first NPHC organization to establish a chartered national leadership auxiliary for teenage girls.",
+    body: "Pioneered the Rhoer Club® in 1939, becoming the first NPHC organization to establish a chartered national leadership auxiliary for teenage girls.",
   },
   {
     title: "Non-Degreed Women’s Pipeline",
-    body: "Pioneered the Philo Affiliate (originating in 1943), breaking traditional collegiate elitism to provide non-degreed women official national service status.",
+    body: "Pioneered the Philo Affiliate® (originating in 1943), breaking traditional collegiate elitism to provide non-degreed women official national service status.",
   },
 ];
 
@@ -239,7 +241,7 @@ const timeline = [
     year: "Today",
     label: "The Centenary & Beyond",
     head: "Unbroken Legacy, Boundless Future",
-    body: "With over 100 years of documented leadership, thousands of members across hundreds of chapters carry the founders’ standard forward — advancing social justice, women’s health, education, and community self-reliance under the banner: “Greater Women, Greater World.”",
+    body: "With over 100 years of documented leadership, thousands of members across hundreds of chapters carry the founders’ standard forward — advancing social justice, women’s health, education, and community self-reliance under the banner: “Greater Women, Greater World”®.",
     note: {
       style: "quote",
       kind: "Movement",
@@ -300,7 +302,7 @@ const regions = [
     <div class="hs-hero__image"></div>
     <div class="hs-hero__overlay"></div>
     <div class="container hs-hero__content">
-      <p class="eyebrow">MCMXXII</p>
+      <p class="eyebrow">MCMXXII<sup class="reg">&reg;</sup></p>
       <h1 class="hs-hero__title">
         Her<span>story</span>
       </h1>
@@ -372,7 +374,7 @@ const regions = [
         {facts.map((f) => (
           <article class="hs-fact-card">
             <p class="hs-fact-label">{f.label}</p>
-            <h3>{f.title}</h3>
+            <h3 set:html={reg(f.title)} />
             {f.body && <p class="hs-fact-body">{f.body}</p>}
             {f.link && (
               <a

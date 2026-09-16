@@ -262,6 +262,20 @@ strong {
   --btn-bg: rgba(255, 255, 255, 0.08);
 }
 
+/* Registered-mark symbol from lib/reg.js: raised and reduced so a ® after a
+   display headline does not shout, with line-height pinned so it cannot push
+   the line apart. Never smaller than 9px, so it stays legible on labels. */
+.reg {
+  /* Montserrat, not the display face: LEMON MILK's ® is wide enough to push
+     trailing punctuation visibly away at hero sizes. */
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: max(0.4em, 9px);
+  line-height: 0;
+  vertical-align: super;
+  letter-spacing: 0;
+}
+
 /* --- Utility ------------------------------------------------------ */
 /* Short gold divider rule under a heading — was hand-copied into ~12
    page-level <style> blocks with identical rules; lives here once now.
