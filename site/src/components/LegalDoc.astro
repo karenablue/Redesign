@@ -157,9 +157,11 @@ const { title, updated, draftNote, intro = [], sections } = Astro.props;
     text-decoration: none;
   }
   .legal-toc a:hover {
-    /* the table of contents sits on white; --gold-dark here was 2.67:1 on
-       hover. Caught by tests/color-context.spec.ts. */
-    color: var(--gold-text);
+    /* The table of contents sits on white, where gold text would be 2:1.
+       Hover deepens to royal and adds a brand-gold underline instead. */
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
 
   .legal-section {

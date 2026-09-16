@@ -5,13 +5,11 @@ import { ROUTES } from "./helpers";
  * Colour-context checks — the two holes a11y.spec.ts's contrast test cannot
  * see.
  *
- * 1. The Two-Golds Rule (DESIGN.md). `--gold-text` is the gold that is legible
- *    on LIGHT ground; `--gold` and `--gold-bright` are for DARK ground. Using
- *    the wrong one can still clear WCAG 1.4.3 — dark gold on a royal band is
- *    3.37:1, which passes as large text — so a ratio check alone waves it
- *    through. A bulk token retarget once shipped 43 of these on a green suite.
- *    `--gold-dark` is a hover and gradient fill, never a text colour, and is
- *    flagged as text on any ground.
+ * 1. The One-Gold Rule (DESIGN.md, FY2027 guidelines). The brand has one gold,
+ *    #DFB136. Any other gold used as text is a violation, whatever its
+ *    contrast: this site once shipped five golds and every one of them passed
+ *    WCAG. Brand gold itself is 2:1 on white, so as text it belongs only on
+ *    dark ground; on light ground the accent word is --accent-text (royal).
  *
  * 2. Hover contrast. The contrast test measures resting states only, which is
  *    how a white-on-gold button hover (2:1) went out.
@@ -103,7 +101,7 @@ async function installColorUtils(page: Page) {
     /**
      * A coarse ground colour for light-vs-dark classification only. A gradient
      * counts as the mean of its visible stops — precise enough to tell a royal
-     * band from a cream one, which is all the Two-Golds Rule needs.
+     * band from a cream one, which is all the One-Gold Rule needs.
      */
     const groundOf = (el: Element): RGB => {
       let cur: Element | null = el;
@@ -183,27 +181,29 @@ async function installColorUtils(page: Page) {
   });
 }
 
-async function auditTwoGolds(page: Page): Promise<GoldViolation[]> {
+async function auditOneGold(page: Page): Promise<GoldViolation[]> {
   return page.evaluate(() => {
     const C = (window as unknown as { __sgrColor: ColorUtils }).__sgrColor;
     const root = getComputedStyle(document.documentElement);
-    const token = (name: string) => (C.hex(root.getPropertyValue(name)) || []).join(",");
+    // Read brand gold from the live token so the check follows tokens.css.
+    const brand = (C.hex(root.getPropertyValue("--gold")) || []).join(",");
+    if (!brand) throw new Error("One-Gold audit could not resolve --gold on :root");
 
-    // Read the golds from the live tokens rather than hard-coding them, so the
-    // check follows DESIGN.md if a value ever changes.
-    const darkGold = token("--gold-text");
-    // --gold-display is the large-text member of the light-ground golds, so it
-    // obeys the same rule as --gold-text: never on a dark ground.
-    const displayGold = token("--gold-display");
-    const lightGolds = [token("--gold"), token("--gold-bright")];
-    const fillOnlyGold = token("--gold-dark");
-    // If a token failed to resolve, every comparison below would miss and the
-    // test would pass vacuously. Fail loudly instead.
-    if (!darkGold || !displayGold || !fillOnlyGold || lightGolds.some((g) => !g)) {
-      throw new Error(
-        "Two-Golds audit could not resolve --gold, --gold-bright, --gold-text, --gold-display or --gold-dark on :root"
-      );
-    }
+    // "Looks gold": a warm yellow hue with real saturation. Royal, navy, the
+    // greys and white all fall outside it.
+    const goldish = (c: RGB) => {
+      const [r, g, b] = c.map((v) => v / 255);
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const d = max - min;
+      const l = (max + min) / 2;
+      if (d === 0) return false;
+      const sat = d / (1 - Math.abs(2 * l - 1));
+      let h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+      h *= 60;
+      if (h < 0) h += 360;
+      return h >= 30 && h <= 60 && sat >= 0.4 && l >= 0.15 && l <= 0.9;
+    };
 
     const out: GoldViolation[] = [];
     const seen = new Set<string>();
@@ -214,29 +214,19 @@ async function auditTwoGolds(page: Page): Promise<GoldViolation[]> {
       if (!box.width || !box.height) continue;
       const cs = getComputedStyle(el);
       if (cs.visibility === "hidden" || cs.opacity === "0" || el.closest("[hidden]")) continue;
-      // Decoration is exempt: --gold is the right token for glyphs and rules on
-      // any ground (DESIGN.md), and 1.4.3 does not apply to it either.
+      // Decoration is exempt: 1.4.3 does not apply to it.
       if (el.closest('[aria-hidden="true"]')) continue;
 
       const fg = C.parse(cs.color);
       if (!fg) continue;
       const key = fg.rgb.map(Math.round).join(",");
-      const isDarkGold = key === darkGold || key === displayGold;
-      const isLightGold = lightGolds.includes(key);
-      const isFillOnlyGold = key === fillOnlyGold;
-      if (!isDarkGold && !isLightGold && !isFillOnlyGold) continue;
-
-      let verdict: string | null;
-      if (isFillOnlyGold) {
-        verdict = "--gold-dark used as text (it is a hover and gradient fill, never a text colour)";
-      } else {
-        const groundIsDark = C.luminance(C.groundOf(el)) < 0.2;
-        verdict =
-          isDarkGold && groundIsDark
-            ? "dark gold (--gold-text / --gold-display) on a dark ground"
-            : isLightGold && !groundIsDark
-              ? "light gold (--gold / --gold-bright) on a light ground"
-              : null;
+      let verdict: string | null = null;
+      if (key === brand) {
+        if (C.luminance(C.groundOf(el)) >= 0.2) {
+          verdict = "brand gold as text on a light ground (2:1; use --accent-text)";
+        }
+      } else if (goldish(fg.rgb)) {
+        verdict = "non-brand gold used as text (the brand has one gold, #DFB136)";
       }
       if (!verdict) continue;
 
@@ -352,11 +342,11 @@ const describeHover = (rows: HoverFailure[]) =>
     .join("\n");
 
 for (const route of ROUTES) {
-  test(`two golds ${route}`, async ({ page }) => {
+  test(`one gold ${route}`, async ({ page }) => {
     await installColorUtils(page);
     await page.goto(route, { waitUntil: "load" });
-    const violations = await auditTwoGolds(page);
-    expect(violations, `Two-Golds Rule violations on ${route}:\n${describeGold(violations)}`).toEqual([]);
+    const violations = await auditOneGold(page);
+    expect(violations, `One-Gold Rule violations on ${route}:\n${describeGold(violations)}`).toEqual([]);
   });
 
   test(`hover contrast ${route}`, async ({ page }) => {
@@ -370,45 +360,41 @@ for (const route of ROUTES) {
 }
 
 test.describe("canaries: each check must catch a deliberately broken page", () => {
-  test("two golds flags dark gold on a dark hero", async ({ page }) => {
+  const expectGold = async (page: Page, css: string, route: string, prefix: string) => {
     await installColorUtils(page);
-    await page.goto("/resources/help-center/", { waitUntil: "load" });
-    // #8a6510 is --gold-text's value, forced onto the royal hero's eyebrow.
-    await page.addStyleTag({ content: ".hc-hero .eyebrow { color: #8a6510 !important; }" });
-    const violations = await auditTwoGolds(page);
+    await page.goto(route, { waitUntil: "load" });
+    await page.addStyleTag({ content: css });
+    const violations = await auditOneGold(page);
     expect(
-      violations.some((v) => v.selector.startsWith("p.eyebrow") && v.verdict.startsWith("dark gold")),
+      violations.some((v) => v.verdict.startsWith(prefix)),
       `the injected violation was not detected; the audit returned:\n${describeGold(violations)}`
     ).toBe(true);
+  };
+
+  test("one gold flags a darker, non-brand gold used as text", async ({ page }) => {
+    // #8a6510 was the retired --gold-text.
+    await expectGold(page, ".hc-hero .eyebrow { color: #8a6510 !important; }", "/resources/help-center/", "non-brand gold");
   });
 
-  test("two golds still flags light gold on a translucent tint over a LIGHT ground", async ({ page }) => {
-    // Guards the alpha-weighted gradient fix: a faint wash must not make a
-    // light page read as dark. Same tint as Herstory's gold timeline card.
-    await installColorUtils(page);
-    await page.goto("/privacy/", { waitUntil: "load" });
-    await page.addStyleTag({
-      content:
-        ".legal-toc a { color: #f0cf5c !important; background-image: linear-gradient(145deg, rgba(223,177,54,.14), rgba(255,255,255,.04)) !important; }",
-    });
-    const violations = await auditTwoGolds(page);
-    expect(
-      violations.some((v) => v.verdict.startsWith("light gold")),
-      `the injected violation was not detected; the audit returned:\n${describeGold(violations)}`
-    ).toBe(true);
+  test("one gold flags a lighter, non-brand gold on a dark hero", async ({ page }) => {
+    // #f0cf5c was the retired --gold-bright: it passes contrast on navy and is
+    // still off-brand.
+    await expectGold(page, ".hc-hero .eyebrow { color: #f0cf5c !important; }", "/resources/help-center/", "non-brand gold");
   });
 
-  test("two golds flags --gold-dark used as text", async ({ page }) => {
-    await installColorUtils(page);
-    await page.goto("/privacy/", { waitUntil: "load" });
-    // #c9961a is --gold-dark's value, forced onto the table-of-contents links.
-    await page.addStyleTag({ content: ".legal-toc a { color: #c9961a !important; }" });
-    const violations = await auditTwoGolds(page);
-    expect(
-      violations.some((v) => v.verdict.startsWith("--gold-dark")),
-      `the injected violation was not detected; the audit returned:
-${describeGold(violations)}`
-    ).toBe(true);
+  test("one gold flags brand gold as text on a light ground", async ({ page }) => {
+    await expectGold(page, ".legal-toc a { color: #dfb136 !important; }", "/privacy/", "brand gold");
+  });
+
+  test("one gold still flags brand gold on a translucent tint over a LIGHT ground", async ({ page }) => {
+    // Guards the alpha-weighted gradient reading: a faint wash must not make a
+    // light page read as dark.
+    await expectGold(
+      page,
+      ".legal-toc a { color: #dfb136 !important; background-image: linear-gradient(145deg, rgba(223,177,54,.14), rgba(255,255,255,.04)) !important; }",
+      "/privacy/",
+      "brand gold"
+    );
   });
 
   test("hover contrast flags a link that turns white on a light ground", async ({ page }) => {

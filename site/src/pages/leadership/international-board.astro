@@ -92,7 +92,11 @@ const board = (await getCollection("board"))
     font-size: var(--text-h3);
   }
   .ibd-intro__grid h2 span {
-    color: var(--gold-display);
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
   .ibd-intro__copy p {
     color: var(--muted);
@@ -117,14 +121,18 @@ const board = (await getCollection("board"))
     font-size: var(--text-h3);
   }
   .ibd-heading h2 span {
-    color: var(--gold-display);
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
   .ibd-role {
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gold-text);
+    color: var(--accent-text);
     margin: 0;
   }
   .ibd-note {

@@ -322,7 +322,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     gap: 0.5rem;
     margin-bottom: 4px;
     /* the brand row is white, so this needs the type-safe gold */
-    color: var(--gold-text);
+    color: var(--accent-text);
     font-size: 0.6875rem; /* 11px */
     font-weight: 700;
     letter-spacing: 0.27em; /* ~3px at 11px */
@@ -419,9 +419,10 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   /* Current section / open dropdown — gold text with a persistent underline. */
   .site-nav__item.is-active > .site-nav__link,
   .site-nav__item.is-open > .site-nav__link {
-    /* --gold on the royal bar is 4.44:1 — just under AA. --gold-bright is
-       5.84:1 there and reads as the same accent. */
-    color: var(--gold-bright);
+    /* Brand gold on the royal bar is 4.44:1, just under AA for this size,
+       and there is only one gold. So the active item is white and the gold
+       carries the accent as its underline. */
+    color: #fff;
     border-bottom-color: var(--gold);
   }
   /* Mobile-only expand/collapse indicator — the desktop dropdown stays
@@ -524,10 +525,17 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .header-actions :global(.header-actions__btn:not(.btn--outline)) {
     --btn-fg: var(--navy);
   }
+  /* The global solid-button hover is royal, which would vanish into this
+     royal bar (and navy on royal is 2:1). Here it goes white instead. */
+  .header-actions :global(.header-actions__btn:not(.btn--outline):hover) {
+    --btn-bg: #fff;
+    --btn-border: #fff;
+    --btn-fg: var(--navy);
+  }
   /* outline = Join ΣΓΡ: gold text + 2px gold border, transparent */
   .header-actions :global(.btn--outline) {
     /* on the royal bar — see the .is-active note above */
-    --btn-fg: var(--gold-bright);
+    --btn-fg: #fff;
     border-width: 2px;
     border-color: var(--gold);
   }
@@ -768,7 +776,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     .site-nav__menu a:hover,
     .site-nav__menu a:focus {
       background: transparent;
-      color: var(--gold-bright);
+      color: #fff;
     }
 
     .header-actions {

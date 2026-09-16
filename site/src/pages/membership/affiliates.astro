@@ -215,7 +215,9 @@ const affiliates = [
   }
   .aff-hero__nav a:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-color: var(--gold-text);
+    border-    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
 
   .aff-intro {
@@ -233,7 +235,11 @@ const affiliates = [
     font-size: var(--text-h3);
   }
   .aff-intro__grid h2 span {
-    color: var(--gold-display);
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
   .aff-intro__grid > p {
     color: var(--muted);
@@ -273,13 +279,13 @@ const affiliates = [
   }
   .aff-tab__num {
     font-family: var(--font-label);
-    color: var(--gold-text);
+    color: var(--accent-text);
     font-size: var(--text-sm);
   }
-  /* The active tab's ground flips to royal, where the dark type-safe gold
-     drops to 3.4:1 — full-chroma bright gold reads 5.8:1 there. */
+  /* The active tab's ground flips to royal, where brand gold is 4.44:1 at
+     this size, just under AA. The number goes white with the name. */
   .aff-tab.is-active .aff-tab__num {
-    color: var(--gold-bright);
+    color: #fff;
   }
   .aff-tab__name {
     font-weight: 700;
@@ -326,7 +332,11 @@ const affiliates = [
     font-size: var(--text-h3);
   }
   .aff-panel__copy h2 span {
-    color: var(--gold-display);
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
   .aff-lead {
     font-weight: 700;
@@ -363,7 +373,7 @@ const affiliates = [
     padding: 0.35rem 0.8rem;
     border-radius: 999px;
     background: rgba(223, 177, 54, 0.15);
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   @media (max-width: 900px) {
     .aff-panel.is-active {
@@ -400,7 +410,7 @@ const affiliates = [
     max-width: 32rem;
   }
   .eyebrow--light {
-    color: var(--gold-bright);
+    color: var(--gold);
   }
 </style>
 
