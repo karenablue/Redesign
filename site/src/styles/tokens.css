@@ -24,22 +24,15 @@
   --navy: #081633; /* deepest — hero base                        */
   --deep-blue: #0f2555; /* footer gradient start                      */
   --royal-mid: #10265c; /* mid navy: dark-band and hero gradient stop  */
+  /* ONE GOLD (FY2027 guidelines; Karena, Sept 2026). #DFB136 is 2:1 on
+     white, so on light ground it never carries words: it appears as fills,
+     rules, pills, dots and underlines. Words that play the accent role use
+     --accent-text — royal on light, brand gold inside .on-dark (global.css).
+     There is deliberately no darker or lighter gold. */
   --gold: #dfb136; /* Gold — Pantone 13-0757 TCX                 */
-  --gold-dark: #c9961a; /* gold hover / gradient end                  */
-  --gold-bright: #f0cf5c; /* lighter gold for legibility on navy/dark bands */
-  /* Gold is too light to be TEXT on white: --gold is 1.9:1 and --gold-dark
-     2.67:1 against #fff, both below the 4.5:1 WCAG AA minimum. This is the
-     type-safe member of the gold family (≈5.2:1 on white) — use it whenever
-     gold carries words on a light background; keep --gold/--gold-dark for
-     rules, fills, icons, and gold-on-navy text. */
-  --gold-text: #8a6510;
-  /* Display gold: the brand hue (H44/S73), darkened only as far as large text
-     needs. WCAG 1.4.3 asks 3:1 for text >=24px, and this clears it on every
-     light ground the site uses (worst case 3.26:1 on the cool tint), so big
-     two-tone headlines read as gold instead of bronze. Small text keeps
-     --gold-text, which needs 4.5:1. Chosen by computation, not by eye: the
-     first candidate, #b58c1c, fails on --tint at 2.85:1. */
-  --gold-display: #a8821a;
+  --accent-text: var(--royal);
+  --accent-underline: var(--gold);
+  --accent-hover: var(--royal-dark);
   --white: #ffffff;
   --ink: #333333; /* body text (Make uses #333)                 */
   --muted: #555a66; /* secondary text                             */

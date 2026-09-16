@@ -148,10 +148,10 @@ strong {
      LEMON MILK 13px/0.28em from here. This rule is the one that was wrong, so
      the homepage's per-page override is now redundant and removed. */
   font-family: var(--font-body);
-  /* Eyebrows sit on light ground by default, where --gold is only 2:1.
-     --gold-text is the type-safe member of the gold family; the .on-dark
-     override below restores full-chroma gold where the ground is dark. */
-  color: var(--gold-text);
+  /* One gold (#DFB136) and it is 2:1 on white, so on light ground the
+     eyebrow is royal; the .on-dark override below restores brand gold where
+     the ground is dark (8.9:1 on navy). */
+  color: var(--accent-text);
   font-size: var(--text-xs); /* 11px */
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -162,24 +162,21 @@ strong {
   color: var(--gold);
 }
 
-/* --gold-text is the gold that is legible on LIGHT ground; inside a dark band
-   it is far too dark. Rather than make every page rule ask which ground it is
-   on, redefine the token for the dark subtree — custom properties inherit, so
-   any descendant that says var(--gold-text) now resolves to the gold that is
-   actually legible there. This is what makes the Two-Golds Rule enforceable
-   instead of a thing every author has to remember. */
+/* The accent tokens are context-aware. On light ground the accent is royal
+   (brand gold cannot carry words there). Inside a dark band the same tokens
+   resolve to brand gold, which is 8.9:1 on navy, and underlines drop away. */
 .on-dark,
 .section--navy {
-  --gold-text: var(--gold-bright);
-  --gold-display: var(--gold-bright);
+  --accent-text: var(--gold);
+  --accent-underline: transparent;
+  --accent-hover: #fff;
 }
 
 /* --- Buttons (pill; content buttons dominate) -------------------- */
 .btn {
   --btn-bg: var(--gold);
   /* Navy on gold, not white on gold: white is 2:1 against #dfb136 and 2.4:1
-     against the --gold-dark hover, both far below AA. Navy reads 8.9:1 and
-     6.7:1 on those same two fills, and keeps the gold as the loud element. */
+     against gold, far below AA. Navy reads 8.9:1 on the fill, and keeps the gold as the loud element. */
   --btn-fg: var(--navy);
   --btn-border: var(--gold);
   display: inline-flex;
@@ -202,10 +199,13 @@ strong {
     border-color 0.18s ease,
     box-shadow 0.18s ease;
 }
+/* One gold: hover cannot deepen the fill to a second gold, so it switches
+   to royal with white text (8.2:1). */
 .btn:hover {
-  --btn-bg: var(--gold-dark);
-  --btn-border: var(--gold-dark);
-  box-shadow: 0 6px 22px rgba(223, 177, 54, 0.45);
+  --btn-bg: var(--royal);
+  --btn-border: var(--royal);
+  --btn-fg: #fff;
+  box-shadow: 0 6px 22px rgba(32, 65, 165, 0.28);
 }
 
 .btn--outline {
@@ -216,6 +216,7 @@ strong {
 }
 .btn--outline:hover {
   --btn-bg: var(--gold);
+  --btn-border: var(--gold);
   /* navy, not white — filling with gold on hover puts this in exactly the
      situation .btn is in, where white text is 2:1. Hover states are not
      exempt from 1.4.3. */
@@ -232,6 +233,7 @@ strong {
 .btn--ghost-light:hover {
   --btn-bg: #fff;
   --btn-border: #fff;
+  --btn-fg: var(--royal);
 }
 
 .btn--navy {
@@ -248,6 +250,12 @@ strong {
 .on-dark .btn--outline {
   --btn-fg: #fff;
   --btn-border: var(--gold);
+}
+/* On a dark band a royal hover would vanish into the band; go white. */
+.on-dark .btn:not(.btn--outline):not(.btn--navy):not(.btn--ghost-light):hover {
+  --btn-bg: #fff;
+  --btn-border: #fff;
+  --btn-fg: var(--navy);
 }
 .on-dark .btn--outline:hover {
   --btn-fg: #fff;

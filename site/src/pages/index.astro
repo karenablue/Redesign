@@ -634,7 +634,7 @@ const nextSteps = [
      `.eyebrow` rule, so all 27 pages match the type decision in tokens.css
      instead of just this one. */
   /* Colour is deliberately NOT set here. global.css now pairs
-     `.eyebrow { color: var(--gold-text) }` with an `.on-dark` override, which
+     `.eyebrow { color: var(--accent-text) }` with an `.on-dark` override, which
      gives every page the accessible pairing. A `body.page-home .eyebrow`
      colour rule here would be specificity 0,2,1 and would silently outrank
      that `.on-dark` override (0,2,0) — the exact trap that once rendered the
@@ -659,7 +659,9 @@ const nextSteps = [
   }
   .center-link a:hover,
   .arrow-link:hover {
-    border-color: var(--gold-text);
+    border-    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
 
 
@@ -679,7 +681,11 @@ const nextSteps = [
     color: var(--royal);
   }
   .act-work__statement span {
-    color: var(--gold-display);
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
   /* Full-bleed — a direct child of the section, not inside .container, so
      it spans the true viewport width regardless of the page's editorial
@@ -759,17 +765,17 @@ const nextSteps = [
     background: var(--cream);
   }
   .program-index__row.is-active {
-    border-left-color: var(--gold-text);
+    border-left-color: var(--accent-text);
     background: var(--cream);
   }
   .program-index__row.is-active .program-index__text strong {
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   .program-index__num {
     flex-shrink: 0;
     font-family: var(--font-head);
     font-size: var(--text-sm);
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   .program-index__text {
     flex: 1;
@@ -818,7 +824,7 @@ const nextSteps = [
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   .program-spotlight__statement {
     margin: 0 0 var(--space-4);
@@ -920,7 +926,7 @@ const nextSteps = [
     color: var(--royal);
   }
   .act-women__journey span[aria-hidden] {
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   .act-women__links {
     display: flex;
@@ -980,7 +986,7 @@ const nextSteps = [
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   .happening-feature__body h3 {
     margin: 0 0 var(--space-5);
@@ -1037,7 +1043,7 @@ const nextSteps = [
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--gold-text);
+    color: var(--accent-text);
   }
   .happening-secondary__item h4 {
     margin: 0 0 var(--space-2);
@@ -1057,7 +1063,9 @@ const nextSteps = [
     font-size: var(--text-sm);
   }
   .happening-secondary__item:hover .happening-secondary__go {
-    color: var(--gold-text);
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
   /* The stacked event rows. The date badge keeps its established 58px
      treatment; only its bottom margin goes, since it now sits beside the
@@ -1086,13 +1094,17 @@ const nextSteps = [
     margin: 0 0 var(--space-1);
   }
   .happening-secondary__item .upcoming-list a:hover h4 {
-    color: var(--gold-text);
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
   a.happening-secondary__go {
     text-decoration: none;
   }
   a.happening-secondary__go:hover {
-    color: var(--gold-text);
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
   .happening-secondary__date {
     display: flex;
@@ -1235,7 +1247,7 @@ const nextSteps = [
     margin-bottom: clamp(3rem, 5vw, 4rem);
   }
   .arrow-link.partnership__action {
-    color: var(--gold-text);
+    color: var(--accent-text);
     border-bottom-color: rgba(223, 177, 54, 0.4);
     font-size: var(--text-lg);
   }
@@ -1278,6 +1290,8 @@ const nextSteps = [
     text-decoration: none;
   }
   .next-line a:hover {
-    color: var(--gold-text);
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
   }
 </style>

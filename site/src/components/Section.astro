@@ -107,7 +107,11 @@ const headingOnly = hasHeading && !Astro.slots.has("default");
   .s-head__title span {
     /* white / cream / mist tones — the .section--navy override below keeps
        full-chroma gold where the ground is dark */
-    color: var(--gold-display);
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
 
   .s-head__lead {

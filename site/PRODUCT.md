@@ -115,11 +115,12 @@ one a peer organization cannot truthfully copy.
   WCAG 2.1 AA accessibility requirements for color contrast." Acceptable Use
   additionally requires "high contrast between background and text", and
   Unacceptable Use names "text that is difficult to read due to poor color
-  contrast". This matters because brand Gold is 1.9:1 on white and **fails that
-  clause as text**. So `--gold-text` (`#8a6510`) and `--gold-bright`
-  (`#f0cf5c`) are not departures from the brand — they are how the brand's own
-  accessibility requirement is met. Cite this clause, not general a11y
-  practice, if the gold tokens are ever questioned.
+  contrast". This matters because brand Gold is 2:1 on white and **fails that
+  clause as text**. The site resolves it with **one gold only** (Karena, Sept
+  2026): `#DFB136` never carries words on a light ground — there the accent
+  word is royal and the gold is its underline, rule, pill or fill — and it
+  carries words only on navy. An earlier approach darkened the gold for text,
+  which passed contrast but put several golds on every page; that is retired.
 - **Two items for HQ to ratify at handover** (both deliberate, neither a
   mistake, and neither blocking):
   1. **Cream** (`#fffbf0`, `#fef8ed`) is outside the official palette but used

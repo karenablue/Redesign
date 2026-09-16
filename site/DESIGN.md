@@ -9,9 +9,6 @@ colors:
   navy: "#081633"
   deep-blue: "#0f2555"
   gold: "#dfb136"
-  gold-dark: "#c9961a"
-  gold-bright: "#f0cf5c"
-  gold-text: "#8a6510"
   white: "#ffffff"
   ink: "#333333"
   muted: "#555a66"
@@ -84,8 +81,8 @@ components:
     padding: "0.95em 2.2em"
     typography: "{typography.body}"
   button-primary-hover:
-    backgroundColor: "{colors.gold-dark}"
-    textColor: "{colors.navy}"
+    backgroundColor: "{colors.royal}"
+    textColor: "{colors.white}"
   button-outline:
     backgroundColor: "transparent"
     textColor: "{colors.royal}"
@@ -108,7 +105,7 @@ components:
     backgroundColor: "{colors.white}"
     rounded: "{rounded.lg}"
   eyebrow:
-    textColor: "{colors.gold-text}"
+    textColor: "{colors.royal}"
     typography: "{typography.label}"
   eyebrow-on-dark:
     textColor: "{colors.gold}"
@@ -118,7 +115,7 @@ components:
     textColor: "{colors.white}"
     padding: "0.5rem 0"
   nav-link-active:
-    textColor: "{colors.gold-bright}"
+    textColor: "{colors.white}"
 ---
 
 # Design System: Sigma Gamma Rho Sorority, Incorporated
@@ -172,21 +169,19 @@ accent; extra hues would break the Pearl Standard.
 
 ### Secondary
 
-- **Gold** (`#dfb136`, Pantone 13-0757 TCX): rules, dividers, numerals, icons,
-  borders, button fills, and gold-on-dark text. **Gold is an accent, never a
-  background for body content.**
-- **Gold Bright** (`#f0cf5c`): gold's legible form on royal and navy. Use it
-  whenever gold must carry *words* against a dark ground.
-- **Gold Text** (`#8a6510`): gold's legible form on white and cream. Plain
-  `gold` is 2:1 against white and fails AA badly; this token exists so gold
-  can still carry small type on light ground.
-- **Gold Display** (`#a8821a`): the same brand hue (H44/S73), darkened only as
-  far as *large* text needs — 3:1 at 24px and up, worst case 3.26:1 on the cool
-  tint. Used for two-tone headline highlights and the Herstory motto so they
-  read as gold, not bronze. Small text stays on Gold Text. Both are
-  light-ground golds and both flip to Gold Bright inside `.on-dark`. The FY2027
-  guidelines require WCAG 2.1 AA for digital color, so these two tokens are
-  how the brand gold complies, not departures from it.
+- **Gold** (`#dfb136`, Pantone 13-0757 TCX): **the only gold.** Rules,
+  dividers, underlines, dots, year pills, icons, borders, button fills, and
+  text on navy (8.9:1). **Never text on a light ground** — it is 2:1 on white,
+  which fails the FY2027 guidelines' own WCAG 2.1 AA clause. Never a
+  background for body content.
+- **Accent Text** (`--accent-text`): not a colour but a role. Words that carry
+  the accent (eyebrows, the highlighted half of a headline) are **royal** on
+  light ground and **brand gold** inside `.on-dark`. Its partners are
+  `--accent-underline` (brand gold on light, none on dark) and
+  `--accent-hover` (deep royal on light, white on dark).
+- *Retired, Sept 2026:* `--gold-text`, `--gold-display`, `--gold-bright` and
+  `--gold-dark`. They each passed contrast, and together they made the site
+  read as several golds, which the brand does not have.
 
 ### Neutral
 
@@ -206,10 +201,11 @@ accent; extra hues would break the Pearl Standard.
 **The Rationed Luster Rule.** Gold covers well under 10% of any screen. If a
 composition needs more gold to feel finished, the composition is the problem.
 
-**The Two-Golds Rule.** Gold that carries *words* is never `--gold`. It is
-`--gold-text` on light ground and `--gold-bright` on dark. `--gold` itself is
-for rules, fills, icons, and borders. Picking the wrong one is the single most
-common defect this system has produced.
+**The One-Gold Rule.** There is one gold, `#DFB136`. On light ground it never
+carries words; the accent word is royal (`--accent-text`) and the gold arrives
+as its underline, a rule, a pill or a fill. On navy it may carry words. Any
+other gold as text is a defect, however well it passes contrast —
+`tests/color-context.spec.ts` fails the build on it.
 
 **The No Third Accent Rule.** Royal and gold. Any additional hue — a green
 success state, a red error, a purple anything — must be argued for, not
@@ -348,8 +344,9 @@ borders, minimal ornament. Components recede; content does the work.
 - **Shape:** full pill (`999px`), `1.5px` border, padding `0.95em 2.2em`,
   Montserrat 700 at 16px.
 - **Primary:** gold fill with **navy** text. Never white text on gold — white
-  is 2:1 against `#dfb136`. Hover deepens the fill to `--gold-dark`, text
-  stays navy.
+  is 2:1 against `#dfb136`. Hover switches to a royal fill with white text
+  (8.2:1) — there is no second gold to deepen to. Inside `.on-dark` the hover
+  is white with navy text, and in the royal header bar likewise.
 - **Outline:** transparent with royal text and a gold border. Hover fills gold
   and switches text to navy (same rule as primary).
 - **Navy:** navy fill, white text; hover lifts to royal. The quiet, serious
@@ -380,8 +377,8 @@ nothing replacing it.
 A two-row header: a white brand row carrying the shield and word mark, over a
 royal navigation bar. Links are Montserrat 700 at 16px, white, with a
 transparent 2px bottom border that fills gold on hover — an underline reveal,
-not a pill. The active or open item switches to **gold-bright** (`#f0cf5c`) and
-keeps its underline. Below 1280px the whole nav collapses to a hamburger
+not a pill. The active or open item stays white and keeps its
+gold underline — brand gold as text on the royal bar is 4.44:1, just under AA. Below 1280px the whole nav collapses to a hamburger
 drawer with accordion submenus, `aria-expanded` on the toggle, and Escape
 returning focus to it.
 
@@ -390,8 +387,8 @@ returning focus to it.
 Small uppercase LEMON MILK labels at 0.28em tracking, above a heading. They
 are the system's most repeated gesture — around 69 instances — and therefore
 its biggest liability: they are the "badge above the headline" pattern, and at
-this volume they risk reading as templated. Color is context-bound:
-`--gold-text` on light ground, `--gold` inside `.on-dark`. Never set eyebrow
+this volume they risk reading as templated. Color is context-bound through
+`--accent-text`: royal on light ground, brand gold inside `.on-dark`. Never set eyebrow
 color in a page-scoped rule; `body.page-home .eyebrow` is specificity 0,2,1
 and silently outranks the `.on-dark` override, which is how the hero eyebrow
 once shipped at 2:1.
@@ -406,9 +403,8 @@ it sits directly under the hero.
 
 ### Do:
 
-- **Do** use `--gold-text` (`#8a6510`) for gold type on white or cream, and
-  `--gold-bright` (`#f0cf5c`) for gold type on royal or navy. Reserve plain
-  `--gold` for rules, fills, icons and borders.
+- **Do** use `--accent-text` for accent words, and let brand gold arrive as
+  the underline, rule, pill or fill. Gold carries words only on navy.
 - **Do** put navy text on any gold fill.
 - **Do** build separation from band tone and hairlines before reaching for a
   shadow.
