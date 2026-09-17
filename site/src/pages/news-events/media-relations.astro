@@ -1,338 +1,580 @@
 ---
+/**
+ * Media Relations — the press desk.
+ *
+ * Contact details come from sgrho1922.org/media-inquiries/ (Jamila Walker,
+ * (919) 928-5061). Written requests go to help@sgrho1922.org with a
+ * "Media Inquiry" subject: the intake form below composes that email in the
+ * visitor's mail app, so the page needs no server. The boilerplate is built
+ * only from facts stated elsewhere on this site and should be approved by HQ
+ * before launch.
+ */
 import Base from "../../layouts/Base.astro";
-import SigmaRule from "../../components/SigmaRule.astro";
 import { withBase } from "../../lib/url.js";
+import { getCollection } from "astro:content";
+
+const PRESS_EMAIL = "help@sgrho1922.org";
+const ASSETS_URL = "https://sgrho1922.org/media-inquiries/";
+const GUIDELINES_URL = "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
 
 const facts = [
-  { value: "1922", label: "Founded" },
-  { value: "500+", label: "Chapters Worldwide" },
-  { value: "100,000+", label: "Members Strong" },
-  { value: "50+", label: "States & Territories" },
+  { value: "1922", label: "Founded at Butler University" },
+  { value: "100,000+", label: "Members" },
+  { value: "500+", label: "Chapters worldwide" },
+  { value: "Cary, NC", label: "International Corporate Headquarters" },
 ];
 
-const assets = [
-  {
-    img: "/images/SGR-Logo-Shield.png",
-    name: "Shield",
-    note: "Digital PNG and print-ready shield resources.",
-  },
-  {
-    img: "/images/SGR-Greek-Letter-Gold.png",
-    name: "Greek Letters",
-    note: "Gold, blue, white, and editable vector options.",
-  },
-  {
-    img: "/images/affiliates/rhoers.png",
-    name: "Rhoer",
-    note: "Approved affiliate logo resources.",
-  },
-  {
-    img: "/images/affiliates/philos.png",
-    name: "Philo",
-    note: "Approved affiliate logo resources.",
-  },
-  {
-    img: "/images/affiliates/rhosebuds.png",
-    name: "Rhosebud",
-    note: "Approved affiliate logo resources.",
-  },
-];
+const boilerplate =
+  "Sigma Gamma Rho Sorority, Inc. was founded on November 12, 1922, at Butler University in Indianapolis, Indiana, by seven educators. Guided by its motto, “Greater Service, Greater Progress,” the Sorority has grown to more than 100,000 members in 500 chapters in the United States and internationally. Its national programs advance education, women's wellness, water safety, maternal and infant health, and youth leadership, including Operation BigBookBag, Swim 1922, and Project CRADLE Care. The Sorority's International Corporate Headquarters is in Cary, North Carolina.";
+
+const topics = ["National Programs", "Leadership Commentary", "Boulé & Events", "Partnerships", "History & Archives", "Other"];
+const requestTypes = ["Radio / TV interview", "Print / digital interview", "Written statement", "Historical archives"];
+
+const releases = (await getCollection("news"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2)
+  .map((e) => e.data);
 ---
 
 <Base
   title="Media Relations"
   activeTop="News & Events"
-  description="Official media resources for press, partners, and authorized use of the Sigma Gamma Rho brand."
+  description="Press contacts, media inquiries, the approved boilerplate, and official brand resources for Sigma Gamma Rho Sorority, Inc."
 >
   <section class="mr-hero on-dark">
-    <div class="container mr-hero__inner">
-      <p class="eyebrow">News &amp; Events • Media Relations</p>
+    <div class="container">
+      <p class="eyebrow">Press &amp; Communications</p>
       <h1>
-        Official Media.
+        Media Inquiries &amp;
         <br />
-        <span>One Recognizable Brand.</span>
+        <span>Official Statements</span>
       </h1>
-      <div class="gold-rule"></div>
-      <p>
-        Approved media resources help ensure that Sigma Gamma Rho is represented consistently,
-        accurately, and with the integrity of its visual identity intact.
+      <p class="mr-hero__lead">
+        The media relations desk for Sigma Gamma Rho Sorority, Inc.<sup class="reg">&reg;</sup>{" "}
+        Interview, statement, and archival requests are coordinated here.
       </p>
-      <div class="mr-facts">
+    </div>
+    <div class="container">
+      <ul class="mr-facts">
         {facts.map((f) => (
-          <div class="mr-fact">
+          <li>
             <strong>{f.value}</strong>
             <span>{f.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="mr-desk">
+    <div class="container mr-desk__grid">
+      <aside class="mr-card">
+        <p class="mr-label">Press Office</p>
+        <h2>Jamila Walker</h2>
+        <p class="mr-role">Marketing &amp; Communications Manager</p>
+        <dl>
+          <div>
+            <dt>Media line</dt>
+            <dd><a href="tel:+19199285061">(919) 928-5061</a></dd>
           </div>
-        ))}
-      </div>
+          <div>
+            <dt>Headquarters</dt>
+            <dd><a href="tel:+19196789720">(919) 678-9720</a></dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd>
+              <a href={`mailto:${PRESS_EMAIL}?subject=${encodeURIComponent("Media Inquiry")}`}>{PRESS_EMAIL}</a>
+              <span>Use the subject line &ldquo;Media Inquiry.&rdquo;</span>
+            </dd>
+          </div>
+        </dl>
+        <p class="mr-note">Include your deadline so time-sensitive requests can be prioritized.</p>
+      </aside>
+
+      <form class="mr-form" id="media-form" action={`mailto:${PRESS_EMAIL}`} method="post" enctype="text/plain">
+        <h2>Submit a Press Inquiry</h2>
+        <p class="mr-form__hint">This opens a pre-filled email in your mail app, addressed to the press desk.</p>
+        <div class="mr-form__row">
+          <label>
+            <span>Full name</span>
+            <input id="mf-name" name="name" type="text" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Media outlet</span>
+            <input id="mf-outlet" name="outlet" type="text" autocomplete="organization" placeholder="Publication, network, or platform" required />
+          </label>
+        </div>
+        <div class="mr-form__row">
+          <label>
+            <span>Topic</span>
+            <select id="mf-topic" name="topic" required>
+              <option value="">Choose a topic</option>
+              {topics.map((t) => <option>{t}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Deadline</span>
+            <input id="mf-deadline" name="deadline" type="datetime-local" />
+          </label>
+        </div>
+        <fieldset>
+          <legend>Nature of request</legend>
+          <div class="mr-form__checks">
+            {requestTypes.map((r, i) => (
+              <label class="mr-check">
+                <input id={`mf-type-${i}`} type="checkbox" name="request" value={r} />
+                <span>{r}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <label>
+          <span>Details</span>
+          <textarea id="mf-details" name="details" rows="5" placeholder="Your angle, questions, and who you hope to speak with."></textarea>
+        </label>
+        <button class="btn" type="submit">Submit Press Inquiry <span aria-hidden="true">&rarr;</span></button>
+      </form>
     </div>
   </section>
 
-  <SigmaRule />
+  <section class="mr-about">
+    <div class="container mr-about__inner">
+      <h2>About Sigma Gamma Rho Sorority, Inc.<sup class="reg">&reg;</sup></h2>
+      <p id="boilerplate">{boilerplate}</p>
+      <button class="btn btn--outline" type="button" id="copy-boilerplate" hidden>Copy Boilerplate Text</button>
+      <p class="mr-copied" role="status" aria-live="polite"></p>
+    </div>
+  </section>
 
-  <section class="mr-intro">
-    <div class="container mr-intro__grid">
+  <section class="mr-kit">
+    <div class="container mr-kit__grid">
       <div>
-        <p class="eyebrow">For Press, Partners &amp; Authorized Use</p>
-        <h2>
-          Use the brand
-          <br />
-          <span>with intention.</span>
-        </h2>
+        <h2>Leadership</h2>
+        <ul class="mr-links">
+          <li>
+            <a href={withBase("/leadership/international-grand-basileus/")}>
+              Marica T. Harris, 26th International Grand Basileus <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          <li>
+            <a href={withBase("/about/headquarters/")}>
+              Dr. Karen Y. Williams, Executive Director <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          <li>
+            <a href={withBase("/leadership/international-board/")}>
+              International Board of Directors <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="mr-intro__copy">
-        <p>
-          Explore and download Sigma Gamma Rho's official media resources, including branded assets
-          and approved materials for your communications needs. All materials are the intellectual
-          property of Sigma Gamma Rho Sorority, Inc. and are provided for authorized use only;
-          unauthorized reproduction, distribution, or modification is strictly prohibited.
-        </p>
-        <p>
-          To maintain a consistent and recognizable Sigma Gamma Rho brand, please consult the
-          official{" "}
-          <a href="https://sgrho1922.org/media-inquiries/" target="_blank" rel="noopener">
-            Sigma Gamma Rho Brand Guidelines
-          </a>
-          , which provide the standards for logo usage, colors, typography, and visual identity.
-        </p>
+      <div>
+        <h2>Recent News</h2>
+        <ul class="mr-links">
+          <li>
+            <a href={withBase("/news-events/latest-news/61st-biennial-boule/")}>
+              Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          {releases.map((r) => (
+            <li>
+              <a href={withBase("/news-events/latest-news/")}>
+                {r.title} <span aria-hidden="true">&rarr;</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
 
-  <section class="mr-assets">
-    <div class="container">
-      <div class="mr-heading">
-        <p class="eyebrow">Digital &amp; Print Assets</p>
-        <h2>
-          A visual system
-          <br />
-          <span>ready for use.</span>
-        </h2>
+  <section class="mr-brand">
+    <div class="container mr-brand__inner">
+      <div>
+        <h2>Looking for official logos and graphic assets?</h2>
+        <p>
+          The shield, Greek letters, affiliate logos, templates, and letterhead are the intellectual
+          property of Sigma Gamma Rho Sorority, Inc. and are provided for authorized use only.
+        </p>
       </div>
-      <div class="mr-asset-grid">
-        {assets.map((a) => (
-          <a class="mr-asset" href={withBase(a.img)} download>
-            <img src={withBase(a.img)} alt={a.name} loading="lazy" decoding="async" />
-            <span>
-              {a.name} <i aria-hidden="true">&darr;</i>
-            </span>
-            <p>{a.note}</p>
-          </a>
-        ))}
-        <a
-          class="mr-asset mr-asset--text"
-          href={withBase("/images/SGR-Greater-Tagline.png")}
-          download
-        >
-          <strong>
-            Greater Women
-            <br />
-            Greater World<sup class="reg">&reg;</sup>
-          </strong>
-          <span>
-            Campaign Mark <i aria-hidden="true">&darr;</i>
-          </span>
-          <p>Approved campaign/signature asset.</p>
+      <div class="mr-brand__actions">
+        <a class="btn" href={ASSETS_URL} target="_blank" rel="noopener">
+          Download Official Assets <span aria-hidden="true">&#8599;</span>
+        </a>
+        <a class="btn btn--outline" href={GUIDELINES_URL} target="_blank" rel="noopener">
+          Brand Guidelines (PDF) <span aria-hidden="true">&#8599;</span>
         </a>
       </div>
     </div>
   </section>
-
-  <section class="mr-formats">
-    <div class="container mr-formats__grid">
-      <div>
-        <p class="eyebrow">Available Formats</p>
-        <h2>Digital</h2>
-        <p>
-          Rhoer Logo • Philo Logo • Rhosebud Logo • Shield PNG • Greek Letters in Gold, Blue, and
-          White • Greater Women Greater World • PowerPoint • Letterhead
-        </p>
-      </div>
-      <div>
-        <p class="eyebrow">Available Formats</p>
-        <h2>Print</h2>
-        <p>
-          Rhoer Logo • Philo Logo • Rhosebud Logo • Shield SVG • Editable Greek Letters • Greater
-          Women Greater World
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="mr-contact">
-    <div class="container mr-contact__inner">
-      <div>
-        <p class="eyebrow eyebrow--light">Media Contact</p>
-        <h2>Jamila Walker</h2>
-        <p>Marketing &amp; Communications Manager</p>
-        <strong>(919) 928-5061</strong>
-      </div>
-      <a class="btn" href="mailto:media@sgrho1922.org">
-        Send a Media Inquiry <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </section>
 </Base>
+
+<script>
+  // Build the email from the form fields rather than relying on the
+  // browser's text/plain mailto post, which some mail apps ignore.
+  const form = document.getElementById("media-form") as HTMLFormElement | null;
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const v = (id: string) => (document.getElementById(id) as HTMLInputElement | null)?.value.trim() ?? "";
+    const types = [...form.querySelectorAll<HTMLInputElement>("input[name=request]:checked")].map((i) => i.value);
+    const body = [
+      `Name: ${v("mf-name")}`,
+      `Outlet: ${v("mf-outlet")}`,
+      `Topic: ${v("mf-topic")}`,
+      `Deadline: ${v("mf-deadline") || "Not specified"}`,
+      `Request: ${types.join(", ") || "Not specified"}`,
+      "",
+      v("mf-details"),
+    ].join("\n");
+    const to = form.action.replace(/^mailto:/, "");
+    location.href = `mailto:${to}?subject=${encodeURIComponent(`Media Inquiry: ${v("mf-outlet")}`)}&body=${encodeURIComponent(body)}`;
+  });
+
+  const copy = document.getElementById("copy-boilerplate") as HTMLButtonElement | null;
+  const text = document.getElementById("boilerplate")?.textContent ?? "";
+  const status = document.querySelector<HTMLElement>(".mr-copied");
+  if (copy && navigator.clipboard) {
+    copy.hidden = false;
+    copy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        if (status) status.textContent = "Copied to your clipboard.";
+      } catch {
+        if (status) status.textContent = "Copy failed. Select the text above instead.";
+      }
+    });
+  }
+</script>
 
 <style>
   .mr-hero {
     background: var(--grad-royal);
     color: #fff;
-  }
-  .mr-hero__inner {
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: 48rem;
+    padding-block: clamp(3.5rem, 6vw, 5rem) 0;
   }
   .mr-hero h1 {
-    color: #fff;
     margin: var(--space-2) 0 0;
+    color: #fff;
   }
   .mr-hero h1 span {
     color: var(--gold);
   }
-  .mr-hero > .mr-hero__inner > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.85);
+  .mr-hero__lead {
+    max-width: 44rem;
+    margin: var(--space-5) 0 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--text-lg);
   }
   .mr-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-8);
-    margin-top: var(--space-8);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: var(--space-10) 0 0;
+    padding: var(--space-6) 0;
+    list-style: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
   }
-  .mr-fact {
+  .mr-facts li {
     display: flex;
     flex-direction: column;
+    gap: var(--space-1);
+    padding-inline: var(--space-5);
   }
-  .mr-fact strong {
+  .mr-facts li:first-child {
+    padding-left: 0;
+  }
+  .mr-facts li + li {
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .mr-facts strong {
     font-family: var(--font-label);
-    font-size: var(--text-lg);
+    font-size: var(--text-h3);
+    font-weight: 400;
+    line-height: 1.1;
     color: #fff;
   }
-  .mr-fact span {
+  .mr-facts span {
+    color: rgba(255, 255, 255, 0.78);
     font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: rgba(255, 255, 255, 0.65);
-  }
-
-  .mr-intro {
-    background: var(--white);
-    padding-block: clamp(3rem, 5vw, 4rem);
-  }
-  .mr-intro__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-    gap: var(--space-12);
-    align-items: start;
-  }
-  .mr-intro__copy p {
-    color: var(--muted);
-  }
-  .mr-intro__copy a {
-    color: var(--royal);
     font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
-  @media (max-width: 780px) {
-    .mr-intro__grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 820px) {
+    .mr-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--space-5);
+    }
+    .mr-facts li,
+    .mr-facts li:first-child {
+      padding-inline: 0;
+    }
+    .mr-facts li + li {
+      border-left: 0;
     }
   }
 
-  .mr-assets {
-    background: var(--cream);
+  /* ---- press desk ---- */
+  .mr-desk {
+    background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .mr-heading {
-    max-width: 40rem;
-    margin-bottom: var(--space-10);
-  }
-  .mr-heading h2 span {
-    color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
-  }
-  .mr-asset-grid {
+  .mr-desk__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
-    gap: var(--space-6);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-10);
+    align-items: start;
   }
-  .mr-asset {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-6);
-    background: var(--white);
+  .mr-card,
+  .mr-form {
+    padding: var(--space-8);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
-    text-decoration: none;
-    color: inherit;
   }
-  .mr-asset img {
-    height: 60px;
-    object-fit: contain;
-    align-self: flex-start;
-  }
-  .mr-asset span {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 700;
-    color: var(--royal);
-  }
-  .mr-asset p {
+  .mr-label {
     margin: 0;
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .mr-card h2,
+  .mr-form h2 {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-h3);
+    color: var(--ink);
+  }
+  .mr-role {
+    margin: var(--space-1) 0 var(--space-6);
+    color: var(--royal);
+    font-weight: 600;
+  }
+  .mr-card dl {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+  .mr-card dt {
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .mr-card dd {
+    margin: var(--space-1) 0 0;
+  }
+  .mr-card dd a {
+    color: var(--royal);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .mr-card dd span {
+    display: block;
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .mr-asset--text strong {
-    color: var(--royal);
-    font-family: var(--font-head);
+  .mr-note {
+    margin: var(--space-6) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
   }
 
-  .mr-formats {
-    background: var(--white);
-    padding-block: clamp(2.5rem, 5vw, 3.5rem);
-    border-top: 1px solid var(--line);
-  }
-  .mr-formats__grid {
+  .mr-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-12);
+    gap: var(--space-5);
   }
-  .mr-formats__grid p:not(.eyebrow) {
+  .mr-form h2 {
+    margin: 0;
+  }
+  .mr-form__hint {
+    margin: calc(var(--space-3) * -1) 0 0;
     color: var(--muted);
+    font-size: var(--text-sm);
   }
-  @media (max-width: 700px) {
-    .mr-formats__grid {
-      grid-template-columns: 1fr;
+  .mr-form__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+  .mr-form label > span,
+  .mr-form legend {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  .mr-form input:not([type="checkbox"]),
+  .mr-form select,
+  .mr-form textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--muted-2); /* 4.8:1, meets the 3:1 field-boundary minimum */
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+  }
+  .mr-form input:focus-visible,
+  .mr-form select:focus-visible,
+  .mr-form textarea:focus-visible {
+    outline: 2px solid var(--royal);
+    outline-offset: 1px;
+  }
+  .mr-form fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .mr-form__checks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-5);
+  }
+  .mr-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 32px;
+    color: var(--ink);
+    font-size: var(--text-sm);
+  }
+  .mr-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--royal);
+  }
+  .mr-form .btn {
+    justify-self: start;
+  }
+  @media (max-width: 900px) {
+    .mr-desk__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .mr-card,
+    .mr-form {
+      padding: var(--space-5);
+    }
+    .mr-form__row,
+    .mr-form__checks {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
-  .mr-contact {
-    background: var(--grad-royal);
-    color: #fff;
-    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  /* ---- boilerplate ---- */
+  .mr-about {
+    background: var(--cream);
+    padding-block: clamp(3rem, 5vw, 4rem);
   }
-  .mr-contact__inner {
+  .mr-about__inner {
+    max-width: 52rem;
+    padding-left: var(--space-6);
+    border-left: 3px solid var(--gold);
+  }
+  .mr-about h2 {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--royal);
+  }
+  .mr-about p#boilerplate {
+    margin: 0 0 var(--space-5);
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  .mr-copied {
+    min-height: 1.5em;
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ---- press kit ---- */
+  .mr-kit {
+    background: var(--white);
+    padding-block: clamp(3rem, 5vw, 4rem);
+  }
+  .mr-kit__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10);
+  }
+  .mr-kit h2 {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--ink);
+  }
+  .mr-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .mr-links li {
+    border-bottom: 1px solid var(--line);
+  }
+  .mr-links a {
+    display: block;
+    padding-block: var(--space-3);
+    color: var(--royal);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .mr-links a:hover {
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
+  }
+  @media (max-width: 780px) {
+    .mr-kit__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* ---- brand assets route ---- */
+  .mr-brand {
+    background: var(--white);
+    padding-block: 0 clamp(3rem, 5vw, 4rem);
+  }
+  .mr-brand__inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-6);
+    gap: var(--space-6) var(--space-10);
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--tint);
   }
-  .mr-contact h2 {
-    color: #fff;
+  .mr-brand h2 {
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--royal);
+  }
+  .mr-brand p {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+    max-width: 38rem;
+    color: var(--muted);
   }
-  .mr-contact p {
-    color: rgba(255, 255, 255, 0.85);
-    margin: var(--space-1) 0;
-  }
-  .mr-contact strong {
-    color: var(--gold);
-  }
-  .eyebrow--light {
-    color: var(--gold);
+  .mr-brand__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
 </style>
