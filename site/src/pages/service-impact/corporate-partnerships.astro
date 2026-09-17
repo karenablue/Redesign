@@ -1,10 +1,29 @@
 ---
 import Base from "../../layouts/Base.astro";
-import CardGrid from "../../components/CardGrid.astro";
-import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
-const focusAreas = ["Education", "Health", "Economic Empowerment", "Community Advocacy"];
+const FORM_URL = "https://forms.office.com/r/ruwe5VFBgr";
+
+/*
+ * Figures in the proof block are the ones the site already states (the
+ * International Grand Basileus bio: over 100,000 members, 500 chapters).
+ * No prospectus PDF or sponsorship tiers exist yet; add them here when HQ
+ * publishes them.
+ */
+const proof = [
+  {
+    title: "Multigenerational Reach",
+    body: "More than 100,000 members and 500 chapters worldwide, from collegiate and alumnae chapters to youth affiliates.",
+  },
+  {
+    title: "Ready-to-Activate Programs",
+    body: "National programs open to co-branded support, including Swim 1922, Project Cradle Care, and Operation BigBookBag.",
+  },
+  {
+    title: "Grassroots Footprint",
+    body: "Chapter-led service across five regions, reaching communities in the United States and internationally.",
+  },
+];
 
 const partners = [
   {
@@ -107,9 +126,21 @@ const partners = [
   },
 ];
 
+/** Two tiers, sorted from the one list so a new partner only needs a line. */
+const CORPORATE = ["Amazon", "Chase", "Herff Jones", "Kasper", "Macy's", "Western Governors University"];
+const corporate = partners.filter((x) => CORPORATE.includes(x.name));
+const community = partners.filter((x) => !CORPORATE.includes(x.name));
+
+const allied = [
+  { name: "National Education Fund", logo: "/images/foundations/nef.png", id: "nef" },
+  { name: "SPEAR Foundation", logo: "/images/foundations/spear.png", id: "spear" },
+  { name: "Seven Pearls Foundation", logo: "/images/foundations/seven-pearls.png", id: "seven-pearls" },
+];
+
 const collabs = [
   {
-    n: "01",
+    logo: "/images/USA Swimming.svg",
+    partner: "USA Swimming",
     kicker: "Program Partnership",
     title: "Swim 1922 + USA Swimming",
     body: "A partnership built around access, water safety, and changing the relationship between historically underrepresented communities and the sport of swimming.",
@@ -117,7 +148,8 @@ const collabs = [
     label: "Explore Swim 1922",
   },
   {
-    n: "02",
+    logo: "/images/National Alliance on Mental Illness.jpg",
+    partner: "National Alliance on Mental Illness",
     kicker: "Health Partnership",
     title: "NAMI + Women's Wellness",
     body: "Mental-health education and stigma reduction strengthen the broader work of the Women's Wellness Initiative and local chapter programming.",
@@ -125,7 +157,8 @@ const collabs = [
     label: "Explore Women's Wellness",
   },
   {
-    n: "03",
+    logo: "/images/Western Governors University.svg",
+    partner: "Western Governors University",
     kicker: "Education Partnership",
     title: "WGU + Member Advancement",
     body: "Scholarship access expands the Sorority's long-standing commitment to continuing education and professional development.",
@@ -158,7 +191,7 @@ const collabs = [
         </a>
         <a
           class="btn btn--outline on-dark"
-          href="https://forms.office.com/r/ruwe5VFBgr"
+          href={FORM_URL}
           target="_blank"
           rel="noopener"
         >
@@ -168,113 +201,128 @@ const collabs = [
     </div>
   </section>
 
-  <section class="cp-intro">
-    <div class="container cp-intro__grid">
-      <div>
-        <p class="eyebrow">Meaningful Collaboration</p>
+  <section class="cp-proof">
+    <div class="container">
+      <div class="cp-heading">
+        <p class="eyebrow">Why Partner With Sigma Gamma Rho</p>
         <h2>
-          Shared Values. <span>Shared Impact.</span>
+          Reach, Programs, <span>and Presence.</span>
         </h2>
       </div>
-      <div class="cp-intro__copy">
-        <p>
-          Sigma Gamma Rho Sorority, Inc. welcomes partners who share its commitment to service,
-          education, and uplifting communities through meaningful collaboration. Sponsorship support
-          helps advance programs, events, and initiatives that create lasting impact locally and
-          nationally.
-        </p>
-        <p>
-          <a href="https://forms.office.com/r/ruwe5VFBgr" target="_blank" rel="noopener">
-            Click here to apply for sponsorship and partnership opportunities.
-          </a>
-          <br />
-          Want to ask a few questions about the program?{" "}
-          <a href="mailto:help@sgrho1922.org">Email us directly.</a>
-        </p>
-      </div>
+      <ul class="cp-proof__row">
+        {proof.map((x) => (
+          <li>
+            <h3>{x.title}</h3>
+            <p>{x.body}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <section class="cp-focus">
-    <div class="container cp-focus__grid">
-      {focusAreas.map((f) => (
-        <span>{f}</span>
-      ))}
+  <section class="cp-alliances">
+    <div class="container">
+      <div class="cp-heading">
+        <p class="eyebrow">Strategic Alliances</p>
+        <h2>
+          Partnerships Built Into <span>National Programs</span>
+        </h2>
+      </div>
+      <ul class="cp-alliances__row">
+        {collabs.map((c) => (
+          <li class="cp-alliance">
+            <div class="cp-logo cp-logo--lg">
+              <img src={withBase(c.logo)} alt={`${c.partner} logo`} loading="lazy" decoding="async" />
+            </div>
+            <span class="cp-badge">{c.kicker}</span>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+            <a href={withBase(c.link)}>
+              {c.label} <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
   <section class="cp-partners" id="partner-grid">
     <div class="container">
       <div class="cp-heading">
-        <div>
-          <p class="eyebrow">List of Sponsors</p>
-          <h2>
-            Working Together for <span>Greater Progress</span>
-          </h2>
-        </div>
+        <p class="eyebrow">Our Partners</p>
+        <h2>
+          Working Together for <span>Greater Progress</span>
+        </h2>
         <p>
           Current partnerships span health, education, civil rights, financial literacy, community
           service, retail, culture, and member development.
         </p>
       </div>
-      <CardGrid min="260px" cols={3}>
-        {partners.map((p) => (
-          <div class="partner-card">
-            <div class="partner-card__logo">
-              <img src={withBase(p.logo)} alt={`${p.name} logo`} loading="lazy" decoding="async" />
-            </div>
-            <p class="partner-card__type">{p.type}</p>
-            <h3>{p.name}</h3>
-            <p>{p.note}</p>
-            <span class="partner-card__tag">{p.tag}</span>
-          </div>
-        ))}
-      </CardGrid>
-    </div>
-  </section>
 
-  <section class="cp-collabs">
-    <div class="container cp-collabs__grid">
-      {collabs.map((c) => (
-        <article class="cp-collab">
-          <span class="cp-collab__num">{c.n}</span>
-          <p class="cp-collab__kicker">{c.kicker}</p>
-          <h3>{c.title}</h3>
-          <p>{c.body}</p>
-          <a href={withBase(c.link)}>
-            {c.label} <span aria-hidden="true">&rarr;</span>
-          </a>
-        </article>
+      {[
+        { title: "Corporate Partners", list: corporate },
+        { title: "Health & Community Partners", list: community },
+      ].map((tier) => (
+        <div class="cp-tier">
+          <h3 class="cp-tier__title">{tier.title}</h3>
+          <ul class="cp-grid">
+            {tier.list.map((x) => (
+              <li class="partner-card">
+                <div class="cp-logo">
+                  <img src={withBase(x.logo)} alt={`${x.name} logo`} loading="lazy" decoding="async" />
+                </div>
+                <p class="partner-card__type">{x.type}</p>
+                <h4>{x.name}</h4>
+                <p>{x.note}</p>
+                <span class="partner-card__tag">{x.tag}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       ))}
     </div>
   </section>
 
-  <section class="cp-crosslink">
-    <div class="container cp-crosslink__inner">
+  <section class="cp-allied">
+    <div class="container cp-allied__inner">
       <div>
-        <p class="eyebrow eyebrow--light">Philanthropic Partners</p>
-        <h2>NEF &amp; SPEAR</h2>
+        <p class="eyebrow">Allied Foundations</p>
+        <h2>Philanthropy Through Our Foundations</h2>
         <p>
-          Sigma Gamma Rho's National Education Fund and SPEAR Foundation also support education,
-          public service, research, fiscal sponsorship, and community programs.
+          The National Education Fund, SPEAR Foundation, and Seven Pearls Foundation extend the
+          Sorority's work in education, research, and community support.
         </p>
       </div>
-      <a class="btn" href={withBase("/service-impact/partner-foundations/")}>
-        Explore Partner Foundations
-      </a>
+      <ul class="cp-allied__logos">
+        {allied.map((f) => (
+          <li>
+            <a href={withBase(`/service-impact/partner-foundations/#${f.id}`)}>
+              <img src={withBase(f.logo)} alt={f.name} width="88" height="88" loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <CtaBand
-    eyebrow="Partner With Sigma Gamma Rho"
-    title="Build Something That "
-    highlight="Creates Lasting Impact."
-    copy="Organizations aligned with Sigma Gamma Rho's commitment to service, education, and stronger communities are invited to explore sponsorship and partnership opportunities."
-    actions={[
-      { label: "Explore Partnership Opportunities", href: "https://forms.office.com/r/ruwe5VFBgr" },
-      { label: "Contact Us", href: "/contact/", variant: "outline" },
-    ]}
-  />
+  <section class="cp-inquire">
+    <div class="container cp-inquire__inner">
+      <div>
+        <h2>Start a Partnership Conversation</h2>
+        <p>
+          Tell us about your organization and goals. The partnership form goes directly to
+          International Corporate Headquarters.
+        </p>
+      </div>
+      <div class="cp-inquire__actions">
+        <a class="btn" href={FORM_URL} target="_blank" rel="noopener">
+          Submit a Partnership Inquiry <span aria-hidden="true">&#8599;</span>
+        </a>
+        <a class="btn btn--outline" href="mailto:help@sgrho1922.org">Email help@sgrho1922.org</a>
+      </div>
+    </div>
+  </section>
+
 </Base>
 
 <style>
@@ -303,55 +351,137 @@ const collabs = [
     margin-top: var(--space-8);
   }
 
-  .cp-intro {
+  /* ---- proof: three columns, hairline dividers ---- */
+  .cp-proof {
     background: var(--white);
-    padding-block: clamp(3rem, 5vw, 4rem);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .cp-intro__grid {
+  .cp-proof__row {
     display: grid;
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-    gap: var(--space-12);
-    align-items: start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block: 1px solid var(--line);
   }
-  .cp-intro__grid h2 {
-    margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+  .cp-proof__row li {
+    padding: var(--space-8) var(--space-6);
   }
-  .cp-intro__grid h2 span {
-    color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+  .cp-proof__row li + li {
+    border-left: 1px solid var(--line);
   }
-  .cp-intro__copy p {
+  .cp-proof__row h3 {
+    margin: 0 0 var(--space-3);
+    color: var(--royal);
+    font-size: var(--text-lg);
+  }
+  .cp-proof__row p {
+    margin: 0;
     color: var(--muted);
   }
-  .cp-intro__copy a {
-    color: var(--royal);
-    font-weight: 700;
-  }
-  @media (max-width: 780px) {
-    .cp-intro__grid {
+  @media (max-width: 820px) {
+    .cp-proof__row {
       grid-template-columns: 1fr;
+      border-bottom: 0;
+    }
+    .cp-proof__row li,
+    .cp-proof__row li + li {
+      padding-inline: 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line);
     }
   }
 
-  .cp-focus {
-    background: var(--cream);
-    padding-block: var(--space-8);
-  }
-  .cp-focus__grid {
+  /* ---- logo boxes: fixed height, centred, greyscale until hover ---- */
+  .cp-logo {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: var(--space-8);
+    height: 64px;
+    margin-bottom: var(--space-4);
   }
-  .cp-focus__grid span {
-    font-family: var(--font-label);
-    font-size: var(--text-sm);
+  .cp-logo img {
+    max-height: 56px;
+    max-width: 160px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.85;
+    transition:
+      filter 0.2s ease,
+      opacity 0.2s ease;
+  }
+  .partner-card:hover .cp-logo img,
+  .cp-alliance:hover .cp-logo img,
+  .cp-alliance:focus-within .cp-logo img {
+    filter: none;
+    opacity: 1;
+  }
+  .cp-logo--lg {
+    height: 96px;
+  }
+  .cp-logo--lg img {
+    max-height: 88px;
+    max-width: 200px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cp-logo img {
+      transition: none;
+    }
+  }
+
+  /* ---- strategic alliances ---- */
+  .cp-alliances {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .cp-alliances__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .cp-alliance {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+  }
+  .cp-badge {
+    align-self: center;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
     color: var(--royal);
-    letter-spacing: 0.04em;
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .cp-alliance h3 {
+    margin: var(--space-4) 0 var(--space-2);
+    color: var(--royal);
+    font-size: var(--text-md);
+    text-align: center;
+  }
+  .cp-alliance p {
+    margin: 0 0 var(--space-5);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+  .cp-alliance a {
+    margin-top: auto;
+    align-self: center;
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    .cp-alliances__row {
+      grid-template-columns: 1fr;
+    }
   }
 
   .cp-partners {
@@ -378,25 +508,43 @@ const collabs = [
     color: var(--muted);
     margin-top: var(--space-4);
   }
+  .cp-tier + .cp-tier {
+    margin-top: var(--space-12);
+  }
+  .cp-tier__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0 0 var(--space-6);
+    color: var(--royal);
+    font-size: var(--text-lg);
+  }
+  .cp-tier__title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .cp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
   .partner-card {
-    background: var(--tint);
-    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     padding: var(--space-6);
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    height: 100%;
   }
-  .partner-card__logo {
-    height: 48px;
-    display: flex;
-    align-items: center;
+  .partner-card .cp-logo {
+    justify-content: flex-start;
     margin-bottom: var(--space-2);
-  }
-  .partner-card__logo img {
-    max-height: 48px;
-    max-width: 140px;
-    object-fit: contain;
   }
   .partner-card__type {
     font-size: var(--text-xs);
@@ -406,7 +554,7 @@ const collabs = [
     color: var(--accent-text);
     margin: 0;
   }
-  .partner-card h3 {
+  .partner-card h4 {
     margin: 0;
     font-size: var(--text-md);
   }
@@ -430,75 +578,98 @@ const collabs = [
     color: var(--royal);
   }
 
-  .cp-collabs {
+  /* ---- allied foundations: light, not a navy stripe ---- */
+  .cp-allied {
     background: var(--cream);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(3rem, 5vw, 4rem);
   }
-  .cp-collabs__grid {
+  .cp-allied__inner {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-10);
+    align-items: center;
   }
-  .cp-collab {
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-  }
-  .cp-collab__num {
-    font-family: var(--font-label);
-    color: var(--accent-text);
-    font-size: var(--text-lg);
-  }
-  .cp-collab__kicker {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted-2);
+  .cp-allied h2 {
     margin: var(--space-2) 0 0;
+    font-size: var(--text-h3);
   }
-  .cp-collab h3 {
-    margin: var(--space-1) 0 var(--space-3);
-    font-size: var(--text-md);
-  }
-  .cp-collab p {
+  .cp-allied p:not(.eyebrow) {
+    margin: var(--space-3) 0 0;
     color: var(--muted);
-    font-size: var(--text-sm);
+    max-width: 36rem;
   }
-  .cp-collab a {
-    color: var(--royal);
-    font-weight: 700;
-    text-decoration: none;
+  .cp-allied__logos {
+    display: flex;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-  .cp-collab a:hover {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
+  .cp-allied__logos a {
+    display: grid;
+    place-items: center;
+    width: 120px;
+    height: 120px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    transition: border-color 0.2s ease;
+  }
+  .cp-allied__logos a:hover {
+    border-color: var(--royal);
+  }
+  .cp-allied__logos img {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+  }
+  @media (max-width: 900px) {
+    .cp-allied__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .cp-allied__logos {
+      gap: var(--space-3);
+    }
+    .cp-allied__logos a {
+      width: 88px;
+      height: 88px;
+    }
+    .cp-allied__logos img {
+      width: 68px;
+      height: 68px;
+    }
   }
 
-  .cp-crosslink {
-    background: var(--grad-royal);
-    color: #fff;
-    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  /* ---- inquiry ---- */
+  .cp-inquire {
+    background: var(--white);
+    padding-block: clamp(3rem, 5vw, 4rem);
   }
-  .cp-crosslink__inner {
+  .cp-inquire__inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-6);
+    gap: var(--space-6) var(--space-10);
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
   }
-  .cp-crosslink h2 {
-    color: #fff;
-    margin: var(--space-2) 0 0;
+  .cp-inquire h2 {
+    margin: 0;
     font-size: var(--text-h3);
   }
-  .cp-crosslink p {
-    color: rgba(255, 255, 255, 0.85);
-    margin-top: var(--space-3);
-    max-width: 32rem;
+  .cp-inquire p {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    max-width: 36rem;
   }
-  .eyebrow--light {
-    color: var(--gold);
+  .cp-inquire__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
+</style>
 </style>
