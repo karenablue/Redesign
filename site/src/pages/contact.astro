@@ -1,153 +1,182 @@
 ---
 /**
- * Contact — ported from the original contact/index.html.
+ * Contact — the institutional contact hub.
  *
- * Treatment: a dotted-cream breadcrumb hero ("Let's Talk Sisterhood."), then
- * four alternating FeatureRow sections routing each audience (Headquarters,
- * Membership, Media & Press, Vendors & Partners) to the right destination.
+ * Left: HQ's address, phone, email, and routing to the pages that handle
+ * common requests. Right: an inquiry form that composes an email to
+ * help@sgrho1922.org (see scripts/compose-email.ts), with a link to the
+ * Freshdesk ticket form for anyone who wants a tracking number. Office hours
+ * are not published, so none are stated.
  */
 import Base from "../layouts/Base.astro";
-import FeatureRow from "../components/FeatureRow.astro";
 import { withBase } from "../lib/url.js";
+
+const EMAIL = "help@sgrho1922.org";
+const TICKET_URL = "https://helpsgrho1922.freshdesk.com/support/tickets/new";
+const PORTAL_URL = "https://portal.sgrho1922.org/";
+
+const routes = [
+  { label: "Media & Press", href: "/news-events/media-relations/" },
+  { label: "Reactivation & Transfers", href: "/membership/reactivate/" },
+  { label: "Becoming a Member", href: "/membership/become-a-member/" },
+  { label: "Licensed Vendors", href: "/resources/vendor/" },
+  { label: "Sponsorship & Partnerships", href: "/service-impact/corporate-partnerships/" },
+  { label: "Verify a Member's Standing", href: "/membership/accountability/" },
+];
+
+const affiliations = [
+  "Prospective member (collegiate)",
+  "Prospective member (alumnae)",
+  "Active or inactive Soror",
+  "Corporate sponsor or partner",
+  "Licensed vendor",
+  "General public",
+];
+const departments = [
+  "Membership Services & Verification",
+  "Operations & National Events",
+  "Media & Communications",
+  "Financial Inquiries",
+  "Something else",
+];
 ---
 
 <Base
   title="Contact"
   activeTop="Contact"
-  description="Find the appropriate contact path for questions, support, partnerships, media, and general inquiries."
+  description="Contact Sigma Gamma Rho's International Corporate Headquarters: address, phone, email, and an inquiry form."
 >
-  <section class="contact-hero">
-    <div class="container contact-hero__inner">
+  <section class="ct-hero">
+    <div class="container">
       <p class="breadcrumb">
         <a href={withBase("/")}>Home</a> <span>/</span> <span>Contact</span>
       </p>
       <p class="eyebrow">Contact</p>
-      <h1 class="contact-hero__title">
-        Let's Talk
-        <br />
-        <span>Sisterhood.</span>
-      </h1>
-      <p class="contact-hero__lead">
-        Whichever door you knock on, we'll get you to the right place.
+      <h1>Contact Headquarters</h1>
+      <p class="ct-hero__lead">
+        Reach International Corporate Headquarters directly, or send an inquiry and we'll route it to
+        the right department.
       </p>
     </div>
   </section>
 
-  {/* Each FeatureRow below leads with an h3. This h2 keeps the outline from
-      jumping h1 -> h3; it is hidden because the rows already read as distinct
-      sections visually. */}
-  <h2 class="visually-hidden">Ways to reach us</h2>
+  <section class="ct-main">
+    <div class="container ct-grid">
+      <aside class="ct-card">
+        <h2>International Corporate Headquarters</h2>
+        <dl>
+          <div>
+            <dt>Office</dt>
+            <dd>1000 Southhill Dr, STE 200<br />Cary, NC 27513</dd>
+          </div>
+          <div>
+            <dt>Mailing</dt>
+            <dd>P.O. Box 27688<br />Raleigh, NC 27611</dd>
+          </div>
+          <div>
+            <dt>Phone</dt>
+            <dd><a href="tel:+19196789720">(919) 678-9720</a></dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd>
+          </div>
+        </dl>
+        <h3>Go straight to</h3>
+        <ul class="ct-routes">
+          {routes.map((r) => (
+            <li>
+              <a href={withBase(r.href)}>
+                {r.label} <span aria-hidden="true">&rarr;</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
-  <FeatureRow
-    eyebrow="Headquarters"
-    image="/images/Sigma Gamma Rho Sorority Mosaic Crest.jpg"
-    imageAlt="Sigma Gamma Rho Sorority crest mosaic"
-    index={0}
-  >
-    <h3>
-      Member &amp; <span class="gold">Organizational Support.</span>
-    </h3>
-    <p>
-      General questions, records, and organizational support are handled by International Corporate
-      Headquarters.
-    </p>
-    <ul class="contact-facts">
-      <li>P.O. Box 27688 &bull; Raleigh, NC 27611</li>
-      <li>Office: (919) 678-9720</li>
-      <li>
-        <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>
-      </li>
-    </ul>
-    <a class="zigzag-link" href={withBase("/about/headquarters/")}>
-      Meet the ICHQ Team &rarr;
-    </a>
-  </FeatureRow>
+      <form
+        class="ct-form inquiry-form"
+        data-compose
+        data-subject="Website Inquiry"
+        data-subject-field="cf-dept"
+        action={`mailto:${EMAIL}`}
+        method="post"
+        enctype="text/plain"
+      >
+        <h2>Send an Inquiry</h2>
+        <p class="ct-form__hint">
+          This opens a pre-filled email in your mail app. Prefer a tracking number?{" "}
+          <a href={TICKET_URL} target="_blank" rel="noopener">Submit a help desk ticket</a>.
+        </p>
+        <div class="inquiry-form__row">
+          <label>
+            <span>Full name</span>
+            <input id="cf-name" data-label="Name" name="name" type="text" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Email address</span>
+            <input id="cf-email" data-label="Email" name="email" type="email" autocomplete="email" required />
+          </label>
+        </div>
+        <div class="inquiry-form__row">
+          <label>
+            <span>Phone <small>(optional)</small></span>
+            <input id="cf-phone" data-label="Phone" name="phone" type="tel" autocomplete="tel" />
+          </label>
+          <label>
+            <span>Member ID <small>(optional)</small></span>
+            <input id="cf-member" data-label="Member ID" name="member" type="text" />
+          </label>
+        </div>
+        <div class="inquiry-form__row">
+          <label>
+            <span>I am a</span>
+            <select id="cf-aff" data-label="Affiliation" name="affiliation" required>
+              <option value="">Choose one</option>
+              {affiliations.map((a) => <option>{a}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Department</span>
+            <select id="cf-dept" data-label="Department" name="department" required>
+              <option value="">Choose one</option>
+              {departments.map((d) => <option>{d}</option>)}
+            </select>
+          </label>
+        </div>
+        <label>
+          <span>Message</span>
+          <textarea id="cf-message" data-body name="message" rows="6" placeholder="How can we help?" required></textarea>
+        </label>
+        <button class="btn ct-submit" type="submit">
+          Submit Inquiry <span aria-hidden="true">&rarr;</span>
+        </button>
+      </form>
+    </div>
+  </section>
 
-  <FeatureRow
-    eyebrow="Membership"
-    image="/images/ug sorors 5.jpg"
-    imageAlt="Sigma Gamma Rho undergraduate members together"
-    index={1}
-  >
-    <h3>
-      Questions About <span class="gold">Joining or Reactivating?</span>
-    </h3>
-    <p>
-      Prospective members and returning Sorors can start with the membership and reactivation pages,
-      or reach the Help Center for guidance.
-    </p>
-    <ul class="contact-facts">
-      <li>
-        <a href={withBase("/membership/become-a-member/")}>Become a Member</a>
-      </li>
-      <li>
-        <a href={withBase("/membership/reactivate/")}>Reactivate Membership</a>
-      </li>
-      <li>
-        <a href={withBase("/resources/help-center/")}>Visit the Help Center</a>
-      </li>
-    </ul>
-  </FeatureRow>
-
-  <FeatureRow
-    eyebrow="Media & Press"
-    image="/images/Congressional Day on the Hill 2.jpg"
-    imageAlt="Sigma Gamma Rho members at Congressional Day on the Hill"
-    index={0}
-  >
-    <h3>
-      Reporting on <span class="gold">Sigma Gamma Rho?</span>
-    </h3>
-    <p>
-      Journalists, media outlets, and press contacts should reach the national Media Relations team
-      directly.
-    </p>
-    <a class="zigzag-link" href={withBase("/news-events/media-relations/")}>
-      Media Relations &rarr;
-    </a>
-  </FeatureRow>
-
-  <FeatureRow
-    eyebrow="Vendors & Partners"
-    image="/images/boule.jpg"
-    imageAlt="Sigma Gamma Rho members at Boulé"
-    index={1}
-  >
-    <h3>
-      Want to <span class="gold">Work With Us?</span>
-    </h3>
-    <p>
-      Approved vendors and prospective corporate or foundation partners can find guidelines and next
-      steps here.
-    </p>
-    <ul class="contact-facts">
-      <li>
-        <a href={withBase("/resources/vendor/")}>Vendor Information</a>
-      </li>
-      <li>
-        <a href={withBase("/service-impact/corporate-partnerships/")}>Corporate Partnerships</a>
-      </li>
-    </ul>
-  </FeatureRow>
+  <section class="ct-portal on-dark">
+    <div class="container ct-portal__inner">
+      <div>
+        <h2>Already a member?</h2>
+        <p>Check dues status, update your contact details, and manage your membership in your member profile.</p>
+      </div>
+      <a class="btn" href={PORTAL_URL} target="_blank" rel="noopener">
+        Log in to Poodle Portal <span aria-hidden="true">&#8599;</span>
+      </a>
+    </div>
+  </section>
 </Base>
 
+<script>
+  import { wireComposeForms } from "../scripts/compose-email";
+
+  wireComposeForms();
+</script>
+
 <style>
-  .contact-hero {
-    position: relative;
-    overflow: hidden;
+  .ct-hero {
     background: var(--cream);
-    color: var(--navy);
-  }
-  .contact-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(32, 65, 165, 0.18) 1.5px, transparent 1.5px);
-    background-size: 26px 26px;
-    mask-image: radial-gradient(circle at 82% 30%, #000 0%, transparent 65%);
-  }
-  .contact-hero__inner {
-    position: relative;
     padding-block: clamp(3rem, 6vw, 4rem);
   }
   .breadcrumb {
@@ -155,8 +184,6 @@ import { withBase } from "../lib/url.js";
     flex-wrap: wrap;
     gap: var(--space-2);
     margin: 0 0 var(--space-5);
-    /* was rgba(royal, .6) — 3.21:1 on cream at 11px. --muted-2 is the
-       secondary-text token the other breadcrumbs already use. */
     color: var(--muted-2);
     font-size: var(--text-xs);
     font-weight: 700;
@@ -164,54 +191,144 @@ import { withBase } from "../lib/url.js";
   .breadcrumb a {
     color: inherit;
   }
-  .contact-hero__title {
-    max-width: 600px;
-    margin: 0;
-    font-family: var(--font-head);
-    font-weight: 400;
-    font-size: clamp(2.6rem, 5vw, 3.6rem);
-    line-height: 1.05;
-    color: var(--navy);
+  .ct-hero h1 {
+    margin: var(--space-2) 0 0;
   }
-  .contact-hero__title span {
-    color: var(--royal);
-  }
-  .contact-hero__lead {
-    max-width: 540px;
-    margin: var(--space-5) 0 0;
+  .ct-hero__lead {
+    max-width: 40rem;
+    margin: var(--space-4) 0 0;
     color: var(--muted);
   }
 
-  .gold {
-    color: var(--accent-text);
+  .ct-main {
+    background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .contact-facts {
-    margin: var(--space-5) 0 0;
+  .ct-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-10);
+    align-items: start;
+  }
+  .ct-card,
+  .ct-form {
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .ct-card h2,
+  .ct-form h2 {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--ink);
+  }
+  .ct-card dl {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+  }
+  .ct-card dt {
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ct-card dd {
+    margin: var(--space-1) 0 0;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .ct-card dd a {
+    color: var(--royal);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .ct-card h3 {
+    margin: var(--space-8) 0 var(--space-2);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ct-routes {
+    margin: 0;
     padding: 0;
     list-style: none;
   }
-  .contact-facts li {
-    padding: var(--space-3) 0;
-    border-top: 1px solid var(--line);
+  .ct-routes a {
+    display: block;
+    padding-block: var(--space-2);
+    color: var(--royal);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ct-routes a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+  }
+
+  .ct-form {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .ct-form h2 {
+    margin: 0;
+  }
+  .ct-form__hint {
+    margin: calc(var(--space-3) * -1) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .contact-facts a {
+  .ct-form__hint a {
     color: var(--royal);
-    text-decoration: none;
     font-weight: 700;
   }
-  .zigzag-link {
-    display: inline-block;
-    margin-top: var(--space-5);
-    color: var(--royal);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: var(--text-sm);
+  .ct-form small {
+    color: var(--muted);
+    font-weight: 400;
   }
-  .zigzag-link:hover {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
+  .ct-submit {
+    justify-content: center;
+    width: 100%;
+  }
+  @media (max-width: 900px) {
+    .ct-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .ct-card,
+    .ct-form {
+      padding: var(--space-5);
+    }
+  }
+
+  .ct-portal {
+    background: var(--grad-royal);
+    color: #fff;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .ct-portal__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5) var(--space-10);
+  }
+  .ct-portal h2 {
+    margin: 0;
+    color: #fff;
+    font-size: var(--text-h3);
+  }
+  .ct-portal p {
+    margin: var(--space-2) 0 0;
+    max-width: 40rem;
+    color: rgba(255, 255, 255, 0.85);
   }
 </style>
