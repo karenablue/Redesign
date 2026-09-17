@@ -23,10 +23,25 @@ export const primaryNav = [
       { label: "The Seven Founders", href: "/about/our-founders/" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
       { label: "International Corporate Headquarters", href: "/about/headquarters/" },
+    ],
+  },
+  {
+    label: "Leadership",
+    children: [
       { label: "International Grand Basileus", href: "/leadership/international-grand-basileus/" },
       { label: "International Board of Directors", href: "/leadership/international-board/" },
       { label: "Regional Leadership", href: "/leadership/regional-leadership/" },
       { label: "Past Grand Basilei", href: "/leadership/past-grand-basilei/" },
+    ],
+  },
+  {
+    label: "Membership & Intake",
+    children: [
+      { label: "Become a Member", href: "/membership/become-a-member/" },
+      { label: "Reactivate Membership", href: "/membership/reactivate/" },
+      { label: "Chapter Locator", href: "/membership/chapter-locator/" },
+      { label: "Affiliates", href: "/membership/affiliates/" },
+      { label: "Membership Accountability", href: "/membership/accountability/" },
     ],
   },
   {
@@ -38,17 +53,6 @@ export const primaryNav = [
     ],
   },
   {
-    label: "Membership & Intake",
-    children: [
-      { label: "Become a Member", href: "/membership/become-a-member/" },
-      { label: "Reactivate Membership", href: "/membership/reactivate/" },
-      { label: "Chapter Locator", href: "/membership/chapter-locator/" },
-      { label: "Affiliates", href: "/membership/affiliates/" },
-      { label: "Membership Accountability", href: "/membership/accountability/" },
-      { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
-    ],
-  },
-  {
     label: "News & Events",
     children: [
       { label: "Latest News", href: "/news-events/latest-news/" },
@@ -57,14 +61,15 @@ export const primaryNav = [
     ],
   },
   {
-    label: "Contact",
+    label: "Resources",
     children: [
-      { label: "Contact Headquarters", href: "/contact/" },
       { label: "Help Center", href: "/resources/help-center/" },
-      { label: "Careers", href: "/resources/careers/" },
+      { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
       { label: "Licensed Vendors", href: "/resources/vendor/" },
+      { label: "Careers", href: "/resources/careers/" },
     ],
   },
+  { label: "Contact", href: "/contact/" },
 ];
 
 /* Deck 1's two utility actions, right of the wordmark. */
