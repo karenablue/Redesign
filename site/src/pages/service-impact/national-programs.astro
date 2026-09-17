@@ -3,19 +3,30 @@
  * National Programs — ported from the original
  * service-impact/national-programs/nationalprograms.html.
  *
- * Treatment: hero with a jump-nav to all five programs and the real service
- * stat band, then each program gets its own alternating section with a
- * working 3-image carousel and focus tags, closing on the real "Service
- * Through the Decades" section (not an invented CTA band).
+ * Treatment: hero with a jump-nav and a three-figure ribbon (HQ's reported
+ * figures, unchanged), then a 60/40 showcase per program on one light canvas:
+ * a large photograph and a narrative card. A program with no real photograph
+ * shows its official mark in a framed panel until one is supplied. Closes on
+ * documented program partners and "Service Through the Decades".
  */
 import Base from "../../layouts/Base.astro";
-import Carousel from "../../components/Carousel.astro";
 import { withBase } from "../../lib/url.js";
 
 const heroStats = [
   { value: "2,145,830", label: "Hours of Service" },
   { value: "$7,450,200", label: "Donated to Philanthropy" },
   { value: "$3,125,500", label: "Awarded in Scholarships" },
+];
+
+const PARTNER_URL = "/service-impact/corporate-partnerships/";
+
+/** Partners already documented on this site (Corporate Partnerships). */
+const programPartners = [
+  { name: "USA Swimming", logo: "/images/USA Swimming.svg", note: "Swim 1922" },
+  { name: "National Alliance on Mental Illness", logo: "/images/National Alliance on Mental Illness.jpg", note: "Women's Wellness" },
+  { name: "National Education Fund", logo: "/images/foundations/nef.png", note: "Allied foundation" },
+  { name: "SPEAR Foundation", logo: "/images/foundations/spear.png", note: "Allied foundation" },
+  { name: "Seven Pearls Foundation", logo: "/images/foundations/seven-pearls.png", note: "Allied foundation" },
 ];
 
 const jumpLinks = [
@@ -29,8 +40,7 @@ const jumpLinks = [
 const programs = [
   {
     id: "bigbookbag",
-    number: "National Program 01",
-    tone: "light",
+    kicker: "National Initiative • Est. 1996",
     logo: "/images/Operation BigBookBag.png",
     name: "Operation BigBookBag®",
     lead: "Removing educational barriers by placing the tools students need directly into their hands.",
@@ -39,23 +49,12 @@ const programs = [
       "Established in 1996 under Dr. LaRona J. Morris, 18th International Grand Basileus, the program has expanded to include STEM exposure, tutoring, mentoring, and year-round educational support.",
     ],
     focus: ["School Supplies", "STEM Exposure", "Tutoring", "Mentoring"],
-    images: [
-      { src: "/images/operation-bigbookbag-2.jpg", caption: "Operation BigBookBag in action." },
-      {
-        src: "/images/operation-bigbookbag-4.jpg",
-        caption: "Providing educational materials and school supplies.",
-      },
-      {
-        src: "/images/operation-bigbookbag-2.jpg",
-        caption: "Local chapters supporting students and schools.",
-      },
-    ],
+    photo: "/images/operation-bigbookbag-4.jpg" as string | null,
   },
   {
     id: "wellness",
-    number: "National Program 02",
-    tone: "cream",
     flip: true,
+    kicker: "National Initiative",
     logo: "/images/Women’s Wellness Initiative.png",
     name: "Women's Wellness Initiative",
     lead: "Supporting informed, empowered decisions about physical, mental, and emotional health.",
@@ -64,28 +63,11 @@ const programs = [
       "The initiative encourages healthy lifestyles, informed health decisions, risk reduction, and stronger representation of African American women in health research.",
     ],
     focus: ["Heart Health", "Mental Health", "Breast Health", "Health Equity"],
-    images: [
-      {
-        src: "/images/Women’s Wellness Initiative.png",
-        caption: "Health education designed with women in mind.",
-        fit: "contain" as const,
-      },
-      {
-        src: "/images/Women’s Wellness Initiative.png",
-        caption: "Creating space for informed health decisions.",
-        fit: "contain" as const,
-      },
-      {
-        src: "/images/Women’s Wellness Initiative.png",
-        caption: "Physical, mental, and emotional wellness.",
-        fit: "contain" as const,
-      },
-    ],
+    photo: null as string | null,
   },
   {
     id: "swim",
-    number: "National Program 03",
-    tone: "navy",
+    kicker: "National Initiative",
     logo: "/images/Swim 1922.png",
     name: "SWIM 1922®",
     lead: "Increasing water safety, swimming access, and confidence in communities historically excluded from aquatic participation.",
@@ -93,26 +75,12 @@ const programs = [
       "Swim 1922 addresses racial disparities in swimming and drowning by providing opportunities for youth and adults to learn water safety and swimming skills. Through the partnership with USA Swimming, members and swimming professionals bring instruction and exposure directly into local communities.",
     ],
     focus: ["Water Safety", "Swimming Access", "Confidence", "Community Education"],
-    images: [
-      {
-        src: "/images/swim-1922-1-768x432.jpg",
-        caption: "Building confidence in and around the water.",
-      },
-      {
-        src: "/images/swim-1922-2-768x432.jpg",
-        caption: "Expanding access to swimming instruction.",
-      },
-      {
-        src: "/images/swim-1922-5-768x432.jpg",
-        caption: "Changing attitudes and building safer communities.",
-      },
-    ],
+    photo: "/images/swim-1922-1-768x432.jpg" as string | null,
   },
   {
     id: "cradle",
-    number: "National Program 04",
-    tone: "cream",
     flip: true,
+    kicker: "National Initiative",
     logo: "/images/Project Cradle Care.png",
     name: "Project CRADLE Care®",
     lead: "Advancing healthier maternal and infant outcomes through education, advocacy, outreach, and awareness.",
@@ -121,22 +89,11 @@ const programs = [
       "Through collaboration with March of Dimes, the program connects communities with information, support, and resources intended to strengthen maternal and infant health.",
     ],
     focus: ["Maternal Health", "Infant Health", "Advocacy", "Health Equity"],
-    images: [
-      { src: "/images/project-cradle-care-3.jpg", caption: "Project CRADLE Care in action." },
-      {
-        src: "/images/project-cradle-care-3.jpg",
-        caption: "Maternal and infant health education and outreach.",
-      },
-      {
-        src: "/images/project-cradle-care-3.jpg",
-        caption: "Community awareness and support for healthier families.",
-      },
-    ],
+    photo: "/images/project-cradle-care-3.jpg" as string | null,
   },
   {
     id: "youth",
-    number: "National Program 05",
-    tone: "light",
+    kicker: "National Initiative",
     logo: "/images/Annual Youth Symposium.png",
     name: "Annual Youth Symposium",
     lead: "A nationwide day of relevant, hands-on programming designed to empower young people and strengthen their futures.",
@@ -145,20 +102,7 @@ const programs = [
       "Originated under Dr. LaRona J. Morris during her 1996–2000 administration, the program continues with a standardized agenda designed to support educational and behavioral outcomes for youth.",
     ],
     focus: ["Leadership", "Education", "Life Skills", "Youth Empowerment"],
-    images: [
-      {
-        src: "/images/youth-symposium-1-768x432.jpg",
-        caption: "Relevant programming centered on young people.",
-      },
-      {
-        src: "/images/youth-symposium-2-768x432.jpg",
-        caption: "Hands-on learning and leadership development.",
-      },
-      {
-        src: "/images/youth-symposium-4-768x432.jpg",
-        caption: "Investing in stronger educational and life outcomes.",
-      },
-    ],
+    photo: "/images/youth-symposium-1-768x432.jpg" as string | null,
   },
 ];
 ---
@@ -220,33 +164,54 @@ const programs = [
     </div>
   </section>
 
-  {programs.map((p) => (
-    <section id={p.id} class:list={["program", `program--${p.tone}`]}>
-      <div class:list={["container program__shell", { "program__shell--flip": p.flip }]}>
-        <div class="program__copy">
-          <p class="program__number">{p.number}</p>
-          <img class="program__logo" src={withBase(p.logo)} alt={p.name} loading="lazy" decoding="async" />
-          <h2 class="visually-hidden">{p.name}</h2>
-          <p class="program__lead">{p.lead}</p>
-          {p.body.map((para) => (
-            <p>{para}</p>
-          ))}
-          <div class="program__focus">
-            {p.focus.map((f) => (
-              <span>{f}</span>
+  <div class="showcase">
+    {programs.map((p, i) => (
+      <section id={p.id} class:list={["program", { "program--alt": i % 2 === 1 }]}>
+        <div class:list={["container program__shell", { "program__shell--flip": i % 2 === 1 }]}>
+          <figure class:list={["program__visual", { "program__visual--mark": !p.photo }]}>
+            {p.photo ? (
+              <img src={withBase(p.photo)} alt={`${p.name.replace("®", "")} in action`} width="900" height="600" loading="lazy" decoding="async" />
+            ) : (
+              <img src={withBase(p.logo)} alt={`${p.name} mark`} width="468" height="145" loading="lazy" decoding="async" />
+            )}
+          </figure>
+          <div class="program__card">
+            <p class="program__kicker">{p.kicker}</p>
+            {p.photo && (
+              <img class="program__logo" src={withBase(p.logo)} alt="" loading="lazy" decoding="async" />
+            )}
+            <h2 class="program__name">{p.name}</h2>
+            <p class="program__lead">{p.lead}</p>
+            {p.body.map((para) => (
+              <p>{para}</p>
             ))}
+            <div class="program__focus">
+              {p.focus.map((f) => (
+                <span>{f}</span>
+              ))}
+            </div>
+            <a class="program__cta" href={withBase(PARTNER_URL)}>
+              Partner With Us <span aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </div>
+      </section>
+    ))}
+  </div>
 
-        <Carousel
-          images={p.images}
-          tone={p.tone === "navy" ? "navy" : "light"}
-          label="Program in Action"
-          ariaLabel={`${p.name} image gallery`}
-        />
-      </div>
-    </section>
-  ))}
+  <section class="partners-strip" aria-labelledby="partners-title">
+    <div class="container">
+      <h2 id="partners-title">Program Partners &amp; Allied Foundations</h2>
+      <ul>
+        {programPartners.map((x) => (
+          <li>
+            <img src={withBase(x.logo)} alt={x.name} loading="lazy" decoding="async" />
+            <span>{x.note}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 
   <section class="service-history">
     <div class="container service-history__inner">
@@ -281,6 +246,8 @@ const programs = [
   }
   .programs-hero__inner {
     padding-block: clamp(3.5rem, 7vw, 5rem);
+  }
+  .programs-hero__inner > :not(.hero-stat-band) {
     max-width: 50rem;
     margin-inline: auto;
   }
@@ -327,16 +294,13 @@ const programs = [
   }
   .jump-nav a:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
+    border-color: #fff;
   }
 
+  /* One horizontal ribbon: three equal columns with hairline dividers. */
   .hero-stat-band {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-10);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: var(--space-10);
     padding-top: var(--space-8);
     border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -344,10 +308,26 @@ const programs = [
   .hero-stat {
     display: flex;
     flex-direction: column;
+    padding-inline: var(--space-4);
+  }
+  .hero-stat + .hero-stat {
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  @media (max-width: 800px) {
+    .hero-stat-band {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .hero-stat + .hero-stat {
+      border-left: 0;
+    }
   }
   .hero-stat strong {
     font-family: var(--font-label);
-    font-size: var(--text-stat);
+    /* Sized to its third of the ribbon; --text-stat collides at desktop. */
+    font-size: clamp(2rem, 1rem + 2.6vw, 3.25rem);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
     color: #fff;
   }
   .hero-stat span {
@@ -388,63 +368,82 @@ const programs = [
     }
   }
 
-  /* ---- program sections ---- */
+  /* ---- program showcases: 60/40, one light canvas ---- */
   .program {
-    padding-block: clamp(3rem, 6vw, 4.5rem);
-    scroll-margin-top: 90px;
-  }
-  .program--light {
     background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+    scroll-margin-top: 200px;
   }
-  .program--cream {
+  .program--alt {
     background: var(--cream);
-  }
-  .program--navy {
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .program--navy .program__lead,
-  .program--navy p {
-    color: rgba(255, 255, 255, 0.85);
-  }
-  .program--navy .program__number {
-    color: var(--gold);
   }
   .program__shell {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-    gap: var(--space-14);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: var(--space-12);
     align-items: center;
   }
   .program__shell--flip {
-    direction: rtl;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
   }
-  .program__shell--flip > * {
-    direction: ltr;
+  .program__shell--flip .program__visual {
+    order: 2;
   }
-  .program__number {
+  .program__visual {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .program__visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  .program__visual--mark {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 2;
+    padding: var(--space-10);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+  .program__visual--mark img {
+    width: min(100%, 420px);
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
+  .program__kicker {
+    margin: 0 0 var(--space-4);
+    color: var(--muted-2);
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent-text);
-    margin: 0 0 var(--space-3);
+  }
+  .program--alt .program__kicker {
+    color: var(--muted);
   }
   .program__logo {
-    height: 56px;
+    display: block;
+    height: 48px;
     width: auto;
-    margin-bottom: var(--space-5);
+    max-width: 100%;
+    margin-bottom: var(--space-4);
+  }
+  .program__name {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-h3);
+    line-height: 1.15;
   }
   .program__lead {
     font-weight: 700;
-    font-size: var(--text-lg);
     color: var(--ink);
   }
-  .program--navy .program__lead {
-    color: #fff;
-  }
-  .program__copy p:not(.program__number, .program__lead) {
+  .program__card p:not(.program__kicker, .program__lead) {
     color: var(--muted);
+    font-size: var(--text-sm);
   }
   .program__focus {
     display: flex;
@@ -453,24 +452,67 @@ const programs = [
     margin-top: var(--space-5);
   }
   .program__focus span {
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--royal);
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.04em;
-    padding: 0.35rem 0.8rem;
-    border-radius: 999px;
-    background: rgba(223, 177, 54, 0.15);
-    color: var(--accent-text);
   }
-  .program--navy .program__focus span {
-    background: rgba(255, 255, 255, 0.12);
-    color: var(--gold);
+  .program__cta {
+    display: inline-block;
+    margin-top: var(--space-6);
+    color: var(--royal);
+    font-weight: 700;
   }
-  @media (max-width: 860px) {
+  @media (max-width: 900px) {
     .program__shell,
     .program__shell--flip {
       grid-template-columns: 1fr;
-      direction: ltr;
+      gap: var(--space-8);
     }
+    .program__shell--flip .program__visual {
+      order: 0;
+    }
+  }
+
+  /* ---- partner strip ---- */
+  .partners-strip {
+    background: var(--white);
+    padding-block: clamp(3rem, 5vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+  .partners-strip h2 {
+    margin: 0 0 var(--space-8);
+    text-align: center;
+    font-size: var(--text-h3);
+  }
+  .partners-strip ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-8) var(--space-12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .partners-strip li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .partners-strip img {
+    height: 72px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+  }
+  .partners-strip span {
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
   }
 
   /* ---- service history ---- */
