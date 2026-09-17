@@ -14,31 +14,31 @@ import { withBase } from "../../lib/url.js";
 const regions = [
   {
     name: "Central",
-    img: "/images/Central Region.png",
+    img: "/images/regions/central.png",
     body: "Serving undergraduate and alumnae chapters across the central United States.",
     href: "https://www.sgrhocentral.com/chapter-locator",
   },
   {
     name: "Northeastern",
-    img: "/images/Northeastern Region.jpg",
+    img: "/images/regions/northeastern.png",
     body: "Serving chapters across the northeastern United States and affiliated international areas.",
     href: "https://www.sgrhoneregion.org/chapter-locator-2",
   },
   {
     name: "Southeastern",
-    img: "/images/Southeastern Region.jpg",
+    img: "/images/regions/southeastern.png",
     body: "Alabama, The Bahamas, Florida, Georgia, Mississippi, South Carolina, Tennessee, and the U.S. Virgin Islands.",
     href: "https://www.seregionsgrho.org/team-3",
   },
   {
     name: "Southwestern",
-    img: "/images/Southwestern Region.jpg",
+    img: "/images/regions/southwestern.png",
     body: "Serving chapters throughout the southwestern United States and affiliated areas.",
     href: "https://www.sigmaswregion.com/locate",
   },
   {
     name: "Western",
-    img: "/images/Western Region.jpg",
+    img: "/images/regions/western.png",
     body: "Serving chapters across the western United States and affiliated international areas.",
     href: "https://www.westernsgrho.org/wr-chapter-directory",
   },
@@ -642,14 +642,16 @@ const regions = [
   .region-art {
     display: grid;
     place-items: center;
-    height: 180px;
+    height: 176px;
     padding: var(--space-6);
+    background: var(--tint);
     border-bottom: 1px solid var(--line);
   }
+  /* The marks are pre-cut transparent PNGs (images/regions/), so each one
+     renders at the same size with no source background showing. */
   .region-art img {
-    width: auto;
-    max-width: min(100%, 140px);
-    max-height: 132px;
+    width: 128px;
+    height: 128px;
     object-fit: contain;
   }
   .region-copy {
