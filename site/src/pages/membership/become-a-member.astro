@@ -466,16 +466,12 @@ const accountabilityLinks = [
       </div>
       <div class="accountability-links">
         {accountabilityLinks.map((l) => (
-          <a
-            href={l.external ? l.href : withBase(l.href)}
-            target={l.external ? "_blank" : undefined}
-            rel={l.external ? "noopener" : undefined}
-          >
+          <a href={withBase(l.href)}>
             <span class="link-body">
               <strong>{l.title}</strong>
               <small>{l.note}</small>
             </span>
-            <b aria-hidden="true">{l.external ? "↗" : "→"}</b>
+            <b aria-hidden="true">→</b>
           </a>
         ))}
       </div>

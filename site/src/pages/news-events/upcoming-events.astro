@@ -3,14 +3,44 @@ import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
 import { getCollection, render } from "astro:content";
 
-// Events are markdown files in src/content/events/, so HQ can edit them
-// through a CMS after handover without anyone touching this page. `order`
-// carries the curated season sequence: it cannot be derived by sorting,
-// because several entries have fuzzy dates ("Sep–Oct", a day of "—").
+/*
+ * Events are markdown files in src/content/events/, so HQ can edit them
+ * through a CMS after handover without anyone touching this page. `order`
+ * carries the curated season sequence: it cannot be derived by sorting,
+ * because several entries have fuzzy dates ("Sep–Oct", a day of "—").
+ *
+ * The list groups consecutive entries by the month they start in. Entries carry no
+ * year, registration link or exact time yet, so there are no Register or
+ * Add-to-Calendar actions; add fields to the schema when HQ supplies them.
+ */
 const entries = (await getCollection("events")).sort((a, b) => a.data.order - b.data.order);
 const events = await Promise.all(
   entries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content })),
 );
+
+const MONTHS: Record<string, string> = {
+  Jan: "January", Feb: "February", Mar: "March", Apr: "April", May: "May", Jun: "June",
+  Jul: "July", Aug: "August", Sep: "September", Oct: "October", Nov: "November", Dec: "December",
+};
+const monthName = (m: string) => m.split("–").map((p) => MONTHS[p.trim()] ?? p).join(" – ");
+const format = (location: string) =>
+  /virtual/i.test(location) ? "Virtual" : /various/i.test(location) ? "Multiple locations" : "In person";
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+const featured = events.find((e) => e.featured);
+const listed = events.filter((e) => e !== featured);
+
+// A range like "Sep–Oct" files under the month it starts in; its badge still
+// shows the full range.
+const startMonth = (m: string) => m.split("–")[0].trim();
+const groups: { month: string; items: typeof listed }[] = [];
+for (const e of listed) {
+  const key = startMonth(e.month);
+  const last = groups.at(-1);
+  if (last && last.month === key) last.items.push(e);
+  else groups.push({ month: key, items: [e] });
+}
+const categories = [...new Set(listed.map((e) => e.tag))];
 ---
 
 <Base
@@ -33,27 +63,69 @@ const events = await Promise.all(
 
   <section class="ue-main">
     <div class="container">
-      {/* The event titles below are h3. Without a real h2 between them and the
-          page h1, the outline jumps h1 -> h3, which screen-reader users
-          navigate by. Promoting them to h2 is not the fix: global h2 is LEMON
-          MILK and card titles are deliberately Montserrat. */}
-      <h2 class="visually-hidden">All upcoming events</h2>
-      <div class="ue-grid">
-        {events.map((e) => (
-          <article class="ue-card">
-            <div class="ue-date">
-              <span>{e.month}</span>
-              <strong>{e.day}</strong>
+      {featured && (
+        <article class="ue-feature">
+          <div class="ue-badge ue-badge--lg" aria-hidden="true">
+            <span>{featured.month}</span>
+            <strong>{featured.day}</strong>
+          </div>
+          <div class="ue-feature__copy">
+            <p class="ue-kicker">Featured &bull; {featured.tag}</p>
+            <h2>{featured.title}</h2>
+            <p class="ue-where">
+              {monthName(featured.month)} {featured.day} &bull; {featured.location}
+            </p>
+            <div class="ue-summary">
+              <featured.Body />
             </div>
-            <div class="ue-body">
-              <span class="ue-tag">{e.tag}</span>
-              <h3>{e.title}</h3>
-              <p class="ue-location">{e.location}</p>
-              <e.Body />
-            </div>
-          </article>
+          </div>
+        </article>
+      )}
+
+      <div class="ue-filters" role="group" aria-label="Filter events by category" hidden>
+        <button type="button" class="is-active" aria-pressed="true" data-cat="all">All Events</button>
+        {categories.map((c) => (
+          <button type="button" aria-pressed="false" data-cat={slug(c)}>
+            {c}
+          </button>
         ))}
       </div>
+
+      <div class="ue-list">
+        {groups.map((g) => (
+          <section class="ue-month" aria-labelledby={`m-${slug(g.month)}-${g.items[0].order}`}>
+            <h2 class="ue-month__title" id={`m-${slug(g.month)}-${g.items[0].order}`}>
+              {monthName(g.month)}
+            </h2>
+            <ul>
+              {g.items.map((e) => (
+                <li class="ue-row" data-cat={slug(e.tag)}>
+                  <div class="ue-badge" aria-hidden="true">
+                    <span>{e.month}</span>
+                    <strong>{e.day}</strong>
+                  </div>
+                  <div class="ue-row__body">
+                    <p class="ue-tags">
+                      <span class="ue-tag">{e.tag}</span>
+                      <span class="ue-format">{format(e.location)}</span>
+                    </p>
+                    <h3>{e.title}</h3>
+                    <p class="ue-where">
+                      <span class="visually-hidden">{monthName(e.month)} {e.day}, </span>
+                      {e.location}
+                    </p>
+                    <div class="ue-summary">
+                      <e.Body />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+      <p class="ue-empty" hidden>No events in this category right now.</p>
+
       <p class="ue-cta">
         Looking for a chapter-level event near you?{" "}
         <a href={withBase("/membership/chapter-locator/")}>Find a Chapter &rarr;</a>
@@ -61,6 +133,31 @@ const events = await Promise.all(
     </div>
   </section>
 </Base>
+
+<script>
+  const bar = document.querySelector<HTMLElement>(".ue-filters");
+  if (bar) {
+    bar.hidden = false;
+    const buttons = [...bar.querySelectorAll<HTMLButtonElement>("button")];
+    const rows = [...document.querySelectorAll<HTMLElement>(".ue-row")];
+    const months = [...document.querySelectorAll<HTMLElement>(".ue-month")];
+    const empty = document.querySelector<HTMLElement>(".ue-empty");
+    buttons.forEach((b) =>
+      b.addEventListener("click", () => {
+        const cat = b.dataset.cat;
+        buttons.forEach((x) => {
+          const on = x === b;
+          x.classList.toggle("is-active", on);
+          x.setAttribute("aria-pressed", String(on));
+        });
+        rows.forEach((r) => (r.hidden = !(cat === "all" || r.dataset.cat === cat)));
+        // A month with nothing left to show drops its heading too.
+        months.forEach((m) => (m.hidden = !m.querySelector(".ue-row:not([hidden])")));
+        if (empty) empty.hidden = rows.some((r) => !r.hidden);
+      }),
+    );
+  }
+</script>
 
 <style>
   .ue-hero {
@@ -91,74 +188,192 @@ const events = await Promise.all(
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .ue-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-    gap: var(--space-6);
-  }
-  .ue-card {
-    display: flex;
-    gap: var(--space-5);
-    padding: var(--space-6);
-    background: var(--tint);
-    border-radius: var(--radius-lg);
-  }
-  .ue-date {
-    flex-shrink: 0;
+
+  /* ---- date badge: calendar tile ---- */
+  .ue-badge {
+    flex: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.15em;
-    min-width: 70px;
-    padding: 0.5em 0.4em;
-    background: var(--white);
+    width: 84px;
+    border: 1px solid var(--line);
     border-radius: var(--radius);
+    overflow: hidden;
     text-align: center;
+    background: var(--white);
   }
-  .ue-date span {
+  .ue-badge span {
+    padding: 0.3rem 0.25rem;
+    background: var(--royal);
+    color: #fff;
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-text);
   }
-  .ue-date strong {
+  .ue-badge strong {
+    padding: 0.55rem 0.25rem;
+    color: var(--ink);
     font-size: var(--text-lg);
-    color: var(--royal);
-    white-space: nowrap;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
   }
-  .ue-tag {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent-text);
+  .ue-badge--lg {
+    width: 120px;
   }
-  .ue-body h3 {
-    margin: var(--space-2) 0 var(--space-1);
-    font-size: var(--text-md);
+  .ue-badge--lg strong {
+    padding-block: 1rem;
+    font-size: var(--text-h3);
   }
-  .ue-location {
-    margin: 0 0 var(--space-2);
-    color: var(--royal);
-    font-size: var(--text-xs);
-    font-weight: 700;
+
+  /* ---- featured ---- */
+  .ue-feature {
+    display: flex;
+    gap: var(--space-8);
+    align-items: center;
+    margin-bottom: var(--space-12);
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    background: var(--tint);
   }
-  .ue-body > p:last-child {
+  .ue-kicker {
     margin: 0;
+    /* --muted, not --muted-2: this sits on the tint ground (4.47:1 otherwise). */
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ue-feature h2 {
+    margin: var(--space-2) 0 var(--space-2);
+    font-size: var(--text-h3);
+  }
+  .ue-where {
+    margin: 0;
+    color: var(--ink);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .ue-summary :global(p) {
+    margin: var(--space-2) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
 
+  /* ---- filters ---- */
+  .ue-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+  .ue-filters button {
+    min-height: 40px;
+    padding: 0 1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--royal);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .ue-filters button:hover {
+    border-color: var(--royal);
+  }
+  .ue-filters button.is-active {
+    border-color: var(--royal);
+    background: var(--royal);
+    color: #fff;
+  }
+
+  /* ---- chronological list ---- */
+  .ue-month + .ue-month {
+    margin-top: var(--space-10);
+  }
+  .ue-month__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0 0 var(--space-2);
+    color: var(--royal);
+    font-size: var(--text-lg);
+  }
+  .ue-month__title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .ue-month ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ue-row {
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .ue-row__body {
+    min-width: 0;
+  }
+  .ue-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+  }
+  .ue-tag,
+  .ue-format {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .ue-tag {
+    background: var(--tint);
+    color: var(--royal);
+  }
+  .ue-format {
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .ue-row h3 {
+    margin: var(--space-2) 0 var(--space-1);
+    color: var(--royal);
+    font-size: var(--text-md);
+  }
+  .ue-empty {
+    color: var(--muted);
+  }
   .ue-cta {
-    text-align: center;
-    margin-top: var(--space-12);
+    margin-top: var(--space-10);
     color: var(--muted);
   }
   .ue-cta a {
     color: var(--royal);
     font-weight: 700;
-    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .ue-feature {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--space-6);
+    }
+    .ue-row {
+      gap: var(--space-4);
+    }
+    .ue-badge {
+      width: 68px;
+    }
+    .ue-badge strong {
+      font-size: var(--text-md);
+    }
   }
 </style>
