@@ -107,32 +107,11 @@ test.describe("hero video, prefers-reduced-motion", () => {
   });
 });
 
-test("the program spotlight is keyboard-operable and does not navigate", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
-
-  const rows = page.locator(".program-index__row");
-  const count = await rows.count();
-  expect(count).toBeGreaterThan(1);
-
-  // Buttons, not links — these swap content in place, they don't go anywhere.
-  for (let i = 0; i < count; i++) {
-    await expect(rows.nth(i)).toHaveJSProperty("tagName", "BUTTON");
-    await expect(rows.nth(i)).toHaveAttribute("aria-controls", "program-spotlight");
+test("each signature program card links to its section on National Programs", async ({ page }) => {
+  await page.goto("/", { waitUntil: "load" });
+  const links = page.locator(".program-card h4 a");
+  await expect(links).toHaveCount(3);
+  for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""))) {
+    expect(href).toMatch(/\/service-impact\/national-programs\/#[a-z]+$/);
   }
-
-  const spotlight = page.locator("#program-spotlight");
-  await expect(spotlight).toHaveAttribute("aria-live", "polite");
-
-  // Exactly one row is ever current.
-  await expect(page.locator('.program-index__row[aria-current="true"]')).toHaveCount(1);
-
-  const urlBefore = page.url();
-  const before = await spotlight.locator(".program-spotlight__eyebrow").innerText();
-
-  await rows.first().focus();
-  await page.keyboard.press("Enter");
-
-  expect(page.url(), "activating a program must not navigate").toBe(urlBefore);
-  await expect(spotlight.locator(".program-spotlight__eyebrow")).not.toHaveText(before);
-  await expect(page.locator('.program-index__row[aria-current="true"]')).toHaveCount(1);
 });

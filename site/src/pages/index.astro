@@ -9,12 +9,17 @@
  *
  *   ACT I    THIS IS SIGMA      hero + scale fused into one opening — no
  *                                white "institutional" section breaking it.
- *   ACT II   THIS IS OUR WORK   one massive documentary photo + outcomes.
+ *   ACT II   THIS IS OUR WORK   a framed photo beside the statement, then
+ *                                three signature programs as photo cards.
  *   ACT III  THIS IS WHO WE ARE contemporary sisterhood → 1922 founding →
  *                                the woman leading it now, one continuous
  *                                editorial flow, not three separate modules.
- *   ACT IV   SIGMA RIGHT NOW    current activity, partnership, then a thin
- *                                routing line — not another full section.
+ *   ACT IV   SIGMA RIGHT NOW    a featured story beside the event list,
+ *                                partnership, then a thin routing line.
+ *
+ * One stat ribbon only (Act I). The figures are ones the site already
+ * states: 1922, 100,000+ members and 500 chapters (the Grand Basileus bio),
+ * and $7.4M+ donated to philanthropy (National Programs).
  */
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
@@ -24,14 +29,7 @@ import { getCollection } from "astro:content";
 
 // ACT I — organizational scale.
 const reachStats = [
-  {
-    value: "500+",
-    label: "Chapters",
-    icon: {
-      viewBox: "0 0 24 24",
-      path: "M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29L11.5 3.26zm0-2.26L2 6v2h19V6l-9.5-5z",
-    },
-  },
+  { value: "1922", label: "Founded" },
   {
     value: "100,000+",
     label: "Members",
@@ -40,118 +38,68 @@ const reachStats = [
       path: "M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85C21.93 14.21 20.99 14 20 14c-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z",
     },
   },
-  { value: "1922", label: "Founded" },
   {
-    value: "50",
-    label: "U.S. States & Territories",
-    icon: {
-      viewBox: "0 0 800.685 800.685",
-      path: "M800.196,248.076c-0.079-0.108-0.205-0.206-0.318-0.311c-6.391-6.022-50.159-2.275-50.159-2.275s-0.271,0.932-0.969,2.275 c-1.485,2.859-4.936,7.608-11.979,9.373c-10.354,2.586-157.908,5.172-161.791-5.181c-0.653-1.75-1.818-3.104-3.258-4.192 c-7.063-5.335-21.334-3.572-21.334-3.572s-1.106,1.468-2.892,3.572c-4.027,4.749-11.538,12.752-17.817,14.545 c-7.013,2.005-8.585-6.84-7.745-14.545c0.245-2.247,0.688-4.405,1.271-6.16c1.812-5.438-15.428-24.205-29.918-33.632 c-6.192-4.025-11.893-6.361-15.382-5.198c-11.647,3.883-72.487-19.414-72.487-19.414H193.214H28.763c0,0-0.792,8.261-2.147,15.461 c-0.127,0.667-0.257,1.32-0.393,1.963c-0.638,3.021-1.376,5.687-2.207,7.188c-0.54,0.981-1.117,1.474-1.722,1.27 c-0.556-0.184-1.367-0.653-2.327-1.27c-5.751-3.691-17.458-13.335-19.68-7.79c-0.709,1.771-0.035,4.533,1.279,7.79 c3.495,8.65,11.664,20.935,11.664,28.452c0,1.654,0,5.685,0,11.34c0,6.453,0,15.019,0,24.615c0,12.354,0,26.394,0,39.79 c0,8.698,0,17.113,0,24.615c0,13.418,0,23.909,0,27.781c0,5.052,3.265,8.64,7.358,12.009c7.435,6.127,17.61,11.546,15.939,23.768 c-0.039,0.284-0.045,0.564-0.069,0.847c-1.217,14.422,16.472,29.532,28.742,39.79c3.649,3.051,6.822,5.676,8.865,7.719 c3.774,3.775,9.119,10.467,14.632,16.895c7.727,9.014,15.784,17.514,20.315,16.762c7.766-1.295,22.005-6.475,31.065,3.883 c7.56,8.643,42.152,17.273,59.413,19.146h9.94c9.832-1.316,35.456-4.867,50.457,0c5.52,1.793,9.604,4.719,10.919,9.326 c1.528,5.346,4.308,10.566,7.449,15.289c7.509,11.279,17.142,19.658,17.142,19.658s6.475-10.354,10.356-18.121 c0.297-0.596,0.687-1.104,1.138-1.537c2.18-2.104,6.041-2.312,10.43,0c6.632,3.496,14.46,12.76,19.498,30.016 c1.013,3.477,2.396,6.723,4.025,9.773c5.7,10.674,14.598,18.828,22.798,24.613c10.465,7.383,19.773,10.912,19.773,10.912 s0-4.547,0.083-10.912c0.093-7.191,0.291-16.697,0.714-24.613c0.139-2.613,0.302-5.062,0.495-7.188 c1.294-14.234,44.009-27.182,51.773-28.479c7.768-1.293,59.541,22.008,59.541,14.244c0-6.521,8.226-12.139,17.755-18.367 c1.82-1.189,3.681-2.396,5.547-3.641c4.116-2.748,9.204-0.309,14.114,3.641c8.995,7.219,17.404,19.5,18.24,14.484 c1.293-7.771,25.89-3.883,28.476,5.174c1.524,5.344,3.497,12.938,4.599,20.131c0.767,4.998,1.108,9.811,0.583,13.525 c-0.363,2.545,1.315,6.627,4.007,11.086c6.887,11.42,20.383,25.355,23.176,22.562c1.706-1.703,3.664-11.434,4.442-22.562 c0.583-8.346,0.49-17.475-0.86-24.611c-0.944-4.975-2.496-8.982-4.878-11.068c-4.604-4.029-8.18-15.992-9.829-28.721 c-1.108-8.602-1.342-17.529-0.407-24.619c0.791-6.014,2.42-10.693,5.061-12.674c4.068-3.051,18.512-14.281,33.693-27.113 c9.606-8.121,19.513-16.881,27.268-24.613c11.199-11.164,17.926-20.192,12.814-22.051c-8.366-3.045-9.562-8.799-8.615-17.739 c0.664-6.264,2.371-14.078,3.436-23.677c0.039-0.334,0.086-0.623,0.129-0.938c2.915-21.554,18.086,4.392,24.474-24.954 c1.341-6.175,4.817-11,9.393-14.836c17.461-14.656,51.124-14.71,44.966-18.813c-1.896-1.271-3.253-3.322-4.066-5.802 c-2.514-7.642,0.136-19.402,7.949-25.264c4.006-3.001,12.067-8.515,20.148-14.526C790.469,262.837,803.375,252.046,800.196,248.076z",
-    },
-  },
-  {
-    value: "10",
-    label: "Countries",
+    value: "500+",
+    label: "Chapters",
     icon: {
       viewBox: "0 0 24 24",
-      path: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z",
+      path: "M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29L11.5 3.26zm0-2.26L2 6v2h19V6l-9.5-5z",
     },
   },
+  { value: "$7.4M+", label: "Donated to Philanthropy" },
 ];
 
-// ACT II — three layers, not one: what we accomplish (impact numbers),
-// where we focus (impact areas, as light framing), and how we do it (all
-// five national programs — these are institutional assets people should
-// recognize by name, not a program catalog flattened into vague buckets).
-const since2020 = [
-  { value: "2.1M+", label: "Hours of Service" },
-  { value: "$7.4M+", label: "Philanthropic Impact" },
-  { value: "$3.1M+", label: "In Scholarships" },
-];
-// All five national flagship programs — mirrors
-// service-impact/national-programs.astro. Every one is visible in the list;
-// clicking a row swaps the larger spotlight (image, statement, body, CTA)
-// client-side — a selector, not a ranking of one program over the other
-// four.
-const programs = [
+// ACT II — the three signature programs get photo cards; the other two
+// national programs are named in a line beneath them.
+const signature = [
   {
-    n: "01",
-    title: "Project CRADLE Care®",
-    descriptor: "Maternal & infant health",
-    statement: "Maternal and infant health shouldn't depend on your ZIP code.",
-    body: "Maternal and infant health education, advocacy, and outreach.",
-    href: "/service-impact/national-programs/#cradle",
-    img: "/images/project-cradle-care-3.jpg",
+    title: "Operation BigBookBag®",
+    descriptor: "Educational access & resources",
+    statement: "Expanding access to educational resources for students and families.",
+    href: "/service-impact/national-programs/#bigbookbag",
+    img: "/images/operation-bigbookbag-4.jpg",
   },
   {
-    n: "02",
     title: "SWIM 1922®",
     descriptor: "Water safety & swim education",
     statement: "Every child deserves to feel safe in the water.",
-    body: "Water safety and swim education in communities where access is limited.",
     href: "/service-impact/national-programs/#swim",
     img: "/images/swim-1922-1-768x432.jpg",
   },
   {
-    n: "03",
-    title: "Operation BigBookBag®",
-    descriptor: "Educational access & resources",
-    statement: "Expanding access to educational resources for students and families.",
-    body: "Educational resources and school supplies for students and families.",
-    href: "/service-impact/national-programs/#bigbookbag",
-    img: "/images/operation-bigbookbag-2.jpg",
-  },
-  {
-    n: "04",
-    title: "Annual Youth Symposium",
-    descriptor: "Youth development & leadership",
-    statement: "Empowering the next generation starts with showing up for them today.",
-    body: "Youth development, leadership, education, and enrichment.",
-    href: "/service-impact/national-programs/#youth",
-    img: "/images/youth-symposium-2-768x432.jpg",
-  },
-  {
-    n: "05",
-    title: "Women's Wellness Initiative",
-    descriptor: "Women's health & wellness",
-    statement: "Health equity begins with informed choices.",
-    body: "Programs supporting women's physical, emotional, and community wellness.",
-    href: "/service-impact/national-programs/#wellness",
-    img: "/images/Women’s Wellness Initiative.png",
-    imgFit: "contain",
+    title: "Project CRADLE Care®",
+    descriptor: "Maternal & infant health",
+    statement: "Maternal and infant health shouldn't depend on your ZIP code.",
+    href: "/service-impact/national-programs/#cradle",
+    img: "/images/project-cradle-care-3.jpg",
   },
 ];
-const defaultProgram = programs[2]; // Operation BigBookBag
+const morePrograms = [
+  { title: "Annual Youth Symposium", href: "/service-impact/national-programs/#youth" },
+  { title: "Women's Wellness Initiative", href: "/service-impact/national-programs/#wellness" },
+];
 
 // ACT III — the range of women who call Sigma Gamma Rho home.
 const memberJourney = ["Collegiate Women", "Professionals", "Community Leaders", "Lifelong Members"];
 
 // The next five events, read from the same collection the upcoming-events
 // page renders, so this column cannot drift from it. It previously showed a
-// single hardcoded entry. Five rather than three because the column sits
-// beside a tall featured-news card, and five rows stand up to it.
+// single hardcoded entry. Four rows balance the featured story beside them.
 const upcoming = (await getCollection("events"))
   .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 5)
+  .slice(0, 4)
   .map((e) => e.data);
 
-// ACT IV — a featured story and a news item, mirroring the real entries on
-// news-events/latest-news. The events beside them come from `upcoming` above.
-const happening = [
-  {
-    tag: "Featured Story",
-    img: "/images/Beta Alpha.jpg",
-    date: "July 31, 2026",
-    title: "Sigma Gamma Rho Inducts 21 Honorary Members at 61st Biennial Boule",
-    body: "A historic class of 21 honorary members joined the Sorority at its 61st Biennial Boule in Tampa.",
-    href: "/news-events/latest-news/",
-  },
-  {
-    img: "/images/Congressional Day on the Hill.jpg",
-    title: "Sigma Gamma Rho Brings Service & Multi-Million Dollar Impact to Tampa",
-    href: "/news-events/latest-news/",
-  },
-];
+// ACT IV — the lead story from Latest News, which has its own page; the
+// events beside it come from `upcoming` above.
+const featuredStory = {
+  tag: "Boulé",
+  date: "July 2026",
+  img: "/images/boule.jpg",
+  title: "Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé",
+  body: "Thousands of members, partners, and guests gathered at the Tampa Convention Center, the first Sigma Gamma Rho international convention in Tampa since 1976.",
+  href: "/news-events/latest-news/61st-biennial-boule/",
+};
 
 // All fourteen real, already-published corporate/nonprofit partners (from
 // service-impact/corporate-partnerships) — not a curated subset. Each links
@@ -224,89 +172,54 @@ const nextSteps = [
        that takes over the full width of the page, then outcomes as plain
        editorial numerals and columns — no card backgrounds. -->
   <section class="section act-work">
-    <div class="container act-work__head">
-      <p class="eyebrow">Greater Service</p>
-      <h2 class="act-work__statement">
-        Greater Service isn't just our slogan. <span>It's our work.</span>
-      </h2>
-    </div>
-
-    <figure class="act-work__photo">
-      <img
-        src={withBase("/images/youth-symposium-1-768x432.jpg")}
-        alt="Sorors leading programming at the Annual Youth Symposium"
-      />
-    </figure>
-
     <div class="container">
-      <div class="act-work__stats">
-        {since2020.map((s) => (
-          <div class="act-work__stat">
-            <span class="act-work__stat-value">{s.value}</span>
-            <span class="act-work__stat-label">{s.label}</span>
-          </div>
-        ))}
-      </div>
-
-      <!-- claim → evidence → the programs responsible for the work. No
-           extra taxonomy layer between the metrics and the programs
-           themselves. -->
-      <!-- How we do it: all five national flagship programs — visible by
-           name, not flattened into a taxonomy. One is spotlighted at
-           a time; every row is clickable and swaps it (client-side, no
-           reload), so this is a selector, not a ranking. -->
-      <h3 class="act-work__programs-label">Our National Programs</h3>
-      <div class="act-work__programs">
-        <!-- Buttons, not links: activating a row swaps the panel beside it,
-             it doesn't navigate. As <a href> these announced as links and
-             then swallowed the navigation with preventDefault — the href was
-             a promise the row never kept. Navigation lives on the
-             spotlight's own "Explore …" link instead. -->
-        <ul class="program-index" data-program-index>
-          {programs.map((p, i) => (
-            <li>
-              <button
-                type="button"
-                class:list={["program-index__row", { "is-active": p === defaultProgram }]}
-                data-index={i}
-                aria-controls="program-spotlight"
-                aria-current={p === defaultProgram ? "true" : undefined}
-              >
-                <span class="program-index__num">{p.n}</span>
-                <span class="program-index__text">
-                  <strong>{p.title}</strong>
-                  <span>{p.descriptor}</span>
-                </span>
-                <span class="program-index__arrow" aria-hidden="true">&rarr;</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <!-- aria-live so a screen-reader user who activates a row is told
-             the panel changed, instead of silence. -->
-        <div
-          class="program-spotlight"
-          id="program-spotlight"
-          role="region"
-          aria-label="Selected national program"
-          aria-live="polite"
-        >
-          <figure class="program-spotlight__figure">
-            <img
-              src={withBase(defaultProgram.img)}
-              alt={`${defaultProgram.title} program photo`}
-              style={defaultProgram.imgFit === "contain" ? "object-fit:contain" : ""} loading="lazy" decoding="async" />
-          </figure>
-          <div class="program-spotlight__copy">
-            <h4 class="program-spotlight__eyebrow">{defaultProgram.title}</h4>
-            <p class="program-spotlight__statement">{defaultProgram.statement}</p>
-            <a class="arrow-link" href={withBase(defaultProgram.href)}>
-              Explore {defaultProgram.title} <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+      <div class="act-work__intro">
+        <figure class="act-work__photo">
+          <img
+            src={withBase("/images/youth-symposium-1-768x432.jpg")}
+            alt="Sorors leading programming at the Annual Youth Symposium"
+            width="768"
+            height="432"
+          />
+        </figure>
+        <div class="act-work__head">
+          <p class="eyebrow">Greater Service</p>
+          <h2 class="act-work__statement">
+            Greater Service isn't just our slogan. <span>It's our work.</span>
+          </h2>
+          <p>
+            Chapters in every region turn the Sorority's national programs into local action:
+            books and supplies for students, swim lessons, maternal health outreach, and youth
+            leadership.
+          </p>
         </div>
       </div>
+
+      <h3 class="act-work__programs-label">Our Signature Programs</h3>
+      <ul class="program-cards">
+        {signature.map((p) => (
+          <li class="program-card">
+            <img src={withBase(p.img)} alt="" width="600" height="400" loading="lazy" decoding="async" />
+            <div class="program-card__body">
+              <p class="program-card__descriptor">{p.descriptor}</p>
+              <h4>
+                <a href={withBase(p.href)}>{p.title}</a>
+              </h4>
+              <p>{p.statement}</p>
+              <span class="program-card__go" aria-hidden="true">Learn more &rarr;</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="program-more">
+        Also:{" "}
+        {morePrograms.map((m, i) => (
+          <>
+            <a href={withBase(m.href)}>{m.title}</a>
+            {i < morePrograms.length - 1 && " · "}
+          </>
+        ))}
+      </p>
 
       <p class="center-link">
         <a href={withBase("/service-impact/national-programs/")}>
@@ -415,57 +328,43 @@ const nextSteps = [
       <p class="eyebrow">Stay Connected</p>
       <h2 class="act-now__title">What's Happening</h2>
 
-      <article class="happening-feature">
-        <figure class="happening-feature__figure">
-          <img src={withBase(happening[0].img)} alt="" />
-        </figure>
-        <div class="happening-feature__body">
+      <div class="happening">
+        <article class="happening-feature">
+          <figure class="happening-feature__figure">
+            <img src={withBase(featuredStory.img)} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+          </figure>
           <p class="happening-feature__meta">
-            {happening[0].tag} &middot; {happening[0].date}
+            {featuredStory.tag} &middot; {featuredStory.date}
           </p>
-          <h3>{happening[0].title}</h3>
-          <div class="happening-feature__copy">
-            <p>{happening[0].body}</p>
-            <a class="arrow-link" href={withBase(happening[0].href)}>
-              Read the Story <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </article>
+          <h3>
+            <a href={withBase(featuredStory.href)}>{featuredStory.title}</a>
+          </h3>
+          <p>{featuredStory.body}</p>
+          <span class="happening-feature__go" aria-hidden="true">Read the full story &rarr;</span>
+        </article>
 
-      <div class="happening-secondary">
-        <div class="happening-secondary__item happening-secondary__item--event">
-          <p class="happening-secondary__label">Upcoming</p>
+        <div class="happening-events">
+          <h3 class="happening-events__label">Upcoming Events</h3>
           <ul class="upcoming-list">
             {upcoming.map((e) => (
               <li>
-                <a href={withBase("/news-events/upcoming-events/")}>
-                  <span class="happening-secondary__date">
-                    <span>{e.month}</span>
-                    <strong>{e.day}</strong>
-                  </span>
-                  <span class="upcoming-list__text">
-                    <h4>{e.title}</h4>
-                    <p>{e.location}</p>
-                  </span>
-                </a>
+                <span class="date-tile" aria-hidden="true">
+                  <span>{e.month}</span>
+                  <strong>{e.day}</strong>
+                </span>
+                <span class="upcoming-list__text">
+                  <a href={withBase("/news-events/upcoming-events/")}>
+                    <span class="visually-hidden">{e.month} {e.day}: </span>{e.title}
+                  </a>
+                  <span>{e.location}</span>
+                </span>
               </li>
             ))}
           </ul>
-          <a class="happening-secondary__go" href={withBase("/news-events/upcoming-events/")}>
-            View Calendar <span aria-hidden="true">&rarr;</span>
+          <a class="arrow-link" href={withBase("/news-events/upcoming-events/")}>
+            View the Full Calendar <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
-        <a class="happening-secondary__item" href={withBase(happening[1].href)}>
-          <p class="happening-secondary__label">Latest News</p>
-          <div class="happening-secondary__img">
-            <img src={withBase(happening[1].img)} alt="" />
-          </div>
-          <h4>{happening[1].title}</h4>
-          <span class="happening-secondary__go" aria-hidden="true">
-            Read Story &rarr;
-          </span>
-        </a>
       </div>
       <p class="center-link">
         <a href={withBase("/news-events/latest-news/")}>
@@ -536,64 +435,6 @@ const nextSteps = [
     </div>
   </nav>
 </Base>
-
-<script
-  is:inline
-  define:vars={{
-    PROGRAMS: programs.map((p) => ({
-      title: p.title,
-      statement: p.statement,
-      href: withBase(p.href),
-      img: withBase(p.img),
-      imgFit: p.imgFit ?? "cover",
-      alt: `${p.title} program photo`,
-    })),
-  }}
->
-  // National-programs spotlight selector. All five programs are equally
-  // clickable; this swaps which one is shown large, so the spotlight reads
-  // as "currently selected," not "the one that outranks the other four."
-  // Falls back to the real anchor links with no JS.
-  (function () {
-    const nav = document.querySelector("[data-program-index]");
-    const spotlight = document.getElementById("program-spotlight");
-    if (!nav || !spotlight) return;
-
-    const img = spotlight.querySelector(".program-spotlight__figure img");
-    const eyebrow = spotlight.querySelector(".program-spotlight__eyebrow");
-    const statement = spotlight.querySelector(".program-spotlight__statement");
-    const link = spotlight.querySelector(".arrow-link");
-    const rows = Array.prototype.slice.call(nav.querySelectorAll(".program-index__row"));
-
-    rows.forEach(function (row) {
-      row.addEventListener("click", function () {
-        const i = Number(row.dataset.index);
-        const p = PROGRAMS[i];
-        if (!p) return;
-
-        rows.forEach(function (r) {
-          r.classList.remove("is-active");
-          r.removeAttribute("aria-current");
-        });
-        row.classList.add("is-active");
-        row.setAttribute("aria-current", "true");
-
-        img.src = p.img;
-        img.alt = p.alt;
-        img.style.objectFit = p.imgFit;
-        eyebrow.textContent = p.title;
-        statement.textContent = p.statement;
-        link.href = p.href;
-        link.textContent = "";
-        link.append("Explore " + p.title + " ");
-        const arrow = document.createElement("span");
-        arrow.setAttribute("aria-hidden", "true");
-        arrow.textContent = "→";
-        link.append(arrow);
-      });
-    });
-  })();
-</script>
 
 <script>
   // Partner carousel — native scroll does the real work (touch, trackpad,
@@ -666,17 +507,23 @@ const nextSteps = [
 
 
   /* ACT II — THIS IS OUR WORK */
-  .act-work__head {
-    text-align: center;
-    max-width: 760px;
-    margin-inline: auto;
-    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  .act-work__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+    margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  }
+  .act-work__head p:not(.eyebrow) {
+    margin: var(--space-5) 0 0;
+    color: var(--muted);
+    max-width: 34rem;
   }
   .act-work__statement {
     margin: 0;
     font-family: var(--font-editorial);
     font-weight: 600;
-    font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem);
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
     line-height: 1.3;
     color: var(--royal);
   }
@@ -687,37 +534,19 @@ const nextSteps = [
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.16em;
   }
-  /* Full-bleed — a direct child of the section, not inside .container, so
-     it spans the true viewport width regardless of the page's editorial
-     content width. */
+  /* A framed 16:9 photograph inside the content width, not a full-bleed
+     banner. */
   .act-work__photo {
-    margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
   }
   .act-work__photo img {
+    display: block;
     width: 100%;
-    max-height: 640px;
-    aspect-ratio: 21/9;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
-    display: block;
-  }
-  .act-work__stats {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(2.5rem, 6vw, 5rem);
-    text-align: center;
-    margin-bottom: clamp(4rem, 8vw, 6rem);
-  }
-  .act-work__stat-value {
-    display: block;
-    font-family: var(--font-head);
-    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
-    color: var(--royal);
-  }
-  .act-work__stat-label {
-    color: var(--muted);
-    font-size: var(--text-sm);
-    letter-spacing: 0.03em;
   }
   .act-work__programs-label {
     text-align: center;
@@ -727,119 +556,107 @@ const nextSteps = [
     color: var(--royal);
     margin-bottom: clamp(2rem, 4vw, 3rem);
   }
-  .act-work__programs {
+  .program-cards {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(2.5rem, 5vw, 4rem);
-    align-items: start;
-    margin-bottom: clamp(3rem, 5vw, 4rem);
-  }
-  .program-index {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
     margin: 0;
     padding: 0;
     list-style: none;
-    border-top: 1px solid var(--line);
   }
-  .program-index__row {
-    /* now a <button> — reset the UA chrome so it renders exactly as the
-       editorial row it replaces */
-    width: 100%;
-    background: none;
-    border: 0;
-    font: inherit;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: var(--space-5);
-    padding: var(--space-5) var(--space-2);
-    border-bottom: 1px solid var(--line);
-    border-left: 3px solid transparent;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    transition:
-      background 0.15s ease,
-      border-left-color 0.15s ease;
-  }
-  .program-index__row:hover {
-    background: var(--cream);
-  }
-  .program-index__row.is-active {
-    border-left-color: var(--accent-text);
-    background: var(--cream);
-  }
-  .program-index__row.is-active .program-index__text strong {
-    color: var(--accent-text);
-  }
-  .program-index__num {
-    flex-shrink: 0;
-    font-family: var(--font-head);
-    font-size: var(--text-sm);
-    color: var(--accent-text);
-  }
-  .program-index__text {
-    flex: 1;
+  /* The whole card is the link (stretched from the title). */
+  .program-card {
+    position: relative;
     display: flex;
     flex-direction: column;
-  }
-  .program-index__text strong {
-    color: var(--royal);
-    font-size: var(--text-md);
-  }
-  .program-index__text span {
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .program-index__arrow {
-    flex-shrink: 0;
-    color: var(--muted);
-    transition:
-      transform 0.15s ease,
-      color 0.15s ease;
-  }
-  .program-index__row:hover .program-index__arrow {
-    color: var(--royal);
-    transform: translateX(3px);
-  }
-  .program-spotlight {
-    position: sticky;
-    /* SiteHeader's own sticky height varies slightly by breakpoint — this
-       clears it comfortably rather than guessing an exact px match. */
-    top: var(--space-8);
-  }
-  .program-spotlight__figure {
-    margin: 0 0 var(--space-5);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
+    background: var(--white);
     overflow: hidden;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
   }
-  .program-spotlight__figure img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
+  .program-card:hover {
+    border-color: var(--royal);
+    transform: translateY(-2px);
+  }
+  .program-card:has(a:focus-visible) {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .program-card img {
     display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
   }
-  .program-spotlight__eyebrow {
-    margin: 0 0 var(--space-3);
+  .program-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-6);
+  }
+  .program-card__descriptor {
+    margin: 0 0 var(--space-2);
+    color: var(--muted);
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-text);
   }
-  .program-spotlight__statement {
-    margin: 0 0 var(--space-4);
-    font-family: var(--font-editorial);
-    font-weight: 600;
-    font-size: var(--text-h3);
+  .program-card h4 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+  }
+  .program-card h4 a {
     color: var(--royal);
-    line-height: 1.25;
+    text-decoration: none;
   }
-  @media (max-width: 780px) {
-    .act-work__programs {
-      grid-template-columns: 1fr;
+  .program-card h4 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .program-card h4 a:focus-visible {
+    outline: none;
+  }
+  .program-card p:not(.program-card__descriptor) {
+    margin: 0 0 var(--space-5);
+    color: var(--muted);
+  }
+  .program-card__go {
+    margin-top: auto;
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  .program-more {
+    margin: var(--space-6) 0 0;
+    text-align: center;
+    color: var(--muted);
+  }
+  .program-more a {
+    color: var(--royal);
+    font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    .act-work__intro,
+    .program-cards {
+      grid-template-columns: minmax(0, 1fr);
     }
-    .program-spotlight {
-      position: static;
+    .program-cards {
+      max-width: 36rem;
+      margin-inline: auto;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .program-card {
+      transition: none;
+    }
+    .program-card:hover {
+      transform: none;
     }
   }
 
@@ -965,20 +782,28 @@ const nextSteps = [
     font-weight: 600;
     color: var(--royal);
   }
-  .happening-feature {
+  /* Featured story beside the event list. */
+  .happening {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
     margin-bottom: clamp(2rem, 4vw, 3rem);
   }
+  .happening-feature {
+    position: relative;
+  }
   .happening-feature__figure {
-    margin: 0 0 var(--space-6);
-    border-radius: var(--radius-lg);
+    margin: 0 0 var(--space-5);
+    border-radius: var(--radius);
     overflow: hidden;
   }
   .happening-feature__figure img {
-    width: 100%;
-    max-height: 480px;
-    aspect-ratio: 21/9;
-    object-fit: cover;
     display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
   .happening-feature__meta {
     margin: 0 0 var(--space-2);
@@ -986,157 +811,105 @@ const nextSteps = [
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-text);
-  }
-  .happening-feature__body h3 {
-    margin: 0 0 var(--space-5);
-    font-size: var(--text-h3);
-    max-width: 34rem;
-  }
-  .happening-feature__copy {
-    display: grid;
-    /* 32rem matches the max-width on the paragraph below. A 1fr track here
-       is ~1390px wide at desktop while the text fills only 512px of it,
-       stranding the arrow link against the right margin. */
-    grid-template-columns: minmax(0, 32rem) auto;
-    /* Grid stretches an `auto` track into free space by default, which
-       dragged the arrow link's underline ~860px to the page edge. This
-       sizes the track to its content and leaves the slack at the end. */
-    justify-content: start;
-    gap: var(--space-6);
-    align-items: start;
-  }
-  .happening-feature__copy p {
-    margin: 0;
     color: var(--muted);
-    max-width: 32rem;
   }
-  .happening-feature__copy .arrow-link {
-    white-space: nowrap;
-    margin-top: 0.3em;
+  .happening-feature h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-h3);
   }
-  @media (max-width: 640px) {
-    .happening-feature__copy {
-      grid-template-columns: 1fr;
-    }
+  .happening-feature h3 a {
+    color: var(--royal);
+    text-decoration: none;
   }
-  .happening-secondary {
+  .happening-feature h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .happening-feature:hover h3 a {
+    color: var(--accent-hover);
+  }
+  .happening-feature > p:not(.happening-feature__meta) {
+    margin: 0 0 var(--space-4);
+    color: var(--muted);
+    max-width: 40rem;
+  }
+  .happening-feature__go {
+    color: var(--royal);
+    font-weight: 700;
+  }
+  .happening-events__label {
+    margin: 0 0 var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--line);
+    font-size: var(--text-md);
+    color: var(--ink);
+  }
+  .upcoming-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-    /* Not stretch. These items have no card background, so equal heights buy
-       nothing visually while giving __go's `margin-top: auto` slack to push
-       the link far below the content it belongs to. */
-    align-items: start;
-    gap: var(--space-6);
-    padding-top: clamp(1.5rem, 3vw, 2rem);
-    border-top: 1px solid var(--line);
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    list-style: none;
   }
-  .happening-secondary__item {
+  .upcoming-list li {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+  /* Same calendar tile as the Upcoming Events page. */
+  .date-tile {
+    flex: none;
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: inherit;
+    width: 72px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-align: center;
+    background: var(--white);
   }
-  .happening-secondary__label {
-    margin: 0 0 var(--space-3);
+  .date-tile span {
+    padding: 0.2rem;
+    background: var(--royal);
+    color: #fff;
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-text);
   }
-  .happening-secondary__item h4 {
-    margin: 0 0 var(--space-2);
+  .date-tile strong {
+    padding: 0.4rem 0.2rem;
+    color: var(--ink);
     font-size: var(--text-md);
-    color: var(--royal);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
   }
-  .happening-secondary__item p {
-    margin: 0;
+  .upcoming-list__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+  .upcoming-list__text a {
+    color: var(--royal);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .upcoming-list__text a:hover {
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
+  }
+  .upcoming-list__text > span {
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .happening-secondary__go {
-    margin-top: auto;
-    padding-top: var(--space-3);
-    color: var(--royal);
-    font-weight: 700;
-    font-size: var(--text-sm);
-  }
-  .happening-secondary__item:hover .happening-secondary__go {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
-  }
-  /* The stacked event rows. The date badge keeps its established 58px
-     treatment; only its bottom margin goes, since it now sits beside the
-     text rather than above it. */
-  .upcoming-list {
-    margin: 0 0 var(--space-2);
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-  .upcoming-list a {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-4);
-    align-items: start;
-    text-decoration: none;
-    color: inherit;
-  }
-  .upcoming-list .happening-secondary__date {
-    flex-shrink: 0;
-    margin-bottom: 0;
-  }
-  .happening-secondary__item .upcoming-list h4 {
-    margin: 0 0 var(--space-1);
-  }
-  .happening-secondary__item .upcoming-list a:hover h4 {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
-  }
-  a.happening-secondary__go {
-    text-decoration: none;
-  }
-  a.happening-secondary__go:hover {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
-  }
-  .happening-secondary__date {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 58px;
-    height: 58px;
-    margin-bottom: var(--space-4);
-    background: var(--cream-2);
-    border-radius: var(--radius);
-    color: var(--royal);
-  }
-  .happening-secondary__date span {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-  }
-  .happening-secondary__date strong {
-    font-size: 1.4rem;
-    line-height: 1;
-  }
-  .happening-secondary__img {
-    aspect-ratio: 16/9;
-    margin-bottom: var(--space-4);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .happening-secondary__img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  @media (max-width: 900px) {
+    .happening {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   /* Partnership — full-bleed institutional statement, real logos as white
