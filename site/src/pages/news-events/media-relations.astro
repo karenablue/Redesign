@@ -92,38 +92,38 @@ const releases = (await getCollection("news"))
         <p class="mr-note">Include your deadline so time-sensitive requests can be prioritized.</p>
       </aside>
 
-      <form class="mr-form" id="media-form" action={`mailto:${PRESS_EMAIL}`} method="post" enctype="text/plain">
+      <form class="mr-form inquiry-form" data-compose data-subject="Media Inquiry" data-subject-field="mf-outlet" action={`mailto:${PRESS_EMAIL}`} method="post" enctype="text/plain">
         <h2>Submit a Press Inquiry</h2>
         <p class="mr-form__hint">This opens a pre-filled email in your mail app, addressed to the press desk.</p>
-        <div class="mr-form__row">
+        <div class="inquiry-form__row">
           <label>
             <span>Full name</span>
-            <input id="mf-name" name="name" type="text" autocomplete="name" required />
+            <input id="mf-name" data-label="Name" name="name" type="text" autocomplete="name" required />
           </label>
           <label>
             <span>Media outlet</span>
-            <input id="mf-outlet" name="outlet" type="text" autocomplete="organization" placeholder="Publication, network, or platform" required />
+            <input id="mf-outlet" data-label="Outlet" name="outlet" type="text" autocomplete="organization" placeholder="Publication, network, or platform" required />
           </label>
         </div>
-        <div class="mr-form__row">
+        <div class="inquiry-form__row">
           <label>
             <span>Topic</span>
-            <select id="mf-topic" name="topic" required>
+            <select id="mf-topic" data-label="Topic" name="topic" required>
               <option value="">Choose a topic</option>
               {topics.map((t) => <option>{t}</option>)}
             </select>
           </label>
           <label>
             <span>Deadline</span>
-            <input id="mf-deadline" name="deadline" type="datetime-local" />
+            <input id="mf-deadline" data-label="Deadline" name="deadline" type="datetime-local" />
           </label>
         </div>
         <fieldset>
           <legend>Nature of request</legend>
-          <div class="mr-form__checks">
+          <div class="inquiry-form__checks">
             {requestTypes.map((r, i) => (
-              <label class="mr-check">
-                <input id={`mf-type-${i}`} type="checkbox" name="request" value={r} />
+              <label class="inquiry-form__check">
+                <input id={`mf-type-${i}`} data-label="Request" type="checkbox" name="request" value={r} />
                 <span>{r}</span>
               </label>
             ))}
@@ -131,7 +131,7 @@ const releases = (await getCollection("news"))
         </fieldset>
         <label>
           <span>Details</span>
-          <textarea id="mf-details" name="details" rows="5" placeholder="Your angle, questions, and who you hope to speak with."></textarea>
+          <textarea id="mf-details" data-body name="details" rows="5" placeholder="Your angle, questions, and who you hope to speak with."></textarea>
         </label>
         <button class="btn" type="submit">Submit Press Inquiry <span aria-hidden="true">&rarr;</span></button>
       </form>
@@ -211,26 +211,9 @@ const releases = (await getCollection("news"))
 </Base>
 
 <script>
-  // Build the email from the form fields rather than relying on the
-  // browser's text/plain mailto post, which some mail apps ignore.
-  const form = document.getElementById("media-form") as HTMLFormElement | null;
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!form.reportValidity()) return;
-    const v = (id: string) => (document.getElementById(id) as HTMLInputElement | null)?.value.trim() ?? "";
-    const types = [...form.querySelectorAll<HTMLInputElement>("input[name=request]:checked")].map((i) => i.value);
-    const body = [
-      `Name: ${v("mf-name")}`,
-      `Outlet: ${v("mf-outlet")}`,
-      `Topic: ${v("mf-topic")}`,
-      `Deadline: ${v("mf-deadline") || "Not specified"}`,
-      `Request: ${types.join(", ") || "Not specified"}`,
-      "",
-      v("mf-details"),
-    ].join("\n");
-    const to = form.action.replace(/^mailto:/, "");
-    location.href = `mailto:${to}?subject=${encodeURIComponent(`Media Inquiry: ${v("mf-outlet")}`)}&body=${encodeURIComponent(body)}`;
-  });
+  import { wireComposeForms } from "../../scripts/compose-email";
+
+  wireComposeForms();
 
   const copy = document.getElementById("copy-boilerplate") as HTMLButtonElement | null;
   const text = document.getElementById("boilerplate")?.textContent ?? "";
@@ -398,60 +381,6 @@ const releases = (await getCollection("news"))
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .mr-form__row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-5);
-  }
-  .mr-form label > span,
-  .mr-form legend {
-    display: block;
-    margin-bottom: var(--space-2);
-    color: var(--ink);
-    font-size: var(--text-sm);
-    font-weight: 700;
-  }
-  .mr-form input:not([type="checkbox"]),
-  .mr-form select,
-  .mr-form textarea {
-    width: 100%;
-    min-height: 44px;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid var(--muted-2); /* 4.8:1, meets the 3:1 field-boundary minimum */
-    border-radius: var(--radius);
-    background: var(--white);
-    color: var(--ink);
-    font: inherit;
-  }
-  .mr-form input:focus-visible,
-  .mr-form select:focus-visible,
-  .mr-form textarea:focus-visible {
-    outline: 2px solid var(--royal);
-    outline-offset: 1px;
-  }
-  .mr-form fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
-  .mr-form__checks {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-2) var(--space-5);
-  }
-  .mr-check {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-height: 32px;
-    color: var(--ink);
-    font-size: var(--text-sm);
-  }
-  .mr-check input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--royal);
-  }
   .mr-form .btn {
     justify-self: start;
   }
@@ -464,10 +393,6 @@ const releases = (await getCollection("news"))
     .mr-card,
     .mr-form {
       padding: var(--space-5);
-    }
-    .mr-form__row,
-    .mr-form__checks {
-      grid-template-columns: minmax(0, 1fr);
     }
   }
 

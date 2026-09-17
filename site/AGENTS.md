@@ -75,7 +75,7 @@ src/
   layouts/Base.astro <head>, <SiteHeader>, <SiteFooter>. Props: title,
                      description, activeTop, image. Page content fills the slot.
   components/         Section, Hero, CardGrid, Card, StatBand, CtaBand, Faq,
-                     Carousel, SigmaRule, Button, FeatureRow, SiteHeader,
+                     Carousel, SigmaRule, Button, SiteHeader,
                      SiteFooter. Compose these; don't hand-roll their markup.
   pages/             File path = URL. src/pages/about/herstory.astro → /about/herstory/
 ```
