@@ -4,6 +4,7 @@ month: "Sep"
 day: "12"
 tag: "Signature"
 location: "Atlanta, GA"
+featured: true
 order: 1
 ---
 
