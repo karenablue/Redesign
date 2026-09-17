@@ -8,4 +8,5 @@ initials: "LB"
 image: "/images/notable/louise-beavers.jpg"
 license: "Public domain"
 credit: "Photofest"
+source: "Listed as honorary by Wikipedia; verification pending."
 ---

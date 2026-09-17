@@ -9,4 +9,5 @@ image: "/images/notable/kelly-price.jpg"
 license: "CC BY 3.0"
 licenseUrl: "https://creativecommons.org/licenses/by/3.0"
 credit: "Valder Beebe Show"
+source: "Honorary (Watch The Yard; Bossip)."
 ---

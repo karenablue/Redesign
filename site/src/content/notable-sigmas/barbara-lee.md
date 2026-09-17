@@ -8,4 +8,5 @@ initials: "BL"
 image: "/images/notable/barbara-lee.jpg"
 license: "Public domain"
 credit: "United States Congress"
+source: "Honorary; 2022."
 ---

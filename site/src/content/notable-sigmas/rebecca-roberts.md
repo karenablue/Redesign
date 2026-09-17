@@ -8,4 +8,5 @@ initials: "RR"
 image: "/images/notable/rebecca-roberts.jpg"
 license: "Public domain"
 credit: "Maggie Bartlett, National Human Genome Research Institute"
+source: "Listed as honorary by Wikipedia; verification pending."
 ---
