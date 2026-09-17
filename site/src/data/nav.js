@@ -118,6 +118,9 @@ export const footerLegal = [
   { label: "Privacy Policy", href: "/privacy/" },
   { label: "Cookie Notice", href: "/cookies/" },
   { label: "Terms of Use", href: "/terms/" },
+  { label: "Membership Accountability", href: "/membership/accountability/" },
+  { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
+  { label: "Help Center", href: "/resources/help-center/" },
 ];
 
 export const footerContact = {
