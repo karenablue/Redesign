@@ -295,6 +295,7 @@ const regions = [
   title="Herstory"
   activeTop="About Us"
   description="Explore the history, milestones, regional development, and enduring legacy of Sigma Gamma Rho Sorority, Incorporated."
+  bodyClass="page-herstory"
 >
   <!-- HERO -->
   {/* on-dark: this hero's ground is navy, so the accent tokens resolve to
@@ -593,9 +594,10 @@ const regions = [
 </Base>
 
 <style>
-  .container {
-    width: min(1180px, calc(100% - 48px));
-    margin-inline: auto;
+  /* A page-level token, not a local .container override: the header reads
+     --container too, so the crest and the copy share one left edge. */
+  :global(body.page-herstory) {
+    --container: 1180px;
   }
   .eyebrow--rule {
     position: relative;

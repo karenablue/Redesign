@@ -69,17 +69,6 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
           <span set:html={reg(x.label)} />
         </Button>
       ))}
-      <button
-        type="button"
-        class="nav-toggle"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="nav-panel"
-      >
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-      </button>
     </div>
   </div>
 
@@ -87,6 +76,21 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       the ribbon keeps the sections reachable. */}
   <div class="nav-bar">
     <div class="header-wrap nav-bar__inner">
+      {/* Below 1280px this is the whole ribbon: the sticky bar becomes the
+          menu trigger rather than an empty strip. */}
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+      >
+        <span class="nav-toggle__bars" aria-hidden="true">
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </span>
+        <span class="nav-toggle__label">Menu</span>
+      </button>
       <div class="nav-panel" id="nav-panel">
         <nav class="site-nav" aria-label="Primary">
           <ul class="site-nav__list">
@@ -245,10 +249,11 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     z-index: 1000;
     background: var(--bright-white);
   }
-  /* Full width with generous side gutters, not the site's reading width. */
+  /* Same measure as .container, so the crest, nav and page copy share one
+     left edge at every width. */
   .header-wrap {
-    width: 100%;
-    padding-inline: clamp(1.25rem, 5.5vw, 5rem);
+    width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+    margin-inline: auto;
   }
 
   /* ---------- Deck 1 — brand masthead ---------- */
@@ -262,7 +267,6 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .brand {
     display: flex;
     align-items: center;
-    gap: 1.1rem;
     min-width: 0;
     text-decoration: none;
   }
@@ -272,28 +276,33 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     object-fit: contain;
     flex-shrink: 0;
   }
+  /* A 1px gold hairline ties the crest to the stacked name, with 16px of
+     clear space either side (APA-style lockup). */
   .brand__wordmark {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     min-width: 0;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid var(--gold);
   }
   .brand__name {
     font-family: var(--font-head);
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
     line-height: 1.05;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.05em;
     color: var(--royal);
     text-transform: uppercase;
   }
   .brand__legal {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: 0.6875rem; /* 11px */
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--ink);
   }
   .brand__legal sup {
     font-size: max(0.5em, 8px);
@@ -453,24 +462,36 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   /* ---------- hamburger ---------- */
   .nav-toggle {
     display: none;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  /* 44px of target, per WCAG 2.5.5. */
+  .nav-toggle__bars {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 5px;
-    /* 44px: WCAG 2.5.5, and this opens the whole navigation on a phone. */
     width: 44px;
     height: 44px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    flex-shrink: 0;
   }
   .nav-toggle__bar {
     display: block;
     width: 22px;
     height: 2px;
-    background: var(--royal);
+    background: #fff;
     border-radius: 1px;
     transition:
       transform 0.25s ease,
@@ -589,6 +610,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     }
     .nav-bar__inner {
       flex-wrap: wrap;
+      padding-block: var(--space-1);
     }
     .nav-panel {
       display: none;
@@ -673,9 +695,13 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       width: 60px;
       height: 60px;
     }
+    .brand__wordmark {
+      margin-left: 10px;
+      padding-left: 10px;
+    }
     .brand__legal {
-      font-size: var(--text-xs);
-      letter-spacing: 0.1em;
+      font-size: 0.5625rem;
+      letter-spacing: 0.14em;
     }
     /* The two utility buttons move into the drawer's own footer rather than
        crowding a phone masthead; search and the hamburger stay. */
