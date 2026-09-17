@@ -1,24 +1,19 @@
 ---
 /**
- * Home — composed as four acts, not nine checklist sections. The audience
- * strategy from the previous pass is kept (scale before history, outcomes
- * before program names, one flowing narrative about the women of Sigma,
- * clean routing at the end) — what changed is the composition: wider
- * editorial content, full-bleed photography, no card-grid "SaaS" pattern,
- * and acts that read as one visual thought instead of independent modules.
+ * Home — six sections (Karena's outline, 2026-09-17):
  *
- *   ACT I    THIS IS SIGMA      hero + scale fused into one opening — no
- *                                white "institutional" section breaking it.
- *   ACT II   THIS IS OUR WORK   a framed photo beside the statement, then
- *                                three signature programs as photo cards.
- *   ACT III  THIS IS WHO WE ARE contemporary sisterhood → 1922 founding →
- *                                the woman leading it now, one continuous
- *                                editorial flow, not three separate modules.
- *   ACT IV   SIGMA RIGHT NOW    a featured story beside the event list,
- *                                partnership, then a thin routing line.
+ *   1  Hero: navy split, slogan and entry points beside the video (the clip
+ *      plays unfiltered, nothing laid over it), then the reach ribbon.
+ *   2  Administration vision: the Grand Basileus's message (60) beside her
+ *      portrait card (40).
+ *   3  Our work in action: three signature program cards.
+ *   4  Living legacy: the 1922 charter photograph and founding story.
+ *   5  Dispatch: newsroom (50) beside upcoming events (50).
+ *   6  Greater Together partner ribbon, then the Poodle Portal strip.
  *
- * One stat ribbon only (Act I), showing scale and geographic reach. The
- * numbers count up when the band scrolls into view.
+ * Copy is drawn from the site's own pages (Grand Basileus bio, National
+ * Programs, Herstory, Latest News); no administration theme is published,
+ * so none is named.
  */
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
@@ -26,7 +21,9 @@ import StatBand from "../components/StatBand.astro";
 import { withBase } from "../lib/url.js";
 import { getCollection } from "astro:content";
 
-// ACT I — organizational scale.
+const PORTAL_URL = "https://portal.sgrho1922.org/";
+
+// 1 — organizational scale and reach. Counts up on scroll.
 const reachStats = [
   { value: "1922", label: "Founded at Butler University" },
   {
@@ -55,62 +52,57 @@ const reachStats = [
   },
 ];
 
-// ACT II — the three signature programs get photo cards; the other two
-// national programs are named in a line beneath them.
+// 3 — signature programs. Scope lines restate National Programs.
 const signature = [
   {
-    title: "Operation BigBookBag®",
-    descriptor: "Educational access & resources",
-    statement: "Expanding access to educational resources for students and families.",
-    href: "/service-impact/national-programs/#bigbookbag",
-    img: "/images/operation-bigbookbag-4.jpg",
+    tag: "Maternal & Infant Health",
+    title: "Project CRADLE Care®",
+    scope: "Raises awareness of inequitable maternal and infant health outcomes affecting Black women. Outreach, education, and advocacy connect families with information and support.",
+    href: "/service-impact/national-programs/#cradle",
+    img: "/images/project-cradle-care-3.jpg",
   },
   {
+    tag: "Water Safety • USA Swimming",
     title: "SWIM 1922®",
-    descriptor: "Water safety & swim education",
-    statement: "Every child deserves to feel safe in the water.",
+    scope: "Addresses racial disparities in swimming and drowning by teaching water safety and swim skills. Through the partnership with USA Swimming, instruction comes directly into local communities.",
     href: "/service-impact/national-programs/#swim",
     img: "/images/swim-1922-1-768x432.jpg",
   },
   {
-    title: "Project CRADLE Care®",
-    descriptor: "Maternal & infant health",
-    statement: "Maternal and infant health shouldn't depend on your ZIP code.",
-    href: "/service-impact/national-programs/#cradle",
-    img: "/images/project-cradle-care-3.jpg",
+    tag: "Educational Equity",
+    title: "Operation BigBookBag®",
+    scope: "Puts school supplies, books, and study aids in the hands of students who are educationally at risk. Since 1996 it has grown to include STEM exposure, tutoring, and mentoring.",
+    href: "/service-impact/national-programs/#bigbookbag",
+    img: "/images/operation-bigbookbag-4.jpg",
   },
 ];
-const morePrograms = [
-  { title: "Annual Youth Symposium", href: "/service-impact/national-programs/#youth" },
-  { title: "Women's Wellness Initiative", href: "/service-impact/national-programs/#wellness" },
-];
 
-// ACT III — the range of women who call Sigma Gamma Rho home.
-const memberJourney = ["Collegiate Women", "Professionals", "Community Leaders", "Lifelong Members"];
-
-// The next five events, read from the same collection the upcoming-events
-// page renders, so this column cannot drift from it. It previously showed a
-// single hardcoded entry. Four rows balance the featured story beside them.
-const upcoming = (await getCollection("events"))
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4)
-  .map((e) => e.data);
-
-// ACT IV — the lead story from Latest News, which has its own page; the
-// events beside it come from `upcoming` above.
+// 5 — newsroom: the lead story (it has its own page) and the two latest
+// items from the news collection; events from the events collection.
 const featuredStory = {
-  tag: "Boulé",
-  date: "July 2026",
+  date: "Boulé • July 2026",
   img: "/images/boule.jpg",
   title: "Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé",
   body: "Thousands of members, partners, and guests gathered at the Tampa Convention Center, the first Sigma Gamma Rho international convention in Tampa since 1976.",
   href: "/news-events/latest-news/61st-biennial-boule/",
 };
+const recentNews = (await getCollection("news"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2)
+  .map((e) => e.data)
+  .map((d) => ({
+    ...d,
+    link: d.href
+      ? { href: d.href.startsWith("http") ? d.href : withBase(d.href), ...(d.external ? { target: "_blank", rel: "noopener" } : {}) }
+      : { href: withBase("/news-events/latest-news/") },
+  }));
+const upcoming = (await getCollection("events"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4)
+  .map((e) => e.data);
 
-// All fourteen real, already-published corporate/nonprofit partners (from
-// service-impact/corporate-partnerships) — not a curated subset. Each links
-// out to the organization's own official site (verified via web search,
-// not guessed) rather than an internal page.
+// 6 — partners: the fourteen on Corporate Partnerships plus the allied
+// foundations. External logos open the partner's own site.
 const partnerLogos = [
   { name: "Alzheimer's Association", logo: "/images/Alzheimer's Association.svg", url: "https://www.alz.org/" },
   { name: "Amazon", logo: "/images/Amazon.png", url: "https://www.amazon.com/" },
@@ -126,15 +118,9 @@ const partnerLogos = [
   { name: "St. Jude Children's Research Hospital", logo: "/images/St. Jude Children's Research Hospital.svg", url: "https://www.stjude.org/" },
   { name: "USA Swimming", logo: "/images/USA Swimming.svg", url: "https://www.usaswimming.org/" },
   { name: "Western Governors University", logo: "/images/Western Governors University.svg", url: "https://www.wgu.edu/" },
-];
-
-// The closing routing line — no selling, no institutional story, just
-// navigation, immediately before the footer.
-const nextSteps = [
-  { title: "Membership", href: "/membership/become-a-member/" },
-  { title: "Find a Chapter", href: "/membership/chapter-locator/" },
-  { title: "Our Impact", href: "/service-impact/national-programs/" },
-  { title: "Events", href: "/news-events/upcoming-events/" },
+  { name: "National Education Fund", logo: "/images/foundations/nef.png", url: "/service-impact/partner-foundations/#nef", internal: true },
+  { name: "SPEAR Foundation", logo: "/images/foundations/spear.png", url: "/service-impact/partner-foundations/#spear", internal: true },
+  { name: "Seven Pearls Foundation", logo: "/images/foundations/seven-pearls.png", url: "/service-impact/partner-foundations/#seven-pearls", internal: true },
 ];
 ---
 
@@ -143,9 +129,12 @@ const nextSteps = [
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
   bodyClass="page-home"
 >
-  <!-- ACT I: THIS IS SIGMA. One navy opener (Karena, 2026-09-17: no video,
-       no second header), handing off to the navy StatBand. -->
+  <!-- 1 — one navy opener: words on the left, the video on the right. -->
   <Hero
+    variant="split"
+    dark
+    video="/images/sgrho-hero.mp4"
+    image="/images/sgr-alpha-charter.jpeg"
     eyebrow="1922 — Today"
     title="Greater Service,"
     highlight="Greater Progress®"
@@ -164,212 +153,178 @@ const nextSteps = [
   </Hero>
   <StatBand stats={reachStats} tone="navy" />
 
-  <!-- ACT II: THIS IS OUR WORK — one visual thought: statement, a photograph
-       that takes over the full width of the page, then outcomes as plain
-       editorial numerals and columns — no card backgrounds. -->
-  <section class="section act-work">
-    <div class="container">
-      <div class="act-work__intro">
-        <div class="act-work__head">
-          <p class="eyebrow">Greater Service</p>
-          <h2 class="act-work__statement">
-            Greater Service isn't just our slogan. <span>It's our work.</span>
-          </h2>
+  <!-- 2 — administration vision (60) and the Grand Basileus (40). -->
+  <section class="section vision">
+    <div class="container vision__grid">
+      <div class="vision__copy">
+        <p class="eyebrow">Leading Sigma Forward</p>
+        <h2 class="vision__title">Into the Next Century of Service</h2>
+        <p>
+          Marica T. Harris was elected the 26th International Grand Basileus of Sigma Gamma Rho
+          Sorority, Inc. at the 60th Biennial Boulé, a life member poised to guide the organization
+          as it embarks on its next century of service.
+        </p>
+        <p>
+          As International President, she oversees more than 100,000 members and serves as Chairman
+          of the Board of Directors, guiding the Sorority's chapters worldwide.
+        </p>
+        <blockquote class="vision__quote">
           <p>
-            Chapters in every region turn the Sorority's national programs into local action:
-            books and supplies for students, swim lessons, maternal health outreach, and youth
-            leadership.
+            &ldquo;Our founders' vision has been carried forward by women who lead with purpose and
+            serve without limits.&rdquo;
           </p>
-        </div>
-        <figure class="act-work__photo">
-          <img
-            src={withBase("/images/youth-symposium-1-768x432.jpg")}
-            alt="Sorors leading programming at the Annual Youth Symposium"
-            width="768"
-            height="432"
-          />
-        </figure>
+          <footer>Marica T. Harris, 26th International Grand Basileus</footer>
+        </blockquote>
+        <a class="arrow-link" href={withBase("/leadership/international-grand-basileus/")}>
+          Read Her Full Biography <span aria-hidden="true">&rarr;</span>
+        </a>
       </div>
+      <aside class="vision__card">
+        <img
+          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
+          alt="International Grand Basileus Marica T. Harris"
+          width="704"
+          height="1024"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="vision__card-body">
+          <h3>Marica T. Harris</h3>
+          <ul>
+            <li>26th International Grand Basileus</li>
+            <li>Elected at the 60th Biennial Boulé</li>
+            <li>Life member</li>
+          </ul>
+          <a class="btn" href={withBase("/leadership/international-board/")}>
+            Meet the International Board <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
 
-      <h3 class="act-work__programs-label">Our Signature Programs</h3>
+  <!-- 3 — our work in action. -->
+  <section class="section work">
+    <div class="container">
+      <h2 class="work__label">Our Work in Action</h2>
       <ul class="program-cards">
         {signature.map((p) => (
           <li class="program-card">
-            <img src={withBase(p.img)} alt="" width="600" height="400" loading="lazy" decoding="async" />
+            <img src={withBase(p.img)} alt="" width="640" height="360" loading="lazy" decoding="async" />
             <div class="program-card__body">
-              <p class="program-card__descriptor">{p.descriptor}</p>
-              <h4>
+              <p class="program-card__tag">{p.tag}</p>
+              <h3>
                 <a href={withBase(p.href)}>{p.title}</a>
-              </h4>
-              <p>{p.statement}</p>
-              <span class="program-card__go" aria-hidden="true">Learn more &rarr;</span>
+              </h3>
+              <p>{p.scope}</p>
+              <span class="program-card__go" aria-hidden="true">Explore Program &rarr;</span>
             </div>
           </li>
         ))}
       </ul>
-      <p class="program-more">
-        Also:{" "}
-        {morePrograms.map((m, i) => (
-          <>
-            <a href={withBase(m.href)}>{m.title}</a>
-            {i < morePrograms.length - 1 && " · "}
-          </>
-        ))}
-      </p>
-
       <p class="center-link">
         <a href={withBase("/service-impact/national-programs/")}>
-          Explore All National Programs <span aria-hidden="true">&rarr;</span>
+          All National Programs <span aria-hidden="true">&rarr;</span>
         </a>
       </p>
     </div>
   </section>
 
-  <!-- ACT III: THIS IS WHO WE ARE — one continuous editorial flow rather than
-       three separate modules: contemporary sisterhood → the 1922 founding →
-       the woman leading it forward now. Same tone throughout, thin rules
-       between beats instead of full section breaks. -->
-  <section class="section act-women">
-    <div class="container">
-      <!-- Who We Are, immediately followed by a message from the Grand
-           Basileus — origin first, then who leads it forward now, then who
-           you could become. -->
-      <div class="act-women__beat">
-        <figure class="act-women__figure act-women__figure--archival" id="our-legacy">
-          <img
-            src={withBase("/images/sgr-alpha-charter.jpeg")}
-            alt="Alpha Chapter charter members, 1922"
-          />
-          <figcaption>1922 &rarr; Today</figcaption>
-        </figure>
-        <div class="act-women__copy">
-          <p class="eyebrow">Who We Are</p>
-          <h2 class="act-women__statement">Seven educators. One radical idea.</h2>
-          <p>
-            Founded at Butler University in 1922, seven Black educators built a sorority on
-            academic excellence, sisterhood, and civic courage — a foundation that still shapes
-            every chapter today.
-          </p>
+  <!-- 4 — living legacy. -->
+  <section class="section legacy">
+    <div class="container legacy__grid">
+      <figure class="legacy__figure" id="our-legacy">
+        <img
+          src={withBase("/images/sgr-alpha-charter.jpeg")}
+          alt="Alpha Chapter charter members, 1922"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Alpha Chapter charter members, 1922</figcaption>
+      </figure>
+      <div class="legacy__copy">
+        <p class="eyebrow">Living Legacy</p>
+        <h2 class="legacy__title">Seven Educators. One Radical Idea.</h2>
+        <p>
+          On November 12, 1922, seven Black educators founded Sigma Gamma Rho at Butler University
+          in Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
+          civic courage, a foundation that still shapes every chapter today.
+        </p>
+        <div class="legacy__links">
           <a class="arrow-link" href={withBase("/about/herstory/")}>
-            Discover Our Story <span aria-hidden="true">&rarr;</span>
+            Discover Our Herstory <span aria-hidden="true">&rarr;</span>
           </a>
-        </div>
-      </div>
-
-      <div class="act-women__beat act-women__beat--leadership act-women__beat--reverse">
-        <figure class="act-women__figure act-women__figure--portrait">
-          <img
-            src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
-            alt="International Grand Basileus Marica T. Harris"
-          />
-        </figure>
-        <div class="act-women__copy">
-          <p class="eyebrow">Leading Sigma Forward</p>
-          <h2 class="act-women__statement">That vision continues today.</h2>
-          <p class="act-women__quote">
-            "Our founders' vision has been carried forward by women who lead with purpose and
-            serve without limits."
-          </p>
-          <p class="act-women__sign">
-            Marica T. Harris <span>&mdash; 26th International Grand Basileus</span>
-          </p>
-          <div class="act-women__links">
-            <a class="arrow-link" href={withBase("/leadership/international-grand-basileus/")}>
-              Meet Our Grand Basileus <span aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="arrow-link" href={withBase("/leadership/international-board/")}>
-              National Leadership <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="act-women__beat">
-        <figure class="act-women__figure">
-          <img src={withBase("/images/ug sorors 6.jpg")} alt="Collegiate sorors of Sigma Gamma Rho" />
-        </figure>
-        <div class="act-women__copy">
-          <p class="eyebrow">The Sigma Experience</p>
-          <h2 class="act-women__statement">And it lives through every generation of Sigma women.</h2>
-          <p>
-            Join a network of women committed to learning, leading, serving, and helping one
-            another progress.
-          </p>
-          <div class="act-women__journey" aria-label="Sigma Gamma Rho members, from collegiate to lifelong">
-            {memberJourney.map((step, i) => (
-              <>
-                <span>{step}</span>
-                {i < memberJourney.length - 1 && <span aria-hidden="true">&rarr;</span>}
-              </>
-            ))}
-          </div>
-          <div class="act-women__links">
-            <a class="arrow-link" href={withBase("/membership/become-a-member/")}>
-              Explore Membership <span aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="arrow-link" href={withBase("/membership/chapter-locator/")}>
-              Find a Chapter <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+          <a class="arrow-link" href={withBase("/about/our-founders/")}>
+            Meet the Founders <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ACT IV: SIGMA RIGHT NOW — current activity, an institutional
-       partnership statement, then a thin routing line instead of another
-       full section. -->
-  <section class="section act-now">
+  <!-- 5 — dispatch: newsroom and events, 50/50. -->
+  <section class="section dispatch">
     <div class="container">
       <p class="eyebrow">Stay Connected</p>
-      <h2 class="act-now__title">What's Happening</h2>
-
-      <div class="happening">
-        <article class="happening-feature">
-          <figure class="happening-feature__figure">
+      <h2 class="dispatch__title">What's Happening</h2>
+      <div class="dispatch__grid">
+        <div class="newsroom">
+          <h3 class="dispatch__label">Official Newsroom</h3>
+          <article class="news-lead">
             <img src={withBase(featuredStory.img)} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-          </figure>
-          <p class="happening-feature__meta">
-            {featuredStory.tag} &middot; {featuredStory.date}
-          </p>
-          <h3>
-            <a href={withBase(featuredStory.href)}>{featuredStory.title}</a>
-          </h3>
-          <p>{featuredStory.body}</p>
-          <span class="happening-feature__go" aria-hidden="true">Read the full story &rarr;</span>
-        </article>
+            <p class="news-meta">{featuredStory.date}</p>
+            <h4>
+              <a href={withBase(featuredStory.href)}>{featuredStory.title}</a>
+            </h4>
+            <p>{featuredStory.body}</p>
+          </article>
+          <ul class="news-rows">
+            {recentNews.map((n) => (
+              <li>
+                {n.image && <img src={withBase(n.image)} alt="" width="120" height="90" loading="lazy" decoding="async" />}
+                <div>
+                  <p class="news-meta">{n.tag}</p>
+                  <a {...n.link}>{n.title}</a>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <a class="arrow-link" href={withBase("/news-events/latest-news/")}>
+            All News <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
 
-        <div class="happening-events">
-          <h3 class="happening-events__label">Upcoming Events</h3>
-          <ul class="upcoming-list">
+        <div class="events">
+          <h3 class="dispatch__label">Upcoming Events</h3>
+          <ul class="event-rows">
             {upcoming.map((e) => (
               <li>
                 <span class="date-tile" aria-hidden="true">
                   <span>{e.month}</span>
                   <strong>{e.day}</strong>
                 </span>
-                <span class="upcoming-list__text">
-                  <a href={withBase("/news-events/upcoming-events/")}>
-                    <span class="visually-hidden">{e.month} {e.day}: </span>{e.title}
-                  </a>
-                  <span>{e.location}</span>
-                </span>
+                <div class="event-rows__meta">
+                  <strong>{e.title}</strong>
+                  <span>
+                    <span class="visually-hidden">{e.month} {e.day}, </span>
+                    {e.location}
+                  </span>
+                </div>
+                <a class="event-rows__go" href={withBase("/news-events/upcoming-events/")}>
+                  Details<span class="visually-hidden">: {e.title}</span> <span aria-hidden="true">&rarr;</span>
+                </a>
               </li>
             ))}
           </ul>
           <a class="arrow-link" href={withBase("/news-events/upcoming-events/")}>
-            View the Full Calendar <span aria-hidden="true">&rarr;</span>
+            Full Calendar <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </div>
-      <p class="center-link">
-        <a href={withBase("/news-events/latest-news/")}>
-          Read Our Stories <span aria-hidden="true">&rarr;</span>
-        </a>
-      </p>
     </div>
   </section>
 
+  <!-- 6 — Greater Together. -->
   <section class="section section--navy partnership">
     <div class="container partnership__inner">
       <h2 class="partnership__title">Greater Together.</h2>
@@ -379,19 +334,22 @@ const nextSteps = [
       </p>
     </div>
 
-    <!-- All 14 real partners, each linking out to the org's own site — a
-         scroll-snap carousel rather than a static row, so nothing gets
-         cropped to fit and it reads as a real roster, not a curated five. -->
     <div class="container partner-carousel" data-partner-carousel>
       <button class="partner-carousel__btn partner-carousel__btn--prev" type="button" aria-label="Previous partners">
         &lsaquo;
       </button>
       <ul class="partner-carousel__track">
-        {partnerLogos.map((p) => (
+        {partnerLogos.map((x) => (
           <li>
-            <a href={p.url} target="_blank" rel="noopener" aria-label={`${p.name} (opens in a new tab)`}>
-              <img src={withBase(p.logo)} alt={p.name} loading="lazy" />
-            </a>
+            {x.internal ? (
+              <a href={withBase(x.url)} aria-label={x.name}>
+                <img src={withBase(x.logo)} alt={x.name} loading="lazy" />
+              </a>
+            ) : (
+              <a href={x.url} target="_blank" rel="noopener" aria-label={`${x.name} (opens in a new tab)`}>
+                <img src={withBase(x.logo)} alt={x.name} loading="lazy" />
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -419,17 +377,18 @@ const nextSteps = [
     </div>
   </section>
 
-  <!-- A thin routing line, not a full section — the four pathways from the
-     previous "Where Will You Go Next?" pass, compressed to a single row. -->
-  <nav class="next-line" aria-label="Where to go next">
-    <div class="container next-line__inner">
-      {nextSteps.map((s) => (
-        <a href={withBase(s.href)}>
-          {s.title} <span aria-hidden="true">&#8599;</span>
-        </a>
-      ))}
+  <!-- Pre-footer member strip. -->
+  <aside class="portal-strip" aria-label="Member login">
+    <div class="container portal-strip__inner">
+      <p>
+        <strong>Active Soror?</strong> Access resources, dues, and member records inside the Poodle
+        Portal.
+      </p>
+      <a class="btn btn--navy" href={PORTAL_URL} target="_blank" rel="noopener">
+        Member Login <span aria-hidden="true">&#8599;</span>
+      </a>
     </div>
-  </nav>
+  </aside>
 </Base>
 
 <script>
@@ -496,69 +455,109 @@ const nextSteps = [
   }
   .center-link a:hover,
   .arrow-link:hover {
-    border-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
+    color: var(--accent-hover);
+    border-bottom-color: var(--gold);
   }
 
 
-  /* ACT II — THIS IS OUR WORK */
-  .act-work__intro {
-    margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  /* 2 — administration vision, 60/40 */
+  .vision {
+    background: var(--white);
   }
-  .act-work__head {
-    max-width: 48rem;
-    margin: 0 auto clamp(2rem, 4vw, 3rem);
-    text-align: center;
+  .vision__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
   }
-  .act-work__head p:not(.eyebrow) {
-    margin: var(--space-5) auto 0;
-    color: var(--muted);
-    max-width: 40rem;
-  }
-  .act-work__statement {
-    margin: 0;
+  .vision__title,
+  .legacy__title,
+  .dispatch__title {
+    margin: 0 0 var(--space-5);
     font-family: var(--font-editorial);
     font-weight: 600;
     font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
-    line-height: 1.3;
+    line-height: 1.25;
     color: var(--royal);
   }
-  .act-work__statement span {
-    color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+  .vision__copy > p:not(.eyebrow) {
+    color: var(--muted);
+    max-width: 40rem;
   }
-  /* A framed 16:9 photograph inside the content width, not a full-bleed
-     banner. */
-  .act-work__photo {
+  /* A quotation, so the gold rule marks it as one. */
+  .vision__quote {
+    margin: var(--space-8) 0;
+    padding-left: var(--space-6);
+    border-left: 3px solid var(--gold);
+  }
+  .vision__quote p {
     margin: 0;
-    border-radius: var(--radius);
-    overflow: hidden;
+    font-family: var(--font-editorial);
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.5rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
   }
-  .act-work__photo img {
+  .vision__quote footer {
+    margin-top: var(--space-3);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  .vision__card {
+    border: 1px solid rgba(32, 65, 165, 0.2);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    padding: var(--space-4);
+  }
+  .vision__card img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9;
-    max-height: 620px;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: 50% 15%;
+    border-radius: var(--radius);
   }
-  .act-work__programs-label {
-    text-align: center;
-    font-family: var(--font-editorial);
-    font-weight: 600;
+  .vision__card-body {
+    padding: var(--space-5) var(--space-2) var(--space-2);
+  }
+  .vision__card h3 {
+    margin: 0 0 var(--space-3);
     font-size: var(--text-h3);
-    color: var(--royal);
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .vision__card ul {
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+    color: var(--muted);
+  }
+  .vision__card li + li {
+    margin-top: var(--space-1);
+  }
+  @media (max-width: 900px) {
+    .vision__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .vision__card {
+      max-width: 26rem;
+    }
+  }
+
+  /* 3 — our work in action */
+  .work {
+    background: var(--cream);
+  }
+  .work__label {
+    margin: 0 0 clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    font-size: var(--text-h3);
   }
   .program-cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-6);
-    margin: 0;
+    margin: 0 0 var(--space-10);
     padding: 0;
     list-style: none;
   }
@@ -569,8 +568,9 @@ const nextSteps = [
     flex-direction: column;
     padding: var(--space-4);
     border: 1px solid rgba(32, 65, 165, 0.2);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius);
     background: var(--white);
+    box-shadow: 0 6px 20px rgba(8, 22, 51, 0.06);
     transition:
       border-color 0.2s ease,
       transform 0.2s ease;
@@ -587,7 +587,7 @@ const nextSteps = [
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: var(--radius);
   }
@@ -597,7 +597,7 @@ const nextSteps = [
     flex: 1;
     padding: var(--space-5) var(--space-2) var(--space-2);
   }
-  .program-card__descriptor {
+  .program-card__tag {
     margin: 0 0 var(--space-2);
     color: var(--muted);
     font-size: var(--text-xs);
@@ -605,25 +605,26 @@ const nextSteps = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .program-card h4 {
+  .program-card h3 {
     margin: 0 0 var(--space-3);
     font-size: var(--text-lg);
   }
-  .program-card h4 a {
+  .program-card h3 a {
     color: var(--royal);
     text-decoration: none;
   }
-  .program-card h4 a::after {
+  .program-card h3 a::after {
     content: "";
     position: absolute;
     inset: 0;
   }
-  .program-card h4 a:focus-visible {
+  .program-card h3 a:focus-visible {
     outline: none;
   }
-  .program-card p:not(.program-card__descriptor) {
+  .program-card p:not(.program-card__tag) {
     margin: 0 0 var(--space-5);
     color: var(--muted);
+    font-size: var(--text-sm);
   }
   .program-card__go {
     margin-top: auto;
@@ -631,20 +632,9 @@ const nextSteps = [
     font-size: var(--text-sm);
     font-weight: 700;
   }
-  .program-more {
-    margin: var(--space-6) 0 0;
-    text-align: center;
-    color: var(--muted);
-  }
-  .program-more a {
-    color: var(--royal);
-    font-weight: 700;
-  }
   @media (max-width: 900px) {
     .program-cards {
       grid-template-columns: minmax(0, 1fr);
-    }
-    .program-cards {
       max-width: 36rem;
       margin-inline: auto;
     }
@@ -658,198 +648,145 @@ const nextSteps = [
     }
   }
 
-  /* ACT III — THIS IS WHO WE ARE. One continuous flow: each "beat" is a
-     grid; whitespace alone separates them. */
-  .act-women__beat {
+  /* 4 — living legacy */
+  .legacy {
+    background: var(--white);
+  }
+  .legacy__grid {
     display: grid;
-    /* Photography favored slightly over copy — this is the "past → present
-       → future" narrative told mostly through images. */
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     gap: clamp(2.5rem, 6vw, 5rem);
     align-items: center;
-    padding-block: clamp(4rem, 7vw, 6rem);
   }
-  .act-women__beat--reverse .act-women__figure {
-    order: 1;
-  }
-  .act-women__figure {
+  .legacy__figure {
     margin: 0;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
   }
-  .act-women__figure img {
-    width: 100%;
-    /* 4/3, not 4/5. At ~590px wide a 4/5 portrait stands ~737px tall beside
-       ~180px of copy, and `align-items: center` then leaves ~275px of void
-       above AND below the text in each of the three beats. Landscape keeps
-       the section image-led while the columns stay in the same league.
-       `align-items: start` would only move that emptiness, not remove it.
-       Keep in step with --archival below, which sets its own ratio. */
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    display: block;
-  }
-  .act-women__figure--archival {
-    position: relative;
-    /* Matches .act-women__figure img above; this beat is sized by the
-       container because its child is `aspect-ratio: auto; height: 100%`. */
-    aspect-ratio: 4/3;
-  }
-  .act-women__figure--archival img {
-    aspect-ratio: auto;
-    height: 100%;
-  }
-  .act-women__figure--archival figcaption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1.5rem 1.25rem 1.1rem;
-    color: #fff;
-    font-weight: 700;
-    font-size: var(--text-lg);
-    background: linear-gradient(0deg, rgba(8, 22, 51, 0.9), transparent);
-  }
-  .act-women__figure--portrait {
-    /* No longer capped narrow — she's part of the same past → present →
-       future narrative as the other two beats, not a smaller inserted
-       object between them. */
-  }
-  .act-women__statement {
-    margin: 0 0 var(--space-4);
-    font-family: var(--font-editorial);
-    font-weight: 600;
-    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
-    line-height: 1.25;
-    color: var(--royal);
-  }
-  .act-women__copy > p {
-    color: var(--muted);
-    max-width: 34rem;
-  }
-  .act-women__journey {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.6rem;
-    margin: var(--space-6) 0;
-    font-weight: 700;
-    font-size: var(--text-sm);
-    color: var(--royal);
-  }
-  .act-women__journey span[aria-hidden] {
-    color: var(--accent-text);
-  }
-  .act-women__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-6);
-  }
-  .act-women__quote {
-    font-size: var(--text-lg);
-    font-style: italic;
-    color: var(--ink);
-    max-width: 34rem;
-    margin-bottom: var(--space-4);
-  }
-  .act-women__sign {
-    color: var(--royal);
-    font-weight: 700;
-    margin-bottom: var(--space-4);
-  }
-  .act-women__sign span {
-    color: var(--muted);
-    font-weight: 400;
-  }
-  @media (max-width: 820px) {
-    .act-women__beat {
-      grid-template-columns: 1fr;
-    }
-    .act-women__beat--reverse .act-women__figure {
-      order: 0;
-    }
-  }
-
-  /* ACT IV — SIGMA RIGHT NOW */
-  .act-now__title {
-    margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
-    font-family: var(--font-editorial);
-    font-weight: 600;
-    color: var(--royal);
-  }
-  /* Featured story beside the event list. */
-  .happening {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
-    margin-bottom: clamp(2rem, 4vw, 3rem);
-  }
-  .happening-feature {
-    position: relative;
-  }
-  .happening-feature__figure {
-    margin: 0 0 var(--space-5);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .happening-feature__figure img {
+  .legacy__figure img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
+    border-radius: var(--radius);
   }
-  .happening-feature__meta {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .legacy__figure figcaption {
+    margin-top: var(--space-2);
     color: var(--muted);
+    font-size: var(--text-sm);
   }
-  .happening-feature h3 {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-h3);
-  }
-  .happening-feature h3 a {
-    color: var(--royal);
-    text-decoration: none;
-  }
-  .happening-feature h3 a::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
-  .happening-feature:hover h3 a {
-    color: var(--accent-hover);
-  }
-  .happening-feature > p:not(.happening-feature__meta) {
-    margin: 0 0 var(--space-4);
+  .legacy__copy > p:not(.eyebrow) {
     color: var(--muted);
-    max-width: 40rem;
+    max-width: 36rem;
   }
-  .happening-feature__go {
-    color: var(--royal);
-    font-weight: 700;
+  .legacy__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
   }
-  .happening-events__label {
+  @media (max-width: 900px) {
+    .legacy__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* 5 — dispatch */
+  .dispatch {
+    background: var(--cream);
+  }
+  .dispatch__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .dispatch__label {
     margin: 0 0 var(--space-4);
     padding-bottom: var(--space-3);
     border-bottom: 1px solid var(--line);
     font-size: var(--text-md);
     color: var(--ink);
   }
-  .upcoming-list {
-    display: grid;
+  .news-meta {
+    margin: 0 0 var(--space-1);
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .news-lead {
+    position: relative;
+    margin-bottom: var(--space-4);
+  }
+  .news-lead img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: var(--space-4);
+  }
+  .news-lead h4 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  .news-lead h4 a {
+    color: var(--royal);
+    text-decoration: none;
+  }
+  .news-lead h4 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .news-lead:hover h4 a {
+    color: var(--accent-hover);
+  }
+  .news-lead > p:not(.news-meta) {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .news-rows,
+  .event-rows {
     margin: 0 0 var(--space-5);
     padding: 0;
     list-style: none;
   }
-  .upcoming-list li {
+  .news-rows li {
     display: flex;
     gap: var(--space-4);
-    align-items: flex-start;
+    align-items: center;
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+  .news-rows img {
+    flex: none;
+    width: 96px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .news-rows a,
+  .event-rows__meta strong {
+    color: var(--royal);
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .news-rows a {
+    text-decoration: none;
+  }
+  .news-rows a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+  }
+  .event-rows li {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
     padding-block: var(--space-4);
     border-bottom: 1px solid var(--line);
   }
@@ -881,29 +818,30 @@ const nextSteps = [
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
   }
-  .upcoming-list__text {
+  .event-rows__meta {
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    flex: 1;
     min-width: 0;
   }
-  .upcoming-list__text a {
-    color: var(--royal);
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .upcoming-list__text a:hover {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
-  }
-  .upcoming-list__text > span {
+  .event-rows__meta > span {
     color: var(--muted);
     font-size: var(--text-sm);
   }
+  .event-rows__go {
+    flex: none;
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
   @media (max-width: 900px) {
-    .happening {
+    .dispatch__grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 420px) {
+    .event-rows__go {
+      display: none;
     }
   }
 
@@ -1038,28 +976,30 @@ const nextSteps = [
     color: #fff;
   }
 
-  /* The closing routing line — no card, no padded section, just a slim bar
-     of links immediately before the footer. */
-  .next-line {
-    background: var(--white);
-    border-bottom: 1px solid var(--line);
-  }
-  .next-line__inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
+  /* Pre-footer member strip: navy on gold (8.9:1). */
+  .portal-strip {
+    background: var(--gold);
+    color: var(--navy);
     padding-block: var(--space-6);
   }
-  .next-line a {
-    color: var(--royal);
-    font-weight: 700;
-    font-size: var(--text-sm);
-    text-decoration: none;
+  .portal-strip__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-8);
   }
-  .next-line a:hover {
-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
+  .portal-strip p {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+  /* Partner logos read as one grey set until hovered. */
+  .partner-carousel__track img {
+    filter: grayscale(1);
+    transition: filter 0.2s ease;
+  }
+  .partner-carousel__track a:hover img,
+  .partner-carousel__track a:focus-visible img {
+    filter: none;
   }
 </style>
