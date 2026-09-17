@@ -3,13 +3,12 @@
  * Become a Member — ported from the original
  * membership/become-a-member/becomeamember.html.
  *
- * This is a much larger page than the earlier rebuild had: a hero with an
- * overview side-panel and standards strip, a "Who Would Make a Good Sigma
- * Woman?" accordion, two eligibility pathways each with a real (working)
- * mini image carousel (set side by side, divided by a gold rule), a
- * two-column prospective-member FAQ (16 questions),
- * a parent/family FAQ, and an accountability section linking to the real
- * official disciplinary/anti-hazing/report-a-concern resources.
+ * Sections: a single-column hero with a standards strip; a five-column row
+ * of Sigma-woman qualities; two eligibility pathways side by side (photo
+ * carousel first, divided by a gold rule); the 16 prospective-member
+ * questions grouped by topic; a parent/family FAQ; a membership-integrity
+ * public notice linking to HQ's official Expulsions & Suspensions list; and
+ * the anti-hazing / report-a-concern links.
  */
 import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
@@ -136,6 +135,48 @@ const prospectiveFaqB = [
   },
 ];
 
+/** The same 16 questions, grouped by what they are actually about. */
+const allProspective = [...prospectiveFaqA, ...prospectiveFaqB];
+const pick = (...starts: string[]) =>
+  starts.map((st) => {
+    const hit = allProspective.find((f) => f.q.startsWith(st));
+    if (!hit) throw new Error(`FAQ not found: ${st}`);
+    return hit;
+  });
+const faqGroups = [
+  {
+    title: "Eligibility & Academics",
+    items: pick(
+      "Does meeting the minimum",
+      "What GPA",
+      "Can I pursue membership during",
+      "Can I pursue membership while",
+      "What if I already earned",
+      "Is there an age limit",
+      "Do I have to be African American"
+    ),
+  },
+  {
+    title: "Chapters & the Official Process",
+    items: pick(
+      "What if my college",
+      "Can I participate through",
+      "How do I know when",
+      "Should I attend public",
+      "If I attend every",
+      "What should I do if a member",
+      "How can I verify"
+    ),
+  },
+  {
+    title: "Legacy Candidates",
+    items: pick("What is considered a legacy", "Does legacy status"),
+  },
+];
+if (faqGroups.flatMap((g) => g.items).length !== allProspective.length) {
+  throw new Error("Every prospective-member question must sit in exactly one group");
+}
+
 const familyFaq = [
   {
     q: "How can I verify that a membership activity is official?",
@@ -171,13 +212,10 @@ const familyFaq = [
   },
 ];
 
+const EXPULSIONS_URL =
+  "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx";
+
 const accountabilityLinks = [
-  {
-    title: "Expulsions & Suspensions",
-    note: "Official disciplinary status resource",
-    href: "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx",
-    external: true,
-  },
   {
     title: "Anti-Hazing Policy",
     note: "Safety, dignity, and prohibited conduct",
@@ -225,23 +263,6 @@ const accountabilityLinks = [
           </a>
         </div>
       </div>
-      <aside class="mem-hero__side">
-        <div class="mem-hero__side-rule"></div>
-        <p>
-          Prospective members should leave this page with a clear understanding of the two
-          membership pathways, the baseline requirements, the importance of official process, and
-          the questions families most often ask.
-        </p>
-        <div class="mem-hero__statements">
-          <span>Undergraduate Membership</span>
-          <span>Alumnae Membership</span>
-          <span>Eligibility Standards</span>
-          <span>Prospective Member FAQs</span>
-          <span>Parent &amp; Family FAQs</span>
-          <span>Standards &amp; Accountability</span>
-        </div>
-        <strong>Greater Service, Greater Progress<sup class="reg">&reg;</sup>.</strong>
-      </aside>
     </div>
     <div class="standards-strip">
       <div class="standards-strip__inner">
@@ -272,7 +293,14 @@ const accountabilityLinks = [
           honor, but an obligation. The qualities below matter just as much as interest.
         </p>
       </div>
-      <Faq items={sigmaWoman} variant="bordered" openFirst />
+      <ul class="traits">
+        {sigmaWoman.map((t) => (
+          <li>
+            <h3>{t.q}</h3>
+            <p>{t.a}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -297,6 +325,14 @@ const accountabilityLinks = [
 
       <div class="pathway-spread">
         <article class="pathway" id="collegiate">
+          <Carousel
+            variant="mini"
+            images={undergradImages.map((src) => ({
+              src,
+              alt: "Sigma Gamma Rho undergraduate members",
+            }))}
+            ariaLabel="Undergraduate membership gallery"
+          />
           <div class="pathway__header">
             <p>Collegiate Path</p>
             <h3>Undergraduate Membership</h3>
@@ -310,17 +346,14 @@ const accountabilityLinks = [
               <li>{r}</li>
             ))}
           </ul>
-          <Carousel
-            variant="mini"
-            images={undergradImages.map((src) => ({
-              src,
-              alt: "Sigma Gamma Rho undergraduate members",
-            }))}
-            ariaLabel="Undergraduate membership gallery"
-          />
         </article>
 
         <article class="pathway" id="alumnae">
+          <Carousel
+            variant="mini"
+            images={alumnaeImages.map((src) => ({ src, alt: "Sigma Gamma Rho alumnae members" }))}
+            ariaLabel="Alumnae membership gallery"
+          />
           <div class="pathway__header">
             <p>Graduate Path</p>
             <h3>Alumnae Membership</h3>
@@ -334,11 +367,6 @@ const accountabilityLinks = [
               <li>{r}</li>
             ))}
           </ul>
-          <Carousel
-            variant="mini"
-            images={alumnaeImages.map((src) => ({ src, alt: "Sigma Gamma Rho alumnae members" }))}
-            ariaLabel="Alumnae membership gallery"
-          />
         </article>
       </div>
     </div>
@@ -347,8 +375,8 @@ const accountabilityLinks = [
   <SigmaRule />
 
   <section class="faq-section">
-    <div class="container faq-shell">
-      <aside class="section-heading">
+    <div class="container">
+      <div class="section-heading">
         <span class="heading-sigma" aria-hidden="true">
           &Sigma;
         </span>
@@ -360,10 +388,14 @@ const accountabilityLinks = [
           Membership questions should be answered clearly and through official channels. Review the
           topics below before pursuing an opportunity through a chapter.
         </p>
-      </aside>
-      <div class="faq-columns">
-        <Faq items={prospectiveFaqA} variant="bordered" openFirst />
-        <Faq items={prospectiveFaqB} variant="bordered" />
+      </div>
+      <div class="faq-groups">
+        {faqGroups.map((g, i) => (
+          <div class="faq-group">
+            <h3>{g.title}</h3>
+            <Faq items={g.items} variant="bordered" openFirst={i === 0} />
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -388,7 +420,32 @@ const accountabilityLinks = [
     </div>
   </section>
 
-  <SigmaRule />
+  <section class="notice" aria-labelledby="notice-title">
+    <div class="container">
+      {/* Policy wording for HQ to confirm before launch. The list itself is
+          HQ's: this page links to it and never republishes names. */}
+      <div class="notice__box">
+        <h2 id="notice-title">Membership Integrity &amp; Public Notice</h2>
+        <p>
+          Individuals who have been expelled or suspended are not members in good standing of Sigma
+          Gamma Rho Sorority, Inc.<sup class="reg">&reg;</sup> They may not represent themselves as
+          members, take part in membership activities, or use the Sorority's name, Greek letters,
+          marks, or regalia.
+        </p>
+        <p>
+          Before any intake activity or official business, verify a person's standing with
+          International Corporate Headquarters.
+        </p>
+        <div class="notice__actions">
+          <a href={EXPULSIONS_URL} target="_blank" rel="noopener">
+            View the official Expulsions &amp; Suspensions list{" "}
+            <span aria-hidden="true">&#8599;</span>
+          </a>
+          <a href="mailto:help@sgrho1922.org">Verify standing: help@sgrho1922.org</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="accountability on-dark">
     <div class="container">
@@ -432,10 +489,7 @@ const accountabilityLinks = [
     color: #fff;
   }
   .mem-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
-    gap: var(--space-16);
-    align-items: start;
+    max-width: 48rem;
     padding-block: clamp(3.5rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
   }
   .mem-hero__title {
@@ -468,43 +522,6 @@ const accountabilityLinks = [
     flex-wrap: wrap;
     gap: var(--space-4);
     margin-top: var(--space-6);
-  }
-  .mem-hero__side {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: var(--radius-lg);
-    padding: var(--space-8);
-  }
-  .mem-hero__side-rule {
-    width: 3rem;
-    height: 2px;
-    background: var(--gold);
-    margin-bottom: var(--space-4);
-  }
-  .mem-hero__side > p {
-    color: rgba(255, 255, 255, 0.82);
-    margin: 0 0 var(--space-6);
-  }
-  .mem-hero__statements {
-    display: grid;
-    gap: var(--space-2);
-    margin-bottom: var(--space-6);
-  }
-  .mem-hero__statements span {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .mem-hero__side strong {
-    color: #fff;
-    font-family: var(--font-head);
-  }
-  @media (max-width: 900px) {
-    .mem-hero__grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   .standards-strip {
@@ -583,8 +600,57 @@ const accountabilityLinks = [
     background: var(--grad-royal);
     color: #fff;
   }
+  .accountability .section-heading h2 {
+    color: #fff;
+  }
   .accountability .section-heading > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* ---- qualities: one row, hairline dividers ---- */
+  .traits {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block: 1px solid var(--line);
+  }
+  .traits li {
+    padding: var(--space-6) var(--space-5);
+  }
+  .traits li + li {
+    border-left: 1px solid var(--line);
+  }
+  .traits h3 {
+    margin: 0 0 var(--space-3);
+    color: var(--royal);
+    font-size: var(--text-md);
+    line-height: 1.35;
+  }
+  .traits p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+  @media (max-width: 1100px) {
+    .traits {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-8);
+      border-bottom: 0;
+    }
+    .traits li,
+    .traits li + li {
+      padding-inline: 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+  @media (max-width: 640px) {
+    .traits {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* ---- pathways: an open comparison, split by one gold rule ---- */
@@ -612,7 +678,7 @@ const accountabilityLinks = [
     flex-direction: column;
   }
   .pathway__header {
-    margin-bottom: var(--space-4);
+    margin: var(--space-6) 0 var(--space-4);
   }
   .pathway__header p {
     margin: 0;
@@ -674,28 +740,73 @@ const accountabilityLinks = [
     }
   }
 
-  /* ---- FAQ columns ---- */
-  .faq-shell {
+  /* ---- FAQ: labelled groups ---- */
+  .faq-groups {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: var(--space-16);
+    gap: var(--space-10);
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+  .faq-group {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+    gap: var(--space-8);
     align-items: start;
   }
-  .faq-shell .section-heading {
-    text-align: left;
+  .faq-group > :global(.faq) {
+    width: 100%;
+  }
+  .faq-group h3 {
     margin: 0;
+    padding-top: var(--space-4);
+    color: var(--royal);
+    font-size: var(--text-md);
   }
-  .faq-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .faq-shell,
-    .faq-columns {
+  @media (max-width: 820px) {
+    .faq-group {
       grid-template-columns: 1fr;
+      gap: var(--space-3);
     }
+  }
+
+  /* ---- public notice: neutral, institutional ---- */
+  .notice {
+    background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .notice__box {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--navy);
+  }
+  .notice__box h2 {
+    margin: 0 0 var(--space-4);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-md);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .notice__box p {
+    margin: 0 0 var(--space-3);
+    color: var(--ink);
+    max-width: 65ch;
+  }
+  .notice__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-8);
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+  .notice__actions a {
+    color: var(--royal);
+    font-weight: 700;
+    overflow-wrap: anywhere;
   }
 
   /* ---- family ---- */
@@ -714,7 +825,7 @@ const accountabilityLinks = [
   .family-photo img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
   }
   .family-content h2 {
