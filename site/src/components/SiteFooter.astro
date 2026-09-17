@@ -32,8 +32,8 @@ const socialPaths: Record<string, string> = {
         <img
           src={withBase("/images/SGR-Logo-Shield.png")}
           alt="Sigma Gamma Rho Sorority coat of arms"
-          width="72"
-          height="72"
+          width="128"
+          height="128"
         />
         <span class="site-footer__wordmark">
           <span>Sigma Gamma Rho</span>
@@ -118,9 +118,10 @@ const socialPaths: Record<string, string> = {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* Clear space under the Shield (FY2027: no crowding) — a third of its
-       72px height. */
-    gap: var(--space-6);
+    /* FY2027 minimum for the full Coat of Arms is 1 1/3in x 1in, so the
+       crest runs at 128px here and nothing crowds it: clear space below is
+       a third of its height. */
+    gap: var(--space-10);
     text-decoration: none;
     color: var(--white);
   }

@@ -38,16 +38,15 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   <div class="nav-bar">
     <div class="header-wrap nav-bar__inner">
+      {/* FY2027: below the Coat of Arms minimum (1 1/3in x 1in) use an
+          approved wordmark instead, so the header carries the Greek letters
+          and the name. The full crest runs at its minimum in the footer. */}
       <a class="brand" href={withBase("/")} aria-label="Sigma Gamma Rho home">
-        <img
-          class="brand__shield"
-          src={withBase("/images/SGR-Logo-Shield.png")}
-          alt="Sigma Gamma Rho Sorority Shield"
-          width="80"
-          height="80"
-        />
+        <span class="brand__letters" aria-hidden="true">
+          &Sigma;&Gamma;&Rho;<sup>&reg;</sup>
+        </span>
         <span class="brand__title">
-          Sigma Gamma Rho Sorority, Incorporated<sup>&reg;</sup>
+          Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup>
         </span>
       </a>
 
@@ -327,8 +326,8 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     text-underline-offset: 3px;
   }
 
-  /* Tier 2's brand lockup: crest beside a compact wordmark, so the row also
-     carries the nav and the CTA. */
+  /* Tier 2's brand lockup: the Greek-letter wordmark beside the name, with
+     a gold rule between them for clear space. */
   .brand {
     display: flex;
     align-items: center;
@@ -337,17 +336,29 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     flex-shrink: 0;
     text-decoration: none;
   }
-  .brand__shield {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    flex-shrink: 0;
+  .brand__letters {
+    display: flex;
+    align-items: flex-start;
+    padding-right: 0.85rem;
+    border-right: 2px solid var(--gold);
+    color: var(--royal);
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+  .brand__letters sup {
+    font-family: var(--font-body);
+    font-size: max(0.32em, 9px);
+    font-weight: 700;
+    vertical-align: super;
   }
   .brand__title {
-    max-width: 15rem;
+    max-width: 13rem;
     color: var(--royal);
     font-family: var(--font-body);
-    font-size: 1.0625rem;
+    font-size: 1rem;
     line-height: 1.25;
     font-weight: 700;
   }
@@ -523,12 +534,11 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
      the CTA share one row with very little slack, so the wordmark, the links
      and the button all tighten rather than wrap. */
   @media (max-width: 1500px) {
-    .brand__shield {
-      width: 52px;
-      height: 52px;
+    .brand__letters {
+      font-size: 1.75rem;
     }
     .brand__title {
-      max-width: 11.5rem;
+      max-width: 10.5rem;
       font-size: 0.9375rem;
     }
     .site-nav__link {
@@ -795,16 +805,16 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   /* Phones: the crest and wordmark share the row with the hamburger. */
   @media (max-width: 560px) {
-    .brand__shield {
-      width: 48px;
-      height: 48px;
-    }
     .brand {
       gap: 0.65rem;
     }
+    .brand__letters {
+      font-size: 1.5rem;
+      padding-right: 0.65rem;
+    }
     .brand__title {
-      max-width: 12rem;
-      font-size: 0.9375rem;
+      max-width: 11rem;
+      font-size: 0.875rem;
     }
     .utility-bar__inner {
       justify-content: center;
