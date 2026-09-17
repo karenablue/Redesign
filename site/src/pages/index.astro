@@ -55,14 +55,14 @@ const reachStats = [
 // 3 — signature programs. Scope lines restate National Programs.
 const signature = [
   {
-    tag: "Maternal & Infant Health",
+    tag: "Maternal Health",
     title: "Project CRADLE Care®",
     scope: "Raises awareness of inequitable maternal and infant health outcomes affecting Black women. Outreach, education, and advocacy connect families with information and support.",
     href: "/service-impact/national-programs/#cradle",
     img: "/images/project-cradle-care-3.jpg",
   },
   {
-    tag: "Water Safety • USA Swimming",
+    tag: "Aquatic Safety",
     title: "SWIM 1922®",
     scope: "Addresses racial disparities in swimming and drowning by teaching water safety and swim skills. Through the partnership with USA Swimming, instruction comes directly into local communities.",
     href: "/service-impact/national-programs/#swim",
@@ -80,7 +80,8 @@ const signature = [
 // 5 — newsroom: the lead story (it has its own page) and the two latest
 // items from the news collection; events from the events collection.
 const featuredStory = {
-  date: "Boulé • July 2026",
+  tag: "Convention",
+  date: "July 2026",
   img: "/images/boule.jpg",
   title: "Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé",
   body: "Thousands of members, partners, and guests gathered at the Tampa Convention Center, the first Sigma Gamma Rho international convention in Tampa since 1976.",
@@ -154,7 +155,7 @@ const partnerLogos = [
   <StatBand stats={reachStats} tone="navy" />
 
   <!-- 2 — administration vision (60) and the Grand Basileus (40). -->
-  <section class="section vision">
+  <section class="section vision on-dark">
     <div class="container vision__grid">
       <div class="vision__copy">
         <p class="eyebrow">Leading Sigma Forward</p>
@@ -164,22 +165,26 @@ const partnerLogos = [
           Sorority, Inc. at the 60th Biennial Boulé, a life member poised to guide the organization
           as it embarks on its next century of service.
         </p>
-        <p>
-          As International President, she oversees more than 100,000 members and serves as Chairman
-          of the Board of Directors, guiding the Sorority's chapters worldwide.
-        </p>
         <blockquote class="vision__quote">
           <p>
-            &ldquo;Our founders' vision has been carried forward by women who lead with purpose and
-            serve without limits.&rdquo;
+            Our founders' vision has been carried forward by women who lead with purpose and serve
+            without limits.
           </p>
-          <footer>Marica T. Harris, 26th International Grand Basileus</footer>
+          <footer>
+            <strong>Marica T. Harris</strong>
+            <span>26th International Grand Basileus</span>
+          </footer>
         </blockquote>
-        <a class="arrow-link" href={withBase("/leadership/international-grand-basileus/")}>
-          Read Her Full Biography <span aria-hidden="true">&rarr;</span>
-        </a>
+        <div class="vision__actions">
+          <a class="btn" href={withBase("/leadership/international-board/")}>
+            Meet the International Board <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="vision__link" href={withBase("/leadership/international-grand-basileus/")}>
+            Read her biography <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
       </div>
-      <aside class="vision__card">
+      <figure class="vision__portrait">
         <img
           src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
           alt="International Grand Basileus Marica T. Harris"
@@ -188,18 +193,7 @@ const partnerLogos = [
           loading="lazy"
           decoding="async"
         />
-        <div class="vision__card-body">
-          <h3>Marica T. Harris</h3>
-          <ul>
-            <li>26th International Grand Basileus</li>
-            <li>Elected at the 60th Biennial Boulé</li>
-            <li>Life member</li>
-          </ul>
-          <a class="btn" href={withBase("/leadership/international-board/")}>
-            Meet the International Board <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </aside>
+      </figure>
     </div>
   </section>
 
@@ -210,9 +204,11 @@ const partnerLogos = [
       <ul class="program-cards">
         {signature.map((p) => (
           <li class="program-card">
-            <img src={withBase(p.img)} alt="" width="640" height="360" loading="lazy" decoding="async" />
+            <div class="program-card__media">
+              <img src={withBase(p.img)} alt="" width="640" height="360" loading="lazy" decoding="async" />
+              <span class="program-card__badge">{p.tag}</span>
+            </div>
             <div class="program-card__body">
-              <p class="program-card__tag">{p.tag}</p>
               <h3>
                 <a href={withBase(p.href)}>{p.title}</a>
               </h3>
@@ -272,7 +268,10 @@ const partnerLogos = [
           <h3 class="dispatch__label">Official Newsroom</h3>
           <article class="news-lead">
             <img src={withBase(featuredStory.img)} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-            <p class="news-meta">{featuredStory.date}</p>
+            <p class="news-lead__meta">
+              <span class="news-tag">{featuredStory.tag}</span>
+              {featuredStory.date}
+            </p>
             <h4>
               <a href={withBase(featuredStory.href)}>{featuredStory.title}</a>
             </h4>
@@ -460,9 +459,12 @@ const partnerLogos = [
   }
 
 
-  /* 2 — administration vision, 60/40 */
+  /* 2 — administration vision, 60/40, on navy */
   .vision {
-    background: var(--white);
+    background:
+      radial-gradient(circle at 78% 40%, rgba(223, 177, 54, 0.14), transparent 45%),
+      var(--navy);
+    color: #fff;
   }
   .vision__grid {
     display: grid;
@@ -480,37 +482,74 @@ const partnerLogos = [
     line-height: 1.25;
     color: var(--royal);
   }
+  .vision .vision__title {
+    color: #fff;
+  }
   .vision__copy > p:not(.eyebrow) {
-    color: var(--muted);
+    color: rgba(255, 255, 255, 0.82);
     max-width: 40rem;
   }
-  /* A quotation, so the gold rule marks it as one. */
+  /* Editorial pull quote: a large gold mark, display italic, signature. */
   .vision__quote {
-    margin: var(--space-8) 0;
-    padding-left: var(--space-6);
-    border-left: 3px solid var(--gold);
+    position: relative;
+    margin: var(--space-10) 0;
+    padding-top: var(--space-8);
+  }
+  .vision__quote::before {
+    content: "\201C";
+    position: absolute;
+    top: -0.35em;
+    left: -0.05em;
+    font-family: var(--font-editorial);
+    font-size: 6rem;
+    line-height: 1;
+    color: var(--gold);
   }
   .vision__quote p {
     margin: 0;
     font-family: var(--font-editorial);
-    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.5rem);
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.1rem);
     font-style: italic;
-    line-height: 1.5;
-    color: var(--ink);
+    line-height: 1.4;
+    color: #fff;
   }
   .vision__quote footer {
-    margin-top: var(--space-3);
-    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 22rem;
+  }
+  .vision__quote footer strong {
+    color: var(--gold);
+  }
+  .vision__quote footer span {
+    color: rgba(255, 255, 255, 0.72);
     font-size: var(--text-sm);
+  }
+  .vision__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-8);
+  }
+  .vision__link {
+    color: #fff;
     font-weight: 700;
   }
-  .vision__card {
-    border: 1px solid rgba(32, 65, 165, 0.2);
-    border-radius: var(--radius-lg);
-    background: var(--white);
-    padding: var(--space-4);
+  .vision__link:hover {
+    color: var(--gold);
   }
-  .vision__card img {
+  /* The portrait, framed with a soft gold backlight. */
+  .vision__portrait {
+    margin: 0;
+    padding: var(--space-3);
+    border: 1px solid rgba(223, 177, 54, 0.45);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 80px rgba(223, 177, 54, 0.22);
+  }
+  .vision__portrait img {
     display: block;
     width: 100%;
     height: auto;
@@ -519,34 +558,19 @@ const partnerLogos = [
     object-position: 50% 15%;
     border-radius: var(--radius);
   }
-  .vision__card-body {
-    padding: var(--space-5) var(--space-2) var(--space-2);
-  }
-  .vision__card h3 {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-h3);
-  }
-  .vision__card ul {
-    margin: 0 0 var(--space-6);
-    padding: 0;
-    list-style: none;
-    color: var(--muted);
-  }
-  .vision__card li + li {
-    margin-top: var(--space-1);
-  }
   @media (max-width: 900px) {
     .vision__grid {
       grid-template-columns: minmax(0, 1fr);
     }
-    .vision__card {
+    .vision__portrait {
       max-width: 26rem;
+      order: -1;
     }
   }
 
   /* 3 — our work in action */
   .work {
-    background: var(--cream);
+    background: var(--white);
   }
   .work__label {
     margin: 0 0 clamp(2rem, 4vw, 3rem);
@@ -566,7 +590,7 @@ const partnerLogos = [
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: var(--space-4);
+    overflow: hidden;
     border: 1px solid rgba(32, 65, 165, 0.2);
     border-radius: var(--radius);
     background: var(--white);
@@ -583,31 +607,39 @@ const partnerLogos = [
     outline: 3px solid var(--gold);
     outline-offset: 2px;
   }
+  .program-card__media {
+    position: relative;
+  }
   .program-card img {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
+  }
+  /* Navy on gold: 8.9:1. */
+  .program-card__badge {
+    position: absolute;
+    left: var(--space-4);
+    top: var(--space-4);
+    padding: 0.3rem 0.7rem;
     border-radius: var(--radius);
-  }
-  .program-card__body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: var(--space-5) var(--space-2) var(--space-2);
-  }
-  .program-card__tag {
-    margin: 0 0 var(--space-2);
-    color: var(--muted);
+    background: var(--gold);
+    color: var(--navy);
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .program-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-6);
+  }
   .program-card h3 {
     margin: 0 0 var(--space-3);
-    font-size: var(--text-lg);
+    font-size: var(--text-h3);
   }
   .program-card h3 a {
     color: var(--royal);
@@ -621,7 +653,7 @@ const partnerLogos = [
   .program-card h3 a:focus-visible {
     outline: none;
   }
-  .program-card p:not(.program-card__tag) {
+  .program-card__body p {
     margin: 0 0 var(--space-5);
     color: var(--muted);
     font-size: var(--text-sm);
@@ -649,8 +681,10 @@ const partnerLogos = [
   }
 
   /* 4 — living legacy */
+  /* Heritage: the site's warm paper tone (global --cream, not the
+     homepage's slate repoint). */
   .legacy {
-    background: var(--white);
+    background: #fffbf0;
   }
   .legacy__grid {
     display: grid;
@@ -668,6 +702,7 @@ const partnerLogos = [
     aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: var(--radius);
+    box-shadow: 0 0 0 1px rgba(223, 177, 54, 0.5);
   }
   .legacy__figure figcaption {
     margin-top: var(--space-2);
@@ -715,6 +750,25 @@ const partnerLogos = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .news-lead__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-2);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .news-tag {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
   .news-lead {
     position: relative;
     margin-bottom: var(--space-4);
@@ -730,7 +784,8 @@ const partnerLogos = [
   }
   .news-lead h4 {
     margin: 0 0 var(--space-2);
-    font-size: var(--text-lg);
+    font-size: var(--text-h3);
+    line-height: 1.25;
   }
   .news-lead h4 a {
     color: var(--royal);
@@ -744,7 +799,7 @@ const partnerLogos = [
   .news-lead:hover h4 a {
     color: var(--accent-hover);
   }
-  .news-lead > p:not(.news-meta) {
+  .news-lead > p:not(.news-lead__meta) {
     margin: 0;
     color: var(--muted);
     font-size: var(--text-sm);
@@ -790,32 +845,30 @@ const partnerLogos = [
     padding-block: var(--space-4);
     border-bottom: 1px solid var(--line);
   }
-  /* Same calendar tile as the Upcoming Events page. */
+  /* A solid navy calendar square: month above, day below, both white. */
   .date-tile {
     flex: none;
     display: flex;
     flex-direction: column;
-    width: 72px;
-    border: 1px solid var(--line);
+    justify-content: center;
+    width: 76px;
+    min-height: 76px;
+    padding: var(--space-2);
     border-radius: var(--radius);
-    overflow: hidden;
+    background: var(--navy);
+    color: #fff;
     text-align: center;
-    background: var(--white);
   }
   .date-tile span {
-    padding: 0.2rem;
-    background: var(--royal);
-    color: #fff;
+    color: var(--gold);
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
   .date-tile strong {
-    padding: 0.4rem 0.2rem;
-    color: var(--ink);
-    font-size: var(--text-md);
-    line-height: 1.1;
+    font-size: var(--text-lg);
+    line-height: 1.15;
     font-variant-numeric: tabular-nums;
   }
   .event-rows__meta {
@@ -974,6 +1027,16 @@ const partnerLogos = [
   }
   .partnership__fineprint a:hover {
     color: #fff;
+  }
+
+  /* The reach ribbon continues the navy opener: darker ground, larger
+     numerals, a hairline where it meets the hero. */
+  :global(body.page-home .statband--navy) {
+    background: var(--navy);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  :global(body.page-home .statband__value) {
+    font-size: clamp(1.6rem, 0.9rem + 3.2vw, 3.25rem);
   }
 
   /* Pre-footer member strip: navy on gold (8.9:1). */
