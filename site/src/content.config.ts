@@ -38,6 +38,9 @@ const events = defineCollection({
 
     location: z.string().min(1),
 
+    /** Pins the event in the wide banner above the list. Use on one entry. */
+    featured: z.boolean().optional(),
+
     /**
      * Display position. The curated sequence runs across a season
      * (Sep → May), and because the dates above are fuzzy it cannot be derived
@@ -53,7 +56,10 @@ const news = defineCollection({
   schema: z.object({
     title: z.string().min(1),
     tag: z.string().min(1),
-    image: z.string().min(1),
+    /** Optional: a story with no real photograph runs as a text row. */
+    image: z.string().min(1).optional(),
+    /** Optional publication date as it should read, e.g. "July 2026". */
+    date: z.string().optional(),
     /** Optional link. Absolute URLs open in a new tab when `external` is set;
      *  site-relative paths are passed through withBase() by the page. */
     href: z.string().optional(),

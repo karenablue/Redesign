@@ -38,6 +38,11 @@
   box-sizing: border-box;
 }
 
+/* `hidden` must win over any component's display rule (filters, search). */
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;

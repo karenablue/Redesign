@@ -1,15 +1,37 @@
 ---
-import Base from "../../layouts/Base.astro";
-import { withBase } from "../../lib/url.js";
+import Base from "../../../layouts/Base.astro";
+import { withBase } from "../../../lib/url.js";
 import { getCollection, render } from "astro:content";
 
-// News items are markdown in src/content/news/, so HQ can post an update
-// after handover without touching this page. `order` is the display order;
-// prose lives in each file's markdown body.
+/*
+ * News items are markdown in src/content/news/, so HQ can post an update
+ * after handover without touching this page. `order` is the display order;
+ * prose lives in each file's markdown body. The first two items get the
+ * large secondary slots; the rest run as compact rows.
+ */
 const newsEntries = (await getCollection("news")).sort((a, b) => a.data.order - b.data.order);
-const cards = await Promise.all(
-  newsEntries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content })),
+const items = await Promise.all(
+  newsEntries.map(async (entry) => {
+    const d = entry.data;
+    return {
+      ...d,
+      topic: d.tag,
+      link: d.href
+        ? {
+            href: d.href.startsWith("http") ? d.href : withBase(d.href),
+            ...(d.external ? { target: "_blank", rel: "noopener" } : {}),
+          }
+        : null,
+      Body: (await render(entry)).Content,
+    };
+  }),
 );
+const secondary = items.slice(0, 2);
+const archive = items.slice(2);
+const topics = [...new Set(items.map((i) => i.topic))];
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
 ---
 
 <Base
@@ -31,54 +53,140 @@ const cards = await Promise.all(
 
   <section class="ln-main">
     <div class="container">
-      <article class="ln-feature">
-        <figure>
+      <article class="ln-lead">
+        <a class="ln-lead__media" href={withBase(LEAD_URL)} tabindex="-1" aria-hidden="true">
           <img
             src={withBase("/images/boule.jpg")}
-            alt="Sigma Gamma Rho members at the 61st International Biennial Boule in Tampa"
+            alt=""
+            width="1200"
+            height="675"
           />
-        </figure>
-        <div class="ln-feature__copy">
-          <span class="ln-tag">Featured</span>
-          <h2>Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boule</h2>
+          <span class="ln-lead__badge">International Boulé</span>
+        </a>
+        <div class="ln-lead__copy">
+          <p class="ln-meta">Boulé &bull; July 2026</p>
+          <h2>
+            <a href={withBase(LEAD_URL)}>
+              Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé
+            </a>
+          </h2>
           <p>
             Thousands of members, partners, and guests gathered at the Tampa Convention Center July
-            22&ndash;26 for the 61st International Biennial Boule &mdash; the first Sigma Gamma Rho
-            international convention held in Tampa since 1976. The city projected the gathering
-            would generate more than $5.1 million in direct regional economic impact, alongside
-            on-the-ground service including 300 newborn care packages, 3,000 backpacks for K&ndash;8
-            students, and 300 free swim lessons for local youth. "Our presence in Tampa represents
-            an investment in people, partnerships, and progress," said 26th International Grand
-            Basileus Marica T. Harris.
+            22&ndash;26, the first Sigma Gamma Rho international convention in Tampa since 1976.
+            The week paired business with service: newborn care packages, backpacks, and free swim
+            lessons for local families.
           </p>
+          <a class="ln-more" href={withBase(LEAD_URL)}>
+            Read the full story <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
       </article>
 
-      <div class="ln-grid">
-        {cards.map((c) => {
-          const Tag = c.href ? "a" : "article";
-          const props = c.href
-            ? {
-                href: c.href.startsWith("http") ? c.href : withBase(c.href),
-                ...(c.external ? { target: "_blank", rel: "noopener" } : {}),
-              }
-            : {};
-          return (
-            <Tag class="ln-card" {...props}>
-              <figure>
-                <img src={withBase(c.image)} alt={c.title} loading="lazy" decoding="async" />
-              </figure>
-              <span class="ln-tag">{c.tag}</span>
-              <h3>{c.title}</h3>
-              <c.Body />
-            </Tag>
-          );
-        })}
-      </div>
+      <div class="ln-layout">
+        <div class="ln-feed">
+          <div class="ln-filters" role="group" aria-label="Filter stories by topic" hidden>
+            <button type="button" class="is-active" aria-pressed="true" data-topic="all">
+              All Stories
+            </button>
+            {topics.map((t) => (
+              <button type="button" aria-pressed="false" data-topic={slug(t)}>
+                {t}
+              </button>
+            ))}
+          </div>
 
+          <h2 class="visually-hidden">More stories</h2>
+          <ul class="ln-secondary">
+            {secondary.map((c) => (
+              <li class="ln-story" data-topic={slug(c.topic)}>
+                {c.image && (
+                  <img src={withBase(c.image)} alt="" width="600" height="400" loading="lazy" decoding="async" />
+                )}
+                <p class="ln-meta">
+                  {c.topic}
+                  {c.date && <> &bull; {c.date}</>}
+                </p>
+                <h3>
+                  {c.link ? <a {...c.link}>{c.title}</a> : c.title}
+                </h3>
+                <div class="ln-summary">
+                  <c.Body />
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <ul class="ln-archive">
+            {archive.map((c) => (
+              <li class="ln-row" data-topic={slug(c.topic)}>
+                {c.image ? (
+                  <img src={withBase(c.image)} alt="" width="160" height="120" loading="lazy" decoding="async" />
+                ) : (
+                  <span class="ln-row__blank" aria-hidden="true" />
+                )}
+                <div>
+                  <p class="ln-meta">
+                    {c.topic}
+                    {c.date && <> &bull; {c.date}</>}
+                  </p>
+                  <h3>
+                    {c.link ? <a {...c.link}>{c.title}</a> : c.title}
+                  </h3>
+                  <div class="ln-summary">
+                    <c.Body />
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p class="ln-empty" hidden>No stories in this topic yet.</p>
+        </div>
+
+        <aside class="ln-press" aria-label="For the press">
+          <h2>For the Press</h2>
+          <p>
+            Interview, statement, and archival requests are coordinated by International Corporate
+            Headquarters.
+          </p>
+          <a class="btn" href={withBase("/news-events/media-relations/")}>Media Relations</a>
+          <a class="ln-press__link" href={withBase("/news-events/media-relations/")}>
+            Brand assets &amp; logo suite <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="ln-press__link" href={withBase("/news-events/upcoming-events/")}>
+            Upcoming events <span aria-hidden="true">&rarr;</span>
+          </a>
+        </aside>
+      </div>
     </div>
   </section>
 </Base>
+
+<script>
+  const bar = document.querySelector<HTMLElement>(".ln-filters");
+  if (bar) {
+    bar.hidden = false;
+    const buttons = [...bar.querySelectorAll<HTMLButtonElement>("button")];
+    const stories = [...document.querySelectorAll<HTMLElement>("[data-topic]:not(button)")];
+    const empty = document.querySelector<HTMLElement>(".ln-empty");
+    buttons.forEach((b) =>
+      b.addEventListener("click", () => {
+        const topic = b.dataset.topic;
+        buttons.forEach((x) => {
+          const on = x === b;
+          x.classList.toggle("is-active", on);
+          x.setAttribute("aria-pressed", String(on));
+        });
+        let shown = 0;
+        stories.forEach((s) => {
+          const match = topic === "all" || s.dataset.topic === topic;
+          s.hidden = !match;
+          if (match) shown++;
+        });
+        if (empty) empty.hidden = shown > 0;
+      }),
+    );
+  }
+</script>
 
 <style>
   .ln-hero {
@@ -109,101 +217,232 @@ const cards = await Promise.all(
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .ln-feature {
+  .ln-meta {
+    margin: 0;
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ---- lead story: 60/40 ---- */
+  .ln-lead {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: var(--space-12);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: var(--space-10);
     align-items: center;
-    margin-bottom: var(--space-14);
     padding-bottom: var(--space-14);
     border-bottom: 1px solid var(--line);
   }
-  .ln-feature figure {
-    margin: 0;
-    border-radius: var(--radius-lg);
+  .ln-lead__media {
+    position: relative;
+    display: block;
+    border-radius: var(--radius);
     overflow: hidden;
   }
-  .ln-feature img {
+  .ln-lead__media img {
+    display: block;
     width: 100%;
-    aspect-ratio: 4/3;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
   }
-  .ln-tag {
-    display: inline-block;
+  .ln-lead__badge {
+    position: absolute;
+    left: var(--space-4);
+    top: var(--space-4);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius);
+    background: var(--navy);
+    color: #fff;
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--accent-text);
-    margin-bottom: var(--space-2);
   }
-  .ln-feature__copy h2 {
-    margin: 0 0 var(--space-4);
+  .ln-lead h2 {
+    margin: var(--space-3) 0 var(--space-4);
     font-size: var(--text-h3);
+    line-height: 1.15;
   }
-  .ln-feature__copy p {
+  .ln-lead h2 a {
+    color: var(--royal);
+    text-decoration: none;
+  }
+  .ln-lead h2 a:hover {
+    color: var(--accent-hover);
+  }
+  .ln-lead__copy > p:not(.ln-meta) {
+    margin: 0;
     color: var(--muted);
   }
-  .ln-feature__copy a {
+  .ln-more {
+    display: inline-block;
+    margin-top: var(--space-5);
     color: var(--royal);
     font-weight: 700;
-    text-decoration: none;
-  }
-  /* Below ~720px the two columns leave the copy side about 100px wide, which
-     no headline can wrap into — the page then scrolled sideways by 50-70px.
-     Stack instead, image first. */
-  @media (max-width: 720px) {
-    .ln-feature {
-      grid-template-columns: 1fr;
-      gap: var(--space-8);
-    }
-    .ln-feature figure {
-      order: -1;
-    }
   }
 
-  .ln-grid {
+  /* ---- feed + press box ---- */
+  .ln-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: var(--space-12);
+    align-items: start;
+    margin-top: var(--space-12);
   }
-  .ln-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
+  .ln-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+  .ln-filters button {
+    min-height: 40px;
+    padding: 0 1rem;
     border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--royal);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
   }
-  .ln-card figure {
-    margin: 0;
+  .ln-filters button:hover {
+    border-color: var(--royal);
   }
-  .ln-card img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
+  .ln-filters button.is-active {
+    border-color: var(--royal);
+    background: var(--royal);
+    color: #fff;
+  }
+
+  .ln-secondary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8);
+    margin: 0 0 var(--space-10);
+    padding: 0;
+    list-style: none;
+  }
+  .ln-story img {
     display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: var(--space-4);
   }
-  .ln-card .ln-tag {
-    margin: var(--space-5) var(--space-5) 0;
+  .ln-story h3,
+  .ln-row h3 {
+    margin: var(--space-2) 0 var(--space-2);
+    font-size: var(--text-lg);
+    line-height: 1.3;
   }
-  .ln-card h3 {
-    margin: var(--space-2) var(--space-5) var(--space-2);
+  .ln-row h3 {
     font-size: var(--text-md);
   }
-  .ln-card p {
-    margin: 0 var(--space-5) var(--space-5);
+  .ln-story h3 a,
+  .ln-row h3 a {
+    color: var(--royal);
+    text-decoration: none;
+  }
+  .ln-story h3 a:hover,
+  .ln-row h3 a:hover {
+    color: var(--accent-hover);
+    text-decoration-line: underline;
+    text-decoration-color: var(--gold);
+  }
+  .ln-summary :global(p) {
+    margin: 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
 
-  .ln-more {
-    text-align: center;
-    margin-top: var(--space-12);
+  .ln-archive {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
   }
-  .ln-more a {
-    color: var(--royal);
+  .ln-row {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .ln-row img,
+  .ln-row__blank {
+    display: block;
+    width: 160px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .ln-row__blank {
+    background: var(--tint);
+  }
+  .ln-empty {
+    color: var(--muted);
+  }
+
+  .ln-press {
+    position: sticky;
+    top: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .ln-press h2 {
+    margin: 0;
+    font-family: var(--font-body);
     font-weight: 700;
-    text-decoration: none;
+    font-size: var(--text-lg);
+    color: var(--royal);
+  }
+  .ln-press p {
+    margin: 0 0 var(--space-2);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .ln-press .btn {
+    align-self: flex-start;
+  }
+  .ln-press__link {
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  @media (max-width: 1000px) {
+    .ln-lead,
+    .ln-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ln-press {
+      position: static;
+    }
+  }
+  @media (max-width: 640px) {
+    .ln-secondary {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ln-row {
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: var(--space-4);
+    }
+    .ln-row img,
+    .ln-row__blank {
+      width: 96px;
+      height: 72px;
+    }
   }
 </style>
