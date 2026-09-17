@@ -1,35 +1,28 @@
 ---
 /**
- * PillarRail — the Sorority's pillars as three cards: a line icon, the pillar,
- * and one sentence on what it means.
+ * PillarRail — the Sorority's pillars as three cards: a Sigma in a gold
+ * circle, the pillar, and one sentence on what it means.
  *
- * Icons are inline SVG line art (no clip art, per FY2027) and decorative, so
- * they are hidden from assistive tech; the heading carries the meaning.
+ * The mark is decorative (the heading carries the meaning), so it is hidden
+ * from assistive tech.
  */
 interface Pillar {
   label: string;
   body: string;
-  icon: string;
 }
 
 const pillars: Pillar[] = [
   {
     label: "Sisterhood",
     body: "Lifelong bonds rooted in genuine support, shared purpose, and lasting unity.",
-    // three figures
-    icon: "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM3 19c0-2.8 2.7-4.5 6-4.5s6 1.7 6 4.5M16 14c2.4.2 4 1.8 4 4",
   },
   {
     label: "Scholarship",
     body: "Academic excellence and intellectual growth, born from our educator roots.",
-    // open book
-    icon: "M12 7.5C10.5 6.2 8.4 5.5 4.5 5.5v11c3.9 0 6 .7 7.5 2 1.5-1.3 3.6-2 7.5-2v-11c-3.9 0-6 .7-7.5 2Zm0 0v11",
   },
   {
     label: "Service",
     body: "Transformative community impact, health advocacy, and global outreach.",
-    // open hands around a heart
-    icon: "M12 20c-4-2.2-7-5-7-8a3.2 3.2 0 0 1 5.6-2.1l1.4 1.5 1.4-1.5A3.2 3.2 0 0 1 19 12c0 3-3 5.8-7 8Z",
   },
 ];
 ---
@@ -37,11 +30,7 @@ const pillars: Pillar[] = [
 <ul class="pillars">
   {pillars.map((p) => (
     <li class="pillar">
-      <span class="pillar__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d={p.icon} />
-        </svg>
-      </span>
+      <span class="pillar__mark" aria-hidden="true">&Sigma;</span>
       <h3 class="pillar__label">{p.label}</h3>
       <p class="pillar__body">{p.body}</p>
     </li>
@@ -67,7 +56,7 @@ const pillars: Pillar[] = [
     background: var(--white);
     text-align: center;
   }
-  .pillar__icon {
+  .pillar__mark {
     display: grid;
     place-items: center;
     width: 64px;
@@ -76,10 +65,9 @@ const pillars: Pillar[] = [
     border: 1px solid var(--gold);
     border-radius: 50%;
     color: var(--royal);
-  }
-  .pillar__icon svg {
-    width: 30px;
-    height: 30px;
+    font-family: var(--font-head);
+    font-size: 1.75rem;
+    line-height: 1;
   }
   .pillar__label {
     margin: 0 0 var(--space-3);
