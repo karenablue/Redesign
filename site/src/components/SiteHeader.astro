@@ -1,18 +1,19 @@
 ---
 /**
- * SiteHeader — two tiers (Karena's handoff spec, 2026-09-17):
- *   Tier 1  royal utility strip: Find a Chapter, Donate, Poodle Portal.
- *   Tier 2  white bar: crest and wordmark, primary nav, gold Join button,
- *           search. Collapses to a drawer below 1280px.
+ * SiteHeader — two decks (Karena's wireframe, 2026-09-17):
+ *   Deck 1  brand masthead on Bright White: the Coat of Arms at 100px, the
+ *           wordmark, then search and the two utility actions.
+ *   Deck 2  royal navigation ribbon, sticky on scroll, five sections.
+ *
  * Reads primaryNav / headerActions / searchIndex from src/data/nav.js, so the
  * navigation is defined once for the whole site (the old site had this markup
- * duplicated in 24 files).
+ * duplicated in 24 files). Below 1280px the ribbon collapses to a drawer.
  *
  * props:
- *   activeTop  label of the current top-level section, e.g. "About" — used to
- *              highlight the matching nav item.
+ *   activeTop  label of the current top-level section, e.g. "About Us" — used
+ *              to highlight the matching nav item.
  */
-import { primaryNav, headerUtility, headerActions, searchIndex } from "../data/nav.js";
+import { primaryNav, headerActions, searchIndex } from "../data/nav.js";
 import { reg } from "../lib/reg.js";
 import { withBase } from "../lib/url.js";
 import Button from "./Button.astro";
@@ -22,41 +23,70 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 ---
 
 <header class="site-header">
-  <div class="utility-bar">
-    <nav class="header-wrap utility-bar__inner" aria-label="Utility">
-      {headerUtility.map((u) => (
-        <a
-          href={u.external ? u.href : withBase(u.href)}
-          {...(u.external ? { target: "_blank", rel: "noopener" } : {})}
+  <div class="header-wrap masthead">
+    <a class="brand" href={withBase("/")} aria-label="Sigma Gamma Rho home">
+      <img
+        class="brand__crest"
+        src={withBase("/images/SGR-Logo-Shield.png")}
+        alt="Sigma Gamma Rho Sorority coat of arms"
+        width="100"
+        height="100"
+      />
+      <span class="brand__wordmark">
+        <span class="brand__name">Sigma Gamma Rho</span>
+        <span class="brand__legal">Sorority, Inc.<sup>&reg;</sup></span>
+      </span>
+    </a>
+
+    <div class="masthead__actions">
+      <div class="header-search">
+        <button type="button" class="search-toggle" aria-label="Search the site" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </button>
+        <div class="search-panel" hidden>
+          <div class="search-field">
+            <svg class="search-field__icon" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="11" cy="11" r="7" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="search" class="search-input" placeholder="Search the site&hellip;" aria-label="Search the site" />
+          </div>
+          <div class="search-results" role="listbox" aria-label="Search results"></div>
+        </div>
+      </div>
+      {headerActions.map((x) => (
+        <Button
+          href={x.href}
+          variant={x.variant === "solid" ? "solid" : "outline"}
+          class="masthead__btn"
+          {...(x.external ? { target: "_blank", rel: "noopener" } : {})}
         >
-          {u.label}
-          {u.external && <span aria-hidden="true">&#8599;</span>}
-        </a>
+          {/* one inline element: .btn is a flex row with a gap, so a bare
+              <sup> would be spaced away from the label */}
+          <span set:html={reg(x.label)} />
+        </Button>
       ))}
-    </nav>
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+      >
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+    </div>
   </div>
 
+  {/* Deck 2 — the only part that sticks, so the masthead scrolls away and
+      the ribbon keeps the sections reachable. */}
   <div class="nav-bar">
     <div class="header-wrap nav-bar__inner">
-      {/* The crest runs at the FY2027 minimum (128px, i.e. 1 1/3in) and
-          overlaps the bar's bottom edge so the bar height doesn't shrink it.
-          Clear space is reserved by the brand's own padding. */}
-      <a class="brand" href={withBase("/")} aria-label="Sigma Gamma Rho home">
-        <img
-          class="brand__crest"
-          src={withBase("/images/SGR-Logo-Shield.png")}
-          alt="Sigma Gamma Rho Sorority coat of arms"
-          width="128"
-          height="128"
-        />
-        <span class="brand__title">
-          Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup>
-        </span>
-      </a>
-
-      <!-- Collapses to a single drawer below 1280px, toggled by .nav-toggle;
-           `display: contents` above that width so it's invisible to the flex
-           layout and .site-nav / .header-actions lay out exactly as before. -->
       <div class="nav-panel" id="nav-panel">
         <nav class="site-nav" aria-label="Primary">
           <ul class="site-nav__list">
@@ -85,80 +115,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
             ))}
           </ul>
         </nav>
-
-        <div class="header-actions">
-          <div class="header-search">
-            <button
-              type="button"
-              class="search-toggle"
-              aria-label="Search the site"
-              aria-expanded="false"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                width="18"
-                height="18"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </button>
-            <div class="search-panel" hidden>
-              <div class="search-field">
-                <svg
-                  class="search-field__icon"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                >
-                  <circle cx="11" cy="11" r="7" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-                <input
-                  type="search"
-                  class="search-input"
-                  placeholder="Search the site&hellip;"
-                  aria-label="Search the site"
-                />
-              </div>
-              <div class="search-results" role="listbox" aria-label="Search results"></div>
-            </div>
-          </div>
-          {headerActions.map((a) => (
-            <Button
-              href={a.href}
-              variant={a.variant === "solid" ? "solid" : "outline"}
-              class="header-actions__btn"
-            >
-              {/* one inline element: .btn is a flex row with a gap, so a bare
-                  <sup> would be spaced away from the label */}
-              <span set:html={reg(a.label)} />
-            </Button>
-          ))}
-        </div>
       </div>
-
-      <button
-        type="button"
-        class="nav-toggle"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="nav-panel"
-      >
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-      </button>
     </div>
   </div>
 </header>
@@ -283,105 +240,113 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 </script>
 
 <style>
-  /* Brand identity bar — matched to the Figma Make Header.tsx:
-     96px shield w/ gold drop-shadow, 24px gap, LEFT-aligned copy block,
-     11px/3px-tracked kicker between two 12px gold rules, 32px Montserrat
-     wordmark, 16px sup ®, and a 320px gold→transparent gradient underline. */
   .site-header {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 1000;
-    background: var(--white);
-    box-shadow: var(--shadow-sm);
+    background: var(--bright-white);
   }
-  /* Figma Make header spans the full width with ~80px side gutters,
-     not the site's 1100px container. */
+  /* Full width with generous side gutters, not the site's reading width. */
   .header-wrap {
     width: 100%;
     padding-inline: clamp(1.25rem, 5.5vw, 5rem);
   }
-  /* Tier 1 — royal utility strip. */
-  .utility-bar {
-    background: var(--royal);
-  }
-  .utility-bar__inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    gap: var(--space-5);
-    min-height: 40px;
-    padding-block: 0.35rem;
-  }
-  .utility-bar a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    color: #fff;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-  .utility-bar a:hover {
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
-    text-underline-offset: 3px;
-  }
 
-  /* Tier 2's brand lockup: the crest anchored at full size, overlapping the
-     bar, with the wordmark beside it. */
-  .brand {
-    position: relative;
+  /* ---------- Deck 1 — brand masthead ---------- */
+  .masthead {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    justify-content: space-between;
+    gap: var(--space-6);
+    min-height: 110px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
     min-width: 0;
-    flex-shrink: 0;
-    padding-left: 148px;
     text-decoration: none;
   }
   .brand__crest {
-    position: absolute;
-    left: 0;
-    top: -10px;
-    width: 128px;
-    height: 128px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
+    flex-shrink: 0;
   }
-  .brand__title {
-    max-width: 13rem;
+  .brand__wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .brand__name {
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
+    line-height: 1.05;
+    letter-spacing: 0.02em;
     color: var(--royal);
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.25;
-    font-weight: 700;
+    text-transform: uppercase;
   }
-  .brand__title sup {
-    font-size: max(0.4em, 9px);
+  .brand__legal {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .brand__legal sup {
+    font-size: max(0.5em, 8px);
     vertical-align: super;
-    margin-left: 1px;
   }
 
-  /* Nav bar — navy, 4px gold bottom rule, 64px row, links centred, 32px gap,
-     16px Montserrat 700, no dropdown arrows, gold underline-reveal on hover. */
+  .masthead__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+  .masthead__actions :global(.masthead__btn) {
+    padding: 0.6rem 1.4rem;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+  /* Gold fill carries navy text (8.9:1); on hover the global .btn fills
+     royal, so the label goes white with it. */
+  .masthead__actions :global(.masthead__btn:not(.btn--outline)) {
+    --btn-fg: var(--navy);
+  }
+  .masthead__actions :global(.masthead__btn:not(.btn--outline):hover) {
+    --btn-fg: #fff;
+  }
+  .masthead__actions :global(.btn--outline) {
+    --btn-fg: var(--royal);
+    border-width: 2px;
+  }
+  /* Filling with gold on hover puts royal text at 4.44:1, so it goes navy
+     (8.9:1) like every other gold-filled button. */
+  .masthead__actions :global(.btn--outline:hover) {
+    --btn-fg: var(--navy);
+  }
+
+  /* ---------- Deck 2 — sticky navigation ribbon ---------- */
   .nav-bar {
-    background: var(--white);
-    border-bottom: 4px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--royal);
+    border-block: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 24px rgba(8, 22, 51, 0.16);
   }
   .nav-bar__inner {
     display: flex;
     align-items: center;
-    gap: clamp(var(--space-3), 2vw, var(--space-8));
-    min-height: 88px;
+    min-height: 48px;
   }
-  /* Transparent to layout above the collapse breakpoint — .site-nav and
-     .header-actions remain direct flex children of .nav-bar__inner. */
+  /* Transparent to layout above the collapse breakpoint. */
   .nav-panel {
     display: contents;
   }
-
   .site-nav {
     flex: 1;
   }
@@ -389,7 +354,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(0.9rem, 1.6vw, 2rem);
+    gap: clamp(1.25rem, 3vw, 3.25rem);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -400,15 +365,16 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .site-nav__link {
     display: flex;
     align-items: center;
-    padding: 0.5rem 0;
+    padding: 0.35rem 0;
     border: 0;
     border-bottom: 2px solid transparent;
     background: none;
-    color: var(--royal);
+    color: #fff;
     font-family: var(--font-body);
-    font-size: 0.9375rem;
+    font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     white-space: nowrap;
     cursor: pointer;
     text-decoration: none;
@@ -416,22 +382,17 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       color 0.3s ease,
       border-color 0.3s ease;
   }
-  /* Simple underline reveal — a gold rule wipes in under the link on hover
-     or keyboard focus. */
   .site-nav__link:hover,
   .site-nav__link:focus-visible {
     border-bottom-color: var(--gold);
   }
-  /* Current section / open dropdown — gold text with a persistent underline. */
-  /* Current section / open dropdown: royal text with a gold underline. Gold
-     text would be 2:1 on this white bar, so the gold stays in the rule. */
+  /* Current section / open dropdown: white text, gold rule. Brand gold as
+     text on royal is 4.44:1, so the gold stays in the underline. */
   .site-nav__item.is-active > .site-nav__link,
   .site-nav__item.is-open > .site-nav__link {
-    color: var(--royal);
+    color: #fff;
     border-bottom-color: var(--gold);
   }
-  /* Mobile-only expand/collapse indicator — the desktop dropdown stays
-     arrow-free, but a stacked accordion needs the affordance. */
   .site-nav__chevron {
     display: none;
     width: 7px;
@@ -455,8 +416,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .site-nav__menu {
     position: absolute;
     top: 100%;
-    left: 0;
-    min-width: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 260px;
     display: flex;
     flex-direction: column;
     margin: 0.5rem 0 0;
@@ -465,123 +427,37 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     background: var(--white);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: var(--radius);
-    box-shadow: 0 20px 44px rgba(8, 22, 51, 0.16);
+    box-shadow: 0 20px 44px rgba(8, 22, 51, 0.18);
     z-index: 50;
+    opacity: 0;
+    visibility: hidden;
   }
-  /* click-only (not hover-open — that doesn't work on touch) — the trigger
-     button toggles .is-open. Above the collapse breakpoint this fades and
-     slides in rather than snapping open. */
-  @media (min-width: 1280px) {
-    .site-nav__menu {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-6px);
-      pointer-events: none;
-      transition:
-        opacity 0.18s ease,
-        transform 0.18s ease,
-        visibility 0.18s;
-    }
-    .site-nav__item.is-open .site-nav__menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
+  .site-nav__item.is-open > .site-nav__menu {
+    opacity: 1;
+    visibility: visible;
   }
   .site-nav__menu a {
-    /* Block, not the default inline — an inline element only pads the
-       first line of a wrapped label ("International Corporate
-       Headquarters" wraps to 2 lines), leaving the continuation flush
-       against the panel edge with no padding. */
     display: block;
-    padding: 0.625rem 1.25rem;
-    color: #374151;
+    padding: 0.55rem var(--space-5);
+    color: var(--royal);
     font-size: var(--text-sm);
-    line-height: 1.45;
+    font-weight: 600;
     text-decoration: none;
-    transition:
-      background 0.12s ease,
-      color 0.12s ease;
   }
   .site-nav__menu a:hover,
   .site-nav__menu a:focus {
-    color: #fff;
-    background: var(--royal);
-    outline: none;
+    background: var(--tint);
+    color: var(--accent-hover);
   }
 
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-  /* Figma nav CTAs: rounded-md (not pill), 13px, 600, 24/10 padding, no wrap */
-  .header-actions :global(.header-actions__btn) {
-    border-radius: var(--radius);
-    padding: 0.625rem 1.5rem;
-    font-size: var(--text-sm);
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  /* Between the collapse breakpoint and ~1500px the crest, six nav items and
-     the CTA share one row with very little slack, so the wordmark, the links
-     and the button all tighten rather than wrap. */
-  @media (max-width: 1340px) {
-    .brand__crest {
-      width: 92px;
-      height: 92px;
-    }
-    .brand {
-      padding-left: 104px;
-    }
-    .site-nav__list {
-      gap: 0.8rem;
-    }
-  }
-  @media (max-width: 1500px) {
-    .brand__crest {
-      width: 104px;
-      height: 104px;
-      top: -6px;
-    }
-    .brand {
-      padding-left: 120px;
-    }
-    .brand__title {
-      max-width: 10.5rem;
-      font-size: 0.9375rem;
-    }
-    .site-nav__link {
-      font-size: 0.875rem;
-    }
-    .header-actions :global(.header-actions__btn) {
-      padding-inline: 1.1rem;
-    }
-  }
-  /* The single CTA: gold fill, navy text (8.9:1) at rest. On hover the
-     global .btn fills royal, so the text goes white (8.2:1) with it —
-     navy on royal would be 2:1. */
-  .header-actions :global(.header-actions__btn) {
-    --btn-fg: var(--navy);
-  }
-  .header-actions :global(.header-actions__btn:hover) {
-    --btn-fg: #fff;
-  }
-
-  /* Hamburger — hidden above the collapse breakpoint, morphs to an X when
-     the drawer is open. */
+  /* ---------- hamburger ---------- */
   .nav-toggle {
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 5px;
-    /* 44px, not 40: WCAG 2.5.5 (AAA) asks for 44x44, and this is the only
-       control on a phone that opens the whole navigation. It already passed
-       AA's 24px floor at 40px, so this is polish rather than a fix. */
+    /* 44px: WCAG 2.5.5, and this opens the whole navigation on a phone. */
     width: 44px;
     height: 44px;
     padding: 0;
@@ -610,6 +486,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     transform: translateY(-7px) rotate(-45deg);
   }
 
+  /* ---------- search ---------- */
   .header-search {
     position: relative;
   }
@@ -639,33 +516,19 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     padding: var(--space-3);
     background: var(--white);
     border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 18px 44px rgba(8, 22, 51, 0.22);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 44px rgba(8, 22, 51, 0.18);
+    z-index: 60;
   }
-  /* little caret pointing back up at the toggle */
-  .search-panel::before {
-    content: "";
-    position: absolute;
-    top: -7px;
-    right: 12px;
-    width: 12px;
-    height: 12px;
-    background: var(--white);
-    border-left: 1px solid var(--line);
-    border-top: 1px solid var(--line);
-    transform: rotate(45deg);
-  }
-
   .search-field {
     position: relative;
-    display: flex;
-    align-items: center;
   }
   .search-field__icon {
     position: absolute;
-    left: 0.75rem;
-    color: var(--muted-2);
-    pointer-events: none;
+    left: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
   }
   .search-input {
     width: 100%;
@@ -674,86 +537,69 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     border-radius: 999px;
     background: var(--tint);
     font: inherit;
-    font-size: var(--text-sm);
     color: var(--ink);
-    transition:
-      border-color 0.15s ease,
-      background 0.15s ease;
   }
   .search-input::placeholder {
     color: var(--muted-2);
   }
   .search-input:focus {
-    outline: none;
-    background: var(--white);
-    border-color: var(--gold);
+    outline: 2px solid var(--royal);
+    outline-offset: 1px;
   }
-  /* hide the browser's native clear (×) button */
   .search-input::-webkit-search-cancel-button,
   .search-input::-webkit-search-decoration {
     -webkit-appearance: none;
-    appearance: none;
   }
-
   .search-results {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     margin-top: var(--space-2);
   }
   .search-results:empty {
-    display: none;
+    margin-top: 0;
   }
   /* Result rows are created at runtime by the inline script, so scoped
-     selectors can't reach them — pierce the scope with :global(). */
+     styles cannot reach them. */
   .search-results :global(a) {
-    display: block;
-    padding: 0.55rem 0.7rem;
-    color: var(--ink);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    text-decoration: none;
+    padding: 0.5rem var(--space-3);
     border-radius: var(--radius);
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
   }
   .search-results :global(a:hover),
   .search-results :global(a:focus) {
     background: var(--tint);
-    color: var(--royal);
-    outline: none;
   }
   .search-results :global(.search-results__empty) {
     margin: 0;
-    padding: 0.55rem 0.7rem;
+    padding: 0.5rem var(--space-3);
     color: var(--muted);
     font-size: var(--text-sm);
   }
 
-  /* Below this width the full nav + search + two buttons no longer fit on one
-     row (the crest shares it since the two-tier rebuild). Rather than
-     wrapping everything onto the header (a wall of chips
-     before any page content), it collapses behind a hamburger into a
-     full-width accordion drawer — nav links stack vertically, each dropdown
-     expands in place instead of floating over its neighbors. */
+  /* ---------- collapse ---------- */
   @media (max-width: 1279px) {
-    .nav-bar__inner {
-      flex-wrap: wrap;
-      padding-block: var(--space-2);
+    .masthead {
+      min-height: 88px;
+      padding-block: var(--space-3);
     }
     .nav-toggle {
       display: inline-flex;
-      margin-left: auto;
+    }
+    .nav-bar__inner {
+      flex-wrap: wrap;
     }
     .nav-panel {
       display: none;
       flex-direction: column;
       align-items: stretch;
       width: 100%;
-      gap: var(--space-2);
       padding-block: var(--space-2) var(--space-4);
     }
     .nav-bar.is-menu-open .nav-panel {
       display: flex;
     }
-
     .site-nav {
       width: 100%;
     }
@@ -764,7 +610,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     }
     .site-nav__item {
       position: static;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
     }
     .site-nav__item:last-child {
       border-bottom: 0;
@@ -780,12 +626,11 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     .site-nav__item.is-open .site-nav__chevron {
       transform: rotate(-135deg);
     }
-
-    /* Accordion, not a floating panel — expands in normal flow so it pushes
-       the next item down instead of overlapping it. */
+    /* Accordion, not a floating panel. */
     .site-nav__menu {
       display: none;
       position: static;
+      transform: none;
       width: 100%;
       min-width: 0;
       margin: 0;
@@ -794,50 +639,48 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       border-radius: 0;
       box-shadow: none;
       background: transparent;
+      opacity: 1;
+      visibility: visible;
     }
     .site-nav__item.is-open .site-nav__menu {
       display: flex;
     }
     .site-nav__menu a {
       padding: 0.6rem 0.25rem;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.85);
     }
     .site-nav__menu a:hover,
     .site-nav__menu a:focus {
       background: transparent;
-      color: var(--royal);
-    }
-
-    .header-actions {
-      margin-left: 0;
-      width: 100%;
-      justify-content: center;
-      flex-wrap: wrap;
+      color: #fff;
     }
   }
 
-  /* Phones: the crest and wordmark share the row with the hamburger. */
-  @media (max-width: 560px) {
-    .brand {
-      gap: 0.65rem;
-      padding-left: 84px;
-    }
+  @media (max-width: 860px) {
     .brand__crest {
       width: 76px;
       height: 76px;
-      top: -4px;
     }
-    .brand__title {
-      max-width: 11rem;
-      font-size: 0.875rem;
+    .masthead__actions :global(.masthead__btn) {
+      padding-inline: 1rem;
     }
-    .utility-bar__inner {
-      justify-content: center;
+  }
+  @media (max-width: 640px) {
+    .masthead {
       gap: var(--space-4);
     }
-    .utility-bar a {
-      font-size: 0.625rem;
-      letter-spacing: 0.06em;
+    .brand__crest {
+      width: 60px;
+      height: 60px;
+    }
+    .brand__legal {
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+    }
+    /* The two utility buttons move into the drawer's own footer rather than
+       crowding a phone masthead; search and the hamburger stay. */
+    .masthead__actions :global(.masthead__btn) {
+      display: none;
     }
   }
 </style>
