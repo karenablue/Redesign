@@ -1,0 +1,56 @@
+---
+/**
+ * Wedge — a diagonal transition between two section grounds, with a gold
+ * hairline along the cut.
+ *
+ * Drawn as an SVG with preserveAspectRatio="none" so the slope stretches to
+ * any width, and the rule uses vector-effect="non-scaling-stroke" so it stays
+ * a true hairline instead of thickening with the viewport. Purely decorative,
+ * so it is hidden from assistive tech.
+ *
+ * props:
+ *   from    the ground above the cut (any CSS colour)
+ *   to      the ground below it
+ *   height  slope depth in px (default 88)
+ *   flip    true drops left-to-right instead of right-to-left
+ */
+const { from = "var(--white)", to = "var(--white)", height = 88, flip = false } = Astro.props;
+const points = flip ? "0,0 100,10 0,10" : "100,0 100,10 0,10";
+const line = flip ? { x1: 0, y1: 0, x2: 100, y2: 10 } : { x1: 0, y1: 10, x2: 100, y2: 0 };
+---
+
+<div
+  class="wedge"
+  aria-hidden="true"
+  style={`--wedge-from:${from};--wedge-to:${to};--wedge-h:${height}px`}
+>
+  <svg viewBox="0 0 100 10" preserveAspectRatio="none" focusable="false">
+    <polygon points={points} fill="var(--wedge-to)" />
+    <line
+      x1={line.x1}
+      y1={line.y1}
+      x2={line.x2}
+      y2={line.y2}
+      stroke="var(--gold)"
+      stroke-width="1.5"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+</div>
+
+<style>
+  .wedge {
+    background: var(--wedge-from);
+    line-height: 0;
+  }
+  .wedge svg {
+    display: block;
+    width: 100%;
+    height: var(--wedge-h);
+  }
+  @media (max-width: 700px) {
+    .wedge svg {
+      height: calc(var(--wedge-h) * 0.55);
+    }
+  }
+</style>
