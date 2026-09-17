@@ -5,9 +5,13 @@
  * A narrative arc, not a dashboard: identity, origin, impact, leadership,
  * then the ways in.
  *
- *   1  Hero: the slogan and mission over the full-bleed clip, with the reach
- *      ribbon docked on its bottom edge. 1922 lives in the hero eyebrow and
- *      the origin section, so the ribbon is scale and geography only.
+ *   1  Hero: the clip runs clean; the slogan, mission and actions sit in the
+ *      navy band below it, with the reach ribbon on its edge. 1922 lives in
+ *      the eyebrow and the origin story, so the ribbon is scale only.
+ *
+ * One canvas: everything between the navy band and the navy partner ribbon
+ * is Bright White, so photography and type carry the rhythm instead of
+ * alternating grounds (Karena, 2026-09-17).
  *   2  Origin: the 1922 charter photograph and founding story.
  *   3  Our work in action: three signature program cards.
  *   4  Into the next century: the Grand Basileus, steward of that legacy.
@@ -21,7 +25,6 @@
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import StatBand from "../components/StatBand.astro";
-import Wedge from "../components/Wedge.astro";
 import PillarRail from "../components/PillarRail.astro";
 import { withBase } from "../lib/url.js";
 import { getCollection } from "astro:content";
@@ -169,8 +172,6 @@ const partnerLogos = [
     <StatBand stats={reachStats} tone="navy" />
   </section>
 
-  <Wedge from="var(--white)" to="#fffbf0" height={112} />
-
   <!-- 2 — origin: where the work comes from. -->
   <section class="section legacy">
     <div class="container legacy__grid">
@@ -206,8 +207,6 @@ const partnerLogos = [
       </div>
     </div>
   </section>
-
-  <Wedge from="#fffbf0" to="var(--white)" flip />
 
   <!-- 3 — the mission in motion. -->
   <section class="section work">
@@ -254,10 +253,8 @@ const partnerLogos = [
     </div>
   </section>
 
-  <Wedge from="var(--white)" to="var(--navy)" />
-
   <!-- 4 — into the next century: leadership, after the legacy it carries. -->
-  <section class="section vision on-dark">
+  <section class="section vision">
     <div class="container vision__grid">
       <div class="vision__copy">
         <p class="eyebrow">Leading Sigma Forward</p>
@@ -286,20 +283,19 @@ const partnerLogos = [
           </a>
         </div>
       </div>
-      <figure class="vision__portrait">
+      <div class="vision__portrait">
+        <span class="vision__watermark" aria-hidden="true">1922</span>
         <img
-          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
+          src={withBase("/images/leadership/marica-harris-cutout.png")}
           alt="International Grand Basileus Marica T. Harris"
-          width="704"
-          height="1024"
+          width="669"
+          height="914"
           loading="lazy"
           decoding="async"
         />
-      </figure>
+      </div>
     </div>
   </section>
-
-  <Wedge from="var(--navy)" to="var(--cream)" flip />
 
   <!-- 5a — ways in: the three paths a visitor is most likely to want. -->
   <section class="section ways">
@@ -407,8 +403,6 @@ const partnerLogos = [
       </div>
     </div>
   </section>
-
-  <Wedge from="var(--white)" to="var(--navy)" />
 
   <!-- 6 — Greater Together. -->
   <section class="section section--navy partnership">
@@ -546,12 +540,49 @@ const partnerLogos = [
   }
 
 
-  /* 2 — administration vision, 60/40, on navy */
-  .vision {
-    background:
-      radial-gradient(circle at 78% 40%, rgba(223, 177, 54, 0.14), transparent 45%),
-      var(--navy);
-    color: #fff;
+  /* Every band between the navy opener and the navy partner ribbon shares
+     one Bright White ground. */
+  .legacy,
+  .work,
+  .vision,
+  .ways,
+  .dispatch {
+    background: var(--bright-white);
+  }
+
+  /* 4 — leadership: the portrait is a cutout over a 1922 watermark, so she
+     breaks the grid instead of sitting in a box. */
+  .vision__grid {
+    align-items: end;
+  }
+  .vision__portrait {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .vision__watermark {
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-head);
+    font-size: clamp(6rem, 4rem + 9vw, 13rem);
+    line-height: 1;
+    color: rgba(32, 65, 165, 0.07);
+    letter-spacing: -0.02em;
+    pointer-events: none;
+  }
+  .vision__portrait img {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+    /* The source photo was cropped at her waist, so the cutout's bottom edge
+       is ragged; fade it into the canvas instead of showing the tear. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 97%);
+    mask-image: linear-gradient(to bottom, #000 78%, transparent 97%);
   }
   .vision__grid {
     display: grid;
@@ -569,11 +600,8 @@ const partnerLogos = [
     line-height: 1.25;
     color: var(--royal);
   }
-  .vision .vision__title {
-    color: #fff;
-  }
   .vision__copy > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--muted);
     max-width: 40rem;
   }
   /* Editorial pull quote: a large gold mark, display italic, signature. */
@@ -598,21 +626,21 @@ const partnerLogos = [
     font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.1rem);
     font-style: italic;
     line-height: 1.4;
-    color: #fff;
+    color: var(--ink);
   }
   .vision__quote footer {
     display: flex;
     flex-direction: column;
     margin-top: var(--space-5);
     padding-top: var(--space-4);
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 1px solid var(--line);
     max-width: 22rem;
   }
   .vision__quote footer strong {
-    color: var(--gold);
+    color: var(--royal);
   }
   .vision__quote footer span {
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--muted);
     font-size: var(--text-sm);
   }
   .vision__actions {
@@ -622,43 +650,22 @@ const partnerLogos = [
     gap: var(--space-4) var(--space-8);
   }
   .vision__link {
-    color: #fff;
+    color: var(--royal);
     font-weight: 700;
   }
   .vision__link:hover {
-    color: var(--gold);
-  }
-  /* The portrait, framed with a soft gold backlight. */
-  .vision__portrait {
-    margin: 0;
-    padding: var(--space-3);
-    border: 1px solid rgba(223, 177, 54, 0.45);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 0 80px rgba(223, 177, 54, 0.22);
-  }
-  .vision__portrait img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: 50% 15%;
-    border-radius: var(--radius);
+    color: var(--accent-hover);
   }
   @media (max-width: 900px) {
     .vision__grid {
       grid-template-columns: minmax(0, 1fr);
     }
     .vision__portrait {
-      max-width: 26rem;
       order: -1;
     }
   }
 
   /* 3 — our work in action */
-  .work {
-    background: var(--white);
-  }
   .work__head {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
@@ -828,11 +835,6 @@ const partnerLogos = [
   }
 
   /* 4 — living legacy */
-  /* Origin: the site's warm paper tone (global --cream, not the homepage's
-     slate repoint), so the founding story reads as heritage. */
-  .legacy {
-    background: #fffbf0;
-  }
   .legacy__grid {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -879,9 +881,6 @@ const partnerLogos = [
   }
 
   /* 5a — ways in */
-  .ways {
-    background: var(--cream);
-  }
   .ways__head {
     max-width: 44rem;
     margin: 0 auto clamp(2rem, 4vw, 3rem);
@@ -930,10 +929,6 @@ const partnerLogos = [
     }
   }
 
-  /* 5b — dispatch */
-  .dispatch {
-    background: var(--white);
-  }
   .dispatch__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
