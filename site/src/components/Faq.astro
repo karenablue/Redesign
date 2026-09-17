@@ -3,7 +3,8 @@
  * Faq — an accordion of <details> items. One shared implementation behind
  * two visual treatments already used on the site:
  *   variant="soft"      cream card, chevron glyph (homepage)
- *   variant="bordered"  outlined white card, +/- glyph (become-a-member)
+ *   variant="bordered"  ruled list: 1px rules between items, +/- glyph
+ *                       (become-a-member)
  *
  * props:
  *   items      [{ q, a }]
@@ -79,20 +80,27 @@ const { items = [], variant = "soft", openFirst = false, width = "default" } = A
   }
 
   .faq--bordered {
-    gap: var(--space-2);
+    border-top: 1px solid var(--line);
   }
   .faq--bordered .faq__item {
-    border: 1px solid var(--line);
-    background: var(--white);
-    padding: var(--space-4) var(--space-6);
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
+    padding: var(--space-4) 0;
   }
   .faq--bordered .faq__item summary {
     color: var(--royal);
+    text-align: left;
   }
+  /* Royal, not gold: the glyph is the control's only affordance, and gold
+     on white is 2:1, under the 3:1 needed for a meaningful graphic. */
   .faq--bordered .faq__item summary::after {
     content: "+";
-    color: var(--gold);
+    flex: none;
+    color: var(--royal);
     font-weight: 700;
+  }
+  .faq--bordered .faq__item summary:hover {
+    color: var(--accent-hover);
   }
   .faq--bordered .faq__item[open] summary::after {
     content: "\2013";
