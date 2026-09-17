@@ -2,45 +2,62 @@
 import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
 
-const steps = [
-  {
-    title: "Confirm your last active chapter.",
-    body: "Locate the chapter you were initiated into or last held active membership with, using the Chapter Locator if needed.",
-  },
-  {
-    title: "Contact International Corporate Headquarters.",
-    body: "Reach the Membership Services team to confirm your record and any outstanding requirements.",
-  },
-  {
-    title: "Submit your reactivation request and dues.",
-    body: "Complete the reactivation request and remit any applicable dues or fees as instructed by Headquarters.",
-  },
-  {
-    title: "Receive confirmation.",
-    body: "Once processed, you'll receive confirmation of your restored active status and chapter assignment.",
-  },
+/*
+ * Source for every step, fee and contact on this page:
+ * "Reactivations and Transfers" FY26 one-pager, International Corporate
+ * Headquarters. Update this data (not the markup) when the next fiscal
+ * year's one-pager is issued.
+ */
+const FISCAL_YEAR = "FY26";
+
+const portalSections = [
+  ["Section 1", "Reactivating Member Information", "Review the information you provided."],
+  ["Section 2", "Sigma History", "Induction chapter, induction date, last active chapter, last active state of residence, current state of residence, and current region of residence."],
+  ["Section 3", "Education", "Upload a copy of your degree or diploma."],
+  ["Section 4", "Membership Options", "Membership type and desired chapter."],
+  ["Section 5", "Terms & Conditions", "Photography/videography release and arbitration agreement."],
 ];
 
-const faqs = [
-  {
-    q: "I don't know my last chapter's name — can I still reactivate?",
-    a: "Yes. Headquarters can look up your membership record using your name and approximate initiation date.",
-  },
-  {
-    q: "Can I join a different chapter than the one I was initiated into?",
-    a: "In many cases, yes — especially if you've relocated. Headquarters can advise on chapter transfer options.",
-  },
-  {
-    q: "Is there a deadline to reactivate?",
-    a: "No. Reactivation is available year-round, regardless of how long you've been inactive.",
-  },
+const nationalCosts = [
+  { type: "Graduate Member / Associate Member", total: 235 },
+  { type: "Undergraduate Member", total: 155 },
+  { type: "Member-at-Large", note: "Lives 30 miles from the nearest chapter", total: 235 },
+  { type: "General Member", note: "Includes GM surcharge", total: 410 },
+  { type: "Life Member", total: 145 },
+  { type: "Military Member", note: "Financially inactive 1–9 years", total: 145 },
+  { type: "Military Member", note: "Financially inactive 10+ years", total: 135 },
 ];
+
+const regions = [
+  { name: "Central", grad: 30, undergrad: 30, late: 0, email: "grammateus@sgrhocentral.com", site: "https://www.sgrhocentral.com" },
+  { name: "Northeastern", grad: 60, undergrad: 29, late: 5, email: "grammateus@sgrhoneregion.com", site: "https://www.sgrhoneregion.com" },
+  { name: "Southeastern", grad: 30, undergrad: 10, late: 10, email: "grammateus@seregionsgrho.org", site: "https://www.seregionsgrho.org" },
+  { name: "Southwestern", grad: 50, undergrad: 40, late: 20, email: "grammateus@sigmaswregion.com", site: "https://www.sigmaswregion.com" },
+  { name: "Western", grad: 55, undergrad: 30, late: 20, email: "grammateus@westernsgrho.org", site: "https://www.westernsgrho.org" },
+];
+
+const foundations = [
+  { name: "National Education Fund (NEF)", fee: 7, href: "https://www.sgrnationaleducationfund.org/home", label: "Pay the NEF assessment" },
+  { name: "Sigma Public Education Foundation & Research (SPEAR)", fee: 7, href: "https://www.flipcause.com/secure/cause_pdetails/MTQ2MDUw", label: "Pay the SPEAR assessment" },
+];
+
+const transferSteps = [
+  "Log in to the national website, sgrho1922.org.",
+  "Click the Login button to sign in to the Members Only Portal.",
+  "Select your name at the top of the page to open your Member Profile.",
+  "On your Member Profile, click the TRANSFER tab.",
+  "Follow the instructions, then save and close the dialogue box.",
+  "Once processed, the invoice is available to pay from your member profile.",
+];
+
+const usd = (n: number) => `$${n}`;
+const bare = (url: string) => url.replace(/^https?:\/\//, "");
 ---
 
 <Base
   title="Reactivate Membership"
   activeTop="Membership"
-  description="Reactivating your membership reconnects you with Sigma Gamma Rho, your chapter, and Sorors around the world."
+  description="Who needs to reactivate, the Poodle Portal steps, and the national, regional and foundation costs to return to active membership in Sigma Gamma Rho."
 >
   <section class="rx-hero">
     <div class="container">
@@ -66,9 +83,12 @@ const faqs = [
     <div class="container rx-layout">
       <nav class="rx-toc" aria-label="On this page">
         <p class="rx-toc__label">On This Page</p>
-        <a href="#eligibility">1. Who Can Reactivate</a>
-        <a href="#steps">2. Reactivation Steps</a>
-        <a href="#faq">3. Frequently Asked Questions</a>
+        <a href="#eligibility">Who Needs to Reactivate</a>
+        <a href="#steps">Steps to Reactivation</a>
+        <a href="#costs">National Cost</a>
+        <a href="#regional">Regional Assessments</a>
+        <a href="#foundations">Foundation Assessments</a>
+        <a href="#transfers">Transfers</a>
         <div class="rx-toc__cta">
           <p>Have questions before you start?</p>
           <a href={withBase("/resources/help-center/")}>Visit Help Center &rarr;</a>
@@ -77,54 +97,174 @@ const faqs = [
 
       <div class="rx-copy">
         <section class="rx-block" id="eligibility">
-          <span class="rx-index">01</span>
-          <h2>Who Can Reactivate</h2>
+          <h2>Who Needs to Reactivate</h2>
+          <p class="rx-lead">
+            Members who have been financially inactive for <strong>one (1) year or more</strong>.
+          </p>
           <p>
-            Any Soror in good standing prior to lapsing may apply to reactivate her membership,
-            regardless of how long she has been inactive. Reactivation restores your standing with
-            your chapter (or a new chapter, if you've relocated) and with the international
-            organization.
+            Reactivation happens online through the national website. Have a copy of your degree or
+            diploma ready to upload before you begin.
           </p>
         </section>
 
         <section class="rx-block" id="steps">
-          <span class="rx-index">02</span>
-          <h2>Reactivation Steps</h2>
+          <h2>Steps to Reactivation</h2>
           <ol class="rx-steps">
-            {steps.map((s) => (
-              <li>
-                <strong>{s.title}</strong>
-                <p>{s.body}</p>
-              </li>
-            ))}
+            <li>
+              <strong>Log on to sgrho1922.org.</strong>
+              <p>
+                Go to <a href="https://sgrho1922.org/" rel="noopener">www.sgrho1922.org</a>.
+              </p>
+            </li>
+            <li>
+              <strong>Click the REACTIVATE tab.</strong>
+            </li>
+            <li>
+              <strong>Create an account if you do not already have an active one.</strong>
+              <p>
+                You will provide your name, email, phone number and address, and create a username.
+              </p>
+            </li>
+            <li>
+              <strong>Click Next.</strong>
+            </li>
+            <li>
+              <strong>Complete the five sections of the form.</strong>
+              <dl class="rx-sections">
+                {portalSections.map(([n, title, body]) => (
+                  <div>
+                    <dt>
+                      <span>{n}</span> {title}
+                    </dt>
+                    <dd>{body}</dd>
+                  </div>
+                ))}
+              </dl>
+            </li>
           </ol>
-          <div class="rx-callout">
-            <strong>Ready to start?</strong>
-            <span>
-              Reach Membership Services through the Help Center or contact Headquarters directly.
-            </span>
-            <div class="rx-callout__actions">
-              <a class="btn" href={withBase("/resources/help-center/")}>
-                Visit Help Center
-              </a>
-              <a class="btn btn--outline" href={withBase("/contact/")}>
-                Contact Headquarters
-              </a>
-            </div>
+          <div class="rx-actions">
+            <a class="btn" href="https://sgrho1922.org/" rel="noopener">Start Reactivation</a>
           </div>
         </section>
 
-        <section class="rx-block" id="faq">
-          <span class="rx-index">03</span>
-          <h2>Frequently Asked Questions</h2>
-          {faqs.map((f) => (
-            <p>
-              <strong>{f.q}</strong>
-              <br />
-              {f.a}
-            </p>
-          ))}
+        <section class="rx-block" id="costs">
+          <h2>National Cost to Reactivate</h2>
+          <p>
+            Each total includes headtax, insurance, the reactivation fee and the credit-card
+            processing fee.
+          </p>
+          <div class="rx-table-wrap">
+            <table class="rx-table">
+              <caption>National reactivation totals, {FISCAL_YEAR}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Membership type</th>
+                  <th scope="col" class="num">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {nationalCosts.map((c) => (
+                  <tr>
+                    <th scope="row">
+                      {c.type}
+                      {c.note && <span class="rx-table__note">{c.note}</span>}
+                    </th>
+                    <td class="num">{usd(c.total)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
+
+        <section class="rx-block" id="regional">
+          <h2>Regional Assessments</h2>
+          <p>
+            Your region sets its own assessment, paid in addition to the national cost. Questions go
+            to your region's Grammateus.
+          </p>
+          <div class="rx-table-wrap">
+            <table class="rx-table rx-table--regions">
+              <caption>Regional assessments, {FISCAL_YEAR}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Region</th>
+                  <th scope="col" class="num">Graduate</th>
+                  <th scope="col" class="num">Undergraduate</th>
+                  <th scope="col" class="num">Late fee</th>
+                  <th scope="col">Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {regions.map((r) => (
+                  <tr>
+                    <th scope="row">{r.name}</th>
+                    <td class="num" data-label="Graduate">{usd(r.grad)}</td>
+                    <td class="num" data-label="Undergraduate">{usd(r.undergrad)}</td>
+                    <td class="num" data-label="Late fee">{usd(r.late)}</td>
+                    <td class="rx-contact">
+                      <a href={`mailto:${r.email}`}>{r.email}</a>
+                      <a href={r.site} rel="noopener">{bare(r.site)}</a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="rx-block" id="foundations">
+          <h2>Foundation Assessments</h2>
+          <ul class="rx-funds">
+            {foundations.map((f) => (
+              <li>
+                <h3>{f.name}</h3>
+                <p class="rx-funds__fee">
+                  {usd(f.fee)} <span>graduate fee</span>
+                </p>
+                <a href={f.href} rel="noopener">
+                  {f.label} <span aria-hidden="true">&rarr;</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="rx-footnote">
+            <em>Graduate</em> refers to Life Members, Cultured Pearls, General Members,
+            Members-at-Large and Graduate members. Undergraduates are exempt from the NEF and SPEAR
+            assessments.
+          </p>
+        </section>
+
+        <section class="rx-block" id="transfers">
+          <div class="rx-transfer">
+            <div class="rx-transfer__head">
+              <h2>Transfers</h2>
+              <p class="rx-transfer__fee">
+                {usd(15)} <span>transfer fee, includes credit-card processing</span>
+              </p>
+            </div>
+            <p>
+              Moving to a different chapter is a transfer, not a reactivation. It starts from your
+              Member Profile in the Members Only Portal.
+            </p>
+            <ol class="rx-transfer__steps">
+              {transferSteps.map((t) => <li>{t}</li>)}
+            </ol>
+          </div>
+        </section>
+
+        <aside class="rx-help">
+          <strong>Need help?</strong>
+          <p>
+            International Corporate Headquarters: <a href="tel:+19196789720">(919) 678-9720</a>.
+          </p>
+          <div class="rx-actions">
+            <a class="btn btn--outline" href={withBase("/resources/help-center/")}>
+              Visit Help Center
+            </a>
+            <a class="btn btn--outline" href={withBase("/contact/")}>Contact Headquarters</a>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
@@ -163,13 +303,13 @@ const faqs = [
   }
   .rx-layout {
     display: grid;
-    grid-template-columns: minmax(0, 0.35fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.3fr) minmax(0, 1fr);
     gap: var(--space-14);
     align-items: start;
   }
   .rx-toc {
     position: sticky;
-    top: 100px;
+    top: 200px;
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -203,32 +343,34 @@ const faqs = [
     font-size: var(--text-sm);
     margin: 0 0 var(--space-2);
   }
-  .rx-toc__cta a {
-    color: var(--accent-text);
-  }
 
   .rx-copy {
     display: flex;
     flex-direction: column;
-    gap: var(--space-12);
+    gap: var(--space-14);
+    min-width: 0;
   }
   .rx-block {
-    scroll-margin-top: 100px;
-  }
-  .rx-index {
-    display: inline-block;
-    font-family: var(--font-label);
-    color: var(--accent-text);
-    font-size: var(--text-md);
-    margin-bottom: var(--space-2);
+    scroll-margin-top: 210px;
   }
   .rx-block h2 {
     margin: 0 0 var(--space-4);
   }
   .rx-block > p {
     color: var(--muted);
+    max-width: 65ch;
+  }
+  .rx-block > p.rx-lead {
+    color: var(--ink);
+    font-size: var(--text-lg);
+    padding-left: var(--space-5);
+    border-left: 3px solid var(--gold);
+  }
+  .rx-lead strong {
+    color: var(--royal);
   }
 
+  /* A real sequence, so the steps keep their numbers. */
   .rx-steps {
     list-style: none;
     margin: 0;
@@ -237,16 +379,16 @@ const faqs = [
     gap: var(--space-5);
     counter-reset: step;
   }
-  .rx-steps li {
+  .rx-steps > li {
     padding-left: var(--space-10);
     position: relative;
   }
-  .rx-steps li::before {
+  .rx-steps > li::before {
     counter-increment: step;
     content: counter(step);
     position: absolute;
     left: 0;
-    top: 0;
+    top: -2px;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -264,41 +406,244 @@ const faqs = [
     color: var(--muted);
     margin: var(--space-1) 0 0;
   }
-
-  .rx-callout {
-    margin-top: var(--space-8);
-    padding: var(--space-6);
-    background: var(--tint);
-    border-radius: var(--radius-lg);
+  .rx-sections {
+    display: grid;
+    margin: var(--space-4) 0 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
   }
-  .rx-callout strong {
-    display: block;
+  .rx-sections > div {
+    padding: var(--space-3) var(--space-4);
+  }
+  .rx-sections > div + div {
+    border-top: 1px solid var(--line);
+  }
+  .rx-sections dt {
     color: var(--royal);
-    margin-bottom: var(--space-2);
+    font-weight: 700;
   }
-  .rx-callout span {
+  .rx-sections dt span {
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-right: var(--space-2);
+  }
+  .rx-sections dd {
+    margin: var(--space-1) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .rx-callout__actions {
+  .rx-actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-4);
-    margin-top: var(--space-5);
+    margin-top: var(--space-6);
   }
 
-  .rx-block p strong {
+  /* Fee data sheets. */
+  .rx-table-wrap {
+    overflow-x: auto;
+    margin-top: var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .rx-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .rx-table caption {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+  }
+  .rx-table th,
+  .rx-table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    vertical-align: top;
+  }
+  .rx-table thead th {
+    background: var(--tint);
+    color: var(--royal);
+    font-size: var(--text-sm);
+  }
+  .rx-table tbody tr + tr {
+    border-top: 1px solid var(--line);
+  }
+  .rx-table tbody th {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .rx-table .num {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .rx-table td.num {
+    color: var(--royal);
+    font-weight: 700;
+  }
+  .rx-table__note {
+    display: block;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+  .rx-contact {
+    font-size: var(--text-sm);
+  }
+  .rx-contact a {
     display: block;
     color: var(--royal);
-    margin-bottom: var(--space-1);
+    overflow-wrap: anywhere;
+  }
+
+  .rx-funds {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rx-funds li {
+    padding: var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .rx-funds h3 {
+    margin: 0;
+    color: var(--royal);
+    font-size: var(--text-md);
+  }
+  .rx-funds__fee {
+    margin: var(--space-3) 0;
+    color: var(--royal);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .rx-funds__fee span {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+  .rx-funds a {
+    color: var(--royal);
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+  .rx-block > p.rx-footnote {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .rx-transfer {
+    padding: var(--space-6);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    background: var(--tint);
+  }
+  .rx-transfer__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-6);
+  }
+  .rx-transfer__head h2 {
+    margin: 0;
+  }
+  .rx-transfer__fee {
+    margin: 0;
+    color: var(--royal);
+    font-size: var(--text-h3);
+    font-weight: 700;
+  }
+  .rx-transfer__fee span {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+  .rx-transfer > p {
+    color: var(--muted);
+    margin: var(--space-4) 0;
+  }
+  .rx-transfer__steps {
+    margin: 0;
+    padding-left: var(--space-5);
+    display: grid;
+    gap: var(--space-2);
+    color: var(--ink);
+  }
+
+  .rx-help {
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--line);
+  }
+  .rx-help strong {
+    color: var(--royal);
+  }
+  .rx-help p {
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+  }
+  .rx-help a:not(.btn) {
+    color: var(--royal);
+    font-weight: 700;
+  }
+  .rx-help .rx-actions {
+    margin-top: var(--space-4);
   }
 
   @media (max-width: 860px) {
     .rx-layout {
       grid-template-columns: 1fr;
+      gap: var(--space-10);
     }
     .rx-toc {
       position: static;
+    }
+  }
+  /* Regions table becomes stacked rows on phones. */
+  @media (max-width: 620px) {
+    .rx-table--regions thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+    .rx-table--regions,
+    .rx-table--regions tbody,
+    .rx-table--regions tr,
+    .rx-table--regions th,
+    .rx-table--regions td {
+      display: block;
+    }
+    .rx-table--regions tbody th {
+      padding-bottom: var(--space-1);
+      color: var(--royal);
+      font-weight: 700;
+    }
+    .rx-table--regions td.num {
+      display: flex;
+      justify-content: space-between;
+      padding-block: var(--space-1);
+    }
+    .rx-table--regions td.num::before {
+      content: attr(data-label);
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .rx-table--regions .rx-contact {
+      padding-top: var(--space-2);
     }
   }
 </style>
