@@ -1,7 +1,8 @@
 ---
 /**
  * StatBand — big institutional numerals on the royal gradient, no card chrome.
- * Matches the Make source's Stats component.
+ * Matches the Make source's Stats component. The figures render as written:
+ * a count-up animation twice read as wrong numbers in review, so it is gone.
  *
  * props:
  *   stats  [{ value: "500+", label: "Chapters Worldwide" }, …]
@@ -35,9 +36,7 @@ const showAnchor = anchor ?? tone === "navy";
               </svg>
             </span>
           )}
-          <dt class="statband__value" data-count data-value={s.value}>
-            {s.value}
-          </dt>
+          <dt class="statband__value">{s.value}</dt>
           <dd class="statband__label">{s.label}</dd>
         </div>
       ))}
@@ -213,70 +212,3 @@ const showAnchor = anchor ?? tone === "navy";
   }
 </style>
 
-<script>
-  // Counts each stat up from 0 when it scrolls into view. The SSR'd text is
-  // the real final value, so this only enhances — no JS / reduced-motion
-  // leaves the correct number in place.
-  interface ParsedStat {
-    prefix: string;
-    suffix: string;
-    target: number;
-    hasComma: boolean;
-    decimals: number;
-  }
-
-  function parseStatValue(raw: string): ParsedStat | null {
-    const match = raw.match(/^([^\d]*)(\d[\d,]*(?:\.\d+)?)([^\d]*)$/);
-    if (!match) return null;
-    const [, prefix, numStr, suffix] = match;
-    return {
-      prefix,
-      suffix,
-      target: parseFloat(numStr.replace(/,/g, "")),
-      hasComma: numStr.includes(","),
-      decimals: numStr.includes(".") ? numStr.split(".")[1].length : 0,
-    };
-  }
-
-  function formatStatNumber(
-    n: number,
-    { hasComma, decimals }: Pick<ParsedStat, "hasComma" | "decimals">
-  ) {
-    const fixed = n.toFixed(decimals);
-    if (!hasComma) return fixed;
-    const [intPart, decPart] = fixed.split(".");
-    const withCommas = Number(intPart).toLocaleString("en-US");
-    return decPart ? `${withCommas}.${decPart}` : withCommas;
-  }
-
-  function animateStat(el: HTMLElement, parsed: ParsedStat) {
-    const duration = 1400;
-    const start = performance.now();
-    function tick(now: number) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = `${parsed.prefix}${formatStatNumber(parsed.target * eased, parsed)}${parsed.suffix}`;
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const items = document.querySelectorAll("[data-count]");
-
-  if (!reduceMotion && items.length && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const el = entry.target as HTMLElement;
-          const parsed = parseStatValue(el.dataset.value ?? "");
-          if (parsed) animateStat(el, parsed);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.4 }
-    );
-    items.forEach((el) => observer.observe(el));
-  }
-</script>

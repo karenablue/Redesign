@@ -34,6 +34,9 @@
   --accent-underline: var(--gold);
   --accent-hover: var(--royal-dark);
   --white: #ffffff;
+  /* FY2027 Bright White. HQ must confirm the PDF's own conflict: it prints
+     #FCFFFE beside R:241 G:242 B:241 (#F1F2F1). */
+  --bright-white: #fcfffe;
   --ink: #333333; /* body text (Make uses #333)                 */
   --muted: #555a66; /* secondary text                             */
   --muted-2: #6a7282;
