@@ -137,16 +137,9 @@ const nextSteps = [
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
   bodyClass="page-home"
 >
-  <!-- ACT I: THIS IS SIGMA — hero and scale fused into one opening statement.
-       No white "institutional" section between them: the video's own scrim
-       already resolves to solid navy at the bottom, so it hands off to the
-       navy StatBand with no visual break. -->
-  <!-- "Envision..." (the video's own kinetic typography) and "Greater
-       Service, Greater Progress" (the org's actual slogan) were competing
-       as two separate opening statements when stacked as two sections.
-       One hero, one winner: Hero.astro's variant="image" desaturates +
-       scrims the video so it becomes atmosphere behind the slogan, not a
-       second headline. -->
+  <!-- ACT I: THIS IS SIGMA. The video plays untouched (no filter, no text
+       over it, Karena 2026-09-17); the slogan and entry points sit in the navy
+       band beneath it, which hands off to the navy StatBand. -->
   <Hero
     video="/images/sgrho-hero.mp4"
     image="/images/sgr-alpha-charter.jpeg"
@@ -155,6 +148,7 @@ const nextSteps = [
     highlight="Greater Progress®"
     copy="For more than a century, women of Sigma Gamma Rho have led with scholarship, sisterhood, and service."
     size="tall"
+    clean
   >
     <a class="btn btn--outline" href={withBase("/membership/become-a-member/#collegiate")}>
       Collegiate Intake <span aria-hidden="true">&rarr;</span>

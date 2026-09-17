@@ -7,11 +7,16 @@
  *   variant="split"  cream band, portrait/photo panel beside the text.
  *   variant="plain"  solid royal (or gold) band, no media. Compact.
  *
+ *   clean (image variant only): the photo/video plays at full color with no
+ *   filter or scrim, and the text sits in a navy band below it instead of
+ *   over it (homepage).
+ *
  * props:
  *   variant, eyebrow, title, highlight, copy, image, video, imageAlt,
  *   focal (image position), accent ("navy"|"gold" for plain), align,
  *   size ("tall"|"regular"|"compact"), as ("h1"|"h2"),
- *   watermark (giant faint decorative word/numeral in the corner)
+ *   watermark (giant faint decorative word/numeral in the corner),
+ *   clean (boolean)
  * default slot: action buttons (rendered under the copy)
  */
 import { withBase } from "../lib/url.js";
@@ -32,6 +37,7 @@ const {
   size = "regular",
   as = "h1",
   watermark,
+  clean = false,
 } = Astro.props;
 
 const Heading = as;
@@ -42,6 +48,7 @@ const cls = [
   align === "left" && "hero--left",
   variant === "plain" && `hero--${accent}`,
   variant !== "split" && "on-dark",
+  clean && variant === "image" && "hero--clean",
 ]
   .filter(Boolean)
   .join(" ");
@@ -77,7 +84,13 @@ const hasActions = Astro.slots.has("default");
       ) : (
         <img class="hero__img" src={withBase(image)} alt="" style={`object-position:${focal}`} />
       )}
-      <div class="hero__scrim"></div>
+      {!clean && <div class="hero__scrim"></div>}
+      {clean && video && (
+        <button class="hero__motion-toggle" type="button" data-hero-motion aria-pressed="false">
+          <span class="hero__motion-icon" aria-hidden="true"></span>
+          <span class="hero__motion-label">Pause video</span>
+        </button>
+      )}
     </div>
   )}
 
@@ -125,7 +138,7 @@ const hasActions = Astro.slots.has("default");
   {/* WCAG 2.2.2 (Pause, Stop, Hide): motion lasting more than five seconds
       needs a user-operable way to stop it. The clip loops indefinitely, so
       without this control there is no escape from it. */}
-  {video && (
+  {video && !clean && (
     <button class="hero__motion-toggle" type="button" data-hero-motion aria-pressed="false">
       <span class="hero__motion-icon" aria-hidden="true"></span>
       <span class="hero__motion-label">Pause background video</span>
@@ -246,6 +259,30 @@ const hasActions = Astro.slots.has("default");
       rgba(32, 65, 165, 0.6) 55%,
       transparent 100%
     );
+  }
+
+  /* ---------- clean: media untouched, text below it ---------- */
+  .hero--clean {
+    display: block;
+    min-height: 0;
+  }
+  .hero--clean .hero__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    max-height: 85vh;
+    width: 100%;
+    background: var(--navy);
+  }
+  .hero--clean .hero__video,
+  .hero--clean .hero__img {
+    opacity: 1;
+    mix-blend-mode: normal;
+  }
+  .hero--clean .hero__title {
+    text-shadow: none;
+  }
+  .hero--clean.hero--tall .hero__content {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
   }
 
   /* ---------- variant: split ---------- */
@@ -395,7 +432,8 @@ const hasActions = Astro.slots.has("default");
     function paint(paused: boolean) {
       if (!toggle || !label) return;
       toggle.setAttribute("aria-pressed", String(paused));
-      label.textContent = paused ? "Play background video" : "Pause background video";
+      const noun = hero?.classList.contains("hero--clean") ? "video" : "background video";
+      label.textContent = paused ? `Play ${noun}` : `Pause ${noun}`;
     }
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
