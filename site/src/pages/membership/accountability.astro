@@ -1,0 +1,213 @@
+---
+/**
+ * Membership Accountability — the public-facing explanation of suspension,
+ * expulsion and denouncement, pointing to HQ's official register.
+ *
+ * No names are published here. The register itself is maintained by
+ * International Corporate Headquarters in the member portal; this page only
+ * explains the categories and links to it. Wording of the advisory and the
+ * three definitions should be confirmed by HQ (and counsel) before launch.
+ */
+import Base from "../../layouts/Base.astro";
+import { withBase } from "../../lib/url.js";
+
+const REGISTER_URL =
+  "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx";
+
+const categories = [
+  {
+    title: "Member Suspensions",
+    body: "Suspension temporarily disqualifies an individual from participating in any Sorority activities or representing the organization in any capacity until restored to good standing by the Regional Syntaktes, with the approval of the International Grand Basileus.",
+    action: "View Suspensions",
+  },
+  {
+    title: "Expulsions & Revocations",
+    body: "Expulsion permanently terminates an individual's membership and revokes all rights, privileges, and regalia usage. The Sorority maintains a record of expelled individuals and revoked charters.",
+    action: "View Expulsions",
+  },
+  {
+    title: "Voluntary Denouncements",
+    body: "Voluntary denouncement permanently severs an individual from the sisterhood. Denounced individuals hold no membership rights and may not use the Sorority's registered trademarks or symbols.",
+    action: "View Denouncements",
+  },
+];
+---
+
+<Base
+  title="Membership Accountability"
+  activeTop="Membership"
+  description="How Sigma Gamma Rho Sorority, Inc. handles suspension, expulsion and denouncement, and how to verify a member's or chapter's standing."
+>
+  <section class="ma-hero">
+    <div class="container">
+      <p class="breadcrumb">
+        <a href={withBase("/")}>Home</a> <span>/</span>{" "}
+        <a href={withBase("/membership/become-a-member/")}>Membership</a> <span>/</span>{" "}
+        <span>Membership Accountability</span>
+      </p>
+      <p class="eyebrow">Membership</p>
+      <h1>
+        Membership
+        <br />
+        <span>Accountability.</span>
+      </h1>
+    </div>
+  </section>
+
+  <section class="ma-main">
+    <div class="container">
+      <div class="ma-notice">
+        <h2>Public Notice &amp; Trademark Advisory</h2>
+        <p>
+          Sigma Gamma Rho Sorority, Inc.<sup class="reg">&reg;</sup> prohibits hazing, unauthorized
+          intake activities, and conduct contrary to its Constitution and Bylaws.
+        </p>
+        <p>
+          Individuals who have been suspended, expelled, or who have voluntarily denounced
+          membership are <strong>not in good standing</strong>. They may not wear, display, or use
+          the registered trademarks, crest, letters, regalia, or symbols of Sigma Gamma Rho
+          Sorority, Inc.<sup class="reg">&reg;</sup> Intake, events, or representation on behalf of
+          the Sorority by these individuals, or by unrecognized chapters, are unauthorized.
+        </p>
+      </div>
+
+      <ul class="ma-cards">
+        {categories.map((c) => (
+          <li class="ma-card">
+            <h2>{c.title}</h2>
+            <p>{c.body}</p>
+            <a class="btn btn--outline" href={REGISTER_URL} target="_blank" rel="noopener">
+              {c.action} <span aria-hidden="true">&#8599;</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="ma-note">
+        The official register is maintained by International Corporate Headquarters in the member
+        portal.
+      </p>
+
+      <div class="ma-verify">
+        <p>
+          To verify the standing of any chapter or individual, contact International Corporate
+          Headquarters at <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>.
+        </p>
+        <a class="btn" href={withBase("/resources/anti-hazing-policy/")}>Read the Anti-Hazing Policy</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ma-hero {
+    background: var(--cream);
+    padding-block: clamp(3rem, 6vw, 4rem);
+  }
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-5);
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .breadcrumb a {
+    color: inherit;
+  }
+  .ma-hero h1 {
+    margin: var(--space-2) 0 0;
+  }
+
+  .ma-main {
+    background: var(--white);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+  .ma-notice {
+    max-width: 52rem;
+    padding: var(--space-6) var(--space-8);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--navy);
+  }
+  .ma-notice h2 {
+    margin: 0 0 var(--space-4);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-md);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ma-notice p {
+    margin: 0 0 var(--space-3);
+    color: var(--ink);
+    max-width: 65ch;
+  }
+  .ma-notice p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Three categories: white cards, a royal top rule, the action on the foot. */
+  .ma-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: var(--space-12) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ma-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--royal);
+    background: var(--white);
+  }
+  .ma-card h2 {
+    margin: 0 0 var(--space-3);
+    color: var(--royal);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+  .ma-card p {
+    margin: 0 0 var(--space-6);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+  .ma-card .btn {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  .ma-note {
+    margin: var(--space-4) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .ma-verify {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--line);
+  }
+  .ma-verify p {
+    margin: 0;
+    max-width: 44rem;
+    color: var(--ink);
+  }
+  .ma-verify a:not(.btn) {
+    color: var(--royal);
+    font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    .ma-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

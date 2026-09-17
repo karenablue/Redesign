@@ -20,6 +20,7 @@ export const ROUTES = [
   "/membership/reactivate/",
   "/membership/chapter-locator/",
   "/membership/affiliates/",
+  "/membership/accountability/",
   "/service-impact/national-programs/",
   "/service-impact/partner-foundations/",
   "/service-impact/corporate-partnerships/",

@@ -35,6 +35,7 @@ export const primaryNav = [
       { label: "Reactivate Membership", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
       { label: "Affiliates", href: "/membership/affiliates/" },
+      { label: "Accountability", href: "/membership/accountability/" },
     ],
   },
   {
@@ -96,6 +97,7 @@ export const footerColumns = [
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
       { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
       { label: "Affiliates", href: "/membership/affiliates/" },
+      { label: "Accountability", href: "/membership/accountability/" },
     ],
   },
   {
