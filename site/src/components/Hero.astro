@@ -4,17 +4,18 @@
  *
  *   variant="image"  (default) full-bleed photo OR video, desaturated on navy,
  *                    with a bottom-up navy gradient. Centered LEMON MILK title.
+ *   cinematic        image variant, media at full colour with a side-to-side
+ *                    navy fade behind the type instead of the desaturating
+ *                    wash (homepage).
  *   variant="split"  cream band, portrait/photo panel beside the text.
- *                    With `dark`, a navy band and a 16:9 media panel shown
- *                    unfiltered (homepage video).
  *   variant="plain"  solid royal (or gold) band, no media. Compact.
  *
  * props:
  *   variant, eyebrow, title, highlight, copy, image, video, imageAlt,
  *   focal (image position), accent ("navy"|"gold" for plain), align,
  *   size ("tall"|"regular"|"compact"), as ("h1"|"h2"),
- *   watermark (giant faint decorative word/numeral in the corner),
- *   dark (split only)
+ *   watermark (giant faint decorative word/numeral in the corner)
+ *   cinematic (image variant only)
  * default slot: action buttons (rendered under the copy)
  */
 import { withBase } from "../lib/url.js";
@@ -35,7 +36,7 @@ const {
   size = "regular",
   as = "h1",
   watermark,
-  dark = false,
+  cinematic = false,
 } = Astro.props;
 
 const Heading = as;
@@ -45,8 +46,8 @@ const cls = [
   `hero--${size}`,
   align === "left" && "hero--left",
   variant === "plain" && `hero--${accent}`,
-  (variant !== "split" || dark) && "on-dark",
-  variant === "split" && dark && "hero--split-dark",
+  variant !== "split" && "on-dark",
+  cinematic && variant === "image" && "hero--cinematic",
 ]
   .filter(Boolean)
   .join(" ");
@@ -253,6 +254,43 @@ const hasActions = Astro.slots.has("default");
     );
   }
 
+  /* ---------- cinematic: full-colour media, fade under the type ---------- */
+  .hero--cinematic .hero__video,
+  .hero--cinematic .hero__img {
+    opacity: 1;
+    mix-blend-mode: normal;
+  }
+  /* Left-to-right so the words sit on near-solid navy while the right half
+     of the footage stays clear. */
+  .hero--cinematic .hero__scrim {
+    background:
+      linear-gradient(
+        100deg,
+        rgba(8, 22, 51, 0.96) 0%,
+        rgba(8, 22, 51, 0.9) 38%,
+        rgba(8, 22, 51, 0.55) 62%,
+        rgba(8, 22, 51, 0.25) 100%
+      ),
+      linear-gradient(to top, rgba(8, 22, 51, 0.85) 0%, transparent 45%);
+  }
+  .hero--cinematic .hero__text {
+    max-width: 44rem;
+  }
+  .hero--cinematic .hero__title {
+    text-shadow: 0 2px 18px rgba(8, 22, 51, 0.6);
+  }
+  @media (max-width: 820px) {
+    /* On a phone the type needs the whole frame behind it. */
+    .hero--cinematic .hero__scrim {
+      background: linear-gradient(
+        180deg,
+        rgba(8, 22, 51, 0.82) 0%,
+        rgba(8, 22, 51, 0.92) 55%,
+        rgba(8, 22, 51, 0.96) 100%
+      );
+    }
+  }
+
   /* ---------- variant: split ---------- */
   .hero--split {
     background: var(--cream);
@@ -283,38 +321,6 @@ const hasActions = Astro.slots.has("default");
     max-height: 440px;
     object-fit: cover;
     display: block;
-  }
-  .hero--split-dark {
-    background: var(--grad-royal);
-    color: #fff;
-    border-bottom: 0;
-  }
-  .hero--split-dark .hero__content {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  }
-  .hero--split-dark .hero__title {
-    color: #fff;
-    font-size: clamp(2.4rem, 1.4rem + 3.2vw, 4.25rem);
-  }
-  .hero--split-dark .hero__copy {
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .hero--split-dark .hero__figure {
-    border-radius: var(--radius);
-  }
-  .hero--split-dark .hero__figure img,
-  .hero--split-dark .hero__figure video {
-    aspect-ratio: 16 / 9;
-    max-height: none;
-  }
-  .hero--split-dark .hero__actions {
-    gap: var(--space-3);
-  }
-  @media (max-width: 820px) {
-    .hero--split-dark .hero__figure {
-      order: 0;
-      max-width: none;
-    }
   }
   @media (max-width: 820px) {
     .hero--split .hero__content {

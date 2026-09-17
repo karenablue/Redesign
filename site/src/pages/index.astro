@@ -130,26 +130,24 @@ const partnerLogos = [
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
   bodyClass="page-home"
 >
-  <!-- 1 — one navy opener: words on the left, the video on the right. -->
+  <!-- 1 — cinematic opener: the clip runs full-bleed at full colour, with a
+       navy fade carrying the type on the left (Karena, 2026-09-17). -->
   <Hero
-    variant="split"
-    dark
+    cinematic
+    align="left"
     video="/images/sgrho-hero.mp4"
     image="/images/sgr-alpha-charter.jpeg"
     eyebrow="1922 — Today"
     title="Greater Service,"
     highlight="Greater Progress®"
     copy="For more than a century, women of Sigma Gamma Rho have led with scholarship, sisterhood, and service."
-    size="regular"
+    size="tall"
   >
-    <a class="btn btn--outline" href={withBase("/membership/become-a-member/#collegiate")}>
-      Collegiate Intake <span aria-hidden="true">&rarr;</span>
+    <a class="btn" href={withBase("/membership/become-a-member/")}>
+      Explore Sisterhood &amp; Intake <span aria-hidden="true">&rarr;</span>
     </a>
-    <a class="btn btn--outline" href={withBase("/membership/become-a-member/#alumnae")}>
-      Alumnae &amp; Graduate <span aria-hidden="true">&rarr;</span>
-    </a>
-    <a class="btn btn--outline" href={withBase("/membership/reactivate/")}>
-      Reactivate &amp; Reclamation <span aria-hidden="true">&rarr;</span>
+    <a class="btn btn--outline hero-glass" href={PORTAL_URL} target="_blank" rel="noopener">
+      Member Portal &amp; Reclamation <span aria-hidden="true">&#8599;</span>
     </a>
   </Hero>
   <StatBand stats={reachStats} tone="navy" />
@@ -1029,11 +1027,32 @@ const partnerLogos = [
     color: #fff;
   }
 
-  /* The reach ribbon continues the navy opener: darker ground, larger
-     numerals, a hairline where it meets the hero. */
+  /* A frosted button on the footage, for the secondary hero action. */
+  :global(body.page-home .hero-glass) {
+    background: rgba(8, 22, 51, 0.45);
+    backdrop-filter: blur(6px);
+  }
+
+  /* The reach ribbon docks onto the bottom of the hero canvas: frosted
+     navy over the footage, hairline on top, hairline dividers between. */
   :global(body.page-home .statband--navy) {
-    background: var(--navy);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    z-index: 3;
+    margin-top: clamp(-7rem, -6vw, -4.5rem);
+    background: rgba(8, 22, 51, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  :global(body.page-home .statband--navy::before) {
+    display: none;
+  }
+  /* The ribbon overlaps the hero, so the pause control clears it. */
+  :global(body.page-home .hero__motion-toggle) {
+    z-index: 4;
+    bottom: clamp(7rem, 11vw, 9.5rem);
+  }
+  :global(body.page-home .hero--cinematic .hero__content) {
+    padding-bottom: clamp(9rem, 14vw, 13rem);
   }
   :global(body.page-home .statband__value) {
     font-size: clamp(1.6rem, 0.9rem + 3.2vw, 3.25rem);
