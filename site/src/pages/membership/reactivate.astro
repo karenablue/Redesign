@@ -3,12 +3,16 @@ import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
 
 /*
- * Source for every step, fee and contact on this page:
- * "Reactivations and Transfers" FY26 one-pager, International Corporate
- * Headquarters. Update this data (not the markup) when the next fiscal
- * year's one-pager is issued.
+ * Source for every step and contact on this page: the "Reactivations and
+ * Transfers" FY26 one-pager from International Corporate Headquarters.
+ *
+ * Yearly dues and regional/foundation assessment amounts are deliberately
+ * NOT published here: they change each fiscal year, and the Poodle Portal
+ * shows each member her own current total. Only the flat transfer fee is
+ * stated. Check it against each new one-pager.
  */
-const FISCAL_YEAR = "FY26";
+const PORTAL_URL = "https://portal.sgrho1922.org/";
+const TRANSFER_FEE = 15;
 
 const portalSections = [
   ["Section 1", "Reactivating Member Information", "Review the information you provided."],
@@ -18,27 +22,26 @@ const portalSections = [
   ["Section 5", "Terms & Conditions", "Photography/videography release and arbitration agreement."],
 ];
 
-const nationalCosts = [
-  { type: "Graduate Member / Associate Member", total: 235 },
-  { type: "Undergraduate Member", total: 155 },
-  { type: "Member-at-Large", note: "Lives 30 miles from the nearest chapter", total: 235 },
-  { type: "General Member", note: "Includes GM surcharge", total: 410 },
-  { type: "Life Member", total: 145 },
-  { type: "Military Member", note: "Financially inactive 1–9 years", total: 145 },
-  { type: "Military Member", note: "Financially inactive 10+ years", total: 135 },
+/** What a reactivation total is made of, per the one-pager. No amounts. */
+const assessmentParts = [
+  ["National headtax", "Operational dues to the national organization."],
+  ["Insurance", "Coverage included with every reactivation."],
+  ["Regional assessment", "Set by your region and paid with your reactivation."],
+  ["Foundation assessments", "The National Education Fund (NEF) and SPEAR, for graduate members."],
+  ["Reactivation & processing", "The reactivation fee and the credit-card processing fee."],
 ];
 
 const regions = [
-  { name: "Central", grad: 30, undergrad: 30, late: 0, email: "grammateus@sgrhocentral.com", site: "https://www.sgrhocentral.com" },
-  { name: "Northeastern", grad: 60, undergrad: 29, late: 5, email: "grammateus@sgrhoneregion.com", site: "https://www.sgrhoneregion.com" },
-  { name: "Southeastern", grad: 30, undergrad: 10, late: 10, email: "grammateus@seregionsgrho.org", site: "https://www.seregionsgrho.org" },
-  { name: "Southwestern", grad: 50, undergrad: 40, late: 20, email: "grammateus@sigmaswregion.com", site: "https://www.sigmaswregion.com" },
-  { name: "Western", grad: 55, undergrad: 30, late: 20, email: "grammateus@westernsgrho.org", site: "https://www.westernsgrho.org" },
+  { name: "Central", email: "grammateus@sgrhocentral.com", site: "https://www.sgrhocentral.com" },
+  { name: "Northeastern", email: "grammateus@sgrhoneregion.com", site: "https://www.sgrhoneregion.com" },
+  { name: "Southeastern", email: "grammateus@seregionsgrho.org", site: "https://www.seregionsgrho.org" },
+  { name: "Southwestern", email: "grammateus@sigmaswregion.com", site: "https://www.sigmaswregion.com" },
+  { name: "Western", email: "grammateus@westernsgrho.org", site: "https://www.westernsgrho.org" },
 ];
 
 const foundations = [
-  { name: "National Education Fund (NEF)", fee: 7, href: "https://www.sgrnationaleducationfund.org/home", label: "Pay the NEF assessment" },
-  { name: "Sigma Public Education Foundation & Research (SPEAR)", fee: 7, href: "https://www.flipcause.com/secure/cause_pdetails/MTQ2MDUw", label: "Pay the SPEAR assessment" },
+  { name: "National Education Fund (NEF)", href: "https://www.sgrnationaleducationfund.org/home", label: "Pay the NEF assessment" },
+  { name: "Sigma Public Education Foundation & Research (SPEAR)", href: "https://www.flipcause.com/secure/cause_pdetails/MTQ2MDUw", label: "Pay the SPEAR assessment" },
 ];
 
 const transferSteps = [
@@ -50,14 +53,13 @@ const transferSteps = [
   "Once processed, the invoice is available to pay from your member profile.",
 ];
 
-const usd = (n: number) => `$${n}`;
 const bare = (url: string) => url.replace(/^https?:\/\//, "");
 ---
 
 <Base
   title="Reactivate Membership"
   activeTop="Membership"
-  description="Who needs to reactivate, the Poodle Portal steps, and the national, regional and foundation costs to return to active membership in Sigma Gamma Rho."
+  description="Who needs to reactivate, the Poodle Portal steps, what your assessment covers, and how transfers work in Sigma Gamma Rho."
 >
   <section class="rx-hero">
     <div class="container">
@@ -85,8 +87,8 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
         <p class="rx-toc__label">On This Page</p>
         <a href="#eligibility">Who Needs to Reactivate</a>
         <a href="#steps">Steps to Reactivation</a>
-        <a href="#costs">National Cost</a>
-        <a href="#regional">Regional Assessments</a>
+        <a href="#costs">What Your Assessment Covers</a>
+        <a href="#regional">Regional Contacts</a>
         <a href="#foundations">Foundation Assessments</a>
         <a href="#transfers">Transfers</a>
         <div class="rx-toc__cta">
@@ -148,91 +150,61 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
         </section>
 
         <section class="rx-block" id="costs">
-          <h2>National Cost to Reactivate</h2>
+          <h2>What Your Assessment Covers</h2>
           <p>
-            Each total includes headtax, insurance, the reactivation fee and the credit-card
-            processing fee.
+            Your reactivation total depends on your membership category and region, and it is set
+            each fiscal year. The Poodle Portal calculates your exact amount. Every total is made
+            up of the same parts:
           </p>
-          <div class="rx-table-wrap">
-            <table class="rx-table">
-              <caption>National reactivation totals, {FISCAL_YEAR}</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Membership type</th>
-                  <th scope="col" class="num">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {nationalCosts.map((c) => (
-                  <tr>
-                    <th scope="row">
-                      {c.type}
-                      {c.note && <span class="rx-table__note">{c.note}</span>}
-                    </th>
-                    <td class="num">{usd(c.total)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <ul class="rx-covers">
+            {assessmentParts.map(([title, body]) => (
+              <li>
+                <strong>{title}</strong>
+                <span>{body}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="rx-actions">
+            <a class="btn" href={PORTAL_URL} rel="noopener">
+              View Current Dues &amp; Calculate Your Total in the Poodle Portal{" "}
+              <span aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </section>
 
         <section class="rx-block" id="regional">
-          <h2>Regional Assessments</h2>
+          <h2>Regional Contacts</h2>
           <p>
-            Your region sets its own assessment, paid in addition to the national cost. Questions go
-            to your region's Grammateus.
+            Questions about your regional assessment go to your region's Grammateus.
           </p>
-          <div class="rx-table-wrap">
-            <table class="rx-table rx-table--regions">
-              <caption>Regional assessments, {FISCAL_YEAR}</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Region</th>
-                  <th scope="col" class="num">Graduate</th>
-                  <th scope="col" class="num">Undergraduate</th>
-                  <th scope="col" class="num">Late fee</th>
-                  <th scope="col">Contact</th>
-                </tr>
-              </thead>
-              <tbody>
-                {regions.map((r) => (
-                  <tr>
-                    <th scope="row">{r.name}</th>
-                    <td class="num" data-label="Graduate">{usd(r.grad)}</td>
-                    <td class="num" data-label="Undergraduate">{usd(r.undergrad)}</td>
-                    <td class="num" data-label="Late fee">{usd(r.late)}</td>
-                    <td class="rx-contact">
-                      <a href={`mailto:${r.email}`}>{r.email}</a>
-                      <a href={r.site} rel="noopener">{bare(r.site)}</a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ul class="rx-regions">
+            {regions.map((r) => (
+              <li>
+                <strong>{r.name} Region</strong>
+                <a href={`mailto:${r.email}`}>{r.email}</a>
+                <a href={r.site} rel="noopener">{bare(r.site)}</a>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section class="rx-block" id="foundations">
           <h2>Foundation Assessments</h2>
+          <p>
+            Graduate members pay two foundation assessments. <em>Graduate</em> covers Life Members,
+            Cultured Pearls, General Members, Members-at-Large and Graduate members.
+            Undergraduates are exempt.
+          </p>
           <ul class="rx-funds">
             {foundations.map((f) => (
               <li>
                 <h3>{f.name}</h3>
-                <p class="rx-funds__fee">
-                  {usd(f.fee)} <span>graduate fee</span>
-                </p>
                 <a href={f.href} rel="noopener">
                   {f.label} <span aria-hidden="true">&rarr;</span>
                 </a>
               </li>
             ))}
           </ul>
-          <p class="rx-footnote">
-            <em>Graduate</em> refers to Life Members, Cultured Pearls, General Members,
-            Members-at-Large and Graduate members. Undergraduates are exempt from the NEF and SPEAR
-            assessments.
-          </p>
         </section>
 
         <section class="rx-block" id="transfers">
@@ -240,7 +212,7 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
             <div class="rx-transfer__head">
               <h2>Transfers</h2>
               <p class="rx-transfer__fee">
-                {usd(15)} <span>transfer fee, includes credit-card processing</span>
+                ${TRANSFER_FEE} <span>transfer fee, includes credit-card processing</span>
               </p>
             </div>
             <p>
@@ -441,65 +413,49 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
     margin-top: var(--space-6);
   }
 
-  /* Fee data sheets. */
-  .rx-table-wrap {
-    overflow-x: auto;
-    margin-top: var(--space-5);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-  }
-  .rx-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-variant-numeric: tabular-nums;
-  }
-  .rx-table caption {
-    padding: var(--space-3) var(--space-4);
-    text-align: left;
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--line);
-  }
-  .rx-table th,
-  .rx-table td {
-    padding: var(--space-3) var(--space-4);
-    text-align: left;
-    vertical-align: top;
-  }
-  .rx-table thead th {
-    background: var(--tint);
-    color: var(--royal);
-    font-size: var(--text-sm);
-  }
-  .rx-table tbody tr + tr {
+  /* What a total is made of: a ruled definition list, no amounts. */
+  .rx-covers {
+    display: grid;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
     border-top: 1px solid var(--line);
   }
-  .rx-table tbody th {
-    color: var(--ink);
-    font-weight: 600;
+  .rx-covers li {
+    display: grid;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-6);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--line);
   }
-  .rx-table .num {
-    text-align: right;
-    white-space: nowrap;
-  }
-  .rx-table td.num {
+  .rx-covers strong {
     color: var(--royal);
-    font-weight: 700;
   }
-  .rx-table__note {
-    display: block;
+  .rx-covers span {
     color: var(--muted);
-    font-size: var(--text-sm);
-    font-weight: 400;
   }
-  .rx-contact {
+  .rx-regions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: var(--space-5);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rx-regions li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     font-size: var(--text-sm);
   }
-  .rx-contact a {
-    display: block;
+  .rx-regions strong {
+    color: var(--ink);
+    font-size: var(--text-base);
+  }
+  .rx-regions a {
     color: var(--royal);
     overflow-wrap: anywhere;
   }
@@ -518,29 +474,13 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
     border-radius: var(--radius-lg);
   }
   .rx-funds h3 {
-    margin: 0;
+    margin: 0 0 var(--space-3);
     color: var(--royal);
     font-size: var(--text-md);
-  }
-  .rx-funds__fee {
-    margin: var(--space-3) 0;
-    color: var(--royal);
-    font-size: var(--text-h3);
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
-  .rx-funds__fee span {
-    color: var(--muted);
-    font-size: var(--text-sm);
-    font-weight: 400;
   }
   .rx-funds a {
     color: var(--royal);
     font-weight: 700;
-    font-size: var(--text-sm);
-  }
-  .rx-block > p.rx-footnote {
-    margin-top: var(--space-4);
     font-size: var(--text-sm);
   }
 
@@ -611,39 +551,9 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
       position: static;
     }
   }
-  /* Regions table becomes stacked rows on phones. */
   @media (max-width: 620px) {
-    .rx-table--regions thead {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-    }
-    .rx-table--regions,
-    .rx-table--regions tbody,
-    .rx-table--regions tr,
-    .rx-table--regions th,
-    .rx-table--regions td {
-      display: block;
-    }
-    .rx-table--regions tbody th {
-      padding-bottom: var(--space-1);
-      color: var(--royal);
-      font-weight: 700;
-    }
-    .rx-table--regions td.num {
-      display: flex;
-      justify-content: space-between;
-      padding-block: var(--space-1);
-    }
-    .rx-table--regions td.num::before {
-      content: attr(data-label);
-      color: var(--muted);
-      font-weight: 400;
-    }
-    .rx-table--regions .rx-contact {
-      padding-top: var(--space-2);
+    .rx-covers li {
+      grid-template-columns: 1fr;
     }
   }
 </style>
