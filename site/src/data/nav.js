@@ -67,14 +67,17 @@ export const primaryNav = [
 ];
 
 /* Header action buttons (right side of the nav bar). */
+/* Tier 1 of the header: utility links for people who already know what they
+   came for. Member Portal lives here rather than in the main nav. */
+export const headerUtility = [
+  { label: "Find a Chapter", href: "/membership/chapter-locator/" },
+  { label: "Donate", href: "/service-impact/partner-foundations/" },
+  { label: "Member Portal", href: "https://portal.sgrho1922.org/", external: true },
+];
+
+/* Tier 2's call to action. One button: the public path in. */
 export const headerActions = [
-  {
-    label: "Poodle Portal",
-    href: "https://portal.sgrho1922.org/",
-    external: true,
-    variant: "solid",
-  },
-  { label: "Join ΣΓΡ®", href: "/membership/become-a-member/", variant: "outline" },
+  { label: "Join ΣΓΡ®", href: "/membership/become-a-member/", variant: "solid" },
 ];
 
 /* Footer link columns. Kept separate from primaryNav because the footer
