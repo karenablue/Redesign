@@ -71,7 +71,7 @@ const partners = [
     tag: "Program Support",
   },
   {
-    logo: "/images/NAACP.svg",
+    logo: "/images/NAACP-dark.svg",
     type: "Civil Rights",
     name: "NAACP",
     note: "Collaborates with Sigma Gamma Rho around advocacy, voter engagement, civic participation, educational equity, and economic and social justice.",
@@ -85,7 +85,7 @@ const partners = [
     tag: "Mental Wellness",
   },
   {
-    logo: "/images/St. Jude Children's Research Hospital.png",
+    logo: "/images/partners/st-jude.png",
     type: "Children's Health",
     name: "St. Jude Children's Research Hospital",
     note: "Supports lifesaving treatment, sickle-cell and gene-editing initiatives, fundraising, internships, Walk/Run participation, and national awareness.",
@@ -414,6 +414,10 @@ const collabs = [
     color: var(--muted);
     font-size: var(--text-sm);
     margin: 0;
+  }
+  /* Only the description absorbs spare height, so every card's label and
+     name sit on the same lines and the tags share a baseline. */
+  .partner-card p:not([class]) {
     flex: 1;
   }
   .partner-card__tag {
