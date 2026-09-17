@@ -5,7 +5,7 @@ cat: "arts"
 note: "Actress, producer, and reality-television pioneer; mental health advocate."
 honorary: true
 initials: "TRY"
-source: "Honorary, 61st Boule, 2026."
+source: "Honorary — 61st Biennial Boulé, Tampa, Florida; July 24, 2026."
 image: "/images/notable/tami-roman-youngblood.jpg"
 license: "CC BY 3.0"
 licenseUrl: "https://creativecommons.org/licenses/by/3.0"

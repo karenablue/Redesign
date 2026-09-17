@@ -5,5 +5,5 @@ cat: "business"
 note: "Founder of Black Girl Sunscreen."
 honorary: true
 initials: "SL"
-source: "Honorary, 61st Boule, 2026."
+source: "Honorary — 61st Biennial Boulé, Tampa, Florida; July 24, 2026."
 ---

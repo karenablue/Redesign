@@ -5,5 +5,5 @@ cat: "arts"
 note: "Actress."
 honorary: true
 initials: "KH"
-source: "Honorary, 2024 class."
+source: "Honorary — 60th International Biennial Boulé, Houston, Texas; 2024."
 ---

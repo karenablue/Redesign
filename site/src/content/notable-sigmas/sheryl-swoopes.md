@@ -9,4 +9,5 @@ image: "/images/notable/sheryl-swoopes.jpg"
 license: "CC BY 2.0"
 licenseUrl: "https://creativecommons.org/licenses/by/2.0"
 credit: "© Two Gypsy Hearts (photo taken by Kate)"
+source: "Honorary — Essence of Sisterhood honorary class; announced July 5, 2025."
 ---

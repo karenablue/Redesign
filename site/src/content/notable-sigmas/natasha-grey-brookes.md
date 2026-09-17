@@ -5,5 +5,5 @@ cat: "public"
 note: "Attorney and first woman to lead a major political party in Saint Kitts and Nevis."
 honorary: true
 initials: "NG"
-source: "Honorary, 61st Boule, 2026."
+source: "Honorary — 61st Biennial Boulé, Tampa, Florida; July 24, 2026."
 ---

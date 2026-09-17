@@ -5,5 +5,5 @@ cat: "arts"
 note: "First Black woman Executive Creative Producer at Walt Disney Imagineering."
 honorary: true
 initials: "CC"
-source: "Honorary, 61st Boule, 2026."
+source: "Honorary — 61st Biennial Boulé, Tampa, Florida; July 24, 2026."
 ---
