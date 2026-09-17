@@ -68,11 +68,11 @@ export const primaryNav = [
 
 /* Header action buttons (right side of the nav bar). */
 /* Tier 1 of the header: utility links for people who already know what they
-   came for. Member Portal lives here rather than in the main nav. */
+   came for. The Poodle Portal lives here rather than in the main nav. */
 export const headerUtility = [
   { label: "Find a Chapter", href: "/membership/chapter-locator/" },
   { label: "Donate", href: "/service-impact/partner-foundations/" },
-  { label: "Member Portal", href: "https://portal.sgrho1922.org/", external: true },
+  { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
 ];
 
 /* Tier 2's call to action. One button: the public path in. */
