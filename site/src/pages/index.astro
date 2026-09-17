@@ -2,13 +2,15 @@
 /**
  * Home — six sections (Karena's outline, 2026-09-17):
  *
- *   1  Hero: navy split, slogan and entry points beside the video (the clip
- *      plays unfiltered, nothing laid over it), then the reach ribbon.
- *   2  Administration vision: the Grand Basileus's message (60) beside her
- *      portrait card (40).
+ * A narrative arc, not a dashboard: identity, origin, impact, leadership,
+ * then the ways in.
+ *
+ *   1  Hero: the slogan and mission over the full-bleed clip, with the reach
+ *      ribbon docked on its bottom edge.
+ *   2  Origin: the 1922 charter photograph and founding story.
  *   3  Our work in action: three signature program cards.
- *   4  Living legacy: the 1922 charter photograph and founding story.
- *   5  Dispatch: newsroom (50) beside upcoming events (50).
+ *   4  Into the next century: the Grand Basileus, steward of that legacy.
+ *   5  Ways in: chapters and intake, then newsroom beside upcoming events.
  *   6  Greater Together partner ribbon, then the Poodle Portal strip.
  *
  * Copy is drawn from the site's own pages (Grand Basileus bio, National
@@ -140,7 +142,7 @@ const partnerLogos = [
     eyebrow="1922 — Today"
     title="Greater Service,"
     highlight="Greater Progress®"
-    copy="For more than a century, women of Sigma Gamma Rho have led with scholarship, sisterhood, and service."
+    copy="A global sisterhood working to enhance the quality of life for women and their families through community service, civil and social action."
     size="tall"
   >
     <a class="btn" href={withBase("/membership/become-a-member/")}>
@@ -152,7 +154,68 @@ const partnerLogos = [
   </Hero>
   <StatBand stats={reachStats} tone="navy" />
 
-  <!-- 2 — administration vision (60) and the Grand Basileus (40). -->
+  <!-- 2 — origin: where the work comes from. -->
+  <section class="section legacy">
+    <div class="container legacy__grid">
+      <figure class="legacy__figure" id="our-legacy">
+        <img
+          src={withBase("/images/sgr-alpha-charter.jpeg")}
+          alt="Alpha Chapter charter members, 1922"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Alpha Chapter charter members, 1922</figcaption>
+      </figure>
+      <div class="legacy__copy">
+        <p class="eyebrow">Living Legacy</p>
+        <h2 class="legacy__title">Seven Educators. One Radical Idea.</h2>
+        <p>
+          On November 12, 1922, seven Black educators founded Sigma Gamma Rho at Butler University
+          in Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
+          civic courage, a foundation that still shapes every chapter today.
+        </p>
+        <div class="legacy__links">
+          <a class="arrow-link" href={withBase("/about/herstory/")}>
+            Discover Our Herstory <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="arrow-link" href={withBase("/about/our-founders/")}>
+            Meet the Founders <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — the mission in motion. -->
+  <section class="section work">
+    <div class="container">
+      <h2 class="work__label">Our Work in Action</h2>
+      <ul class="program-cards">
+        {signature.map((p) => (
+          <li class="program-card">
+            <div class="program-card__media">
+              <img src={withBase(p.img)} alt="" width="640" height="360" loading="lazy" decoding="async" />
+              <span class="program-card__badge">{p.tag}</span>
+            </div>
+            <div class="program-card__body">
+              <h3>
+                <a href={withBase(p.href)}>{p.title}</a>
+              </h3>
+              <p>{p.scope}</p>
+              <span class="program-card__go" aria-hidden="true">Explore Program &rarr;</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="center-link">
+        <a href={withBase("/service-impact/national-programs/")}>
+          All National Programs <span aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 4 — into the next century: leadership, after the legacy it carries. -->
   <section class="section vision on-dark">
     <div class="container vision__grid">
       <div class="vision__copy">
@@ -195,68 +258,49 @@ const partnerLogos = [
     </div>
   </section>
 
-  <!-- 3 — our work in action. -->
-  <section class="section work">
+  <!-- 5a — ways in: the three paths a visitor is most likely to want. -->
+  <section class="section ways">
     <div class="container">
-      <h2 class="work__label">Our Work in Action</h2>
-      <ul class="program-cards">
-        {signature.map((p) => (
-          <li class="program-card">
-            <div class="program-card__media">
-              <img src={withBase(p.img)} alt="" width="640" height="360" loading="lazy" decoding="async" />
-              <span class="program-card__badge">{p.tag}</span>
-            </div>
-            <div class="program-card__body">
-              <h3>
-                <a href={withBase(p.href)}>{p.title}</a>
-              </h3>
-              <p>{p.scope}</p>
-              <span class="program-card__go" aria-hidden="true">Explore Program &rarr;</span>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <p class="center-link">
-        <a href={withBase("/service-impact/national-programs/")}>
-          All National Programs <span aria-hidden="true">&rarr;</span>
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <!-- 4 — living legacy. -->
-  <section class="section legacy">
-    <div class="container legacy__grid">
-      <figure class="legacy__figure" id="our-legacy">
-        <img
-          src={withBase("/images/sgr-alpha-charter.jpeg")}
-          alt="Alpha Chapter charter members, 1922"
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption>Alpha Chapter charter members, 1922</figcaption>
-      </figure>
-      <div class="legacy__copy">
-        <p class="eyebrow">Living Legacy</p>
-        <h2 class="legacy__title">Seven Educators. One Radical Idea.</h2>
-        <p>
-          On November 12, 1922, seven Black educators founded Sigma Gamma Rho at Butler University
-          in Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
-          civic courage, a foundation that still shapes every chapter today.
-        </p>
-        <div class="legacy__links">
-          <a class="arrow-link" href={withBase("/about/herstory/")}>
-            Discover Our Herstory <span aria-hidden="true">&rarr;</span>
-          </a>
-          <a class="arrow-link" href={withBase("/about/our-founders/")}>
-            Meet the Founders <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
+      <div class="ways__head">
+        <p class="eyebrow">Find Your Place</p>
+        <h2 class="ways__title">Ways In</h2>
       </div>
+      <ul class="ways__grid">
+        <li class="way">
+          <h3>Find a Chapter</h3>
+          <p>
+            Sigma Gamma Rho is organized across five regions, with undergraduate and alumnae
+            chapters throughout the United States and internationally.
+          </p>
+          <a class="arrow-link" href={withBase("/membership/chapter-locator/")}>
+            Open the Chapter Locator <span aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+        <li class="way">
+          <h3>Prepare for Intake</h3>
+          <p>
+            Review the collegiate and alumnae requirements, what the Sorority looks for, and how to
+            verify that a membership activity is official.
+          </p>
+          <a class="arrow-link" href={withBase("/membership/become-a-member/")}>
+            Review Membership Standards <span aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+        <li class="way">
+          <h3>Return to Active Status</h3>
+          <p>
+            Members who have been financially inactive for a year or more can reactivate online,
+            and chapter transfers start from the member profile.
+          </p>
+          <a class="arrow-link" href={withBase("/membership/reactivate/")}>
+            Reactivate or Transfer <span aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- 5 — dispatch: newsroom and events, 50/50. -->
+  <!-- 5b — dispatch: newsroom and events, 50/50. -->
   <section class="section dispatch">
     <div class="container">
       <p class="eyebrow">Stay Connected</p>
@@ -679,8 +723,8 @@ const partnerLogos = [
   }
 
   /* 4 — living legacy */
-  /* Heritage: the site's warm paper tone (global --cream, not the
-     homepage's slate repoint). */
+  /* Origin: the site's warm paper tone (global --cream, not the homepage's
+     slate repoint), so the founding story reads as heritage. */
   .legacy {
     background: #fffbf0;
   }
@@ -723,9 +767,61 @@ const partnerLogos = [
     }
   }
 
-  /* 5 — dispatch */
-  .dispatch {
+  /* 5a — ways in */
+  .ways {
     background: var(--cream);
+  }
+  .ways__head {
+    max-width: 44rem;
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+    text-align: center;
+  }
+  .ways__title {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+    color: var(--royal);
+  }
+  .ways__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .way {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    border: 1px solid rgba(32, 65, 165, 0.2);
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .way h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+  }
+  .way p {
+    margin: 0 0 var(--space-6);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .way .arrow-link {
+    margin-top: auto;
+    align-self: flex-start;
+    white-space: normal;
+  }
+  @media (max-width: 900px) {
+    .ways__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* 5b — dispatch */
+  .dispatch {
+    background: var(--white);
   }
   .dispatch__grid {
     display: grid;
