@@ -2,15 +2,16 @@
 import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import { withBase } from "../../lib/url.js";
+import { reg } from "../../lib/reg.js";
 
 const affiliates = [
   {
     key: "rhosebuds",
-    num: "01",
     name: "Rhosebuds",
+    short: "Rhosebuds",
     age: "Ages 8–11",
     logo: "/images/SGR-Affiliate-Logo-Rhosebuds.png",
-    kicker: "Ages 8–11",
+    meta: "Youth affiliate",
     lead: "The earliest step in the Sigma Gamma Rho affiliate journey—introducing girls to sisterhood years before they're old enough to join a Rhoer Club®.",
     body: "Sigma Gamma Rho members serve as mentors, guiding each Rhosebud toward becoming a well-rounded young woman equipped to succeed academically and give back to her community. Activities are age-appropriate and hands-on, laying an early foundation in self-confidence, creativity, and civic awareness.",
     facts: [
@@ -21,11 +22,11 @@ const affiliates = [
   },
   {
     key: "rhoers",
-    num: "02",
-    name: "Rhoers",
+    name: "Rhoer Club®",
+    short: "Rhoers",
     age: "Ages 12–18",
     logo: "/images/SGR-Affiliate-Logo-Rhoers.png",
-    kicker: "Ages 12–18 • Founded 1939",
+    meta: "Founded 1939",
     lead: "Carrying Founder Mary Lou Allison Gardner Little's original vision for youth development into a new generation of Rhoers.",
     body: "Rhoer Clubs are sponsored by local alumnae chapters and operate at the local, regional, and national level, numbering more than 500 worldwide. The program blends academic and personal counseling with a rites-of-passage curriculum, preparing members for adulthood with confidence and a lasting commitment to service.",
     facts: [
@@ -38,11 +39,11 @@ const affiliates = [
   },
   {
     key: "philos",
-    num: "03",
-    name: "Philos",
-    age: "Friends of Sigma",
+    name: "Philo Affiliate®",
+    short: "Philos",
+    age: "Adult women",
     logo: "/images/SGR-Affiliate-Logo-Philos.png",
-    kicker: "Friends of Sigma • Founded 1980",
+    meta: "Friends of Sigma • Founded 1980",
     lead: "Professional women who are not college-initiated members but who actively support the Sorority's mission and programs.",
     body: 'Sigma Gamma Rho has worked with non-Greek-affiliated women throughout its history. Beginning in 1943, these supporters were organized into local auxiliary groups under a range of local names, with early roots in the Galveston–Houston area; in 1954 the Sorority formally adopted "Philo"—from the Greek for "friend"—as the affiliate\'s official designation, and in 1980 it became a national organization under Evelyn H. Hood, the Sorority\'s 14th International Grand Basileus. It has since grown to more than 1,000 members across the United States and internationally, working alongside the Sorority on service projects, educational and cultural programming, community outreach, and fundraising.',
     facts: [
@@ -77,9 +78,7 @@ const affiliates = [
       </p>
       <nav class="aff-hero__nav">
         {affiliates.map((a) => (
-          <a href={`#panel-${a.key}`} data-jump={a.key}>
-            {a.name}
-          </a>
+          <a href={`#${a.key}`}>{a.short}</a>
         ))}
       </nav>
     </div>
@@ -105,58 +104,62 @@ const affiliates = [
 
   <section class="aff-showcase">
     <div class="container">
-      <div class="aff-tabs" role="tablist">
-        {affiliates.map((a, i) => (
-          <button
-            type="button"
-            class:list={["aff-tab", { "is-active": i === 0 }]}
-            data-tab={a.key}
-            role="tab"
-            aria-selected={i === 0}
-          >
-            <span class="aff-tab__num">{a.num}</span>
-            <span class="aff-tab__name">{a.name}</span>
-            <span class="aff-tab__age">{a.age}</span>
-          </button>
+      <p class="eyebrow">The Affiliate Pathway</p>
+      <h2 class="aff-path__title">
+        From girlhood <span>to lifelong friendship.</span>
+      </h2>
+      <ol class="aff-path">
+        {affiliates.map((a) => (
+          <li class="aff-path__step">
+            <a href={`#${a.key}`}>
+              <img src={withBase(a.logo)} alt="" width="64" height="64" loading="lazy" />
+              <span class="aff-path__name" set:html={reg(a.name)} />
+              <span class="aff-badge">{a.age}</span>
+            </a>
+          </li>
         ))}
-      </div>
+      </ol>
 
-      {affiliates.map((a, i) => (
-        <div
-          class:list={["aff-panel", { "is-active": i === 0 }]}
-          id={`panel-${a.key}`}
-          role="tabpanel"
-        >
-          <figure class="aff-panel__media">
-            <img src={withBase(a.logo)} alt={`Sigma Gamma Rho ${a.name} Affiliate logo`} loading="lazy" decoding="async" />
-          </figure>
-          <div class="aff-panel__body">
-            <div class="aff-panel__copy">
-              <p class="eyebrow">{a.kicker}</p>
-              <h2>
-                {a.name} <span>Affiliate</span>
-              </h2>
-              <p class="aff-lead">{a.lead}</p>
-              <p>{a.body}</p>
-            </div>
-            <div class="aff-panel__side">
-              <dl class="aff-facts">
-                {a.facts.map(([k, v]) => (
-                  <>
-                    <dt>{k}</dt>
-                    <dd>{v}</dd>
-                  </>
-                ))}
-              </dl>
-              <div class="aff-focus">
-                {a.focus.map((f) => (
-                  <span>{f}</span>
-                ))}
+      <div class="aff-stages">
+        {affiliates.map((a) => (
+          <article class="aff-stage" id={a.key}>
+            <figure class="aff-stage__media">
+              <img
+                src={withBase(a.logo)}
+                alt={`Sigma Gamma Rho ${a.short} Affiliate logo`}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <div class="aff-stage__body">
+              <div class="aff-stage__copy">
+                <p class="aff-stage__meta">
+                  <span class="aff-badge">{a.age}</span>
+                  <span>{a.meta}</span>
+                </p>
+                <h3 set:html={reg(a.name)} />
+                <p class="aff-lead">{a.lead}</p>
+                <p>{a.body}</p>
+              </div>
+              <div class="aff-stage__side">
+                <dl class="aff-facts">
+                  {a.facts.map(([k, v]) => (
+                    <>
+                      <dt>{k}</dt>
+                      <dd>{v}</dd>
+                    </>
+                  ))}
+                </dl>
+                <div class="aff-focus">
+                  {a.focus.map((f) => (
+                    <span>{f}</span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -215,9 +218,7 @@ const affiliates = [
   }
   .aff-hero__nav a:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-    color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
+    border-color: #fff;
   }
 
   .aff-intro {
@@ -254,95 +255,131 @@ const affiliates = [
     background: var(--cream);
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .aff-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-bottom: var(--space-10);
-  }
-  .aff-tab {
-    flex: 1;
-    min-width: 160px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    padding: var(--space-4) var(--space-5);
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    text-align: left;
-  }
-  .aff-tab.is-active {
-    border-color: var(--royal);
-    background: var(--royal);
-  }
-  .aff-tab__num {
-    font-family: var(--font-label);
-    color: var(--accent-text);
-    font-size: var(--text-sm);
-  }
-  /* The active tab's ground flips to royal, where brand gold is 4.44:1 at
-     this size, just under AA. The number goes white with the name. */
-  .aff-tab.is-active .aff-tab__num {
-    color: #fff;
-  }
-  .aff-tab__name {
-    font-weight: 700;
-    color: var(--royal);
-  }
-  .aff-tab.is-active .aff-tab__name {
-    color: #fff;
-  }
-  .aff-tab__age {
-    font-size: var(--text-xs);
-    color: var(--muted-2);
-  }
-  .aff-tab.is-active .aff-tab__age {
-    color: rgba(255, 255, 255, 0.75);
-  }
-
-  .aff-panel {
-    display: none;
-  }
-  .aff-panel.is-active {
-    display: grid;
-    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
-    gap: var(--space-14);
-    align-items: center;
-  }
-  .aff-panel__media {
-    margin: 0;
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--space-10);
-    display: grid;
-    place-items: center;
-  }
-  .aff-panel__media img {
-    max-width: 160px;
-  }
-  .aff-panel__body {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: var(--space-10);
-  }
-  .aff-panel__copy h2 {
-    margin: var(--space-2) 0 0;
+  .aff-path__title {
+    margin: var(--space-2) 0 var(--space-8);
     font-size: var(--text-h3);
   }
-  .aff-panel__copy h2 span {
+  .aff-path__title span {
     color: var(--accent-text);
     text-decoration-line: underline;
     text-decoration-color: var(--accent-underline);
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.16em;
   }
+  /* Three stages joined by a gold line: the order is the point. */
+  .aff-path {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-8);
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+  .aff-path__step {
+    position: relative;
+  }
+  .aff-path__step + .aff-path__step::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: var(--space-8);
+    height: 1px;
+    background: var(--gold);
+  }
+  .aff-path__step a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .aff-path__step a:hover {
+    border-color: var(--royal);
+  }
+  .aff-path__step img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+  }
+  .aff-path__name {
+    color: var(--royal);
+    font-weight: 700;
+    font-size: var(--text-md);
+  }
+  .aff-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--tint);
+    color: var(--royal);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .aff-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
+    gap: var(--space-14);
+    align-items: start;
+    padding-block: var(--space-12);
+    scroll-margin-top: 200px;
+  }
+  .aff-stage + .aff-stage {
+    border-top: 1px solid var(--line);
+  }
+  .aff-stage__media {
+    margin: 0;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-10);
+    display: grid;
+    place-items: center;
+  }
+  .aff-stage__media img {
+    max-width: 160px;
+  }
+  .aff-stage__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .aff-stage__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--space-10);
+  }
+  .aff-stage__copy h3 {
+    margin: var(--space-3) 0 0;
+    color: var(--royal);
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: var(--text-h3);
+  }
   .aff-lead {
     font-weight: 700;
     color: var(--ink);
   }
-  .aff-panel__copy > p:not(.eyebrow, .aff-lead) {
+  .aff-stage__copy > p:not(.aff-stage__meta, .aff-lead) {
     color: var(--muted);
   }
   .aff-facts {
@@ -376,14 +413,35 @@ const affiliates = [
     color: var(--accent-text);
   }
   @media (max-width: 900px) {
-    .aff-panel.is-active {
+    .aff-stage,
+    .aff-stage__body {
       grid-template-columns: 1fr;
+      gap: var(--space-8);
     }
-    .aff-panel__body {
-      grid-template-columns: 1fr;
+    .aff-stage__media {
+      padding: var(--space-6);
     }
-    .aff-panel__media img {
+    .aff-stage__media img {
       max-width: 120px;
+    }
+  }
+  @media (max-width: 680px) {
+    .aff-path {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .aff-path__step + .aff-path__step::before {
+      top: auto;
+      bottom: 100%;
+      right: auto;
+      left: 50%;
+      width: 1px;
+      height: var(--space-5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aff-path__step a {
+      transition: none;
     }
   }
 
@@ -413,25 +471,3 @@ const affiliates = [
     color: var(--gold);
   }
 </style>
-
-<script>
-  const tabs = document.querySelectorAll(".aff-tab");
-  const panels = document.querySelectorAll(".aff-panel");
-  const jumps = document.querySelectorAll("[data-jump]");
-
-  function activate(key: string) {
-    tabs.forEach((t) => {
-      const on = (t as HTMLElement).dataset.tab === key;
-      t.classList.toggle("is-active", on);
-      t.setAttribute("aria-selected", String(on));
-    });
-    panels.forEach((p) => p.classList.toggle("is-active", p.id === `panel-${key}`));
-  }
-
-  tabs.forEach((tab) =>
-    tab.addEventListener("click", () => activate((tab as HTMLElement).dataset.tab ?? ""))
-  );
-  jumps.forEach((link) =>
-    link.addEventListener("click", () => activate((link as HTMLElement).dataset.jump ?? ""))
-  );
-</script>
