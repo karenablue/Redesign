@@ -9,19 +9,20 @@
    where needed via the withBase() helper in the components.
    ========================================================================== */
 
+/**
+ * Top-level sections. An item either links directly (`href`) or opens a
+ * dropdown (`children`); the annotation keeps both shapes valid for
+ * consumers like 404.astro.
+ * @type {{ label: string; href?: string; children?: { label: string; href: string }[] }[]}
+ */
 export const primaryNav = [
   {
-    label: "About",
+    label: "About Us",
     children: [
       { label: "Herstory", href: "/about/herstory/" },
-      { label: "Our Founders", href: "/about/our-founders/" },
+      { label: "The Seven Founders", href: "/about/our-founders/" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
       { label: "International Corporate Headquarters", href: "/about/headquarters/" },
-    ],
-  },
-  {
-    label: "Leadership",
-    children: [
       { label: "International Grand Basileus", href: "/leadership/international-grand-basileus/" },
       { label: "International Board of Directors", href: "/leadership/international-board/" },
       { label: "Regional Leadership", href: "/leadership/regional-leadership/" },
@@ -29,21 +30,22 @@ export const primaryNav = [
     ],
   },
   {
-    label: "Membership",
+    label: "Programs & Impact",
+    children: [
+      { label: "National Programs", href: "/service-impact/national-programs/" },
+      { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
+      { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
+    ],
+  },
+  {
+    label: "Membership & Intake",
     children: [
       { label: "Become a Member", href: "/membership/become-a-member/" },
       { label: "Reactivate Membership", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
       { label: "Affiliates", href: "/membership/affiliates/" },
-      { label: "Accountability", href: "/membership/accountability/" },
-    ],
-  },
-  {
-    label: "Service & Impact",
-    children: [
-      { label: "National Programs", href: "/service-impact/national-programs/" },
-      { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
-      { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
+      { label: "Membership Accountability", href: "/membership/accountability/" },
+      { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
     ],
   },
   {
@@ -55,29 +57,25 @@ export const primaryNav = [
     ],
   },
   {
-    label: "Resources",
+    label: "Contact",
     children: [
-      { label: "Vendor", href: "/resources/vendor/" },
+      { label: "Contact Headquarters", href: "/contact/" },
       { label: "Help Center", href: "/resources/help-center/" },
-      { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
       { label: "Careers", href: "/resources/careers/" },
+      { label: "Licensed Vendors", href: "/resources/vendor/" },
     ],
   },
-  { label: "Contact", href: "/contact/" },
 ];
 
-/* Header action buttons (right side of the nav bar). */
-/* Tier 1 of the header: utility links for people who already know what they
-   came for. The Poodle Portal lives here rather than in the main nav. */
-export const headerUtility = [
-  { label: "Find a Chapter", href: "/membership/chapter-locator/" },
-  { label: "Donate", href: "/service-impact/partner-foundations/" },
-  { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
-];
-
-/* Tier 2's call to action. One button: the public path in. */
+/* Deck 1's two utility actions, right of the wordmark. */
 export const headerActions = [
-  { label: "Join ΣΓΡ®", href: "/membership/become-a-member/", variant: "solid" },
+  {
+    label: "Poodle Portal",
+    href: "https://portal.sgrho1922.org/",
+    external: true,
+    variant: "solid",
+  },
+  { label: "Donate", href: "/service-impact/partner-foundations/", variant: "outline" },
 ];
 
 /* Footer link columns. Kept separate from primaryNav because the footer
