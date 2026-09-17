@@ -109,7 +109,7 @@ test.describe("hero video, prefers-reduced-motion", () => {
 
 test("each signature program card links to its section on National Programs", async ({ page }) => {
   await page.goto("/", { waitUntil: "load" });
-  const links = page.locator(".program-card h3 a");
+  const links = page.locator(".program-row h3 a");
   await expect(links).toHaveCount(3);
   for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""))) {
     expect(href).toMatch(/\/service-impact\/national-programs\/#[a-z]+$/);

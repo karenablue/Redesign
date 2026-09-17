@@ -1,7 +1,7 @@
 ---
 /**
  * SiteHeader — two tiers (Karena's handoff spec, 2026-09-17):
- *   Tier 1  royal utility strip: Find a Chapter, Donate, Member Portal.
+ *   Tier 1  royal utility strip: Find a Chapter, Donate, Poodle Portal.
  *   Tier 2  white bar: crest and wordmark, primary nav, gold Join button,
  *           search. Collapses to a drawer below 1280px.
  * Reads primaryNav / headerActions / searchIndex from src/data/nav.js, so the
@@ -38,13 +38,17 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   <div class="nav-bar">
     <div class="header-wrap nav-bar__inner">
-      {/* FY2027: below the Coat of Arms minimum (1 1/3in x 1in) use an
-          approved wordmark instead, so the header carries the Greek letters
-          and the name. The full crest runs at its minimum in the footer. */}
+      {/* The crest runs at the FY2027 minimum (128px, i.e. 1 1/3in) and
+          overlaps the bar's bottom edge so the bar height doesn't shrink it.
+          Clear space is reserved by the brand's own padding. */}
       <a class="brand" href={withBase("/")} aria-label="Sigma Gamma Rho home">
-        <span class="brand__letters" aria-hidden="true">
-          &Sigma;&Gamma;&Rho;<sup>&reg;</sup>
-        </span>
+        <img
+          class="brand__crest"
+          src={withBase("/images/SGR-Logo-Shield.png")}
+          alt="Sigma Gamma Rho Sorority coat of arms"
+          width="128"
+          height="128"
+        />
         <span class="brand__title">
           Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup>
         </span>
@@ -326,33 +330,25 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     text-underline-offset: 3px;
   }
 
-  /* Tier 2's brand lockup: the Greek-letter wordmark beside the name, with
-     a gold rule between them for clear space. */
+  /* Tier 2's brand lockup: the crest anchored at full size, overlapping the
+     bar, with the wordmark beside it. */
   .brand {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.85rem;
     min-width: 0;
     flex-shrink: 0;
+    padding-left: 148px;
     text-decoration: none;
   }
-  .brand__letters {
-    display: flex;
-    align-items: flex-start;
-    padding-right: 0.85rem;
-    border-right: 2px solid var(--gold);
-    color: var(--royal);
-    font-family: var(--font-head);
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: 0.04em;
-  }
-  .brand__letters sup {
-    font-family: var(--font-body);
-    font-size: max(0.32em, 9px);
-    font-weight: 700;
-    vertical-align: super;
+  .brand__crest {
+    position: absolute;
+    left: 0;
+    top: -10px;
+    width: 128px;
+    height: 128px;
+    object-fit: contain;
   }
   .brand__title {
     max-width: 13rem;
@@ -533,9 +529,26 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   /* Between the collapse breakpoint and ~1500px the crest, six nav items and
      the CTA share one row with very little slack, so the wordmark, the links
      and the button all tighten rather than wrap. */
+  @media (max-width: 1340px) {
+    .brand__crest {
+      width: 92px;
+      height: 92px;
+    }
+    .brand {
+      padding-left: 104px;
+    }
+    .site-nav__list {
+      gap: 0.8rem;
+    }
+  }
   @media (max-width: 1500px) {
-    .brand__letters {
-      font-size: 1.75rem;
+    .brand__crest {
+      width: 104px;
+      height: 104px;
+      top: -6px;
+    }
+    .brand {
+      padding-left: 120px;
     }
     .brand__title {
       max-width: 10.5rem;
@@ -807,10 +820,12 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   @media (max-width: 560px) {
     .brand {
       gap: 0.65rem;
+      padding-left: 84px;
     }
-    .brand__letters {
-      font-size: 1.5rem;
-      padding-right: 0.65rem;
+    .brand__crest {
+      width: 76px;
+      height: 76px;
+      top: -4px;
     }
     .brand__title {
       max-width: 11rem;

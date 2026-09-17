@@ -15,7 +15,9 @@
  *   focal (image position), accent ("navy"|"gold" for plain), align,
  *   size ("tall"|"regular"|"compact"), as ("h1"|"h2"),
  *   watermark (giant faint decorative word/numeral in the corner)
- *   cinematic (image variant only)
+ *   cinematic (image variant only),
+ *   bare (image variant: media and its pause control only — no words over
+ *   the footage; the page supplies the headline beneath it)
  * default slot: action buttons (rendered under the copy)
  */
 import { withBase } from "../lib/url.js";
@@ -37,6 +39,7 @@ const {
   as = "h1",
   watermark,
   cinematic = false,
+  bare = false,
 } = Astro.props;
 
 const Heading = as;
@@ -48,6 +51,7 @@ const cls = [
   variant === "plain" && `hero--${accent}`,
   variant !== "split" && "on-dark",
   cinematic && variant === "image" && "hero--cinematic",
+  bare && variant === "image" && "hero--bare",
 ]
   .filter(Boolean)
   .join(" ");
@@ -87,6 +91,7 @@ const hasActions = Astro.slots.has("default");
     </div>
   )}
 
+  {!bare && (
   <div class="container hero__content">
     <div class="hero__text">
       {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
@@ -127,6 +132,7 @@ const hasActions = Astro.slots.has("default");
       </figure>
     )}
   </div>
+  )}
 
   {/* WCAG 2.2.2 (Pause, Stop, Hide): motion lasting more than five seconds
       needs a user-operable way to stop it. The clip loops indefinitely, so
@@ -252,6 +258,27 @@ const hasActions = Astro.slots.has("default");
       rgba(32, 65, 165, 0.6) 55%,
       transparent 100%
     );
+  }
+
+  /* ---------- bare: the clip alone, nothing over it ---------- */
+  .hero--bare {
+    display: block;
+    min-height: 0;
+  }
+  .hero--bare .hero__media {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 82vh;
+    width: 100%;
+  }
+  .hero--bare .hero__scrim {
+    display: none;
+  }
+  .hero--bare .hero__video,
+  .hero--bare .hero__img {
+    opacity: 1;
+    mix-blend-mode: normal;
   }
 
   /* ---------- cinematic: full-colour media, fade under the type ---------- */
