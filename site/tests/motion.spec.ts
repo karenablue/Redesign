@@ -30,7 +30,9 @@ test.describe("hero video, default motion settings", () => {
     expect(box!.height, "the motion toggle must be at least 44px tall").toBeGreaterThanOrEqual(44);
 
     await toggle.click();
-    expect(await video.evaluate((v: HTMLVideoElement) => v.paused), "click should pause").toBe(true);
+    expect(await video.evaluate((v: HTMLVideoElement) => v.paused), "click should pause").toBe(
+      true
+    );
     await expect(toggle).toHaveAttribute("aria-pressed", "true");
     await expect(toggle).toContainText(/play/i);
 
@@ -109,9 +111,11 @@ test.describe("hero video, prefers-reduced-motion", () => {
 
 test("each signature program card links to its section on National Programs", async ({ page }) => {
   await page.goto("/", { waitUntil: "load" });
-  const links = page.locator(".program-row h3 a");
-  await expect(links).toHaveCount(3);
-  for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""))) {
+  const links = page.locator(".program-row__go");
+  await expect(links).toHaveCount(5);
+  for (const href of await links.evaluateAll((els) =>
+    els.map((e) => e.getAttribute("href") ?? "")
+  )) {
     expect(href).toMatch(/\/service-impact\/national-programs\/#[a-z]+$/);
   }
 });

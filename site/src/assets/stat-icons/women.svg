@@ -1,0 +1,7 @@
+<!-- Original women-and-sisterhood icon, styled to match the stat line icons. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="10" r="4" />
+  <path d="M8 10V8a4 4 0 0 1 8 0v2M8 9c-2 2-2.5 5-2 8m10-8c2 2 2.5 5 2 8M3 27v-3a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v3M9 18l3 3 3-3" />
+  <circle cx="24" cy="10" r="3.5" />
+  <path d="M20.5 10V8a3.5 3.5 0 0 1 7 0v2M27.5 9c2 2 2.5 4.5 2 7M23 17h1a6 6 0 0 1 6 6v4M23 18l1 2 3-2" />
+</svg>

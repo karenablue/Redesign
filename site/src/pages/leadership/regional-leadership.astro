@@ -183,7 +183,13 @@ const regions = [
     <section id={r.id} class:list={["region-block", { "region-block--dark": r.dark }]}>
       <div class="container region-block__inner">
         <div class="region-heading">
-          <img class="region-logo" src={withBase(r.logo)} alt={`${r.name} Region logo`} loading="lazy" decoding="async" />
+          <img
+            class="region-logo"
+            src={withBase(r.logo)}
+            alt={`${r.name} Region logo`}
+            loading="lazy"
+            decoding="async"
+          />
           <div>
             <p class="eyebrow">{r.name} Region</p>
             <h2>{r.name}</h2>
@@ -267,7 +273,7 @@ const regions = [
   }
   .rl-jump a:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-    color: var(--accent-hover);
+    border-color: var(--accent-hover);
     text-decoration-line: underline;
     text-decoration-color: var(--gold);
   }

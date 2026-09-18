@@ -1,15 +1,14 @@
 ---
-/**
- * Find a Chapter — ported from the original membership/chapter-locator/chapterlocator.html.
- *
- * Deliberately does NOT fabricate a chapter dataset. The original design is
- * explicit that the map/search panel is a placeholder awaiting a real chapter
- * directory feed, and that the actual working path today is the five real
- * regional locator sites linked below. Reproduce that honesty rather than
- * inventing sample chapters to make the search "look" functional.
- */
+/** Search a dated snapshot of official regional listings. */
+import directory from "../../data/chapter-directory.json";
+import CardGrid from "../../components/CardGrid.astro";
 import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
+import { compareChapterNames } from "../../lib/chapter-order";
+
+const chapters = [...directory.chapters].sort(
+  (a, b) => compareChapterNames(a.name, b.name) || a.region.localeCompare(b.region)
+);
 
 const regions = [
   {
@@ -62,8 +61,8 @@ const regions = [
       <div class="gold-rule"></div>
       <p class="hero-lead">
         Sigma Gamma Rho is organized across five regions, with undergraduate and alumnae chapters
-        serving campuses and communities throughout the United States and internationally. Start on
-        the map below.
+        serving campuses and communities throughout the United States and internationally. Search
+        chapter listings or browse a regional directory below.
       </p>
     </div>
     <div class="hero-word" aria-hidden="true">
@@ -71,103 +70,130 @@ const regions = [
     </div>
   </section>
 
-  <div class="sigma-rule sigma-rule-gold" aria-hidden="true">
+  <div class="sigma-rule sigma-rule-gold on-dark" aria-hidden="true">
     <span class="sigma-line"></span>
     <span class="sigma-medallion">&Sigma;</span>
     <span class="sigma-line"></span>
   </div>
 
-  <section class="directory-section">
+  <section class="directory-section" aria-labelledby="directory-title">
     <div class="container directory-shell">
       <div class="directory-heading">
-        <p class="eyebrow">National Directory</p>
-        <h2>
-          The Map Is Your <span>Starting Point.</span>
-        </h2>
+        <p class="eyebrow">Find a Chapter</p>
+        <h2 id="directory-title">Start with Your Community.</h2>
         <p>
-          Search by location or university to find the nearest undergraduate or alumnae chapter.
-          Regional directories below remain the authoritative path for current chapter listings.
+          Search by chapter name, city, state, or university. Explore undergraduate chapters for
+          campus membership or alumnae chapters for community membership.
         </p>
-        <div class="filter-group" role="group" aria-label="Chapter filters">
-          <button class="filter is-active" type="button" data-filter="all">
+      </div>
+      <form
+        id="chapter-search-form"
+        class="locator-search"
+        role="search"
+        aria-label="Chapter directory"
+      >
+        <div class="search-control">
+          <label for="chapter-search">Chapter or location</label>
+          <input
+            id="chapter-search"
+            name="q"
+            type="search"
+            placeholder="City, state, chapter, or university"
+            autocomplete="off"
+          />
+        </div>
+        <div class="search-control">
+          <label for="chapter-region">Region</label>
+          <select id="chapter-region" name="region">
+            <option value="all">All regions</option>
+            {regions.map((r) => (
+              <option value={r.name}>{r.name}</option>
+            ))}
+          </select>
+        </div>
+        <button class="search-button" type="submit">
+          Find Chapters
+        </button>
+      </form>
+      <div class="directory-toolbar">
+        <div class="filter-group" role="group" aria-label="Chapter type">
+          <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">
             All Chapters
           </button>
-          <button class="filter" type="button" data-filter="alumnae">
+          <button class="filter" type="button" data-filter="alumnae" aria-pressed="false">
             Alumnae
           </button>
-          <button class="filter" type="button" data-filter="undergraduate">
+          <button class="filter" type="button" data-filter="undergraduate" aria-pressed="false">
             Undergraduate
           </button>
         </div>
+        <button id="clear-search" class="clear-search" type="button" hidden>
+          Clear filters
+        </button>
       </div>
-
-      <div class="directory-display">
-        <div class="map-panel">
-          <div class="map-grid" aria-hidden="true"></div>
-
-          <div class="map-search">
-            <form class="locator-search" id="chapter-search-form">
-              <label class="visually-hidden" for="chapter-search">
-                Search chapters
-              </label>
-              <div class="search-field">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="10.5" cy="10.5" r="6.5"></circle>
-                  <path d="M15.5 15.5 21 21"></path>
-                </svg>
-                <input
-                  id="chapter-search"
-                  name="chapterSearch"
-                  type="search"
-                  placeholder="City, State, ZIP Code, or University"
-                  autocomplete="off"
-                />
-              </div>
-              <button class="search-button" type="submit">
-                Search Chapters
-              </button>
-            </form>
-            <p class="search-note" id="search-message" aria-live="polite">
-              Search interface ready for the national chapter dataset.
+      <p id="search-message" class="search-note" role="status" aria-live="polite">
+        {directory.chapters.length} published listings
+      </p>
+      <CardGrid min="280px" cols={3} gap="var(--space-5)">
+        {chapters.map((chapter) => (
+          <article
+            class="chapter-result"
+            data-search={[
+              chapter.name,
+              chapter.university,
+              chapter.city,
+              chapter.state,
+              chapter.region,
+            ].join(" ")}
+            data-state={chapter.state}
+            data-type={chapter.type}
+            data-region={chapter.region}
+          >
+            <p class="chapter-result__type">
+              {chapter.type === "alumnae" ? "Alumnae" : "Undergraduate"} &middot; {chapter.region}{" "}
+              Region
             </p>
-          </div>
-
-          <div class="map-copy">
-            <span class="map-pin">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 22s7-6.1 7-13A7 7 0 1 0 5 9c0 6.9 7 13 7 13Z"></path>
-                <circle cx="12" cy="9" r="2.4"></circle>
-              </svg>
-            </span>
-            <strong>Interactive Chapter Map</strong>
-            <p>
-              This area is ready for a chapter dataset and mapping service when you connect one.
+            <h3>{chapter.name}</h3>
+            <p class="chapter-result__location">
+              {[chapter.city, chapter.state].filter(Boolean).join(", ")}
             </p>
-          </div>
-
-          <div class="map-legend">
-            <span>
-              <i class="legend-dot legend-dot--alumnae"></i> Alumnae
-            </span>
-            <span>
-              <i class="legend-dot legend-dot--undergraduate"></i> Undergraduate
-            </span>
-          </div>
-        </div>
-
-        <div class="results-panel">
-          <p class="directory-label">Chapter Results</p>
-          <div class="empty-state" id="empty-state">
-            <span class="empty-sigma" aria-hidden="true">
-              &Sigma;
-            </span>
-            <h3>Search by location or university.</h3>
-            <p>
-              Matching chapter results will populate here after the national dataset is connected.
-            </p>
-          </div>
-        </div>
+            {chapter.university && <p class="chapter-result__university">{chapter.university}</p>}
+            <a
+              href={
+                chapter.source.includes("wikipedia.org")
+                  ? regions.find((region) => region.name === chapter.region)?.href
+                  : chapter.source
+              }
+              target="_blank"
+              rel="noopener"
+            >
+              {chapter.source.includes("google.com/maps")
+                ? "View chapter map"
+                : "View regional directory"}
+              &nearr;
+              <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
+            </a>
+          </article>
+        ))}
+      </CardGrid>
+      <div id="empty-state" class="empty-state" hidden>
+        <h3>No listings found in this collection.</h3>
+        <p>
+          A missing result does not mean a chapter is unavailable. This collection has partial
+          coverage across five regions. Explore the official regional directories for additional
+          chapters and current information.
+        </p>
+        <a href="#regional-directories">Browse regional directories &darr;</a>
       </div>
+      <button id="show-more" class="btn btn--outline" type="button" hidden>
+        Show more chapters
+      </button>
+      <noscript>
+        <p>
+          Use your browser's Find feature to search these listings, or browse the official regional
+          directories.
+        </p>
+      </noscript>
     </div>
   </section>
 
@@ -177,12 +203,12 @@ const regions = [
     <span class="sigma-line"></span>
   </div>
 
-  <section class="regions-section">
+  <section class="regions-section" id="regional-directories">
     <div class="container regions-heading">
       <span class="heading-sigma" aria-hidden="true">
         &Sigma;
       </span>
-      <p class="eyebrow">Supplemental &bull; Five Regions</p>
+      <p class="eyebrow">Official Directories &bull; Five Regions</p>
       <h2>
         Or Browse Sigma Gamma Rho <span>by Region.</span>
       </h2>
@@ -196,7 +222,12 @@ const regions = [
       {regions.map((r) => (
         <article class="region-card">
           <div class="region-art">
-            <img src={withBase(r.img)} alt={`Sigma Gamma Rho ${r.name} Region logo`} loading="lazy" decoding="async" />
+            <img
+              src={withBase(r.img)}
+              alt={`Sigma Gamma Rho ${r.name} Region logo`}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div class="region-copy">
             <p class="region-kicker">{r.name} Region</p>
@@ -236,16 +267,21 @@ const regions = [
   .locator-hero {
     position: relative;
     overflow: hidden;
-    color: #fff;
-    background: linear-gradient(200deg, #17357f 0%, var(--royal-mid) 45%, #07142e 100%);
+    color: var(--white);
+    background: linear-gradient(
+      200deg,
+      var(--royal-dark) 0%,
+      var(--royal-mid) 45%,
+      var(--navy) 100%
+    );
   }
   .locator-hero__grid {
     position: absolute;
     inset: 0;
     opacity: 0.06;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+      linear-gradient(var(--line-dark) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
     background-size: 68px 68px;
   }
   .hero-inner {
@@ -257,7 +293,7 @@ const regions = [
   .hero-inner__title {
     max-width: 780px;
     margin: 0;
-    color: #fff;
+    color: var(--white);
     font-family: var(--font-head);
     font-weight: 400;
     font-size: clamp(2.6rem, 6vw, 4.5rem);
@@ -273,7 +309,7 @@ const regions = [
   .hero-lead {
     max-width: 42rem;
     margin: 0;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--text-on-dark-lead);
     font-size: var(--text-lg);
     line-height: 1.62;
   }
@@ -282,7 +318,8 @@ const regions = [
     right: -0.5rem;
     bottom: -2.5rem;
     z-index: 1;
-    color: rgba(255, 255, 255, 0.03);
+    color: var(--line-dark);
+    opacity: 0.2;
     font-size: clamp(6rem, 15vw, 13rem);
     font-weight: 700;
     letter-spacing: -0.05em;
@@ -336,248 +373,172 @@ const regions = [
     border: 1px solid var(--royal);
   }
 
-  /* ---- directory section ---- */
   .directory-section {
     background: var(--tint);
   }
   .directory-shell {
-    padding-block: clamp(3.5rem, 6vw, 5.5rem);
-    display: grid;
-    grid-template-columns: 0.75fr 1.25fr;
-    gap: var(--space-16);
-    align-items: start;
+    padding-block: var(--section-y);
+  }
+  .directory-heading {
+    max-width: 48rem;
   }
   .directory-heading h2 {
-    margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
-  }
-  .directory-heading h2 span {
-    color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+    margin: var(--space-2) 0 var(--space-4);
+    font-size: var(--text-h2);
+    font-family: var(--font-editorial);
   }
   .directory-heading > p:not(.eyebrow) {
     color: var(--muted);
-    margin-top: var(--space-4);
   }
-  .filter-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-6);
-  }
-  .filter {
-    min-height: 37px;
-    padding: 0 0.9rem;
-    border: 1px solid var(--line);
-    color: var(--royal);
-    background: transparent;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: var(--radius);
-  }
-  .filter.is-active,
-  .filter:hover {
-    color: #fff;
-    background: var(--royal);
-    border-color: var(--royal);
-  }
-  .directory-display {
+  .locator-search {
+    margin-top: var(--space-8);
     display: grid;
-    grid-template-columns: 1.7fr 1fr;
-    min-height: 32rem;
+    grid-template-columns: 2fr 1fr auto;
+    gap: var(--space-4);
+    align-items: end;
   }
-  .map-panel {
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-    background:
-      linear-gradient(rgba(32, 65, 165, 0.88), rgba(7, 20, 46, 0.91)),
-      linear-gradient(135deg, #2041a5, #07142e);
-    min-height: 32rem;
+  .search-control {
+    min-width: 0;
   }
-  .map-grid {
-    position: absolute;
-    inset: 0;
-    opacity: 0.13;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
-    background-size: 42px 42px;
-  }
-  .map-search {
-    position: relative;
-    z-index: 4;
-    width: min(360px, calc(100% - 2rem));
-    margin: 1.6rem 0 0 1.6rem;
-    padding: 1.4rem 1.4rem 1.1rem;
-    border-top: 2px solid var(--gold);
-    background: rgba(255, 255, 255, 0.97);
-    color: var(--ink);
-    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.28);
-  }
-  .search-field {
-    min-height: 58px;
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: var(--space-3);
-    align-items: center;
-    padding: 0 0.9rem;
-    border: 1px solid var(--line);
-    background: #fff;
-  }
-  .search-field svg {
-    width: 20px;
-    fill: none;
-    stroke: var(--gold);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .search-field input {
-    width: 100%;
-    border: 0;
-    outline: 0;
+  .search-control label {
+    display: block;
+    margin-bottom: var(--space-2);
     color: var(--navy);
-    background: transparent;
-    font: inherit;
+    font-weight: 700;
     font-size: var(--text-sm);
   }
-  .search-button {
+  .search-control input,
+  .search-control select {
     width: 100%;
-    min-height: 48px;
-    margin-top: var(--space-3);
+    min-height: 52px;
+    padding: var(--space-3);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    font: inherit;
+    background: var(--white);
+    color: var(--navy);
+  }
+  .search-button {
+    min-height: 52px;
+    padding-inline: var(--space-6);
     border: 0;
+    border-radius: var(--radius);
     color: var(--navy);
     background: var(--gold);
-    font-size: var(--text-xs);
+    font: inherit;
+    font-size: var(--text-sm);
     font-weight: 700;
     cursor: pointer;
   }
   .search-button:hover {
     background: var(--royal);
-    color: #fff;
+    color: var(--white);
   }
-  .search-note {
-    min-height: 18px;
-    margin: 0.8rem 0 0;
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    line-height: 1.55;
-  }
-
-  .map-copy {
-    position: relative;
-    z-index: 2;
-    padding: 1.5rem 2.5rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 18rem;
-  }
-  .map-pin {
-    width: 3.6rem;
-    height: 3.6rem;
-    margin-bottom: var(--space-5);
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(223, 177, 54, 0.65);
-    border-radius: 50%;
-    color: var(--accent-text);
-  }
-  .map-pin svg {
-    width: 27px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .map-copy strong {
-    color: #fff;
-    font-family: var(--font-head);
-    font-size: var(--text-lg);
-  }
-  .map-copy p {
-    max-width: 22rem;
-    margin: var(--space-3) 0 0;
-    color: rgba(255, 255, 255, 0.62);
-    font-size: var(--text-sm);
-    line-height: 1.7;
-  }
-  .map-legend {
-    position: absolute;
-    left: 1.75rem;
-    bottom: 1.5rem;
-    z-index: 3;
+  .directory-toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4);
-    color: rgba(255, 255, 255, 0.65);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .map-legend span {
-    display: flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
   }
-  .legend-dot {
-    width: 9px;
-    height: 9px;
-    display: inline-block;
-    border-radius: 50%;
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
   }
-  .legend-dot--alumnae {
-    background: var(--gold);
-  }
-  .legend-dot--undergraduate {
-    background: #fff;
-  }
-
-  .results-panel {
-    position: relative;
-    min-height: 32rem;
-    padding: var(--space-8);
-    background: #fff;
-  }
-  .directory-label {
-    color: var(--accent-text);
-    font-size: var(--text-xs);
+  .filter {
+    min-height: 44px;
+    padding-inline: var(--space-4);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--royal);
+    background: var(--white);
+    font: inherit;
+    font-size: var(--text-sm);
     font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin: 0;
+    cursor: pointer;
   }
-  .empty-state {
-    min-height: 25rem;
+  .filter.is-active,
+  .filter:hover {
+    color: var(--white);
+    background: var(--royal);
+    border-color: var(--royal);
+  }
+  .clear-search {
+    border: 0;
+    padding: var(--space-3);
+    color: var(--royal);
+    background: transparent;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .search-note {
+    color: var(--muted);
+    margin-block: var(--space-6);
+    font-size: var(--text-sm);
+  }
+  .chapter-result {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    padding: var(--space-6);
+    border-top: 3px solid var(--gold);
+    background: var(--white);
+    min-width: 0;
   }
-  .empty-sigma {
-    margin-bottom: var(--space-4);
-    color: rgba(32, 65, 165, 0.15);
-    font-size: 4rem;
-    line-height: 1;
+  .chapter-result__type {
+    margin: 0 0 var(--space-3);
+    color: var(--royal);
+    font-size: var(--text-xs);
+    font-weight: 700;
   }
-  .empty-state h3 {
-    max-width: 19rem;
+  .chapter-result h3 {
+    margin: 0 0 var(--space-3);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.4;
+  }
+  .chapter-result__location {
     margin: 0;
-    font-size: var(--text-h3);
+    font-weight: 600;
   }
-  .empty-state p {
-    max-width: 23rem;
-    margin: var(--space-3) 0 0;
+  .chapter-result__university {
+    margin-top: var(--space-2);
     color: var(--muted);
     font-size: var(--text-sm);
-    line-height: 1.7;
+  }
+  .chapter-result a {
+    margin-top: auto;
+    padding-top: var(--space-6);
+    color: var(--royal);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  .empty-state {
+    padding: var(--space-8);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+  .empty-state h3 {
+    font-size: var(--text-lg);
+  }
+  .empty-state p {
+    max-width: 45rem;
+    color: var(--muted);
+  }
+  #show-more {
+    margin-top: var(--space-8);
+  }
+  [hidden] {
+    display: none !important;
+  }
+  @media (max-width: 768px) {
+    .locator-search {
+      margin-top: var(--space-8);
+      grid-template-columns: 1fr;
+    }
   }
 
   /* ---- regions ---- */
@@ -718,10 +679,10 @@ const regions = [
 
   /* ---- membership bridge ---- */
   .membership-bridge {
-    color: #fff;
+    color: var(--white);
     background:
-      radial-gradient(circle at 82% 25%, rgba(69, 103, 198, 0.24), transparent 24%),
-      linear-gradient(135deg, #07142e, var(--royal-mid));
+      radial-gradient(circle at 82% 25%, var(--hero-glow), transparent 24%),
+      linear-gradient(135deg, var(--navy), var(--royal-mid));
     border-top: 3px solid var(--gold);
   }
   .membership-bridge__inner {
@@ -733,7 +694,7 @@ const regions = [
   }
   .membership-bridge h2 {
     max-width: 48rem;
-    color: #fff;
+    color: var(--white);
     margin: var(--space-2) 0 0;
     font-size: var(--text-h3);
   }
@@ -747,7 +708,7 @@ const regions = [
   .membership-bridge p:not(.eyebrow) {
     max-width: 45rem;
     margin: var(--space-4) 0 0;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--text-on-dark-soft);
   }
   .eyebrow--light {
     color: var(--gold);
@@ -765,19 +726,10 @@ const regions = [
   }
   .gold-button:hover {
     background: var(--royal);
-    color: #fff;
+    color: var(--white);
   }
 
   @media (max-width: 900px) {
-    .directory-shell {
-      grid-template-columns: 1fr;
-    }
-    .directory-heading {
-      position: static;
-    }
-    .directory-display {
-      grid-template-columns: 1fr;
-    }
     .region-card {
       flex-basis: calc((100% - var(--rg-gap)) / 2);
     }
@@ -794,27 +746,107 @@ const regions = [
 </style>
 
 <script>
-  const form = document.getElementById("chapter-search-form");
-  const input = document.getElementById("chapter-search") as HTMLInputElement | null;
-  const message = document.getElementById("search-message");
-  const filters = document.querySelectorAll(".filter");
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!input || !message) return;
+  import { matchesChapter } from "../../lib/chapter-search";
+  const form = document.querySelector<HTMLFormElement>("#chapter-search-form");
+  const input = document.querySelector<HTMLInputElement>("#chapter-search");
+  const region = document.querySelector<HTMLSelectElement>("#chapter-region");
+  const message = document.querySelector<HTMLElement>("#search-message");
+  const empty = document.querySelector<HTMLElement>("#empty-state");
+  const more = document.querySelector<HTMLButtonElement>("#show-more");
+  const clear = document.querySelector<HTMLButtonElement>("#clear-search");
+  const filters = document.querySelectorAll<HTMLButtonElement>(".filter");
+  const cards = Array.from(document.querySelectorAll<HTMLElement>(".chapter-result"));
+  let type = "all";
+  let limit = 12;
+  function render(updateUrl = true) {
+    if (!input || !region || !message || !empty || !more || !clear) return;
     const query = input.value.trim();
-    if (!query) {
-      message.textContent = "Enter a city, state, ZIP code, or university to search.";
-      input.focus();
-      return;
-    }
-    message.textContent = `Directory search is ready for "${query}". Connect the national chapter dataset to return live chapter results.`;
-  });
-
-  filters.forEach((filter) => {
-    filter.addEventListener("click", () => {
-      filters.forEach((b) => b.classList.remove("is-active"));
-      filter.classList.add("is-active");
+    const matches = cards.filter((card) =>
+      matchesChapter(
+        {
+          search: card.dataset.search ?? "",
+          state: card.dataset.state ?? "",
+          type: card.dataset.type ?? "",
+          region: card.dataset.region ?? "",
+        },
+        query,
+        type,
+        region.value
+      )
+    );
+    cards.forEach((card) => {
+      card.hidden = true;
     });
+    matches.slice(0, limit).forEach((card) => {
+      card.hidden = false;
+    });
+    filters.forEach((button) => {
+      const active = button.dataset.filter === type;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    empty.hidden = matches.length > 0;
+    more.hidden = matches.length <= limit;
+    clear.hidden = !query && type === "all" && region.value === "all";
+    message.textContent = /^\d{5}(?:-\d{4})?$/.test(query)
+      ? "ZIP search is unavailable. Enter a city or state instead."
+      : `${matches.length} ${matches.length === 1 ? "listing" : "listings"} found${query ? ` for "${query}"` : ""}. Showing ${Math.min(limit, matches.length)}.`;
+    if (updateUrl) {
+      const url = new URL(location.href);
+      for (const [key, value] of [
+        ["q", query],
+        ["type", type],
+        ["region", region.value],
+      ]) {
+        if (value && value !== "all") url.searchParams.set(key, value);
+        else url.searchParams.delete(key);
+      }
+      history.pushState(null, "", url);
+    }
+  }
+  function restore() {
+    if (!input || !region) return;
+    const params = new URLSearchParams(location.search);
+    input.value = params.get("q") ?? "";
+    const selected = params.get("region") ?? "all";
+    region.value = Array.from(region.options).some((option) => option.value === selected)
+      ? selected
+      : "all";
+    type = ["alumnae", "undergraduate"].includes(params.get("type") ?? "")
+      ? params.get("type")!
+      : "all";
+    limit = 12;
+    render(false);
+  }
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    limit = 12;
+    render();
   });
+  region?.addEventListener("change", () => {
+    limit = 12;
+    render();
+  });
+  filters.forEach((button) =>
+    button.addEventListener("click", () => {
+      type = button.dataset.filter ?? "all";
+      limit = 12;
+      render();
+    })
+  );
+  more?.addEventListener("click", () => {
+    limit += 12;
+    render(false);
+  });
+  clear?.addEventListener("click", () => {
+    if (!input || !region) return;
+    input.value = "";
+    region.value = "all";
+    type = "all";
+    limit = 12;
+    render();
+    input.focus();
+  });
+  window.addEventListener("popstate", restore);
+  restore();
 </script>

@@ -127,14 +127,25 @@ const partners = [
 ];
 
 /** Two tiers, sorted from the one list so a new partner only needs a line. */
-const CORPORATE = ["Amazon", "Chase", "Herff Jones", "Kasper", "Macy's", "Western Governors University"];
+const CORPORATE = [
+  "Amazon",
+  "Chase",
+  "Herff Jones",
+  "Kasper",
+  "Macy's",
+  "Western Governors University",
+];
 const corporate = partners.filter((x) => CORPORATE.includes(x.name));
 const community = partners.filter((x) => !CORPORATE.includes(x.name));
 
 const allied = [
   { name: "National Education Fund", logo: "/images/foundations/nef.png", id: "nef" },
   { name: "SPEAR Foundation", logo: "/images/foundations/spear.png", id: "spear" },
-  { name: "Seven Pearls Foundation", logo: "/images/foundations/seven-pearls.png", id: "seven-pearls" },
+  {
+    name: "Seven Pearls Foundation",
+    logo: "/images/foundations/seven-pearls.png",
+    id: "seven-pearls",
+  },
 ];
 
 const collabs = [
@@ -189,12 +200,7 @@ const collabs = [
         <a class="btn" href="#partner-grid">
           Explore Partnerships
         </a>
-        <a
-          class="btn btn--outline on-dark"
-          href={FORM_URL}
-          target="_blank"
-          rel="noopener"
-        >
+        <a class="btn btn--outline on-dark" href={FORM_URL} target="_blank" rel="noopener">
           Partnership Opportunities
         </a>
       </div>
@@ -232,7 +238,12 @@ const collabs = [
         {collabs.map((c) => (
           <li class="cp-alliance">
             <div class="cp-logo cp-logo--lg">
-              <img src={withBase(c.logo)} alt={`${c.partner} logo`} loading="lazy" decoding="async" />
+              <img
+                src={withBase(c.logo)}
+                alt={`${c.partner} logo`}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
             <span class="cp-badge">{c.kicker}</span>
             <h3>{c.title}</h3>
@@ -269,7 +280,12 @@ const collabs = [
             {tier.list.map((x) => (
               <li class="partner-card">
                 <div class="cp-logo">
-                  <img src={withBase(x.logo)} alt={`${x.name} logo`} loading="lazy" decoding="async" />
+                  <img
+                    src={withBase(x.logo)}
+                    alt={`${x.name} logo`}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <p class="partner-card__type">{x.type}</p>
                 <h4>{x.name}</h4>
@@ -318,11 +334,12 @@ const collabs = [
         <a class="btn" href={FORM_URL} target="_blank" rel="noopener">
           Submit a Partnership Inquiry <span aria-hidden="true">&#8599;</span>
         </a>
-        <a class="btn btn--outline" href="mailto:help@sgrho1922.org">Email help@sgrho1922.org</a>
+        <a class="btn btn--outline" href="mailto:help@sgrho1922.org">
+          Email help@sgrho1922.org
+        </a>
       </div>
     </div>
   </section>
-
 </Base>
 
 <style>
@@ -671,5 +688,4 @@ const collabs = [
     flex-wrap: wrap;
     gap: var(--space-3);
   }
-</style>
 </style>

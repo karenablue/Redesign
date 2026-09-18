@@ -92,46 +92,46 @@ const hasActions = Astro.slots.has("default");
   )}
 
   {!bare && (
-  <div class="container hero__content">
-    <div class="hero__text">
-      {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
-      <Heading class="hero__title">
-        <Fragment set:html={reg(title)} />
-        {highlight && (
-          <>
-            {" "}
-            <span set:html={reg(highlight)} />
-          </>
+    <div class="container hero__content">
+      <div class="hero__text">
+        {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
+        <Heading class="hero__title">
+          <Fragment set:html={reg(title)} />
+          {highlight && (
+            <>
+              {" "}
+              <span set:html={reg(highlight)} />
+            </>
+          )}
+        </Heading>
+        {copy && <p class="hero__copy">{copy}</p>}
+        {hasActions && (
+          <div class="hero__actions">
+            <slot />
+          </div>
         )}
-      </Heading>
-      {copy && <p class="hero__copy">{copy}</p>}
-      {hasActions && (
-        <div class="hero__actions">
-          <slot />
-        </div>
+      </div>
+
+      {variant === "split" && (video || image) && (
+        <figure class="hero__figure">
+          {video ? (
+            <video
+              muted
+              loop
+              playsinline
+              preload="none"
+              poster={image ? withBase(image) : undefined}
+              aria-hidden="true"
+              data-hero-video
+            >
+              <source src={withBase(video)} type="video/mp4" />
+            </video>
+          ) : (
+            <img src={withBase(image)} alt={imageAlt} />
+          )}
+        </figure>
       )}
     </div>
-
-    {variant === "split" && (video || image) && (
-      <figure class="hero__figure">
-        {video ? (
-          <video
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster={image ? withBase(image) : undefined}
-            aria-hidden="true"
-            data-hero-video
-          >
-            <source src={withBase(video)} type="video/mp4" />
-          </video>
-        ) : (
-          <img src={withBase(image)} alt={imageAlt} />
-        )}
-      </figure>
-    )}
-  </div>
   )}
 
   {/* WCAG 2.2.2 (Pause, Stop, Hide): motion lasting more than five seconds
@@ -482,7 +482,11 @@ const hasActions = Astro.slots.has("default");
      */
     function worthStreaming() {
       if (reduce.matches) return false;
-      const conn = (navigator as any).connection;
+      const conn = (
+        navigator as Navigator & {
+          connection?: { saveData?: boolean; effectiveType?: string };
+        }
+      ).connection;
       if (conn?.saveData) return false;
       if (conn?.effectiveType && /2g$/.test(conn.effectiveType)) return false;
       if (window.matchMedia("(max-width: 900px)").matches) return false;
