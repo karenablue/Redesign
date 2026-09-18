@@ -1631,6 +1631,27 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     gap: var(--space-3);
     margin-top: var(--space-8);
   }
+  @media (max-width: 600px) {
+    .lede {
+      padding-block: var(--space-8) 0;
+    }
+    .lede__title {
+      font-size: clamp(2.35rem, 11vw, 4rem);
+      line-height: 1;
+    }
+    .lede__copy {
+      margin-top: var(--space-4);
+      font-size: var(--text-base);
+      line-height: 1.65;
+    }
+    .lede__actions {
+      margin-top: var(--space-6);
+    }
+    .lede__actions .btn {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
 
   /* The reach ribbon sits on the navy band as a white card, overlapping its
      bottom edge rather than the footage. */
