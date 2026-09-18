@@ -6,7 +6,7 @@
  * No names are published here. The register itself is maintained by
  * International Corporate Headquarters in the member portal; this page only
  * explains the categories and links to it. Wording of the advisory and the
- * three definitions should be confirmed by HQ (and counsel) before launch.
+ * five definitions should be confirmed by HQ (and counsel) before launch.
  */
 import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
@@ -14,38 +14,176 @@ import { withBase } from "../../lib/url.js";
 const REGISTER_URL =
   "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx";
 
-const categories = [
+type AccountabilityCategory =
+  | "member-suspensions"
+  | "chapter-suspensions"
+  | "expulsions"
+  | "charter-revocations"
+  | "denouncements";
+
+type AccountabilityRecord = {
+  name: string;
+  chapter: string;
+  region: string;
+  date: string;
+  status: string;
+  state?: string;
+  location?: string;
+  firstName?: string;
+  lastName?: string;
+  endDate?: string;
+  fine?: string;
+  chapterName?: string;
+  lastAffiliatedChapter?: string;
+  university?: string;
+};
+
+type AccountabilityCell = {
+  value: string;
+  status?: string;
+};
+
+type AccountabilityCategoryConfig = {
+  key: AccountabilityCategory;
+  title: string;
+  body: string;
+  action: string;
+  columns: string[];
+  records: AccountabilityRecord[];
+};
+
+const categories: AccountabilityCategoryConfig[] = [
   {
+    key: "member-suspensions",
     title: "Member Suspensions",
     body: "Suspension temporarily disqualifies an individual from participating in any Sorority activities or representing the organization in any capacity until restored to good standing by the Regional Syntaktes, with the approval of the International Grand Basileus.",
-    action: "View Suspensions",
+    action: "View Member Suspensions",
+    columns: [
+      "Region",
+      "State",
+      "Name of Last Affiliated Chapter",
+      "Location of Last Affiliated Chapter",
+      "First Name",
+      "Last Name",
+      "End Date",
+      "Fine",
+    ],
+    records: [],
   },
   {
-    title: "Expulsions & Revocations",
-    body: "Expulsion permanently terminates an individual's membership and revokes all rights, privileges, and regalia usage. The Sorority maintains a record of expelled individuals and revoked charters.",
+    key: "chapter-suspensions",
+    title: "Chapter Suspensions",
+    body: "Chapter suspension temporarily restricts a chapter's operations, participation, and public representation until the chapter is restored to good standing by the appropriate governing authority.",
+    action: "View Chapter Suspensions",
+    columns: ["Region", "State", "Chapter Name", "Location", "End Date", "Fine"],
+    records: [],
+  },
+  {
+    key: "expulsions",
+    title: "Expulsions",
+    body: "Expulsion permanently terminates an individual's membership and revokes all rights, privileges, and regalia usage.",
     action: "View Expulsions",
+    columns: [
+      "Region",
+      "Last Affiliated Chapter",
+      "Last Affiliated Chapter Location",
+      "First Name",
+      "Last Name",
+    ],
+    records: [],
   },
   {
+    key: "charter-revocations",
+    title: "Charter Revocation",
+    body: "Charter revocation permanently removes a chapter's charter and authorization to operate as a chapter of Sigma Gamma Rho Sorority, Inc.",
+    action: "View Charter Revocations",
+    columns: ["Region", "Chapter", "University"],
+    records: [],
+  },
+  {
+    key: "denouncements",
     title: "Voluntary Denouncements",
     body: "Voluntary denouncement permanently severs an individual from the sisterhood. Denounced individuals hold no membership rights and may not use the Sorority's registered trademarks or symbols.",
     action: "View Denouncements",
+    columns: ["Member", "Chapter", "Region", "Date", "Status"],
+    records: [],
   },
 ];
+
+const formatDate = (date: string) =>
+  new Date(`${date}T12:00:00`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+const cellsForRecord = (
+  record: AccountabilityRecord,
+  category: AccountabilityCategory
+): AccountabilityCell[] => {
+  switch (category) {
+    case "member-suspensions":
+      return [
+        { value: record.region },
+        { value: record.state ?? "-" },
+        { value: record.chapter },
+        { value: record.location ?? "-" },
+        { value: record.firstName ?? "-" },
+        { value: record.lastName ?? "-" },
+        { value: record.endDate ? formatDate(record.endDate) : "-" },
+        { value: record.fine ?? "-" },
+      ];
+    case "chapter-suspensions":
+      return [
+        { value: record.region },
+        { value: record.state ?? "-" },
+        { value: record.chapterName ?? record.chapter },
+        { value: record.location ?? "-" },
+        { value: record.endDate ? formatDate(record.endDate) : "-" },
+        { value: record.fine ?? "-" },
+      ];
+    case "expulsions":
+      return [
+        { value: record.region },
+        { value: record.lastAffiliatedChapter ?? record.chapter },
+        { value: record.location ?? "-" },
+        { value: record.firstName ?? "-" },
+        { value: record.lastName ?? "-" },
+      ];
+    case "charter-revocations":
+      return [
+        { value: record.region },
+        { value: record.chapterName ?? record.chapter },
+        { value: record.university ?? "-" },
+      ];
+    case "denouncements":
+      return [
+        { value: record.name },
+        { value: record.chapter },
+        { value: record.region },
+        { value: formatDate(record.date) },
+        { value: record.status, status: record.status },
+      ];
+  }
+};
 ---
 
 <Base
   title="Membership Accountability"
   activeTop="Membership & Intake"
   description="How Sigma Gamma Rho Sorority, Inc. handles suspension, expulsion and denouncement, and how to verify a member's or chapter's standing."
+  bodyClass="page-accountability"
 >
-  <section class="ma-hero">
-    <div class="container">
+  <section class="ma-hero on-dark">
+    <div class="ma-hero__image"></div>
+    <div class="ma-hero__overlay"></div>
+    <div class="container ma-hero__content">
       <p class="breadcrumb">
         <a href={withBase("/")}>Home</a> <span>/</span>{" "}
         <a href={withBase("/membership/become-a-member/")}>Membership</a> <span>/</span>{" "}
         <span>Membership Accountability</span>
       </p>
-      <p class="eyebrow">Membership</p>
+      <p class="eyebrow">Membership Accountability</p>
       <h1>
         Membership
         <br />
@@ -76,39 +214,196 @@ const categories = [
           <li class="ma-card">
             <h2>{c.title}</h2>
             <p>{c.body}</p>
-            <a class="btn btn--outline" href={REGISTER_URL} target="_blank" rel="noopener">
-              {c.action} <span aria-hidden="true">&#8599;</span>
+            <a class="btn btn--outline" href={`#category-${c.key}`} data-category={c.key}>
+              {c.action}
             </a>
           </li>
         ))}
       </ul>
       <p class="ma-note">
-        The official register is maintained by International Corporate Headquarters in the member
-        portal.
+        Each category has its own official list below so members, chapters, and the public can
+        distinguish between member suspensions, chapter suspensions, expulsions, charter
+        revocations, and denouncements without confusion. For the official HQ listing, visit the
+        <a href={REGISTER_URL} target="_blank" rel="noopener">
+          member portal register
+        </a>
+        .
       </p>
+
+      <div class="ma-registers">
+        {categories.map((category) => (
+          <section
+            class="ma-register"
+            id={`category-${category.key}`}
+            aria-labelledby={`category-${category.key}-title`}
+          >
+            <div class="ma-register__header">
+              <div>
+                <p class="eyebrow">Official Register</p>
+                <h2 id={`category-${category.key}-title`}>{category.title}</h2>
+              </div>
+            </div>
+
+            <form class="ma-register__search" role="search">
+              <label for={`search-${category.key}`}>Filter {category.title}</label>
+              <div class="ma-search__controls">
+                <input
+                  id={`search-${category.key}`}
+                  name={`search-${category.key}`}
+                  type="search"
+                  placeholder="Search this table"
+                  autocomplete="off"
+                  data-register-search
+                />
+                <button class="btn btn--outline" type="reset">
+                  Clear
+                </button>
+              </div>
+              <p class="ma-search__status" aria-live="polite">
+                Showing all records.
+              </p>
+            </form>
+
+            <div class="ma-register__table-wrap">
+              <table class="ma-register__table">
+                <thead>
+                  <tr>
+                    {category.columns.map((column) => (
+                      <th scope="col">{column}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {category.records.length === 0 ? (
+                    <tr>
+                      <td class="ma-register__empty" colspan={category.columns.length}>
+                        No public records are published here. Visit the member portal register for
+                        current official information.
+                      </td>
+                    </tr>
+                  ) : (
+                    category.records.map((record) => (
+                      <tr
+                        class={category.key.includes("suspensions") ? "is-suspension-row" : ""}
+                        data-record-row
+                      >
+                        {cellsForRecord(record, category.key).map((cell) => (
+                          <td>
+                            {cell.status ? (
+                              <span
+                                class={`status-badge status-badge--${cell.status.toLowerCase().replace(/\s+/g, "-")}`}
+                              >
+                                {cell.status}
+                              </span>
+                            ) : (
+                              cell.value
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <p class="ma-register__note" data-register-count>
+              {category.records.length} record{category.records.length === 1 ? "" : "s"}
+            </p>
+          </section>
+        ))}
+      </div>
 
       <div class="ma-verify">
         <p>
           To verify the standing of any chapter or individual, contact International Corporate
           Headquarters at <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>.
         </p>
-        <a class="btn" href={withBase("/resources/anti-hazing-policy/")}>Read the Anti-Hazing Policy</a>
+        <a class="btn" href={withBase("/resources/anti-hazing-policy/")}>
+          Read the Anti-Hazing Policy
+        </a>
       </div>
     </div>
   </section>
 </Base>
 
+<script>
+  const registers = Array.from(document.querySelectorAll<HTMLElement>(".ma-register"));
+
+  registers.forEach((register) => {
+    const searchForm = register.querySelector<HTMLFormElement>(".ma-register__search");
+    const searchInput = register.querySelector<HTMLInputElement>("[data-register-search]");
+    const searchStatus = register.querySelector<HTMLElement>(".ma-search__status");
+
+    const filterRecords = () => {
+      if (!searchInput || !searchStatus) return;
+
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      const rows = Array.from(register.querySelectorAll<HTMLTableRowElement>("[data-record-row]"));
+      let matchCount = 0;
+
+      rows.forEach((row) => {
+        const matches = !query || row.textContent?.toLocaleLowerCase().includes(query);
+        row.hidden = !matches;
+        if (matches) matchCount += 1;
+      });
+
+      const count = register.querySelector<HTMLElement>("[data-register-count]");
+      if (count) {
+        count.textContent = `${matchCount} ${matchCount === 1 ? "record" : "records"}${query ? " matching" : ""}`;
+      }
+
+      searchStatus.textContent = query
+        ? `${matchCount} ${matchCount === 1 ? "record" : "records"} matching "${searchInput.value.trim()}".`
+        : "Showing all records.";
+    };
+
+    searchInput?.addEventListener("input", filterRecords);
+    searchForm?.addEventListener("reset", () => requestAnimationFrame(filterRecords));
+  });
+</script>
+
 <style>
   .ma-hero {
-    background: var(--cream);
-    padding-block: clamp(3rem, 6vw, 4rem);
+    position: relative;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    color: var(--white);
+    background: var(--navy);
+  }
+  .ma-hero__image,
+  .ma-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+  .ma-hero__image {
+    background-image: url("/images/sgr-alpha-charter.jpeg");
+    background-position: 66% 42%;
+    background-size: cover;
+    filter: grayscale(100%);
+  }
+  .ma-hero__overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(8, 22, 51, 0.98) 0%,
+      rgba(14, 37, 88, 0.93) 38%,
+      rgba(21, 52, 122, 0.62) 70%,
+      rgba(8, 22, 51, 0.4) 100%
+    );
+  }
+  .ma-hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(4rem, 9vw, 6rem);
   }
   .breadcrumb {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
     margin: 0 0 var(--space-5);
-    color: var(--muted-2);
+    color: rgba(255, 255, 255, 0.78);
     font-size: var(--text-xs);
     font-weight: 700;
   }
@@ -117,6 +412,19 @@ const categories = [
   }
   .ma-hero h1 {
     margin: var(--space-2) 0 0;
+    color: var(--white);
+    font-family: var(--font-label);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+  .ma-hero h1 span {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
   }
 
   .ma-main {
@@ -126,8 +434,8 @@ const categories = [
   .ma-notice {
     max-width: 52rem;
     padding: var(--space-6) var(--space-8);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    border-top: 1px solid var(--gold);
+    background: var(--cream);
   }
   .ma-notice h2 {
     margin: 0 0 var(--space-4);
@@ -159,10 +467,9 @@ const categories = [
   .ma-card {
     display: flex;
     flex-direction: column;
-    padding: var(--space-6);
-    border: 1px solid var(--line);
-    border-top: 2px solid var(--royal);
-    background: var(--white);
+    padding: var(--space-4) 0 0;
+    border-top: 1px solid var(--gold);
+    background: transparent;
   }
   .ma-card h2 {
     margin: 0 0 var(--space-3);
@@ -182,6 +489,141 @@ const categories = [
     align-self: flex-start;
   }
   .ma-note {
+    margin: var(--space-4) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .ma-registers {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-12);
+    min-width: 0;
+  }
+  .ma-register__search {
+    margin-bottom: var(--space-6);
+    padding: 0 0 var(--space-6);
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+  }
+  .ma-register__search label {
+    display: block;
+    margin-bottom: var(--space-3);
+    color: var(--navy);
+    font-size: var(--text-sm);
+    font-weight: 800;
+  }
+  .ma-search__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .ma-register__search input {
+    flex: 1 1 20rem;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    background: var(--white);
+    font: inherit;
+  }
+  .ma-register__search input:focus-visible {
+    outline: 3px solid rgba(38, 70, 158, 0.25);
+    outline-offset: 2px;
+    border-color: var(--royal);
+  }
+  .ma-search__status {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .ma-register {
+    min-width: 0;
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--gold);
+    background: var(--cream);
+  }
+  .ma-register__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+  .ma-register__header h2 {
+    margin: 0;
+    color: var(--navy);
+    font-size: clamp(var(--text-xl), 3vw, var(--text-h2));
+  }
+  .ma-register__table-wrap {
+    min-width: 0;
+    overflow-x: auto;
+  }
+  .ma-register__table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+  }
+  .ma-register__table th,
+  .ma-register__table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  .ma-register__table th {
+    color: var(--navy);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ma-register__table td {
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .ma-register__empty {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    text-align: center;
+  }
+  .ma-register__table tbody tr.is-suspension-row {
+    background: rgba(210, 149, 34, 0.06);
+    box-shadow: inset 3px 0 0 var(--gold);
+  }
+  .ma-register__table tbody tr.is-suspension-row td:nth-child(3) {
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .status-badge--suspended,
+  .status-badge--off-suspension {
+    color: var(--navy);
+    background: rgba(210, 149, 34, 0.18);
+    border: 1px solid rgba(210, 149, 34, 0.5);
+  }
+  .status-badge--expelled,
+  .status-badge--revoked,
+  .status-badge--denounced {
+    color: var(--white);
+    background: var(--royal);
+    border: 1px solid var(--royal);
+  }
+  .ma-register__note {
     margin: var(--space-4) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
@@ -208,6 +650,11 @@ const categories = [
   @media (max-width: 900px) {
     .ma-cards {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .ma-hero h1 {
+      font-size: clamp(2rem, 11vw, 4rem);
     }
   }
 </style>

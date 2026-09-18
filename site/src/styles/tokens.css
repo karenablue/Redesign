@@ -46,12 +46,25 @@
   --line: rgba(32, 65, 165, 0.12); /* hairline on light            */
   --line-dark: rgba(255, 255, 255, 0.14); /* hairline on dark             */
 
-  /* --- Type — four roles, see the header note + AGENTS.md §6 ------ */
+  /* Semantic treatments keep translucent brand colors centralized. */
+  --line-link: color-mix(in srgb, var(--royal) 25%, transparent);
+  --line-strong: color-mix(in srgb, var(--royal) 20%, transparent);
+  --line-gold: color-mix(in srgb, var(--gold) 40%, transparent);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.6);
+  --text-on-dark-soft: rgba(255, 255, 255, 0.85);
+  --text-on-dark-lead: rgba(255, 255, 255, 0.88);
+  --hero-glass: color-mix(in srgb, var(--navy) 45%, transparent);
+  --hero-glow: color-mix(in srgb, var(--gold) 12%, transparent);
+  --shadow-reach: 0 22px 50px color-mix(in srgb, var(--navy) 22%, transparent);
+  --container-home: 1400px;
+
+  /* --- Type — three roles, see the header note + AGENTS.md §6 ------ */
   --font-body: "Montserrat", system-ui, Arial, sans-serif;
   --font-head: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-label: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-display: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-editorial: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-greek: "Symbol", "Times New Roman", serif;
 
   /* px-ish scale matching the Make source */
   --text-xs: 0.6875rem; /* 11px  meta                */

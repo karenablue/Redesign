@@ -234,9 +234,10 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       const syncToBreakpoint = function (e) {
         if (e.matches) setOpen(false);
       };
-      if (desktopQuery.addEventListener) {
+      if (typeof desktopQuery.addEventListener === "function") {
         desktopQuery.addEventListener("change", syncToBreakpoint);
       } else {
+        // @ts-expect-error addListener is deprecated but still required for older browsers.
         desktopQuery.addListener(syncToBreakpoint);
       }
     }
