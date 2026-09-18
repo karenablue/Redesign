@@ -690,15 +690,22 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   }
   @media (max-width: 640px) {
     .masthead {
-      gap: var(--space-4);
+      min-height: 72px;
+      gap: var(--space-3);
+      padding-block: var(--space-2);
     }
     .brand__crest {
-      width: 60px;
-      height: 60px;
+      width: 48px;
+      height: 48px;
     }
     .brand__wordmark {
-      margin-left: 10px;
-      padding-left: 10px;
+      gap: 2px;
+      margin-left: 8px;
+      padding-left: 8px;
+    }
+    .brand__name {
+      font-size: clamp(0.95rem, 4.8vw, 1.25rem);
+      letter-spacing: 0.035em;
     }
     .brand__legal {
       font-size: 0.5625rem;
@@ -708,6 +715,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
        crowding a phone masthead; search and the hamburger stay. */
     .masthead__actions :global(.masthead__btn) {
       display: none;
+    }
+    .nav-bar__inner {
+      min-height: 44px;
     }
   }
 </style>
