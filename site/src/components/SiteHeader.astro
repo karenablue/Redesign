@@ -34,25 +34,56 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       />
       <span class="brand__wordmark">
         <span class="brand__name">Sigma Gamma Rho</span>
-        <span class="brand__legal">Sorority, Inc.<sup>&reg;</sup></span>
+        <span class="brand__legal">
+          Sorority, Inc.<sup>&reg;</sup>
+        </span>
       </span>
     </a>
 
     <div class="masthead__actions">
       <div class="header-search">
-        <button type="button" class="search-toggle" aria-label="Search the site" aria-expanded="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <button
+          type="button"
+          class="search-toggle"
+          aria-label="Search the site"
+          aria-expanded="false"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
             <circle cx="11" cy="11" r="7" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </button>
         <div class="search-panel" hidden>
           <div class="search-field">
-            <svg class="search-field__icon" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <svg
+              class="search-field__icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
               <circle cx="11" cy="11" r="7" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input type="search" class="search-input" placeholder="Search the site&hellip;" aria-label="Search the site" />
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search the site&hellip;"
+              aria-label="Search the site"
+            />
           </div>
           <div class="search-results" role="listbox" aria-label="Search results"></div>
         </div>
@@ -78,12 +109,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     <div class="header-wrap nav-bar__inner">
       {/* Below 1280px this is the whole ribbon: the sticky bar becomes the
           menu trigger rather than an empty strip. */}
-      <button
-        type="button"
-        class="nav-toggle"
-        aria-expanded="false"
-        aria-controls="nav-panel"
-      >
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-panel">
         <span class="nav-toggle__bars" aria-hidden="true">
           <span class="nav-toggle__bar"></span>
           <span class="nav-toggle__bar"></span>
@@ -510,7 +536,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
 
   /* ---------- search ---------- */
   .header-search {
-    position: relative;
+    position: static;
   }
   .search-toggle {
     width: 36px;
@@ -533,7 +559,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   .search-panel {
     position: absolute;
     right: 0;
-    top: calc(100% + 10px);
+    top: 158px;
     width: min(360px, calc(100vw - 2rem));
     padding: var(--space-3);
     background: var(--white);
@@ -677,6 +703,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       background: transparent;
       color: #fff;
     }
+    .search-panel {
+      top: 136px;
+    }
   }
 
   @media (max-width: 860px) {
@@ -718,6 +747,10 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
     }
     .nav-bar__inner {
       min-height: 44px;
+    }
+    .search-panel {
+      top: 116px;
+      right: 1rem;
     }
   }
 </style>
