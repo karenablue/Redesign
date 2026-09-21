@@ -76,7 +76,7 @@ const affiliates = [
         Our affiliate structure extends development, service, mentorship, and community connection
         beyond initiated membership—meeting girls and women at distinct stages of life.
       </p>
-      <nav class="aff-hero__nav">
+      <nav class="aff-hero__nav" aria-label="Affiliate groups">
         {affiliates.map((a) => (
           <a href={`#${a.key}`}>{a.short}</a>
         ))}

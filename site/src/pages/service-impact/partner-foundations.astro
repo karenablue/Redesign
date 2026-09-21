@@ -109,7 +109,7 @@ const foundations: Foundation[] = [
         Through education, research, advocacy, fiscal support, and strategic partnerships, Sigma
         Gamma Rho's partner foundations help transform community vision into sustained impact.
       </p>
-      <nav class="pf-jump">
+      <nav class="pf-jump" aria-label="Partner foundations">
         <a href="#nef">National Education Fund</a>
         <a href="#spear">SPEAR Foundation</a>
         <a href="#seven-pearls">Seven Pearls Foundation</a>
@@ -147,7 +147,14 @@ const foundations: Foundation[] = [
       {foundations.map((f) => (
         <li class="pf-card" id={f.id}>
           <div class="pf-emblem">
-            <img src={withBase(f.logo)} alt="" width="96" height="96" loading="lazy" decoding="async" />
+            <img
+              src={withBase(f.logo)}
+              alt=""
+              width="96"
+              height="96"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <h2>{f.name}</h2>
           <p class="pf-tag">{f.tag}</p>
