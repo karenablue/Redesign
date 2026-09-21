@@ -67,6 +67,23 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
           </span>
         </button>
         <div class="search-panel" id="site-search-panel" hidden>
+          <div class="search-panel__header">
+            <p class="search-panel__title">Search the site</p>
+            <button type="button" class="search-panel__close" aria-label="Close search">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M5 5l14 14M19 5L5 19" />
+              </svg>
+            </button>
+          </div>
           <div class="search-field">
             <svg
               class="search-field__icon"
@@ -85,11 +102,14 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
             <input
               type="search"
               class="search-input"
-              placeholder="Search the site&hellip;"
+              placeholder="Try membership, chapters, programs&hellip;"
               aria-label="Search the site"
             />
           </div>
-          <div class="search-results" role="listbox" aria-label="Search results"></div>
+          <p class="search-results__heading" hidden>
+            Matching pages
+          </p>
+          <div class="search-results" aria-label="Search results" aria-live="polite"></div>
         </div>
       </div>
       {headerActions.map((x) => (
@@ -158,9 +178,11 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   (function () {
     const toggle = document.querySelector(".search-toggle");
     const panel = document.querySelector(".search-panel");
+    const closeButton = document.querySelector(".search-panel__close");
     const input = document.querySelector(".search-input");
     const results = document.querySelector(".search-results");
-    if (toggle && panel && input && results) {
+    const resultsHeading = document.querySelector(".search-results__heading");
+    if (toggle && panel && closeButton && input && results && resultsHeading) {
       const open = function () {
         panel.hidden = false;
         toggle.setAttribute("aria-expanded", "true");
@@ -171,34 +193,45 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
         toggle.setAttribute("aria-expanded", "false");
         input.value = "";
         results.innerHTML = "";
+        resultsHeading.hidden = true;
       };
       toggle.addEventListener("click", function (e) {
         e.stopPropagation();
         if (panel.hidden) open();
         else close();
       });
+      closeButton.addEventListener("click", function () {
+        close();
+        toggle.focus();
+      });
       document.addEventListener("click", function (e) {
         if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle) close();
       });
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") close();
+        if (e.key === "Escape" && !panel.hidden) {
+          const restoreFocus = panel.contains(document.activeElement);
+          close();
+          if (restoreFocus) toggle.focus();
+        }
       });
       input.addEventListener("input", function () {
         const q = input.value.trim().toLowerCase();
         results.innerHTML = "";
+        resultsHeading.hidden = true;
         if (!q) return;
         const hits = PAGES.filter(function (p) {
           return p.t.toLowerCase().indexOf(q) !== -1;
         }).slice(0, 8);
         if (!hits.length) {
-          results.innerHTML = '<p class="search-results__empty">No results found</p>';
+          results.innerHTML =
+            '<p class="search-results__empty">No matching pages. Try another search.</p>';
           return;
         }
+        resultsHeading.hidden = false;
         hits.forEach(function (p) {
           const a = document.createElement("a");
           a.href = p.u;
           a.textContent = p.t;
-          a.setAttribute("role", "option");
           results.appendChild(a);
         });
       });
@@ -571,70 +604,125 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   }
   .search-panel {
     position: absolute;
-    right: 0;
-    top: 158px;
-    width: min(360px, calc(100vw - 2rem));
-    padding: var(--space-3);
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: 0 20px 44px rgba(8, 22, 51, 0.18);
+    right: max(var(--gutter), calc((100vw - var(--container)) / 2));
+    top: 100%;
+    width: min(440px, calc(100vw - (var(--gutter) * 2)));
+    padding: var(--space-5);
+    background: var(--bright-white);
+    border: 1px solid var(--line-strong);
+    border-top: 3px solid var(--gold);
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow-md);
     z-index: 60;
+  }
+  .search-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .search-panel__title {
+    margin: 0;
+    color: var(--royal);
+    font-family: var(--font-label);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .search-panel__close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: calc(var(--space-2) * -1);
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--royal);
+    cursor: pointer;
+  }
+  .search-panel__close:hover {
+    background: var(--tint);
   }
   .search-field {
     position: relative;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .search-field:focus-within {
+    border-color: var(--royal);
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
   .search-field__icon {
     position: absolute;
-    left: 0.7rem;
+    left: var(--space-4);
     top: 50%;
     transform: translateY(-50%);
-    color: var(--muted);
+    color: var(--royal);
   }
   .search-input {
     width: 100%;
-    padding: 0.6rem 0.8rem 0.6rem 2.2rem;
-    border: 1.5px solid var(--line);
-    border-radius: 999px;
-    background: var(--tint);
+    min-height: 52px;
+    padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
     font: inherit;
+    font-size: var(--text-base);
     color: var(--ink);
   }
   .search-input::placeholder {
     color: var(--muted-2);
   }
   .search-input:focus {
-    outline: 2px solid var(--royal);
-    outline-offset: 1px;
+    outline: none;
   }
   .search-input::-webkit-search-cancel-button,
   .search-input::-webkit-search-decoration {
     -webkit-appearance: none;
   }
+  .search-results__heading {
+    margin: var(--space-5) 0 var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
   .search-results {
     display: grid;
-    margin-top: var(--space-2);
-  }
-  .search-results:empty {
-    margin-top: 0;
   }
   /* Result rows are created at runtime by the inline script, so scoped
      styles cannot reach them. */
   .search-results :global(a) {
-    padding: 0.5rem var(--space-3);
-    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--line);
     color: var(--royal);
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
   }
+  .search-results :global(a::after) {
+    content: "→";
+    flex-shrink: 0;
+  }
   .search-results :global(a:hover),
-  .search-results :global(a:focus) {
+  .search-results :global(a:focus-visible) {
     background: var(--tint);
   }
   .search-results :global(.search-results__empty) {
-    margin: 0;
-    padding: 0.5rem var(--space-3);
+    margin: var(--space-4) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
@@ -716,9 +804,6 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       background: transparent;
       color: #fff;
     }
-    .search-panel {
-      top: 136px;
-    }
   }
 
   @media (max-width: 860px) {
@@ -770,8 +855,7 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
       min-height: 44px;
     }
     .search-panel {
-      top: 116px;
-      right: 1rem;
+      padding: var(--space-4);
     }
   }
 </style>

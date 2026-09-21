@@ -56,6 +56,34 @@ test("a bad URL gets the custom 404, not a blank page", async ({ page }) => {
   await expect(page.locator("footer")).toBeVisible();
 });
 
+test("header search shows matching pages and closes cleanly", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  const toggle = page.getByRole("button", { name: "Search the site" });
+  const panel = page.locator("#site-search-panel");
+  await toggle.click();
+  await expect(panel).toBeVisible();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+  const input = panel.getByRole("searchbox", { name: "Search the site" });
+  await expect(input).toBeFocused();
+  await input.fill("chapter");
+  await expect(panel.getByRole("link", { name: "Chapter Locator" })).toBeVisible();
+
+  await input.fill("unlikelynomatchterm");
+  await expect(panel.getByText("No matching pages. Try another search.")).toBeVisible();
+
+  await panel.getByRole("button", { name: "Close search" }).click();
+  await expect(panel).toBeHidden();
+  await expect(toggle).toBeFocused();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+  await toggle.click();
+  await expect(input).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(panel).toBeHidden();
+  await expect(toggle).toBeFocused();
+});
+
 test("no internal link 404s, and every #anchor resolves", async ({ page }) => {
   // One test crawls every route with `networkidle`. That normally takes
   // 16–22s, and the default 30s budget failed twice under full-suite load
@@ -94,5 +122,7 @@ test("no internal link 404s, and every #anchor resolves", async ({ page }) => {
     broken,
     `Broken internal links:\n${broken.map(([p, s]) => `  ${s}  ${p}`).join("\n")}`
   ).toEqual([]);
-  expect(brokenAnchors, `Anchors pointing at missing ids:\n${brokenAnchors.join("\n")}`).toEqual([]);
+  expect(brokenAnchors, `Anchors pointing at missing ids:\n${brokenAnchors.join("\n")}`).toEqual(
+    []
+  );
 });
