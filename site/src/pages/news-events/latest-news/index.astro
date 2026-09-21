@@ -1,5 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
+import Breadcrumb from "../../../components/Breadcrumb.astro";
 import { withBase } from "../../../lib/url.js";
 import { getCollection, render } from "astro:content";
 
@@ -24,7 +25,7 @@ const items = await Promise.all(
         : null,
       Body: (await render(entry)).Content,
     };
-  }),
+  })
 );
 const secondary = items.slice(0, 2);
 const archive = items.slice(2);
@@ -41,10 +42,9 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
 >
   <section class="ln-hero">
     <div class="container">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span> <span>News &amp; Events</span>{" "}
-        <span>/</span> <span>Latest News</span>
-      </p>
+      <Breadcrumb
+        items={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Latest News" }]}
+      />
       <p class="eyebrow">News &amp; Events</p>
       <h1>Latest News</h1>
       <p>Announcements and updates from across the international sisterhood.</p>
@@ -55,12 +55,7 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
     <div class="container">
       <article class="ln-lead">
         <a class="ln-lead__media" href={withBase(LEAD_URL)} tabindex="-1" aria-hidden="true">
-          <img
-            src={withBase("/images/boule.jpg")}
-            alt=""
-            width="1200"
-            height="675"
-          />
+          <img src={withBase("/images/boule.jpg")} alt="" width="1200" height="675" />
           <span class="ln-lead__badge">International Boulé</span>
         </a>
         <div class="ln-lead__copy">
@@ -72,8 +67,8 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
           </h2>
           <p>
             Thousands of members, partners, and guests gathered at the Tampa Convention Center July
-            22&ndash;26, the first Sigma Gamma Rho international convention in Tampa since 1976.
-            The week paired business with service: newborn care packages, backpacks, and free swim
+            22&ndash;26, the first Sigma Gamma Rho international convention in Tampa since 1976. The
+            week paired business with service: newborn care packages, backpacks, and free swim
             lessons for local families.
           </p>
           <a class="ln-more" href={withBase(LEAD_URL)}>
@@ -100,15 +95,20 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
             {secondary.map((c) => (
               <li class="ln-story" data-topic={slug(c.topic)}>
                 {c.image && (
-                  <img src={withBase(c.image)} alt="" width="600" height="400" loading="lazy" decoding="async" />
+                  <img
+                    src={withBase(c.image)}
+                    alt=""
+                    width="600"
+                    height="400"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 )}
                 <p class="ln-meta">
                   {c.topic}
                   {c.date && <> &bull; {c.date}</>}
                 </p>
-                <h3>
-                  {c.link ? <a {...c.link}>{c.title}</a> : c.title}
-                </h3>
+                <h3>{c.link ? <a {...c.link}>{c.title}</a> : c.title}</h3>
                 <div class="ln-summary">
                   <c.Body />
                 </div>
@@ -120,7 +120,14 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
             {archive.map((c) => (
               <li class="ln-row" data-topic={slug(c.topic)}>
                 {c.image ? (
-                  <img src={withBase(c.image)} alt="" width="160" height="120" loading="lazy" decoding="async" />
+                  <img
+                    src={withBase(c.image)}
+                    alt=""
+                    width="160"
+                    height="120"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 ) : (
                   <span class="ln-row__blank" aria-hidden="true" />
                 )}
@@ -129,9 +136,7 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
                     {c.topic}
                     {c.date && <> &bull; {c.date}</>}
                   </p>
-                  <h3>
-                    {c.link ? <a {...c.link}>{c.title}</a> : c.title}
-                  </h3>
+                  <h3>{c.link ? <a {...c.link}>{c.title}</a> : c.title}</h3>
                   <div class="ln-summary">
                     <c.Body />
                   </div>
@@ -139,7 +144,9 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
               </li>
             ))}
           </ul>
-          <p class="ln-empty" hidden>No stories in this topic yet.</p>
+          <p class="ln-empty" hidden>
+            No stories in this topic yet.
+          </p>
         </div>
 
         <aside class="ln-press" aria-label="For the press">
@@ -148,7 +155,9 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
             Interview, statement, and archival requests are coordinated by International Corporate
             Headquarters.
           </p>
-          <a class="btn" href={withBase("/news-events/media-relations/")}>Media Relations</a>
+          <a class="btn" href={withBase("/news-events/media-relations/")}>
+            Media Relations
+          </a>
           <a class="ln-press__link" href={withBase("/news-events/media-relations/")}>
             Brand assets &amp; logo suite <span aria-hidden="true">&rarr;</span>
           </a>
@@ -183,7 +192,7 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
           if (match) shown++;
         });
         if (empty) empty.hidden = shown > 0;
-      }),
+      })
     );
   }
 </script>
@@ -192,18 +201,6 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
   .ln-hero {
     background: var(--cream);
     padding-block: clamp(3rem, 5vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .ln-hero h1 {
     margin: var(--space-2) 0 0;

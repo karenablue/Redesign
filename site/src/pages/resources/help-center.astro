@@ -7,6 +7,7 @@
  * hours are not published anywhere, so none are stated.
  */
 import Base from "../../layouts/Base.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import { withBase } from "../../lib/url.js";
 
 const DESK = "https://helpsgrho1922.freshdesk.com";
@@ -37,8 +38,16 @@ const pillars = [
 ];
 
 const categories = [
-  { title: "Events & Conventions", note: "Boulé registration, hotels, transportation, and leadership institutes.", href: `${DESK}/support/solutions/69000434790` },
-  { title: "Operations", note: "Account updates, the Sigma Store, and vendor support.", href: `${DESK}/support/solutions/69000434788` },
+  {
+    title: "Events & Conventions",
+    note: "Boulé registration, hotels, transportation, and leadership institutes.",
+    href: `${DESK}/support/solutions/69000434790`,
+  },
+  {
+    title: "Operations",
+    note: "Account updates, the Sigma Store, and vendor support.",
+    href: `${DESK}/support/solutions/69000434788`,
+  },
 ];
 ---
 
@@ -49,22 +58,38 @@ const categories = [
 >
   <section class="hc-hero on-dark">
     <div class="container hc-hero__inner">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span> <span>Resources</span> <span>/</span>{" "}
-        <span>Help Center</span>
-      </p>
+      <Breadcrumb
+        items={[{ label: "Home", href: "/" }, { label: "Resources" }, { label: "Help Center" }]}
+        tone="dark"
+        align="center"
+      />
       <h1>
-        How Can We{" "}
-        <span>Help You?</span>
+        How Can We <span>Help You?</span>
       </h1>
       <p class="hc-hero__lead">
         Search the knowledge base for answers, or open a support ticket with International Corporate
         Headquarters.
       </p>
-      <form class="hc-search" action={`${DESK}/support/search`} method="get" target="_blank" role="search">
-        <label class="visually-hidden" for="hc-term">Search the knowledge base</label>
-        <input id="hc-term" name="term" type="search" placeholder="Search FAQs, policies, and member guidelines" required />
-        <button class="btn" type="submit">Search</button>
+      <form
+        class="hc-search"
+        action={`${DESK}/support/search`}
+        method="get"
+        target="_blank"
+        role="search"
+      >
+        <label class="visually-hidden" for="hc-term">
+          Search the knowledge base
+        </label>
+        <input
+          id="hc-term"
+          name="term"
+          type="search"
+          placeholder="Search FAQs, policies, and member guidelines"
+          required
+        />
+        <button class="btn" type="submit">
+          Search
+        </button>
       </form>
       <a class="btn btn--outline" href={NEW_TICKET} target="_blank" rel="noopener">
         Submit a Support Ticket <span aria-hidden="true">&#8599;</span>
@@ -95,7 +120,9 @@ const categories = [
         {categories.map((c) => (
           <li>
             <a href={c.href} target="_blank" rel="noopener">
-              <strong>{c.title} <span aria-hidden="true">&#8599;</span></strong>
+              <strong>
+                {c.title} <span aria-hidden="true">&#8599;</span>
+              </strong>
               <span>{c.note}</span>
             </a>
           </li>
@@ -105,16 +132,23 @@ const categories = [
       <div class="hc-desk">
         <div>
           <h2>Help Desk</h2>
-          <p>Tickets submitted through the help desk receive a tracking number, so you can follow up on your request.</p>
+          <p>
+            Tickets submitted through the help desk receive a tracking number, so you can follow up
+            on your request.
+          </p>
         </div>
         <dl>
           <div>
             <dt>Email</dt>
-            <dd><a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a></dd>
+            <dd>
+              <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>
+            </dd>
           </div>
           <div>
             <dt>Phone</dt>
-            <dd><a href="tel:+19196789720">(919) 678-9720</a></dd>
+            <dd>
+              <a href="tel:+19196789720">(919) 678-9720</a>
+            </dd>
           </div>
         </dl>
       </div>
@@ -131,19 +165,6 @@ const categories = [
     max-width: 48rem;
     padding-block: clamp(3.5rem, 6vw, 5rem);
     text-align: center;
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: rgba(255, 255, 255, 0.78);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .hc-hero h1 {
     margin: 0;

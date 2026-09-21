@@ -1,0 +1,83 @@
+---
+/**
+ * Breadcrumb — semantic page hierarchy with light and dark-band treatments.
+ *
+ * props:
+ *   items    ordered labels; omit href for the current page
+ *   tone     "light" on light backgrounds, "dark" on dark backgrounds
+ *   align    optional centered layout
+ *   spacing  "default" or the roomier article variant
+ */
+import { withBase } from "../lib/url.js";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  tone?: "light" | "dark";
+  align?: "start" | "center";
+  spacing?: "default" | "article";
+}
+
+const { items, tone = "light", align = "start", spacing = "default" } = Astro.props;
+---
+
+<nav
+  class:list={[
+    "breadcrumb",
+    `breadcrumb--${tone}`,
+    { "breadcrumb--center": align === "center", "breadcrumb--article": spacing === "article" },
+  ]}
+  aria-label="Breadcrumb"
+>
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {item.href ? (
+          <a href={withBase(item.href)}>{item.label}</a>
+        ) : (
+          <span aria-current={index === items.length - 1 ? "page" : undefined}>{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb {
+    margin: 0 0 var(--space-5);
+    color: var(--muted-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .breadcrumb--dark {
+    color: var(--text-on-dark-secondary);
+  }
+  .breadcrumb--article {
+    margin-bottom: var(--space-6);
+  }
+  .breadcrumb ol,
+  .breadcrumb li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .breadcrumb ol {
+    flex-wrap: wrap;
+  }
+  .breadcrumb--center ol {
+    justify-content: center;
+  }
+  .breadcrumb li:not(:first-child)::before {
+    content: "/";
+  }
+  .breadcrumb a {
+    color: inherit;
+  }
+</style>

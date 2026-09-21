@@ -9,6 +9,7 @@
  * are not published, so none are stated.
  */
 import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 import { withBase } from "../lib/url.js";
 
 const EMAIL = "help@sgrho1922.org";
@@ -48,14 +49,12 @@ const departments = [
 >
   <section class="ct-hero">
     <div class="container">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span> <span>Contact</span>
-      </p>
+      <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
       <p class="eyebrow">Contact</p>
       <h1>Contact Headquarters</h1>
       <p class="ct-hero__lead">
-        Reach International Corporate Headquarters directly, or send an inquiry and we'll route it to
-        the right department.
+        Reach International Corporate Headquarters directly, or send an inquiry and we'll route it
+        to the right department.
       </p>
     </div>
   </section>
@@ -67,19 +66,31 @@ const departments = [
         <dl>
           <div>
             <dt>Office</dt>
-            <dd>1000 Southhill Dr, STE 200<br />Cary, NC 27513</dd>
+            <dd>
+              1000 Southhill Dr, STE 200
+              <br />
+              Cary, NC 27513
+            </dd>
           </div>
           <div>
             <dt>Mailing</dt>
-            <dd>P.O. Box 27688<br />Raleigh, NC 27611</dd>
+            <dd>
+              P.O. Box 27688
+              <br />
+              Raleigh, NC 27611
+            </dd>
           </div>
           <div>
             <dt>Phone</dt>
-            <dd><a href="tel:+19196789720">(919) 678-9720</a></dd>
+            <dd>
+              <a href="tel:+19196789720">(919) 678-9720</a>
+            </dd>
           </div>
           <div>
             <dt>Email</dt>
-            <dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd>
+            <dd>
+              <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            </dd>
           </div>
         </dl>
         <h3>Go straight to</h3>
@@ -106,25 +117,46 @@ const departments = [
         <h2>Send an Inquiry</h2>
         <p class="ct-form__hint">
           This opens a pre-filled email in your mail app. Prefer a tracking number?{" "}
-          <a href={TICKET_URL} target="_blank" rel="noopener">Submit a help desk ticket</a>.
+          <a href={TICKET_URL} target="_blank" rel="noopener">
+            Submit a help desk ticket
+          </a>
+          .
         </p>
         <div class="inquiry-form__row">
           <label>
             <span>Full name</span>
-            <input id="cf-name" data-label="Name" name="name" type="text" autocomplete="name" required />
+            <input
+              id="cf-name"
+              data-label="Name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            />
           </label>
           <label>
             <span>Email address</span>
-            <input id="cf-email" data-label="Email" name="email" type="email" autocomplete="email" required />
+            <input
+              id="cf-email"
+              data-label="Email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
           </label>
         </div>
         <div class="inquiry-form__row">
           <label>
-            <span>Phone <small>(optional)</small></span>
+            <span>
+              Phone <small>(optional)</small>
+            </span>
             <input id="cf-phone" data-label="Phone" name="phone" type="tel" autocomplete="tel" />
           </label>
           <label>
-            <span>Member ID <small>(optional)</small></span>
+            <span>
+              Member ID <small>(optional)</small>
+            </span>
             <input id="cf-member" data-label="Member ID" name="member" type="text" />
           </label>
         </div>
@@ -133,20 +165,31 @@ const departments = [
             <span>I am a</span>
             <select id="cf-aff" data-label="Affiliation" name="affiliation" required>
               <option value="">Choose one</option>
-              {affiliations.map((a) => <option>{a}</option>)}
+              {affiliations.map((a) => (
+                <option>{a}</option>
+              ))}
             </select>
           </label>
           <label>
             <span>Department</span>
             <select id="cf-dept" data-label="Department" name="department" required>
               <option value="">Choose one</option>
-              {departments.map((d) => <option>{d}</option>)}
+              {departments.map((d) => (
+                <option>{d}</option>
+              ))}
             </select>
           </label>
         </div>
         <label>
           <span>Message</span>
-          <textarea id="cf-message" data-body name="message" rows="6" placeholder="How can we help?" required></textarea>
+          <textarea
+            id="cf-message"
+            data-body
+            name="message"
+            rows="6"
+            placeholder="How can we help?"
+            required
+          ></textarea>
         </label>
         <button class="btn ct-submit" type="submit">
           Submit Inquiry <span aria-hidden="true">&rarr;</span>
@@ -159,7 +202,10 @@ const departments = [
     <div class="container ct-portal__inner">
       <div>
         <h2>Already a member?</h2>
-        <p>Check dues status, update your contact details, and manage your membership in your member profile.</p>
+        <p>
+          Check dues status, update your contact details, and manage your membership in your member
+          profile.
+        </p>
       </div>
       <a class="btn" href={PORTAL_URL} target="_blank" rel="noopener">
         Log in to Poodle Portal <span aria-hidden="true">&#8599;</span>
@@ -178,18 +224,6 @@ const departments = [
   .ct-hero {
     background: var(--cream);
     padding-block: clamp(3rem, 6vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .ct-hero h1 {
     margin: var(--space-2) 0 0;

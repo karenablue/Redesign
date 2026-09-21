@@ -13,7 +13,7 @@
  *   sections    { id, title, blocks[] }[]  — blocks are
  *               { p: string } | { subhead: string } | { list: string[] } | { address: string[] }
  */
-import { withBase } from "../lib/url.js";
+import Breadcrumb from "./Breadcrumb.astro";
 
 interface Block {
   p?: string;
@@ -39,10 +39,7 @@ const { title, updated, draftNote, intro = [], sections } = Astro.props;
 
 <section class="legal-hero">
   <div class="container container--narrow">
-    <p class="breadcrumb">
-      <a href={withBase("/")}>Home</a> <span aria-hidden="true">/</span>
-      <span>{title}</span>
-    </p>
+    <Breadcrumb items={[{ label: "Home", href: "/" }, { label: title }]} />
     <p class="eyebrow">Legal</p>
     <h1>{title}</h1>
     <p class="legal-hero__updated">Last updated {updated}</p>
@@ -100,18 +97,6 @@ const { title, updated, draftNote, intro = [], sections } = Astro.props;
   .legal-hero {
     background: var(--cream);
     padding-block: clamp(3rem, 6vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .legal-hero h1 {
     margin: var(--space-2) 0 0;

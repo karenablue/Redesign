@@ -51,6 +51,7 @@
   --line-strong: color-mix(in srgb, var(--royal) 20%, transparent);
   --line-gold: color-mix(in srgb, var(--gold) 40%, transparent);
   --text-on-dark-muted: rgba(255, 255, 255, 0.6);
+  --text-on-dark-secondary: rgba(255, 255, 255, 0.78);
   --text-on-dark-soft: rgba(255, 255, 255, 0.85);
   --text-on-dark-lead: rgba(255, 255, 255, 0.88);
   --hero-glass: color-mix(in srgb, var(--navy) 45%, transparent);
