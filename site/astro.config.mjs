@@ -18,4 +18,15 @@ export default defineConfig({
     // matching the current site's directory-style links.
     format: "directory",
   },
+
+  vite: {
+    environments: {
+      astro: {
+        optimizeDeps: {
+          // Pre-bundle picomatch before the ESM-only content runner evaluates it.
+          include: ["picomatch"],
+        },
+      },
+    },
+  },
 });
