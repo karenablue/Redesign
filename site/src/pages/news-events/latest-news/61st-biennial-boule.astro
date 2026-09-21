@@ -4,6 +4,7 @@
  * carried before the newsroom redesign, unchanged.
  */
 import Base from "../../../layouts/Base.astro";
+import Breadcrumb from "../../../components/Breadcrumb.astro";
 import { withBase } from "../../../lib/url.js";
 ---
 
@@ -14,11 +15,14 @@ import { withBase } from "../../../lib/url.js";
 >
   <article class="story">
     <div class="container story__inner">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span>{" "}
-        <a href={withBase("/news-events/latest-news/")}>Latest News</a> <span>/</span>{" "}
-        <span>61st Biennial Boulé</span>
-      </p>
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Latest News", href: "/news-events/latest-news/" },
+          { label: "61st Biennial Boulé" },
+        ]}
+        spacing="article"
+      />
       <p class="story__meta">Boulé &bull; July 2026</p>
       <h1>Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé</h1>
       <figure>
@@ -40,7 +44,10 @@ import { withBase } from "../../../lib/url.js";
         backpacks for K&ndash;8 students, and 300 free swim lessons for local youth.
       </p>
       <blockquote>
-        <p>&ldquo;Our presence in Tampa represents an investment in people, partnerships, and progress.&rdquo;</p>
+        <p>
+          &ldquo;Our presence in Tampa represents an investment in people, partnerships, and
+          progress.&rdquo;
+        </p>
         <footer>26th International Grand Basileus Marica T. Harris</footer>
       </blockquote>
       <p class="story__back">
@@ -59,18 +66,6 @@ import { withBase } from "../../../lib/url.js";
   }
   .story__inner {
     max-width: 48rem;
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-6);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .story__meta {
     margin: 0;

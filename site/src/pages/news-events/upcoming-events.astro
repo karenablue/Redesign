@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import { withBase } from "../../lib/url.js";
 import { getCollection, render } from "astro:content";
 
@@ -15,16 +16,34 @@ import { getCollection, render } from "astro:content";
  */
 const entries = (await getCollection("events")).sort((a, b) => a.data.order - b.data.order);
 const events = await Promise.all(
-  entries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content })),
+  entries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content }))
 );
 
 const MONTHS: Record<string, string> = {
-  Jan: "January", Feb: "February", Mar: "March", Apr: "April", May: "May", Jun: "June",
-  Jul: "July", Aug: "August", Sep: "September", Oct: "October", Nov: "November", Dec: "December",
+  Jan: "January",
+  Feb: "February",
+  Mar: "March",
+  Apr: "April",
+  May: "May",
+  Jun: "June",
+  Jul: "July",
+  Aug: "August",
+  Sep: "September",
+  Oct: "October",
+  Nov: "November",
+  Dec: "December",
 };
-const monthName = (m: string) => m.split("–").map((p) => MONTHS[p.trim()] ?? p).join(" – ");
+const monthName = (m: string) =>
+  m
+    .split("–")
+    .map((p) => MONTHS[p.trim()] ?? p)
+    .join(" – ");
 const format = (location: string) =>
-  /virtual/i.test(location) ? "Virtual" : /various/i.test(location) ? "Multiple locations" : "In person";
+  /virtual/i.test(location)
+    ? "Virtual"
+    : /various/i.test(location)
+      ? "Multiple locations"
+      : "In person";
 const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 const featured = events.find((e) => e.featured);
@@ -50,11 +69,13 @@ const categories = [...new Set(listed.map((e) => e.tag))];
 >
   <section class="ue-hero">
     <div class="container">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span>{" "}
-        <a href={withBase("/news-events/latest-news/")}>News &amp; Events</a> <span>/</span>{" "}
-        <span>Upcoming Events</span>
-      </p>
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "News & Events", href: "/news-events/latest-news/" },
+          { label: "Upcoming Events" },
+        ]}
+      />
       <p class="eyebrow">News &amp; Events</p>
       <h1>Upcoming Events</h1>
       <p>Connect, serve, and celebrate with sorors across every region.</p>
@@ -83,7 +104,9 @@ const categories = [...new Set(listed.map((e) => e.tag))];
       )}
 
       <div class="ue-filters" role="group" aria-label="Filter events by category" hidden>
-        <button type="button" class="is-active" aria-pressed="true" data-cat="all">All Events</button>
+        <button type="button" class="is-active" aria-pressed="true" data-cat="all">
+          All Events
+        </button>
         {categories.map((c) => (
           <button type="button" aria-pressed="false" data-cat={slug(c)}>
             {c}
@@ -111,7 +134,9 @@ const categories = [...new Set(listed.map((e) => e.tag))];
                     </p>
                     <h3>{e.title}</h3>
                     <p class="ue-where">
-                      <span class="visually-hidden">{monthName(e.month)} {e.day}, </span>
+                      <span class="visually-hidden">
+                        {monthName(e.month)} {e.day},{" "}
+                      </span>
                       {e.location}
                     </p>
                     <div class="ue-summary">
@@ -124,7 +149,9 @@ const categories = [...new Set(listed.map((e) => e.tag))];
           </section>
         ))}
       </div>
-      <p class="ue-empty" hidden>No events in this category right now.</p>
+      <p class="ue-empty" hidden>
+        No events in this category right now.
+      </p>
 
       <p class="ue-cta">
         Looking for a chapter-level event near you?{" "}
@@ -154,7 +181,7 @@ const categories = [...new Set(listed.map((e) => e.tag))];
         // A month with nothing left to show drops its heading too.
         months.forEach((m) => (m.hidden = !m.querySelector(".ue-row:not([hidden])")));
         if (empty) empty.hidden = rows.some((r) => !r.hidden);
-      }),
+      })
     );
   }
 </script>
@@ -163,18 +190,6 @@ const categories = [...new Set(listed.map((e) => e.tag))];
   .ue-hero {
     background: var(--cream);
     padding-block: clamp(3rem, 5vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .ue-hero h1 {
     margin: var(--space-2) 0 0;

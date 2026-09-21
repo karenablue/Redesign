@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import { withBase } from "../../lib/url.js";
 
 /*
@@ -16,7 +17,11 @@ const TRANSFER_FEE = 15;
 
 const portalSections = [
   ["Section 1", "Reactivating Member Information", "Review the information you provided."],
-  ["Section 2", "Sigma History", "Induction chapter, induction date, last active chapter, last active state of residence, current state of residence, and current region of residence."],
+  [
+    "Section 2",
+    "Sigma History",
+    "Induction chapter, induction date, last active chapter, last active state of residence, current state of residence, and current region of residence.",
+  ],
   ["Section 3", "Education", "Upload a copy of your degree or diploma."],
   ["Section 4", "Membership Options", "Membership type and desired chapter."],
   ["Section 5", "Terms & Conditions", "Photography/videography release and arbitration agreement."],
@@ -33,15 +38,35 @@ const assessmentParts = [
 
 const regions = [
   { name: "Central", email: "grammateus@sgrhocentral.com", site: "https://www.sgrhocentral.com" },
-  { name: "Northeastern", email: "grammateus@sgrhoneregion.com", site: "https://www.sgrhoneregion.com" },
-  { name: "Southeastern", email: "grammateus@seregionsgrho.org", site: "https://www.seregionsgrho.org" },
-  { name: "Southwestern", email: "grammateus@sigmaswregion.com", site: "https://www.sigmaswregion.com" },
+  {
+    name: "Northeastern",
+    email: "grammateus@sgrhoneregion.com",
+    site: "https://www.sgrhoneregion.com",
+  },
+  {
+    name: "Southeastern",
+    email: "grammateus@seregionsgrho.org",
+    site: "https://www.seregionsgrho.org",
+  },
+  {
+    name: "Southwestern",
+    email: "grammateus@sigmaswregion.com",
+    site: "https://www.sigmaswregion.com",
+  },
   { name: "Western", email: "grammateus@westernsgrho.org", site: "https://www.westernsgrho.org" },
 ];
 
 const foundations = [
-  { name: "National Education Fund (NEF)", href: "https://www.sgrnationaleducationfund.org/home", label: "Pay the NEF assessment" },
-  { name: "Sigma Public Education Foundation & Research (SPEAR)", href: "https://www.flipcause.com/secure/cause_pdetails/MTQ2MDUw", label: "Pay the SPEAR assessment" },
+  {
+    name: "National Education Fund (NEF)",
+    href: "https://www.sgrnationaleducationfund.org/home",
+    label: "Pay the NEF assessment",
+  },
+  {
+    name: "Sigma Public Education Foundation & Research (SPEAR)",
+    href: "https://www.flipcause.com/secure/cause_pdetails/MTQ2MDUw",
+    label: "Pay the SPEAR assessment",
+  },
 ];
 
 const transferSteps = [
@@ -63,11 +88,13 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
 >
   <section class="rx-hero">
     <div class="container">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span>{" "}
-        <a href={withBase("/membership/become-a-member/")}>Membership</a> <span>/</span>{" "}
-        <span>Reactivate Membership</span>
-      </p>
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Membership", href: "/membership/become-a-member/" },
+          { label: "Reactivate Membership" },
+        ]}
+      />
       <p class="eyebrow">Membership</p>
       <h1>
         Welcome Back
@@ -115,7 +142,11 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
             <li>
               <strong>Log on to sgrho1922.org.</strong>
               <p>
-                Go to <a href="https://sgrho1922.org/" rel="noopener">www.sgrho1922.org</a>.
+                Go to{" "}
+                <a href="https://sgrho1922.org/" rel="noopener">
+                  www.sgrho1922.org
+                </a>
+                .
               </p>
             </li>
             <li>
@@ -145,7 +176,9 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
             </li>
           </ol>
           <div class="rx-actions">
-            <a class="btn" href="https://sgrho1922.org/" rel="noopener">Start Reactivation</a>
+            <a class="btn" href="https://sgrho1922.org/" rel="noopener">
+              Start Reactivation
+            </a>
           </div>
         </section>
 
@@ -153,8 +186,8 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
           <h2>What Your Assessment Covers</h2>
           <p>
             Your reactivation total depends on your membership category and region, and it is set
-            each fiscal year. The Poodle Portal calculates your exact amount. Every total is made
-            up of the same parts:
+            each fiscal year. The Poodle Portal calculates your exact amount. Every total is made up
+            of the same parts:
           </p>
           <ul class="rx-covers">
             {assessmentParts.map(([title, body]) => (
@@ -174,15 +207,15 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
 
         <section class="rx-block" id="regional">
           <h2>Regional Contacts</h2>
-          <p>
-            Questions about your regional assessment go to your region's Grammateus.
-          </p>
+          <p>Questions about your regional assessment go to your region's Grammateus.</p>
           <ul class="rx-regions">
             {regions.map((r) => (
               <li>
                 <strong>{r.name} Region</strong>
                 <a href={`mailto:${r.email}`}>{r.email}</a>
-                <a href={r.site} rel="noopener">{bare(r.site)}</a>
+                <a href={r.site} rel="noopener">
+                  {bare(r.site)}
+                </a>
               </li>
             ))}
           </ul>
@@ -192,8 +225,8 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
           <h2>Foundation Assessments</h2>
           <p>
             Graduate members pay two foundation assessments. <em>Graduate</em> covers Life Members,
-            Cultured Pearls, General Members, Members-at-Large and Graduate members.
-            Undergraduates are exempt.
+            Cultured Pearls, General Members, Members-at-Large and Graduate members. Undergraduates
+            are exempt.
           </p>
           <ul class="rx-funds">
             {foundations.map((f) => (
@@ -220,7 +253,9 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
               Member Profile in the Members Only Portal.
             </p>
             <ol class="rx-transfer__steps">
-              {transferSteps.map((t) => <li>{t}</li>)}
+              {transferSteps.map((t) => (
+                <li>{t}</li>
+              ))}
             </ol>
           </div>
         </section>
@@ -234,7 +269,9 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
             <a class="btn btn--outline" href={withBase("/resources/help-center/")}>
               Visit Help Center
             </a>
-            <a class="btn btn--outline" href={withBase("/contact/")}>Contact Headquarters</a>
+            <a class="btn btn--outline" href={withBase("/contact/")}>
+              Contact Headquarters
+            </a>
           </div>
         </aside>
       </div>
@@ -246,18 +283,6 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
   .rx-hero {
     background: var(--cream);
     padding-block: clamp(3rem, 6vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .rx-hero h1 {
     max-width: 600px;

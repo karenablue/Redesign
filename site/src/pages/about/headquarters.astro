@@ -7,6 +7,7 @@
  * which hosts real headshots at sgrho1922.org.
  */
 import Base from "../../layouts/Base.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
@@ -82,10 +83,13 @@ const staff = [
 >
   <section class="hq-hero">
     <div class="container hq-hero__inner">
-      <p class="breadcrumb">
-        <a href={withBase("/")}>Home</a> <span>/</span> <span>About</span> <span>/</span>{" "}
-        <span>International Corporate Headquarters</span>
-      </p>
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "About" },
+          { label: "International Corporate Headquarters" },
+        ]}
+      />
       <p class="eyebrow">About</p>
       <h1>
         The Administrative
@@ -230,18 +234,6 @@ const staff = [
   }
   .hq-hero__inner {
     padding-block: clamp(3rem, 6vw, 4rem);
-  }
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-  .breadcrumb a {
-    color: inherit;
   }
   .hq-hero h1 {
     max-width: 600px;
