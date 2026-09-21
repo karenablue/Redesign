@@ -73,6 +73,25 @@ test("search finds sourced chapters by city, university and full state name", as
   await expect(page.locator(visibleCards)).toHaveCount(24);
 });
 
+test("chapter-type guides apply the matching directory filter", async ({ page }) => {
+  await page.goto(route);
+  await page.getByRole("button", { name: "Show alumnae chapters" }).click();
+  await expect(page.getByRole("button", { name: "Alumnae", exact: true })).toHaveAttribute(
+    "aria-pressed",
+    "true"
+  );
+  await expect(page).toHaveURL(/type=alumnae/);
+  await expect(page.locator(visibleCards).first()).toContainText("Alumnae");
+
+  await page.getByRole("button", { name: "Show undergraduate chapters" }).click();
+  await expect(page.getByRole("button", { name: "Undergraduate", exact: true })).toHaveAttribute(
+    "aria-pressed",
+    "true"
+  );
+  await expect(page).toHaveURL(/type=undergraduate/);
+  await expect(page.locator(visibleCards).first()).toContainText("Undergraduate");
+});
+
 test("filters survive reload and browser back; missing coverage has a regional fallback", async ({
   page,
 }) => {
