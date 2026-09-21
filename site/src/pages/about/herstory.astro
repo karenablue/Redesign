@@ -304,7 +304,9 @@ const regions = [
     <div class="hs-hero__image"></div>
     <div class="hs-hero__overlay"></div>
     <div class="container hs-hero__content">
-      <p class="eyebrow">MCMXXII<sup class="reg">&reg;</sup></p>
+      <p class="eyebrow">
+        MCMXXII<sup class="reg">&reg;</sup>
+      </p>
       <h1 class="hs-hero__title">
         Her<span>story</span>
       </h1>
@@ -315,8 +317,19 @@ const regions = [
     </div>
   </section>
 
+  <nav class="hs-jump" aria-label="Explore this history">
+    <div class="container">
+      <span>Explore</span>
+      <a href="#origins">Origins</a>
+      <a href="#mission-vision">Mission &amp; Vision</a>
+      <a href="#century">A Century in Motion</a>
+      <a href="#regions">Five Regions</a>
+      <a href="#living-legacy">Living Legacy</a>
+    </div>
+  </nav>
+
   <!-- THE BEGINNING -->
-  <section class="hs-section">
+  <section class="hs-section" id="origins">
     <div class="container hs-split">
       <div class="hs-story-copy">
         <p class="eyebrow eyebrow--rule">The Beginning</p>
@@ -419,7 +432,7 @@ const regions = [
   </section>
 
   <!-- MISSION & VISION -->
-  <section class="hs-mv">
+  <section class="hs-mv" id="mission-vision">
     <div class="container hs-mv__inner">
       <article>
         <h2>Mission</h2>
@@ -443,7 +456,7 @@ const regions = [
   </section>
 
   <!-- CENTURY IN MOTION -->
-  <section class="hs-century">
+  <section class="hs-century" id="century">
     <div class="container hs-century__inner">
       <div class="hs-heading hs-heading--centered">
         <p class="eyebrow">Our Journey</p>
@@ -460,28 +473,26 @@ const regions = [
           <div class:list={["hs-chapter", t.side === "right" && "hs-chapter--right"]}>
             <div class="hs-chapter__year">
               <span class="hs-chapter__pill">
-              {/* Ranges break after the dash so "1950s–1960s" fits the rail. */}
-              {t.year.split("–").map((part, i, all) => (
-                <span>
-                  {/* LEMON MILK has no lowercase, so "1930s" would read
+                {/* Ranges break after the dash so "1950s–1960s" fits the rail. */}
+                {t.year.split("–").map((part, i, all) => (
+                  <span>
+                    {/* LEMON MILK has no lowercase, so "1930s" would read
                       "1930S". The decade's s is set in Montserrat instead. */}
-                  {part.endsWith("s") ? (
-                    <>
-                      {part.slice(0, -1)}
-                      <span class="hs-chapter__decade">s</span>
-                    </>
-                  ) : (
-                    part
-                  )}
-                  {i < all.length - 1 && "–"}
-                </span>
-              ))}
+                    {part.endsWith("s") ? (
+                      <>
+                        {part.slice(0, -1)}
+                        <span class="hs-chapter__decade">s</span>
+                      </>
+                    ) : (
+                      part
+                    )}
+                    {i < all.length - 1 && "–"}
+                  </span>
+                ))}
               </span>
             </div>
             <div class="hs-chapter__copy">
-              <p class="hs-chapter__label">
-                {t.label}
-              </p>
+              <p class="hs-chapter__label">{t.label}</p>
               <h3>{t.head}</h3>
               <p>{t.body}</p>
             </div>
@@ -518,7 +529,7 @@ const regions = [
   </section>
 
   <!-- REGIONS -->
-  <section class="hs-section hs-regions">
+  <section class="hs-section hs-regions" id="regions">
     <div class="container">
       <div class="hs-heading">
         <p class="eyebrow eyebrow--rule">National Structure</p>
@@ -557,7 +568,7 @@ const regions = [
   </section>
 
   <!-- LEGACY -->
-  <section class="hs-legacy">
+  <section class="hs-legacy" id="living-legacy">
     <figure class="hs-legacy__image">
       <img
         src={withBase("/images/sgr-75th-stained-glass-cropped.jpg")}
@@ -669,6 +680,43 @@ const regions = [
     font-size: var(--text-md);
     line-height: 1.75;
     font-weight: 400;
+  }
+
+  .hs-jump {
+    background: var(--navy);
+    border-top: 1px solid var(--line-dark);
+  }
+  .hs-jump .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-6);
+    min-height: 4rem;
+  }
+  .hs-jump span {
+    color: var(--gold);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .hs-jump a {
+    color: var(--white);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .hs-jump a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 0.3em;
+  }
+  #origins,
+  #mission-vision,
+  #century,
+  #regions,
+  #living-legacy {
+    scroll-margin-top: 4.5rem;
   }
 
   /* ---- shared heading pattern ---- */
@@ -851,7 +899,9 @@ const regions = [
     font-weight: 700;
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: color 0.18s ease, border-color 0.18s ease;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
   }
   .hs-fact-link:hover {
     color: var(--accent-hover);
@@ -1241,7 +1291,9 @@ const regions = [
     min-height: 280px;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
   }
   /* The whole card is the link (via .hs-region-link::after), so it shows
      that it is actionable. No thick accent bar: see the Hairline note above. */
@@ -1416,6 +1468,20 @@ const regions = [
   @media (max-width: 860px) {
     .hs-legacy {
       grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .hs-jump .container {
+      align-items: stretch;
+      gap: var(--space-2);
+      padding-block: var(--space-3);
+    }
+    .hs-jump span {
+      width: 100%;
+    }
+    .hs-jump a {
+      flex: 1 1 calc(50% - var(--space-2));
+      padding-block: var(--space-3);
     }
   }
 </style>
