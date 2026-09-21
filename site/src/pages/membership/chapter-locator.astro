@@ -86,6 +86,24 @@ const regions = [
           campus membership or alumnae chapters for community membership.
         </p>
       </div>
+      <div class="chapter-type-guide" aria-label="Chapter types">
+        <div>
+          <p class="chapter-type-guide__label">Campus-based</p>
+          <h3>Undergraduate Chapters</h3>
+          <p>For students pursuing collegiate membership at an eligible institution.</p>
+          <button type="button" data-quick-filter="undergraduate">
+            Show undergraduate chapters
+          </button>
+        </div>
+        <div>
+          <p class="chapter-type-guide__label">Community-based</p>
+          <h3>Alumnae Chapters</h3>
+          <p>For degree-holding women seeking service and sisterhood beyond college.</p>
+          <button type="button" data-quick-filter="alumnae">
+            Show alumnae chapters
+          </button>
+        </div>
+      </div>
       <form
         id="chapter-search-form"
         class="locator-search"
@@ -390,6 +408,48 @@ const regions = [
   .directory-heading > p:not(.eyebrow) {
     color: var(--muted);
   }
+  .chapter-type-guide {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .chapter-type-guide > div {
+    padding: var(--space-5);
+    border-left: 4px solid var(--gold);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+  }
+  .chapter-type-guide__label {
+    margin: 0 0 var(--space-2);
+    color: var(--royal);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .chapter-type-guide h3 {
+    margin: 0;
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+  }
+  .chapter-type-guide p:not(.chapter-type-guide__label) {
+    margin: var(--space-2) 0 var(--space-4);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .chapter-type-guide button {
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid var(--line-link);
+    background: transparent;
+    color: var(--royal);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+  }
   .locator-search {
     margin-top: var(--space-8);
     display: grid;
@@ -535,6 +595,9 @@ const regions = [
     display: none !important;
   }
   @media (max-width: 768px) {
+    .chapter-type-guide {
+      grid-template-columns: 1fr;
+    }
     .locator-search {
       margin-top: var(--space-8);
       grid-template-columns: 1fr;
@@ -755,6 +818,7 @@ const regions = [
   const more = document.querySelector<HTMLButtonElement>("#show-more");
   const clear = document.querySelector<HTMLButtonElement>("#clear-search");
   const filters = document.querySelectorAll<HTMLButtonElement>(".filter");
+  const quickFilters = document.querySelectorAll<HTMLButtonElement>("[data-quick-filter]");
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".chapter-result"));
   let type = "all";
   let limit = 12;
@@ -834,6 +898,18 @@ const regions = [
       render();
     })
   );
+  quickFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      const matchingFilter = Array.from(filters).find(
+        (filter) => filter.dataset.filter === button.dataset.quickFilter
+      );
+      matchingFilter?.click();
+      form?.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  });
   more?.addEventListener("click", () => {
     limit += 12;
     render(false);

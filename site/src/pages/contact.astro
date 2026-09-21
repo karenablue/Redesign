@@ -17,12 +17,36 @@ const TICKET_URL = "https://helpsgrho1922.freshdesk.com/support/tickets/new";
 const PORTAL_URL = "https://portal.sgrho1922.org/";
 
 const routes = [
-  { label: "Media & Press", href: "/news-events/media-relations/" },
-  { label: "Reactivation & Transfers", href: "/membership/reactivate/" },
-  { label: "Becoming a Member", href: "/membership/become-a-member/" },
-  { label: "Licensed Vendors", href: "/resources/vendor/" },
-  { label: "Sponsorship & Partnerships", href: "/service-impact/corporate-partnerships/" },
-  { label: "Verify a Member's Standing", href: "/membership/accountability/" },
+  {
+    label: "Media & Press",
+    note: "Official statements, press inquiries, and brand resources",
+    href: "/news-events/media-relations/",
+  },
+  {
+    label: "Reactivation & Transfers",
+    note: "Return to active membership or understand the transfer process",
+    href: "/membership/reactivate/",
+  },
+  {
+    label: "Becoming a Member",
+    note: "Eligibility, collegiate and alumnae pathways, and official process",
+    href: "/membership/become-a-member/",
+  },
+  {
+    label: "Licensed Vendors",
+    note: "Vendor authorization, licensing tiers, and consumer verification",
+    href: "/resources/vendor/",
+  },
+  {
+    label: "Sponsorship & Partnerships",
+    note: "National programs, strategic collaboration, and partnership inquiries",
+    href: "/service-impact/corporate-partnerships/",
+  },
+  {
+    label: "Verify a Member's Standing",
+    note: "Membership accountability and official standing resources",
+    href: "/membership/accountability/",
+  },
 ];
 
 const affiliations = [
@@ -56,6 +80,29 @@ const departments = [
         Reach International Corporate Headquarters directly, or send an inquiry and we'll route it
         to the right department.
       </p>
+    </div>
+  </section>
+
+  <section class="ct-routing" aria-labelledby="ct-routing-title">
+    <div class="container">
+      <div class="ct-routing__heading">
+        <p class="eyebrow">Start Here</p>
+        <h2 id="ct-routing-title">Choose the Right Destination</h2>
+        <p>Many common requests already have a dedicated resource and a faster next step.</p>
+      </div>
+      <ul class="ct-routes">
+        {routes.map((route) => (
+          <li>
+            <a href={withBase(route.href)}>
+              <span>
+                <strong>{route.label}</strong>
+                <small>{route.note}</small>
+              </span>
+              <b aria-hidden="true">&rarr;</b>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -93,16 +140,6 @@ const departments = [
             </dd>
           </div>
         </dl>
-        <h3>Go straight to</h3>
-        <ul class="ct-routes">
-          {routes.map((r) => (
-            <li>
-              <a href={withBase(r.href)}>
-                {r.label} <span aria-hidden="true">&rarr;</span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </aside>
 
       <form
@@ -234,6 +271,70 @@ const departments = [
     color: var(--muted);
   }
 
+  .ct-routing {
+    padding-block: clamp(3rem, 5vw, 4.5rem);
+    background: var(--white);
+  }
+  .ct-routing__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+    gap: var(--space-4) var(--space-10);
+    align-items: end;
+    margin-bottom: var(--space-8);
+  }
+  .ct-routing__heading .eyebrow {
+    grid-column: 1 / -1;
+  }
+  .ct-routing__heading h2,
+  .ct-routing__heading p {
+    margin: 0;
+  }
+  .ct-routing__heading p:last-child {
+    color: var(--muted);
+  }
+  .ct-routes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ct-routes a {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    height: 100%;
+    padding: var(--space-5);
+    border-top: 3px solid var(--gold);
+    background: var(--cream);
+    color: var(--ink);
+    text-decoration: none;
+    transition:
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+  .ct-routes a:hover {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+  }
+  .ct-routes strong,
+  .ct-routes small {
+    display: block;
+  }
+  .ct-routes strong {
+    color: var(--navy);
+  }
+  .ct-routes small {
+    margin-top: var(--space-2);
+    color: var(--muted);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+  .ct-routes b {
+    color: var(--royal);
+  }
+
   .ct-main {
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
@@ -280,33 +381,6 @@ const departments = [
     font-weight: 700;
     overflow-wrap: anywhere;
   }
-  .ct-card h3 {
-    margin: var(--space-8) 0 var(--space-2);
-    padding-top: var(--space-6);
-    border-top: 1px solid var(--line);
-    color: var(--ink);
-    font-size: var(--text-sm);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .ct-routes {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .ct-routes a {
-    display: block;
-    padding-block: var(--space-2);
-    color: var(--royal);
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .ct-routes a:hover {
-    color: var(--accent-hover);
-    text-decoration: underline;
-    text-decoration-color: var(--gold);
-  }
-
   .ct-form {
     display: grid;
     gap: var(--space-5);
@@ -332,8 +406,17 @@ const departments = [
     width: 100%;
   }
   @media (max-width: 900px) {
+    .ct-routing__heading,
+    .ct-routes {
+      grid-template-columns: minmax(0, 1fr);
+    }
     .ct-grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ct-routes a {
+      transition: none;
     }
   }
   @media (max-width: 560px) {
