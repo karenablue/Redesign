@@ -2,27 +2,33 @@
      the Phosphor duotone set beside it: 256 grid, 13-unit round strokes (optically matches the set's 16: the figures are denser), a
      20% fill layer (.icon-fill, tinted gold by the page). The two sorors
      behind are drawn at 80% (stroke 16, so it renders at 13) and the centre
-     figure masks them with the card's white. Not from Phosphor. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+     figure masks them with the card's white. Each has a hair bun and arms,
+     so they read as women at 56px, like AKA's figures. Not from Phosphor. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 256 256" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
   <g transform="translate(-44.4 -5) scale(0.8)" stroke-width="16">
     <path class="icon-fill" opacity="0.2" fill="currentColor" stroke="none" d="M102,104H154L142,140L172,204H84L114,140Z" />
     <circle class="icon-fill" opacity="0.2" fill="currentColor" stroke="none" cx="128" cy="60" r="26" />
     <circle cx="128" cy="60" r="26" />
+    <circle cx="128" cy="26" r="13" fill="currentColor" stroke="none" />
     <path d="M102,104H154L142,140L172,204H84L114,140Z" />
-    <path d="M114,204V228M142,204V228" />
+    <path d="M114,204V228M142,204V228M102,108L82,150M154,108L174,150" />
   </g>
   <g transform="translate(95.6 -5) scale(0.8)" stroke-width="16">
     <path class="icon-fill" opacity="0.2" fill="currentColor" stroke="none" d="M102,104H154L142,140L172,204H84L114,140Z" />
     <circle class="icon-fill" opacity="0.2" fill="currentColor" stroke="none" cx="128" cy="60" r="26" />
     <circle cx="128" cy="60" r="26" />
+    <circle cx="128" cy="26" r="13" fill="currentColor" stroke="none" />
     <path d="M102,104H154L142,140L172,204H84L114,140Z" />
-    <path d="M114,204V228M142,204V228" />
+    <path d="M114,204V228M142,204V228M102,108L82,150M154,108L174,150" />
   </g>
   <path fill="#fff" stroke="#fff" stroke-width="29" d="M102,104H154L142,140L172,204H84L114,140Z" />
   <circle fill="#fff" stroke="#fff" stroke-width="29" cx="128" cy="60" r="26" />
+  <circle fill="#fff" stroke="#fff" stroke-width="29" cx="128" cy="26" r="13" />
+  <path stroke="#fff" stroke-width="29" d="M102,108L82,150M154,108L174,150" />
   <path class="icon-fill" opacity="0.2" fill="currentColor" stroke="none" d="M102,104H154L142,140L172,204H84L114,140Z" />
   <circle class="icon-fill" opacity="0.2" fill="currentColor" stroke="none" cx="128" cy="60" r="26" />
   <circle cx="128" cy="60" r="26" />
+  <circle cx="128" cy="26" r="13" fill="currentColor" stroke="none" />
   <path d="M102,104H154L142,140L172,204H84L114,140Z" />
-  <path d="M114,204V228M142,204V228" />
+  <path d="M114,204V228M142,204V228M102,108L82,150M154,108L174,150" />
 </svg>
