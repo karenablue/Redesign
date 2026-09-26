@@ -57,6 +57,7 @@ export const primaryNav = [
     children: [
       { label: "Latest News", href: "/news-events/latest-news/" },
       { label: "Upcoming Events", href: "/news-events/upcoming-events/" },
+      { label: "Chapter Stories", href: "/news-events/chapter-stories/" },
       { label: "Media Relations", href: "/news-events/media-relations/" },
     ],
   },

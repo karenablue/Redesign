@@ -1,0 +1,462 @@
+---
+/**
+ * Chapter Stories — service and sisterhood reported by chapters, plus member
+ * voices, curated by HQ. Modelled on the D9 benchmark's strongest local
+ * pattern (AKA's chapter activity feed and member testimonials).
+ *
+ * Stories live in src/content/stories/, quotes in src/content/voices/. Both
+ * ship empty: nothing here is written by the site team. Until HQ publishes
+ * submissions, each section shows how a chapter or soror can contribute.
+ */
+import Base from "../../layouts/Base.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { withBase } from "../../lib/url.js";
+import { getCollection, render } from "astro:content";
+import { SUBMIT_EMAIL, storyMailto, voiceMailto, formatStoryDate } from "../../lib/stories";
+
+const stories = await Promise.all(
+  (await getCollection("stories"))
+    .sort((a, b) => b.data.date.localeCompare(a.data.date))
+    .map(async (entry) => ({ ...entry.data, id: entry.id, Body: (await render(entry)).Content }))
+);
+const voices = (await getCollection("voices"))
+  .map((v) => v.data)
+  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || b.consentDate.localeCompare(a.consentDate));
+const regions = [...new Set(stories.map((s) => s.region))].sort();
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+---
+
+<Base
+  title="Chapter Stories"
+  activeTop="News & Events"
+  description="Service, sisterhood and scholarship in action, reported by Sigma Gamma Rho chapters across every region, and sorors in their own words."
+>
+  <section class="cs-hero">
+    <div class="container">
+      <Breadcrumb
+        items={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Chapter Stories" }]}
+      />
+      <div class="cs-masthead">
+        <div>
+          <p class="eyebrow">One Sigma, Every Region</p>
+          <h1>Chapter stories.<span>Greater service, close to home.</span></h1>
+        </div>
+        <div class="cs-masthead__intro">
+          <p>
+            The national programs come to life in chapters. Here is that work as the chapters report
+            it, and sorors in their own words.
+          </p>
+          <a href="#share">Share your chapter&rsquo;s story <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-main" aria-labelledby="cs-stories-title">
+    <div class="container">
+      <h2 class="cs-section-title" id="cs-stories-title">From the chapters</h2>
+
+      {regions.length > 1 && (
+        <div class="cs-filters" role="group" aria-label="Filter stories by region" hidden>
+          <button type="button" class="is-active" aria-pressed="true" data-region="all">All Regions</button>
+          {regions.map((r) => (
+            <button type="button" aria-pressed="false" data-region={slug(r)}>{r}</button>
+          ))}
+        </div>
+      )}
+
+      {stories.length > 0 ? (
+        <ul class="cs-list">
+          {stories.map((s) => (
+            <li class="cs-story" data-region={slug(s.region)}>
+              <article>
+                {s.image && (
+                  <img src={withBase(s.image)} alt={s.imageAlt} width="960" height="600" loading="lazy" decoding="async" />
+                )}
+                <div class="cs-story__copy">
+                  <p class="cs-meta">
+                    <span class="cs-region">{s.region}</span>
+                    {s.program && <span class="cs-program">{s.program}</span>}
+                  </p>
+                  <h3>{s.title}</h3>
+                  <p class="cs-byline">
+                    {s.chapter}
+                    {s.place && <> &middot; {s.place}</>} &middot;{" "}
+                    <time datetime={s.date}>{formatStoryDate(s.date)}</time>
+                  </p>
+                  <div class="cs-body"><s.Body /></div>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="cs-empty">
+          <p class="cs-empty__lead">The first chapter stories are on their way.</p>
+          <p>
+            Chapters report their service here: book drives, swim lessons, health screenings,
+            scholarships, and the sisterhood behind them. If your chapter has a story,{" "}
+            <a href="#share">send it in</a>.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="cs-voices" aria-labelledby="cs-voices-title">
+    <div class="container">
+      <p class="eyebrow">In Their Own Words</p>
+      <h2 class="cs-section-title" id="cs-voices-title">Member voices</h2>
+      {voices.length > 0 ? (
+        <ul class="cs-quotes">
+          {voices.map((v) => (
+            <li>
+              <figure>
+                <blockquote><p>&ldquo;{v.quote}&rdquo;</p></blockquote>
+                <figcaption>
+                  <strong>{v.name}</strong>
+                  <span>{[v.role, v.chapter, v.region].filter(Boolean).join(" · ")}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="cs-voices__empty">
+          What does Sigma Gamma Rho mean to you? Sorors&rsquo; own words will appear here, each
+          published with the member&rsquo;s permission.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="cs-share" id="share" aria-labelledby="cs-share-title">
+    <div class="container">
+      <p class="eyebrow">Contribute</p>
+      <h2 class="cs-section-title" id="cs-share-title">Share your chapter&rsquo;s story</h2>
+      <p class="cs-share__intro">
+        International Corporate Headquarters reviews every submission and publishes a selection.
+        Send it to <a href={storyMailto}>{SUBMIT_EMAIL}</a>.
+      </p>
+      <div class="cs-share__grid">
+        <div class="cs-share__card">
+          <h3>A chapter story</h3>
+          <p>Use the subject line &ldquo;Chapter Story&rdquo; and include:</p>
+          <ul>
+            <li>Your chapter&rsquo;s name and region</li>
+            <li>The date and place of the activity</li>
+            <li>What happened and who it served, in about 150 words</li>
+            <li>The national program it supports, if any</li>
+            <li>
+              One photo, if you have one, and confirmation that everyone pictured agreed to its
+              publication
+            </li>
+          </ul>
+          <a class="btn" href={storyMailto}>Email a Chapter Story</a>
+        </div>
+        <div class="cs-share__card">
+          <h3>A member voice</h3>
+          <p>Use the subject line &ldquo;Member Voice&rdquo; and include:</p>
+          <ul>
+            <li>Your words, up to about 50, on what Sigma Gamma Rho means to you</li>
+            <li>Your name as you would like it shown</li>
+            <li>Your chapter and region</li>
+            <li>Your written permission to publish them on this website</li>
+          </ul>
+          <a class="btn btn--outline" href={voiceMailto}>Email a Member Voice</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Find Your People"
+    title="Connect with a chapter"
+    highlight="near you."
+    copy="Collegiate and alumnae chapters serve communities across five regions and internationally."
+    actions={[
+      { label: "Open the Chapter Locator", href: "/membership/chapter-locator/" },
+      { label: "Latest News", href: "/news-events/latest-news/", variant: "outline" },
+    ]}
+  />
+</Base>
+
+<script>
+  const bar = document.querySelector<HTMLElement>(".cs-filters");
+  if (bar) {
+    bar.hidden = false;
+    const buttons = [...bar.querySelectorAll<HTMLButtonElement>("button")];
+    const items = [...document.querySelectorAll<HTMLElement>(".cs-story")];
+    buttons.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const region = btn.dataset.region;
+        buttons.forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("is-active", on);
+          b.setAttribute("aria-pressed", String(on));
+        });
+        items.forEach((i) => (i.hidden = region !== "all" && i.dataset.region !== region));
+      })
+    );
+  }
+</script>
+
+<style>
+  .cs-hero {
+    padding-block: var(--space-10) var(--space-12);
+    background: var(--bright-white);
+    border-bottom: 1px solid var(--line);
+  }
+  .cs-masthead {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: var(--space-10);
+    align-items: end;
+    margin-top: var(--space-6);
+  }
+  .cs-masthead h1 {
+    margin: 0;
+    color: var(--royal);
+  }
+  .cs-masthead h1 span {
+    display: block;
+    margin-top: var(--space-2);
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.62em;
+    color: var(--accent-text);
+  }
+  .cs-masthead__intro p {
+    color: var(--muted);
+  }
+  .cs-masthead__intro a,
+  .cs-empty a {
+    color: var(--royal-dark);
+    font-weight: 700;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 3px;
+  }
+
+  .cs-main,
+  .cs-voices,
+  .cs-share {
+    padding-block: var(--space-16);
+  }
+  .cs-section-title {
+    margin: 0 0 var(--space-8);
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+    color: var(--royal);
+  }
+
+  .cs-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+  .cs-filters button {
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cs-filters button.is-active {
+    background: var(--royal);
+    border-color: var(--royal);
+    color: var(--white);
+  }
+
+  .cs-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: var(--space-8);
+  }
+  .cs-story article {
+    height: 100%;
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+  .cs-story img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .cs-story__copy {
+    padding: var(--space-6);
+  }
+  .cs-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-3);
+  }
+  .cs-region,
+  .cs-program {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .cs-region {
+    background: var(--tint);
+    color: var(--royal);
+  }
+  .cs-program {
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .cs-story h3 {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: var(--text-xl);
+    color: var(--royal);
+  }
+  .cs-byline {
+    margin: 0 0 var(--space-4);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .cs-body :global(p) {
+    color: var(--ink);
+  }
+
+  .cs-empty {
+    max-width: 44rem;
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    background: var(--white);
+  }
+  .cs-empty__lead {
+    font-family: var(--font-editorial);
+    font-size: var(--text-xl);
+    color: var(--royal);
+    margin-top: 0;
+  }
+  .cs-empty p:last-child {
+    margin-bottom: 0;
+    color: var(--muted);
+  }
+
+  .cs-voices {
+    background: var(--tint);
+  }
+  .cs-quotes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--space-10);
+  }
+  .cs-quotes figure {
+    margin: 0;
+    padding-top: var(--space-5);
+    border-top: 3px solid var(--gold);
+  }
+  .cs-quotes blockquote {
+    margin: 0 0 var(--space-5);
+  }
+  .cs-quotes blockquote p {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--royal);
+  }
+  .cs-quotes figcaption {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .cs-quotes figcaption strong {
+    color: var(--ink);
+  }
+  .cs-quotes figcaption span {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .cs-voices__empty {
+    max-width: 44rem;
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: var(--text-xl);
+    line-height: 1.5;
+    color: var(--royal);
+  }
+
+  .cs-share__intro {
+    max-width: 44rem;
+    color: var(--muted);
+  }
+  .cs-share__intro a {
+    color: var(--royal-dark);
+    font-weight: 700;
+  }
+  .cs-share__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+  .cs-share__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+  .cs-share__card h3 {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: var(--text-xl);
+    color: var(--royal);
+  }
+  .cs-share__card p {
+    color: var(--muted);
+  }
+  .cs-share__card ul {
+    margin: 0 0 var(--space-8);
+    padding-left: 1.2rem;
+    display: grid;
+    gap: var(--space-2);
+    color: var(--ink);
+  }
+  .cs-share__card .btn {
+    margin-top: auto;
+  }
+
+  @media (max-width: 900px) {
+    .cs-masthead {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+  }
+</style>

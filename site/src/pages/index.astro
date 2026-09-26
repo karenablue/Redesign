@@ -27,6 +27,7 @@ import CardGrid from "../components/CardGrid.astro";
 import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
 import { getCollection } from "astro:content";
+import { storyMailto, formatStoryDate } from "../lib/stories";
 
 const PORTAL_URL = "https://portal.sgrho1922.org/";
 
@@ -174,6 +175,16 @@ const partnerLogos = [
     internal: true,
   },
 ];
+
+// Chapter stories and member voices: only what HQ has published from
+// submissions. With none yet, the section invites chapters to send one.
+const chapterStories = (await getCollection("stories"))
+  .map((s) => s.data)
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 3);
+const memberVoice = (await getCollection("voices"))
+  .map((v) => v.data)
+  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || b.consentDate.localeCompare(a.consentDate))[0];
 
 // Summaries restate the foundation profiles already published on this site.
 const foundationDetails: Record<string, { focus: string; summary: string }> = {
@@ -372,6 +383,61 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
           </a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Chapter stories and member voices: the national mission, close to home. -->
+  <section class="section across" aria-labelledby="across-title">
+    <div class="container">
+      <div class="across__head">
+        <div>
+          <p class="eyebrow">One Sigma, Every Region</p>
+          <h2 class="across__title" id="across-title">Chapter Stories</h2>
+        </div>
+        <a class="arrow-link" href={withBase("/news-events/chapter-stories/")}>
+          All chapter stories <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+      {chapterStories.length > 0 ? (
+        <div class="across__grid">
+          <ul class="across__stories">
+            {chapterStories.map((s) => (
+              <li>
+                <p class="across__meta">{s.region}{s.program && <> &middot; {s.program}</>}</p>
+                <h3>{s.title}</h3>
+                <p class="across__byline">
+                  {s.chapter} &middot; <time datetime={s.date}>{formatStoryDate(s.date)}</time>
+                </p>
+              </li>
+            ))}
+          </ul>
+          {memberVoice && (
+            <figure class="across__voice">
+              <blockquote><p>&ldquo;{memberVoice.quote}&rdquo;</p></blockquote>
+              <figcaption>
+                <strong>{memberVoice.name}</strong>
+                <span>{memberVoice.chapter} &middot; {memberVoice.region}</span>
+              </figcaption>
+            </figure>
+          )}
+        </div>
+      ) : (
+        <div class="across__invite">
+          <p class="across__invite-lead">
+            Your chapter&rsquo;s service belongs here.
+          </p>
+          <p>
+            Book drives, swim lessons, health screenings, scholarships: tell headquarters what your
+            chapter did, and it can be featured for sorors and neighbors across the country.
+          </p>
+          <div class="across__actions">
+            <a class="btn" href={storyMailto}>Share a Chapter Story</a>
+            <a class="arrow-link" href={withBase("/news-events/chapter-stories/#share")}>
+              What to send <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   </section>
 
@@ -692,6 +758,118 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
 </Base>
 
 <style>
+  /* Chapter stories: a tinted band between the news and the heritage story. */
+  .across {
+    background: var(--tint);
+  }
+  .across__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-4) var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+  .across__title {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+    line-height: 1.25;
+    color: var(--royal);
+  }
+  .across__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .across__stories {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+  .across__stories li {
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .across__stories li:first-child {
+    padding-top: 0;
+  }
+  .across__meta {
+    margin: 0 0 var(--space-2);
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .across__stories h3 {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-editorial);
+    font-weight: 600;
+    font-size: var(--text-xl);
+    color: var(--royal);
+  }
+  .across__byline {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .across__voice {
+    margin: 0;
+    padding-top: var(--space-5);
+    border-top: 3px solid var(--gold);
+  }
+  .across__voice blockquote {
+    margin: 0 0 var(--space-4);
+  }
+  .across__voice blockquote p {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: clamp(1.2rem, 1rem + 0.6vw, 1.5rem);
+    line-height: 1.5;
+    color: var(--royal);
+  }
+  .across__voice figcaption {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .across__voice figcaption span {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .across__invite {
+    max-width: 46rem;
+    padding: var(--space-8);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+  .across__invite-lead {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-editorial);
+    font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.75rem);
+    color: var(--royal);
+  }
+  .across__invite p:not(.across__invite-lead) {
+    color: var(--muted);
+  }
+  .across__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-6);
+  }
+  @media (max-width: 900px) {
+    .across__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
   .work__invitation {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);

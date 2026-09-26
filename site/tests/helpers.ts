@@ -26,6 +26,7 @@ export const ROUTES = [
   "/service-impact/corporate-partnerships/",
   "/news-events/latest-news/",
   "/news-events/upcoming-events/",
+  "/news-events/chapter-stories/",
   "/news-events/media-relations/",
   "/resources/vendor/",
   "/resources/help-center/",

@@ -240,4 +240,57 @@ const accountability = defineCollection({
     ),
 });
 
-export const collections = { events, news, board, notableSigmas, accountability };
+/**
+ * Chapter stories — service and sisterhood reported by chapters, curated by
+ * HQ. Markdown body is the story (aim for about 150 words).
+ *
+ * Every entry must come from a chapter's own submission. Never write one:
+ * a story HQ did not receive is a fabrication on the national site.
+ * A photo needs `photoConsent: true`, confirming everyone pictured agreed
+ * to publication, and alt text describing it.
+ */
+const stories = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/stories" }),
+  schema: z
+    .object({
+      title: z.string().min(1),
+      chapter: z.string().min(1),
+      region: z.string().min(1),
+      /** City and state of the activity, e.g. "Houston, TX". */
+      place: z.string().optional(),
+      /** Date of the activity, YYYY-MM-DD. Newest stories show first. */
+      date: isoDate,
+      /** National program the work belongs to, if any, e.g. "SWIM 1922". */
+      program: z.string().optional(),
+      image: z.string().optional(),
+      imageAlt: z.string().optional(),
+      photoConsent: z.boolean().optional(),
+    })
+    .refine((s) => !s.image || (s.imageAlt && s.photoConsent === true), {
+      message: "A photo needs imageAlt and photoConsent: true",
+      path: ["image"],
+    }),
+});
+
+/**
+ * Member voices — short quotes from sorors, published only with the member's
+ * written permission. `consent` must be literally true or the build fails.
+ * Never paraphrase or compose a quote.
+ */
+const voices = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/voices" }),
+  schema: z.object({
+    quote: z.string().min(1).max(320),
+    name: z.string().min(1),
+    chapter: z.string().min(1),
+    region: z.string().min(1),
+    /** e.g. "Collegiate soror", "Alumnae soror since 1998". */
+    role: z.string().optional(),
+    consent: z.literal(true, { message: "Publish a member's words only with their permission" }),
+    /** Date permission was given, YYYY-MM-DD. */
+    consentDate: isoDate,
+    order: z.number().int().positive().optional(),
+  }),
+});
+
+export const collections = { events, news, board, notableSigmas, accountability, stories, voices };
