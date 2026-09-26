@@ -58,3 +58,39 @@ test("page weight / on a phone stays inside the page budget with no video", asyn
   expect(video, "a phone should not download the hero clip unasked").toBe(0);
   expect(other, `phone homepage downloads ${fmt(other)}; budget ${fmt(BUDGETS.page)}`).toBeLessThanOrEqual(BUDGETS.page);
 });
+
+/**
+ * Largest Contentful Paint on a slow phone, the industry "good" threshold
+ * (2.5s). Conditions match Lighthouse's mobile profile: 150ms RTT,
+ * 1.6 Mbps down, 750 Kbps up, 4x CPU slowdown. The D9 benchmark measured
+ * every peer homepage at 8–45s under these conditions.
+ *
+ * The preview server answers instantly, so real hosting adds its response
+ * time on top; the budget leaves room for that.
+ */
+test("homepage LCP on a slow 4G phone stays under 2.5s", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  const cdp = await context.newCDPSession(page);
+  await cdp.send("Network.enable");
+  await cdp.send("Network.emulateNetworkConditions", {
+    offline: false,
+    latency: 150,
+    downloadThroughput: (1.6 * 1024 * 1024) / 8,
+    uploadThroughput: (750 * 1024) / 8,
+  });
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+  await page.goto("/", { waitUntil: "load" });
+  await page.waitForTimeout(1500);
+  const lcp = await page.evaluate(
+    () =>
+      new Promise<number>((resolve) => {
+        new PerformanceObserver((list) => resolve(list.getEntries().at(-1)!.startTime)).observe({
+          type: "largest-contentful-paint",
+          buffered: true,
+        });
+      })
+  );
+  await context.close();
+  expect(lcp, `homepage LCP was ${(lcp / 1000).toFixed(2)}s on slow 4G; budget 2.5s`).toBeLessThanOrEqual(2500);
+});

@@ -8,6 +8,9 @@
  *   description   meta description
  *   activeTop     current top-level nav label (see SiteHeader)
  *   image         social share image path (root-absolute), optional
+ *   preloadImage  the page's largest above-the-fold image (root-absolute),
+ *                 fetched first at high priority. Pass it only for an image
+ *                 the browser cannot discover early, such as a video poster.
  */
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
@@ -20,6 +23,7 @@ const {
   activeTop,
   image = "/images/SGR-Logo-Shield.png",
   bodyClass,
+  preloadImage,
 } = Astro.props;
 
 const fullTitle = title
@@ -44,6 +48,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <meta property="og:image" content={withBase(image)} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    {preloadImage && (
+      <link rel="preload" as="image" href={withBase(preloadImage)} fetchpriority="high" />
+    )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Design fonts:
