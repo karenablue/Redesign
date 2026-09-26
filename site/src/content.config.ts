@@ -19,6 +19,13 @@ import { z } from "astro/zod";
  *      fails the build with a named field instead of rendering a broken card.
  */
 
+/** A calendar date as YYYY-MM-DD text. YAML (and CMS date pickers) turn an
+ *  unquoted 2026-11-12 into a Date, so both forms are accepted. */
+const isoDate = z.preprocess(
+  (v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v),
+  z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD, e.g. 2026-11-12")
+);
+
 const events = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/events" }),
   schema: z.object({
@@ -38,6 +45,15 @@ const events = defineCollection({
 
     location: z.string().min(1),
 
+    /**
+     * Confirmed calendar dates, YYYY-MM-DD. Optional because most entries
+     * carry no year yet. When `start` is set, the event gets an
+     * "Add to calendar" download; `end` is the last day, for multi-day events.
+     * Only fill these from HQ's confirmed schedule; never infer the year.
+     */
+    start: isoDate.optional(),
+    end: isoDate.optional(),
+
     /** Pins the event in the wide banner above the list. Use on one entry. */
     featured: z.boolean().optional(),
 
@@ -47,6 +63,9 @@ const events = defineCollection({
      * by sorting. An editor reorders the page by changing these numbers.
      */
     order: z.number().int().positive(),
+  }).refine((e) => !e.end || (e.start !== undefined && e.end >= e.start), {
+    message: "`end` needs a `start`, and cannot be before it",
+    path: ["end"],
   }),
 });
 
@@ -171,4 +190,54 @@ const notableSigmas = defineCollection({
     }),
 });
 
-export const collections = { events, news, board, notableSigmas };
+/**
+ * Membership Accountability register — one file per action, frontmatter only.
+ *
+ * Entries come ONLY from International Corporate Headquarters' official
+ * register, after counsel has approved publishing it. Never add a name from
+ * any other source: a wrong or stale entry here is a legal risk to the
+ * Sorority and a real harm to the person named.
+ *
+ * Suspensions with an `endDate` in the past drop off the page automatically
+ * at the next build, so a reinstated member is not left listed. Expulsions,
+ * charter revocations and denouncements are permanent and have no end date.
+ */
+const accountability = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/accountability" }),
+  schema: z
+    .object({
+      category: z.enum([
+        "member-suspensions",
+        "chapter-suspensions",
+        "expulsions",
+        "charter-revocations",
+        "denouncements",
+      ]),
+      region: z.string().min(1),
+      /** Name of the member's last affiliated chapter, or the chapter acted on. */
+      chapter: z.string().min(1),
+      state: z.string().optional(),
+      /** City of the chapter, e.g. "Houston, TX". */
+      location: z.string().optional(),
+      university: z.string().optional(),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+      /** Date the action took effect, YYYY-MM-DD. */
+      effective: isoDate,
+      /** Suspensions only: last day of the suspension, YYYY-MM-DD. */
+      endDate: isoDate.optional(),
+      fine: z.string().optional(),
+      /** Denouncements only: status label shown as a badge. */
+      status: z.string().optional(),
+      /** Date HQ supplied or last confirmed this entry, YYYY-MM-DD. */
+      listed: isoDate,
+    })
+    .refine(
+      (r) =>
+        !["member-suspensions", "expulsions", "denouncements"].includes(r.category) ||
+        Boolean(r.firstName && r.lastName),
+      { message: "Individual entries need firstName and lastName", path: ["lastName"] }
+    ),
+});
+
+export const collections = { events, news, board, notableSigmas, accountability };

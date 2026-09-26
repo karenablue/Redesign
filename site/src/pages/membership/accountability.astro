@@ -1,16 +1,22 @@
 ---
 /**
- * Membership Accountability — the public-facing explanation of suspension,
- * expulsion and denouncement, pointing to HQ's official register.
+ * Membership Accountability — the public explanation of suspension,
+ * expulsion and denouncement, and the public register itself.
  *
- * No names are published here. The register itself is maintained by
- * International Corporate Headquarters in the member portal; this page only
- * explains the categories and links to it. Wording of the advisory and the
- * five definitions should be confirmed by HQ (and counsel) before launch.
+ * Register entries live in src/content/accountability/ (see the rules in
+ * content.config.ts). The collection ships empty: names are published only
+ * from HQ's official register, after counsel approves. Until then each
+ * category shows its definition and no table. Wording of the advisory and
+ * the five definitions should be confirmed by HQ (and counsel) before launch.
+ *
+ * HQ's own register in the member portal returns an error to signed-out
+ * visitors (HTTP 400, checked 2026-09-26), so it is offered as a sign-in link
+ * for members, not as the public's main action.
  */
 import Base from "../../layouts/Base.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { withBase } from "../../lib/url.js";
+import { getCollection } from "astro:content";
 
 const REGISTER_URL =
   "https://members.sgrho1922.org/SGRho/SGRho/SGRho_Membership/Expulsions___Suspensions.aspx";
@@ -53,6 +59,33 @@ type AccountabilityCategoryConfig = {
   records: AccountabilityRecord[];
 };
 
+// Suspensions whose last day has passed are dropped at build time.
+const today = new Date().toISOString().slice(0, 10);
+const entries = (await getCollection("accountability"))
+  .map((e) => e.data)
+  .filter((r) => !r.endDate || r.endDate >= today)
+  .sort((a, b) => b.effective.localeCompare(a.effective));
+const recordsFor = (category: AccountabilityCategory): AccountabilityRecord[] =>
+  entries
+    .filter((r) => r.category === category)
+    .map((r) => ({
+      name: [r.firstName, r.lastName].filter(Boolean).join(" "),
+      chapter: r.chapter,
+      chapterName: r.chapter,
+      lastAffiliatedChapter: r.chapter,
+      region: r.region,
+      date: r.effective,
+      status: r.status ?? "Denounced",
+      state: r.state,
+      location: r.location,
+      firstName: r.firstName,
+      lastName: r.lastName,
+      endDate: r.endDate,
+      fine: r.fine,
+      university: r.university,
+    }));
+const lastListed = entries.map((r) => r.listed).sort().at(-1);
+
 const categories: AccountabilityCategoryConfig[] = [
   {
     key: "member-suspensions",
@@ -69,7 +102,7 @@ const categories: AccountabilityCategoryConfig[] = [
       "End Date",
       "Fine",
     ],
-    records: [],
+    records: recordsFor("member-suspensions"),
   },
   {
     key: "chapter-suspensions",
@@ -77,7 +110,7 @@ const categories: AccountabilityCategoryConfig[] = [
     body: "Chapter suspension temporarily restricts a chapter's operations, participation, and public representation until the chapter is restored to good standing by the appropriate governing authority.",
     action: "View Chapter Suspensions",
     columns: ["Region", "State", "Chapter Name", "Location", "End Date", "Fine"],
-    records: [],
+    records: recordsFor("chapter-suspensions"),
   },
   {
     key: "expulsions",
@@ -91,7 +124,7 @@ const categories: AccountabilityCategoryConfig[] = [
       "First Name",
       "Last Name",
     ],
-    records: [],
+    records: recordsFor("expulsions"),
   },
   {
     key: "charter-revocations",
@@ -99,7 +132,7 @@ const categories: AccountabilityCategoryConfig[] = [
     body: "Charter revocation permanently removes a chapter's charter and authorization to operate as a chapter of Sigma Gamma Rho Sorority, Inc.",
     action: "View Charter Revocations",
     columns: ["Region", "Chapter", "University"],
-    records: [],
+    records: recordsFor("charter-revocations"),
   },
   {
     key: "denouncements",
@@ -107,7 +140,7 @@ const categories: AccountabilityCategoryConfig[] = [
     body: "Voluntary denouncement permanently severs an individual from the sisterhood. Denounced individuals hold no membership rights and may not use the Sorority's registered trademarks or symbols.",
     action: "View Denouncements",
     columns: ["Member", "Chapter", "Region", "Date", "Status"],
-    records: [],
+    records: recordsFor("denouncements"),
   },
 ];
 
@@ -212,10 +245,12 @@ const cellsForRecord = (
           the Sorority by these individuals, or by unrecognized chapters, are unauthorized.
         </p>
         <div class="ma-notice__actions">
-          <a class="btn" href={REGISTER_URL} target="_blank" rel="noopener">
-            Check the Official Register <span class="visually-hidden">(opens in a new tab)</span>
-          </a>
-          <a class="btn btn--outline" href={withBase("/contact/")}>
+          {entries.length > 0 && (
+            <a class="btn" href="#registers">
+              View the Public Register
+            </a>
+          )}
+          <a class={entries.length > 0 ? "btn btn--outline" : "btn"} href={withBase("/contact/")}>
             Verify Standing with Headquarters
           </a>
         </div>
@@ -235,15 +270,22 @@ const cellsForRecord = (
         ))}
       </ul>
       <p class="ma-note">
-        International Corporate Headquarters maintains the current official listing. To check a
-        member's or chapter's standing, visit the
+        International Corporate Headquarters maintains the official listing.
+        {lastListed && (
+          <>
+            This public register was last updated{" "}
+            <time datetime={lastListed}>{formatDate(lastListed)}</time>.
+          </>
+        )}{" "}
+        Members can also check standing in the{" "}
         <a href={REGISTER_URL} target="_blank" rel="noopener">
           member portal register
+          <span class="visually-hidden"> (sign-in required, opens in a new tab)</span>
         </a>
         .
       </p>
 
-      <div class="ma-registers">
+      <div class="ma-registers" id="registers">
         {categories
           .filter((category) => category.records.length > 0)
           .map((category) => (

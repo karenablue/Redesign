@@ -5,6 +5,7 @@ import CtaBand from "../../components/CtaBand.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import { nationalCalendar } from "../../data/national-calendar";
 import { getCollection, render } from "astro:content";
+import { withBase } from "../../lib/url.js";
 
 /*
  * Events are markdown files in src/content/events/, so HQ can edit them
@@ -12,13 +13,18 @@ import { getCollection, render } from "astro:content";
  * carries the curated season sequence: it cannot be derived by sorting,
  * because several entries have fuzzy dates ("Sep–Oct", a day of "—").
  *
- * The list groups consecutive entries by the month they start in. Entries carry no
- * year, registration link or exact time yet, so there are no Register or
- * Add-to-Calendar actions; add fields to the schema when HQ supplies them.
+ * The list groups consecutive entries by the month they start in. Most entries
+ * carry no year yet. An entry with a confirmed `start` date gets an
+ * "Add to calendar" link to its .ics file (pages/news-events/calendar/);
+ * entries without one show no link, rather than a guessed year.
  */
 const entries = (await getCollection("events")).sort((a, b) => a.data.order - b.data.order);
 const events = await Promise.all(
-  entries.map(async (entry) => ({ ...entry.data, Body: (await render(entry)).Content }))
+  entries.map(async (entry) => ({
+    ...entry.data,
+    id: entry.id,
+    Body: (await render(entry)).Content,
+  }))
 );
 
 const MONTHS: Record<string, string> = {
@@ -155,6 +161,12 @@ const categories = [...new Set(listed.map((e) => e.tag))];
             <div class="ue-summary">
               <featured.Body />
             </div>
+            {featured.start && (
+              <a class="ue-ics" href={withBase(`/news-events/calendar/${featured.id}.ics`)} download>
+                Add to calendar
+                <span class="visually-hidden">: {featured.title} (.ics file)</span>
+              </a>
+            )}
           </div>
         </article>
       )}
@@ -198,6 +210,12 @@ const categories = [...new Set(listed.map((e) => e.tag))];
                     <div class="ue-summary">
                       <e.Body />
                     </div>
+                    {e.start && (
+                      <a class="ue-ics" href={withBase(`/news-events/calendar/${e.id}.ics`)} download>
+                        Add to calendar
+                        <span class="visually-hidden">: {e.title} (.ics file)</span>
+                      </a>
+                    )}
                   </div>
                 </li>
               ))}
@@ -524,6 +542,17 @@ const categories = [...new Set(listed.map((e) => e.tag))];
   }
   .ue-empty {
     color: var(--muted);
+  }
+  .ue-ics {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: var(--space-2);
+    color: var(--royal-dark);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 3px;
   }
 
   @media (max-width: 640px) {

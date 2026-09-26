@@ -23,6 +23,14 @@ Also served, but not the optimization target: current sorors, inactive members
 considering reactivation, families of members, individual donors, and
 press/general public.
 
+**Homepage exception (Karena, 2026-09-26):** the homepage speaks to current
+members and the general public first. Its order is the "One Sigma"
+administration theme with the Grand Basileus, then news and events, then
+heritage, programs, the chapter locator and partnerships. The hero's buttons
+are "Explore Our Impact" and "Member Login". Prospective sorors and partners
+stay the primary audiences for every other page, and are reached from the
+homepage's lower sections and the main navigation.
+
 ## Product Purpose
 
 The national website for **Sigma Gamma Rho Sorority, Incorporated®** — the

@@ -7,8 +7,13 @@
  * rhythm (Karena, 2026-09-17).
  *
  * Copy is drawn from the site's own pages (Grand Basileus bio, National
- * Programs, Herstory, Latest News); no administration theme is published,
- * so none is named.
+ * Programs, Herstory, Latest News). The administration theme, "One Sigma",
+ * leads the page (Karena, 2026-09-26); its wording and the quote come from
+ * the Grand Basileus's Watch The Yard Q&A (2024). Replace both when the
+ * next administration's theme is announced.
+ *
+ * Order speaks to members and the public first: the One Sigma message and
+ * What's Happening come before heritage, programs and partnerships.
  */
 import membersIcon from "../assets/stat-icons/members.svg?raw";
 import chaptersIcon from "../assets/stat-icons/chapters.svg?raw";
@@ -195,7 +200,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     cinematic
     video="/images/sgrho-hero.mp4"
     image="/images/sgr-alpha-charter.jpeg"
-    eyebrow="Sigma Gamma Rho · Since 1922"
+    eyebrow="One Sigma · Since 1922"
     title="Seven founders."
     highlight="A century of greater service."
     copy="From maternal health and water safety to educational opportunity, Sigma Gamma Rho puts sisterhood to work in communities across the country and beyond."
@@ -203,16 +208,171 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     align="left"
     watermark="ΣΓΡ"
   >
-    <a class="btn" href={withBase("/membership/become-a-member/")}>
-      Join the Sisterhood <span aria-hidden="true">&rarr;</span>
-    </a>
-    <a class="btn btn--outline" href={withBase("/service-impact/national-programs/")}>
+    <a class="btn" href={withBase("/service-impact/national-programs/")}>
       Explore Our Impact <span aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="btn btn--outline" href={PORTAL_URL} target="_blank" rel="noopener">
+      Member Login <span aria-hidden="true">&#8599;</span>
+      <span class="visually-hidden"> (opens the Poodle Portal in a new tab)</span>
     </a>
   </Hero>
 
   <section class="reach-band on-dark">
     <StatBand stats={reachStats} tone="navy" />
+  </section>
+
+  <!-- The administration theme leads: One Sigma, in the Grand Basileus's words. -->
+  <section class="section vision" id="grand-basileus" aria-labelledby="vision-title">
+    <div class="container vision__grid">
+      <figure class="vision__portrait">
+        <span class="vision__edition" aria-hidden="true">
+          XXVI
+        </span>
+        <img
+          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
+          alt="International Grand Basileus Marica T. Harris"
+          width="704"
+          height="1024"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>
+          Marica T. Harris <span>26th International Grand Basileus</span>
+        </figcaption>
+      </figure>
+      <div class="vision__copy">
+        <p class="eyebrow">Office of the Grand Basileus</p>
+        <h2 class="vision__title" id="vision-title">
+          One Sigma.
+          <br />
+          <em>Into the Next Century of Service</em>
+        </h2>
+        <blockquote class="vision__intro">
+          <p>
+            &ldquo;I will focus on strengthening our sisterhood in the spirit of &lsquo;One
+            Sigma&rsquo;, the theme of unity across the board through the Sorority&rsquo;s
+            administration.&rdquo;
+          </p>
+        </blockquote>
+        <p>
+          A life member elected at the 60th Biennial Boulé, Marica T. Harris brings more than 25
+          years of nonprofit experience and a legacy of leadership across Sigma.
+        </p>
+        <div class="vision__signature">
+          <strong>Marica T. Harris</strong>
+          <span>26th International Grand Basileus</span>
+        </div>
+        <div class="vision__actions">
+          <a class="btn" href={withBase("/leadership/international-grand-basileus/")}>
+            Meet the Grand Basileus <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="vision__link" href={withBase("/leadership/international-board/")}>
+            International Board <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Members and the public first: news and the events agenda lead the page. -->
+  <section class="section dispatch" id="whats-happening" aria-labelledby="dispatch-title">
+    <div class="container">
+      <div class="dispatch__head">
+        <div>
+          <p class="eyebrow">Stay Connected</p>
+          <h2 class="dispatch__title" id="dispatch-title">
+            What's Happening
+          </h2>
+        </div>
+        <p>
+          Stories from across Sigma.
+          <br />
+          Opportunities to come together.
+        </p>
+      </div>
+      <div class="dispatch__grid">
+        <div class="newsroom">
+          <h3 class="dispatch__label">Official Newsroom</h3>
+          <article class="news-lead">
+            <img
+              src={withBase(featuredStory.img)}
+              alt=""
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="news-lead__copy">
+              <p class="news-lead__meta">
+                <span class="news-tag">{featuredStory.tag}</span>
+                {featuredStory.date}
+              </p>
+              <h4>{featuredStory.title}</h4>
+              <p>{featuredStory.body}</p>
+              <a class="news-lead__go" href={withBase(featuredStory.href)}>
+                Read the story <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+          <ul class="news-rows">
+            {recentNews.map((n) => (
+              <li>
+                {n.image && (
+                  <img
+                    src={withBase(n.image)}
+                    alt=""
+                    width="120"
+                    height="90"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div>
+                  <p class="news-meta">{n.tag}</p>
+                  <a {...n.link}>{n.title}</a>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <a class="arrow-link" href={withBase("/news-events/latest-news/")}>
+            Visit the Newsroom <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
+        <div class="events on-dark">
+          <p class="eyebrow">On the Calendar</p>
+          <h3 class="dispatch__label">Events &amp; Gatherings</h3>
+          <ul class="event-rows">
+            {upcoming.map((e) => (
+              <li>
+                <a class="event-rows__link" href={withBase("/news-events/upcoming-events/")}>
+                  <span class="date-tile" aria-hidden="true">
+                    <span>{e.month}</span>
+                    <strong>{e.day}</strong>
+                  </span>
+                  <span class="event-rows__meta">
+                    <strong>{e.title}</strong>
+                    <span>
+                      <span class="visually-hidden">
+                        {e.month} {e.day},{" "}
+                      </span>
+                      {e.location}
+                    </span>
+                  </span>
+                  <span class="event-rows__go" aria-hidden="true">
+                    &rarr;
+                  </span>
+                  <span class="visually-hidden"> — view event calendar</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a class="arrow-link" href={withBase("/news-events/upcoming-events/")}>
+            Explore the Calendar <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Origin: where the work comes from. -->
@@ -342,56 +502,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </section>
 
-  <!-- Into the next century: leadership, after the legacy it carries. -->
-  <section class="section vision" id="grand-basileus" aria-labelledby="vision-title">
-    <div class="container vision__grid">
-      <figure class="vision__portrait">
-        <span class="vision__edition" aria-hidden="true">
-          XXVI
-        </span>
-        <img
-          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
-          alt="International Grand Basileus Marica T. Harris"
-          width="704"
-          height="1024"
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption>
-          Marica T. Harris <span>26th International Grand Basileus</span>
-        </figcaption>
-      </figure>
-      <div class="vision__copy">
-        <p class="eyebrow">Office of the Grand Basileus</p>
-        <h2 class="vision__title" id="vision-title">
-          Into the Next
-          <br />
-          <em>Century of Service</em>
-        </h2>
-        <p class="vision__intro">
-          Leading Sigma Gamma Rho into its next century of service with experience spanning
-          membership, regional leadership, nonprofit administration, and international growth.
-        </p>
-        <p>
-          A life member elected at the 60th Biennial Boulé, Marica T. Harris brings more than 25
-          years of nonprofit experience and a legacy of leadership across Sigma.
-        </p>
-        <div class="vision__signature">
-          <strong>Marica T. Harris</strong>
-          <span>26th International Grand Basileus</span>
-        </div>
-        <div class="vision__actions">
-          <a class="btn" href={withBase("/leadership/international-grand-basileus/")}>
-            Meet the Grand Basileus <span aria-hidden="true">&rarr;</span>
-          </a>
-          <a class="vision__link" href={withBase("/leadership/international-board/")}>
-            International Board <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- The chapter network is the bridge from national mission to local action. -->
   <section class="chapter-callout on-dark" aria-labelledby="chapter-callout-title">
     <span class="chapter-callout__mark" aria-hidden="true">
@@ -421,107 +531,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
           <span>Reactivate Membership</span>
           <span aria-hidden="true">&rarr;</span>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- A featured dispatch beside the events agenda. -->
-  <section class="section dispatch" id="whats-happening" aria-labelledby="dispatch-title">
-    <div class="container">
-      <div class="dispatch__head">
-        <div>
-          <p class="eyebrow">Stay Connected</p>
-          <h2 class="dispatch__title" id="dispatch-title">
-            What's Happening
-          </h2>
-        </div>
-        <p>
-          Stories from across Sigma.
-          <br />
-          Opportunities to come together.
-        </p>
-      </div>
-      <div class="dispatch__grid">
-        <div class="newsroom">
-          <h3 class="dispatch__label">Official Newsroom</h3>
-          <article class="news-lead">
-            <img
-              src={withBase(featuredStory.img)}
-              alt=""
-              width="1200"
-              height="675"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="news-lead__copy">
-              <p class="news-lead__meta">
-                <span class="news-tag">{featuredStory.tag}</span>
-                {featuredStory.date}
-              </p>
-              <h4>{featuredStory.title}</h4>
-              <p>{featuredStory.body}</p>
-              <a class="news-lead__go" href={withBase(featuredStory.href)}>
-                Read the story <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </article>
-          <ul class="news-rows">
-            {recentNews.map((n) => (
-              <li>
-                {n.image && (
-                  <img
-                    src={withBase(n.image)}
-                    alt=""
-                    width="120"
-                    height="90"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                )}
-                <div>
-                  <p class="news-meta">{n.tag}</p>
-                  <a {...n.link}>{n.title}</a>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <a class="arrow-link" href={withBase("/news-events/latest-news/")}>
-            Visit the Newsroom <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-
-        <div class="events on-dark">
-          <p class="eyebrow">On the Calendar</p>
-          <h3 class="dispatch__label">Events &amp; Gatherings</h3>
-          <ul class="event-rows">
-            {upcoming.map((e) => (
-              <li>
-                <a class="event-rows__link" href={withBase("/news-events/upcoming-events/")}>
-                  <span class="date-tile" aria-hidden="true">
-                    <span>{e.month}</span>
-                    <strong>{e.day}</strong>
-                  </span>
-                  <span class="event-rows__meta">
-                    <strong>{e.title}</strong>
-                    <span>
-                      <span class="visually-hidden">
-                        {e.month} {e.day},{" "}
-                      </span>
-                      {e.location}
-                    </span>
-                  </span>
-                  <span class="event-rows__go" aria-hidden="true">
-                    &rarr;
-                  </span>
-                  <span class="visually-hidden"> — view event calendar</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a class="arrow-link" href={withBase("/news-events/upcoming-events/")}>
-            Explore the Calendar <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -898,10 +907,16 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     font-size: var(--text-base);
   }
   .vision__copy > .vision__intro {
+    margin: 0 0 var(--space-6);
     color: var(--royal);
     font-family: var(--font-editorial);
     font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
     line-height: 1.5;
+  }
+  .vision__intro p {
+    margin: 0;
+    max-width: 38rem;
+    font-style: italic;
   }
   .vision__signature {
     display: flex;
@@ -1385,8 +1400,12 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     font-weight: 700;
     text-decoration: none;
   }
+  /* Gold text on royal is 4.44:1; hover marks the link with a gold rule. */
   .chapter-callout__next a:hover {
-    color: var(--gold);
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 4px;
   }
   .chapter-callout__next a span:last-child {
     color: var(--gold);

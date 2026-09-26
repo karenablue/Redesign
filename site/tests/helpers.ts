@@ -35,6 +35,7 @@ export const ROUTES = [
   "/privacy/",
   "/cookies/",
   "/terms/",
+  "/accessibility/",
 ] as const;
 
 /** Viewport widths that must never produce a horizontal scrollbar. */

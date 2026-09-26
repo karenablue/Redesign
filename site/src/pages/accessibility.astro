@@ -1,0 +1,93 @@
+---
+import Base from "../layouts/Base.astro";
+import LegalDoc from "../components/LegalDoc.astro";
+
+const updated = "September 2026";
+
+// Every claim below is something tests/ checks on every page in ROUTES.
+// If a check is removed from the suite, remove its line here too.
+const intro = [
+  "Sigma Gamma Rho Sorority, Incorporated wants every soror, prospective member, partner, and visitor to be able to use this website, including people who use screen readers, keyboard navigation, screen magnification, or voice control.",
+  "This statement explains the standard we work to, how we check it, what we know is not yet right, and how to tell us about a barrier.",
+];
+
+const sections = [
+  {
+    id: "standard",
+    title: "1. Our Standard",
+    blocks: [
+      {
+        p: "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA. We describe this as a goal, not a certified claim: the site has not yet been reviewed by an independent auditor.",
+      },
+    ],
+  },
+  {
+    id: "how-we-check",
+    title: "2. How We Check",
+    blocks: [
+      {
+        p: "Automated tests run against every page of this site before each change is published. A change that fails them is not released. The tests check that:",
+      },
+      {
+        list: [
+          "Text meets WCAG contrast minimums, including link colours on hover",
+          "Every image carries alternative text, or is marked as decorative",
+          "Headings follow in order without skipping levels",
+          "Every link, button, and form field has an accessible name or label",
+          "Each page declares its language and offers a skip-to-content link that moves keyboard focus into the page",
+          "Tap targets meet the WCAG 2.5.8 minimum size",
+          "No page scrolls sideways at widths from 320 to 1440 pixels",
+          "The mobile menu opens and closes by keyboard and returns focus where it started",
+          "The homepage video can be paused, and never plays for visitors who have asked their device to reduce motion",
+        ],
+      },
+    ],
+  },
+  {
+    id: "known-limitations",
+    title: "3. Known Limitations",
+    blocks: [
+      {
+        p: "Some services linked from this site are run by other providers, and we cannot guarantee their accessibility. These include:",
+      },
+      {
+        list: [
+          "The Poodle Portal member system",
+          "The Sigma Gamma Rho online store",
+          "The Help Center ticketing service",
+          "Regional and chapter websites",
+          "Partner, foundation, and registration forms hosted elsewhere",
+        ],
+      },
+      {
+        p: "Some older documents, such as scanned PDFs, may not be fully readable by screen readers. If you need any document in another format, ask us and we will provide it.",
+      },
+    ],
+  },
+  {
+    id: "feedback",
+    title: "4. Report a Barrier",
+    blocks: [
+      {
+        p: "If something on this site is hard or impossible for you to use, please tell us. Include the page address and a short description of the problem, and let us know how you would like to receive the information.",
+      },
+      {
+        p: "Email help@sgrho1922.org with the subject line \"Accessibility\". We aim to reply within five business days.",
+      },
+    ],
+  },
+];
+---
+
+<Base
+  title="Accessibility Statement"
+  description="How Sigma Gamma Rho Sorority, Incorporated works to make its national website usable by everyone, and how to report a barrier."
+>
+  <LegalDoc
+    title="Accessibility Statement"
+    updated={updated}
+    draftNote="This is a working draft for the site rebuild and is pending review by International Corporate Headquarters. The reply time in section 4 needs HQ's confirmation before launch."
+    intro={intro}
+    sections={sections}
+  />
+</Base>
