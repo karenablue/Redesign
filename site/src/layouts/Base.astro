@@ -48,6 +48,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <meta property="og:image" content={withBase(image)} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    {/* LEMON MILK is self-hosted and set on every heading. Fetched late, it
+        arrives after first paint and re-wraps long titles (a layout shift
+        of 0.12 on Affiliates on a slow phone). Preloading the two weights
+        headings use lets it land before the first paint. */}
+    <link rel="preload" as="font" type="font/woff" href={withBase("/fonts/LemonMilkMedium-mLZYV.woff")} crossorigin />
+    <link rel="preload" as="font" type="font/woff" href={withBase("/fonts/LemonMilkRegular-X3XE2.woff")} crossorigin />
     {preloadImage && (
       <link rel="preload" as="image" href={withBase(preloadImage)} fetchpriority="high" />
     )}

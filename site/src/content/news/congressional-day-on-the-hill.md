@@ -1,7 +1,7 @@
 ---
 title: "Sorors Return to Capitol Hill for Congressional Day"
 tag: "Advocacy"
-image: "/images/Congressional Day on the Hill.jpg"
+image: "/optimized/congressional-day-on-the-hill.webp"
 order: 2
 ---
 
