@@ -148,3 +148,15 @@ test("keyboard: the mobile nav drawer opens, closes on Escape, and returns focus
   );
   expect(focusReturned, "Escape should return focus to the toggle that opened the drawer").toBe(true);
 });
+
+test("phone: the open menu offers Join, Poodle Portal and Donate", async ({ page }) => {
+  // The masthead hides these buttons below 640px; they must reappear in the
+  // drawer, or a phone visitor has no header route to the portal or Donate.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/", { waitUntil: "networkidle" });
+  await page.locator(".nav-toggle").click();
+  const actions = page.locator(".nav-panel__actions");
+  for (const name of ["Join", "Poodle Portal", "Donate"]) {
+    await expect(actions.getByRole("link", { name })).toBeVisible();
+  }
+});

@@ -75,6 +75,9 @@ export const primaryNav = [
 
 /* Deck 1's two utility actions, right of the wordmark. */
 export const headerActions = [
+  // Joining and signing in side by side, the pattern the D9 benchmark
+  // credits to Iota Phi Theta.
+  { label: "Join", href: "/membership/become-a-member/", variant: "outline" },
   {
     label: "Poodle Portal",
     href: "https://portal.sgrho1922.org/",

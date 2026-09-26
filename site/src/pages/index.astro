@@ -746,6 +746,22 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </section>
 
+  <!-- A safety entry point in plain view (the D9 benchmark credits Omega Psi
+       Phi's homepage hotline). Wording restates the Anti-Hazing Policy page:
+       zero tolerance, and confidential reporting. No new contact details. -->
+  <aside class="safety-strip" aria-labelledby="safety-title">
+    <div class="container safety-strip__inner">
+      <p>
+        <strong id="safety-title">Sigma Gamma Rho has zero tolerance for hazing.</strong>{" "}
+        Concerns can be reported confidentially to a chapter advisor, a Regional Director, or
+        International Corporate Headquarters.
+      </p>
+      <a class="arrow-link" href={withBase("/resources/anti-hazing-policy/#reporting")}>
+        Report a concern <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </aside>
+
   <!-- Pre-footer member strip. -->
   <aside class="portal-strip" aria-label="Member login">
     <div class="container portal-strip__inner">
@@ -2268,6 +2284,27 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   }
   :global(body.page-home .hero--cinematic .hero__content) {
     padding-bottom: clamp(5rem, 10vw, 8rem);
+  }
+
+  .safety-strip {
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    padding-block: var(--space-6);
+  }
+  .safety-strip__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-10);
+  }
+  .safety-strip p {
+    max-width: 52rem;
+    margin: 0;
+    color: var(--muted);
+  }
+  .safety-strip strong {
+    color: var(--navy);
   }
 
   /* Pre-footer member strip: navy on gold (8.9:1). */

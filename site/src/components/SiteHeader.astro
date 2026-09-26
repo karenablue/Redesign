@@ -169,6 +169,19 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
             ))}
           </ul>
         </nav>
+        {/* On phones the masthead buttons are hidden; they live here instead,
+            at the foot of the open menu. */}
+        <div class="nav-panel__actions">
+          {headerActions.map((x) => (
+            <Button
+              href={x.href}
+              variant={x.variant === "solid" ? "solid" : "outline"}
+              {...(x.external ? { target: "_blank", rel: "noopener" } : {})}
+            >
+              <span set:html={reg(x.label)} />
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -422,6 +435,9 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
   }
   .site-nav {
     flex: 1;
+  }
+  .nav-panel__actions {
+    display: none;
   }
   .site-nav__list {
     display: flex;
@@ -842,6 +858,28 @@ const search = searchIndex().map((p) => ({ t: p.label, u: withBase(p.href) }));
        crowding a phone masthead; search and the hamburger stay. */
     .masthead__actions :global(.masthead__btn) {
       display: none;
+    }
+    .nav-panel__actions {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .nav-panel__actions :global(.btn) {
+      justify-content: center;
+    }
+    .nav-panel__actions :global(.btn:not(.btn--outline)) {
+      --btn-fg: var(--navy);
+    }
+    /* Outline buttons sit on the royal menu: white label and border;
+       filled gold on hover, where the label goes navy (8.9:1). */
+    .nav-panel__actions :global(.btn--outline) {
+      --btn-fg: var(--white);
+      --btn-border: var(--white);
+    }
+    .nav-panel__actions :global(.btn--outline:hover) {
+      --btn-fg: var(--navy);
     }
     .search-toggle {
       width: 44px;
