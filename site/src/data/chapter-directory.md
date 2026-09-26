@@ -42,6 +42,34 @@ edit `chapter-directory.json` directly.
    Some may be closed; others may be missing from HQ's records. Examples:
    Zeta Delta, Rho Pi, Gamma Nu, Gamma Mu Sigma, Beta Gamma, Xi Iota, Tau Alpha, Xi Delta, Zeta, Beta Nu, Gamma Psi, Delta Kappa.
 
+5. **A broken chapter web address.** Eta Xi's is recorded as
+   `http://etaxisgrho@weebly.com`, which is not a working address, so its card
+   links to the regional directory instead. Several other chapter sites are old
+   `wix.com/...` addresses that may no longer load.
+
+## Chapter social media logos
+
+A chapter card shows a logo for each social account the chapter has. Two
+sources feed them (src/lib/chapter-links.ts):
+
+- HQ's record, when the website HQ holds is actually a social page. Today
+  that is Iota Mu Sigma and Theta Epsilon (Facebook) and Sigma Theta
+  (Instagram).
+- `src/data/chapter-socials.json`, kept by hand. Key it by the chapter name
+  exactly as the locator shows it:
+
+  ```json
+  {
+    "Theta Epsilon": { "instagram": "https://www.instagram.com/..." },
+    "Alpha Iota": { "instagram": "https://...", "tiktok": "https://..." }
+  }
+  ```
+
+  Accounts it accepts: `instagram`, `facebook`, `tiktok`, `x`, `youtube`,
+  `linkedin`. Only add an account the chapter itself runs; the regions or HQ
+  can confirm. A misspelled chapter name fails the test suite rather than
+  silently showing nothing.
+
 ## Earlier snapshot
 
 `chapter-directory-regional.json` is kept as the fallback source above. Its

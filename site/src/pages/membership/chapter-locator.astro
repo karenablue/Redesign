@@ -11,10 +11,16 @@ import CardGrid from "../../components/CardGrid.astro";
 import Base from "../../layouts/Base.astro";
 import { withBase } from "../../lib/url.js";
 import { compareChapterNames } from "../../lib/chapter-order";
+import { chapterLinks } from "../../lib/chapter-links";
+import { socialPaths } from "../../lib/social-icons";
 
-const chapters = [...directory.chapters].sort(
-  (a, b) => compareChapterNames(a.name, b.name) || a.region.localeCompare(b.region)
-);
+const chapters = [...directory.chapters]
+  .sort((a, b) => compareChapterNames(a.name, b.name) || a.region.localeCompare(b.region))
+  .map((chapter) => ({ ...chapter, links: chapterLinks(chapter) }));
+// One copy of each logo in use, referenced by every card that needs it.
+const socialInUse = [
+  ...new Map(chapters.flatMap((c) => c.links.social).map((s) => [s.key, s.label])),
+];
 const retrieved = new Date(`${directory.retrieved}T12:00:00`).toLocaleDateString("en-US", {
   month: "long",
   day: "numeric",
@@ -190,6 +196,15 @@ const regions = [
           .
         </figcaption>
       </figure>
+      {socialInUse.length > 0 && (
+        <svg class="social-sprite" aria-hidden="true" focusable="false">
+          {socialInUse.map(([key, label]) => (
+            <symbol id={`social-${key}`} viewBox="0 0 32 32">
+              <path d={socialPaths[label]} fill-rule="evenodd" />
+            </symbol>
+          ))}
+        </svg>
+      )}
       <CardGrid min="280px" cols={3} gap="var(--space-5)">
         {chapters.map((chapter) => (
           <article
@@ -217,23 +232,43 @@ const regions = [
               {[chapter.city, chapter.state].filter(Boolean).join(", ")}
             </p>
             {chapter.university && <p class="chapter-result__university">{chapter.university}</p>}
-            {chapter.website ? (
-              <a href={chapter.website} target="_blank" rel="noopener">
-                Chapter website &nearr;
-                <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
-              </a>
-            ) : (
-              chapter.region && (
-                <a
-                  href={regions.find((region) => region.name === chapter.region)?.href}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  View regional directory &nearr;
+            <div class="chapter-result__links">
+              {chapter.links.website ? (
+                <a href={chapter.links.website} target="_blank" rel="noopener">
+                  Chapter website &nearr;
                   <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
                 </a>
-              )
-            )}
+              ) : (
+                chapter.region && (
+                  <a
+                    href={regions.find((region) => region.name === chapter.region)?.href}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    View regional directory &nearr;
+                    <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
+                  </a>
+                )
+              )}
+              {chapter.links.social.length > 0 && (
+                <ul class="chapter-result__social" aria-label={`${chapter.name} on social media`}>
+                  {chapter.links.social.map((s) => (
+                    <li>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener"
+                        aria-label={`${chapter.name} on ${s.label} (opens in a new tab)`}
+                      >
+                        <svg width="18" height="18" aria-hidden="true" focusable="false">
+                          <use href={`#social-${s.key}`} />
+                        </svg>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </article>
         ))}
       </CardGrid>
@@ -617,12 +652,49 @@ const regions = [
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .chapter-result a {
+  .chapter-result__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
     margin-top: auto;
     padding-top: var(--space-6);
+  }
+  .chapter-result__links > a {
     color: var(--royal);
     font-size: var(--text-sm);
     font-weight: 700;
+  }
+  .chapter-result__social {
+    display: flex;
+    gap: var(--space-1);
+    /* The 36px tap targets overhang the row, so cards with and without logos line up. */
+    margin: calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) 0;
+    padding: 0;
+    list-style: none;
+  }
+  .chapter-result__social a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: var(--royal);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .chapter-result__social a:hover {
+    background: var(--tint);
+    color: var(--navy);
+  }
+  .chapter-result__social svg {
+    fill: currentColor;
+  }
+  .social-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
   }
   .empty-state {
     padding: var(--space-8);

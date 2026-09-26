@@ -183,3 +183,31 @@ test("the map loads on approach and follows the filters", async ({ page }) => {
   await page.getByRole("button", { name: "Find Chapters", exact: true }).click();
   await expect(page.locator("#search-message")).toContainText('for "Texas"');
 });
+
+test("chapters show a logo for each social account, and bad web addresses fall back", async ({
+  page,
+}) => {
+  // HQ's "website" for Theta Epsilon is its Facebook page: shown as the logo.
+  await page.goto(`${route}?q=Theta+Epsilon+Los+Angeles`);
+  await expect(page.locator(visibleCards)).toHaveCount(1);
+  const facebook = page.getByRole("link", { name: "Theta Epsilon on Facebook (opens in a new tab)" });
+  await expect(facebook).toHaveAttribute("href", "https://www.facebook.com/thetaepsgrho");
+  await expect(facebook.locator("svg")).toBeVisible();
+  await expect(page.locator(visibleCards)).not.toContainText("Chapter website");
+
+  // "http://etaxisgrho@weebly.com" is not a working site: link the region instead.
+  await page.goto(`${route}?q=Eta+Xi+Woodstock`);
+  await expect(page.locator(visibleCards)).toHaveCount(1);
+  await expect(page.locator(`${visibleCards} a`)).toHaveAttribute(
+    "href",
+    "https://www.sgrhoneregion.org/chapter-locator-2"
+  );
+});
+
+test("every name in chapter-socials.json matches a chapter", () => {
+  const socials = JSON.parse(
+    readFileSync(new URL("../src/data/chapter-socials.json", import.meta.url), "utf8")
+  );
+  const names = new Set(directory.chapters.map((c: { name: string }) => c.name));
+  expect(Object.keys(socials).filter((name) => !names.has(name))).toEqual([]);
+});
