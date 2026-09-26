@@ -15,10 +15,6 @@
  * Order speaks to members and the public first: the One Sigma message and
  * What's Happening come before heritage, programs and partnerships.
  */
-import membersIcon from "../assets/stat-icons/members.svg?raw";
-import chaptersIcon from "../assets/stat-icons/chapters.svg?raw";
-import statesIcon from "../assets/stat-icons/states.svg?raw";
-import countriesIcon from "../assets/stat-icons/countries.svg?raw";
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import StatBand from "../components/StatBand.astro";
@@ -31,12 +27,13 @@ import { storyMailto, formatStoryDate } from "../lib/stories";
 
 const PORTAL_URL = "https://portal.sgrho1922.org/";
 
-// One line-art family keeps the four measures visually consistent at small sizes.
+// Figures as type, no icons: a gold rule over each numeral, the same
+// device as Herstory's Key Facts (Karena, 2026-09-26: icons read as generic).
 const reachStats = [
-  { value: "100,000+", label: "Lifetime Members", icon: { svg: membersIcon } },
-  { value: "700+", label: "Collegiate & Alumnae Chapters", icon: { svg: chaptersIcon } },
-  { value: "50+", label: "U.S. States & Territories", icon: { svg: statesIcon } },
-  { value: "10", label: "Countries", icon: { svg: countriesIcon } },
+  { value: "100,000+", label: "Lifetime Members" },
+  { value: "700+", label: "Collegiate & Alumnae Chapters" },
+  { value: "50+", label: "U.S. States & Territories" },
+  { value: "10", label: "Countries" },
 ];
 
 // Signature programs. Scope lines restate National Programs.
@@ -2221,24 +2218,14 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   :global(body.page-home .statband__label) {
     color: var(--muted);
   }
-  :global(body.page-home .statband__icon) {
-    display: grid;
-    place-items: center;
-    width: 60px;
-    height: 60px;
-    margin-bottom: var(--space-4);
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    color: var(--royal);
-    background: var(--cream);
-  }
-  :global(body.page-home .statband__icon svg) {
-    width: 36px;
-    height: 36px;
-  }
-  :global(body.page-home .statband__icon .icon-accent) {
-    fill: var(--gold);
-    stroke: none;
+  /* A short gold rule over each figure: gold as a mark, never as text. */
+  :global(body.page-home .statband__value::before) {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 2px;
+    margin: 0 auto var(--space-5);
+    background: var(--gold);
   }
   :global(body.page-home .statband__item + .statband__item::before) {
     background: var(--line);
