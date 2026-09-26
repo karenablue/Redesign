@@ -11,6 +11,7 @@
  * the anti-hazing / report-a-concern links.
  */
 import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import Faq from "../../components/Faq.astro";
 import Carousel from "../../components/Carousel.astro";
@@ -235,55 +236,31 @@ const accountabilityLinks = [
   activeTop="Membership & Intake"
   description="Eligibility standards and the official path to membership in Sigma Gamma Rho Sorority, Incorporated."
 >
-  <section class="mem-hero on-dark">
-    <div class="container mem-hero__grid">
-      <div class="mem-hero__copy">
-        <p class="eyebrow">Prospective Membership</p>
-        <h1 class="mem-hero__title">
-          A Lifetime
-          <br />
-          <span class="editorial-accent">of Greater Service.</span>
-        </h1>
-        <div class="gold-rule"></div>
-        <p class="mem-hero__lead">
-          Bring your commitment to scholarship, service, and sisterhood to Sigma Gamma Rho.
-        </p>
-        <p class="mem-hero__body">
-          Seven Black educators founded our Sorority in 1922. Their legacy continues through women
-          who lead in their communities, serve with purpose, and make a lifelong commitment to one
-          another. Explore the membership pathway that fits your educational journey.
-        </p>
-        <div class="mem-hero__actions">
-          <a class="btn" href="#eligibility">
-            Explore Membership Pathways
-          </a>
-          <a class="btn btn--outline on-dark" href={withBase("/membership/chapter-locator/")}>
-            Find a Chapter
-          </a>
-        </div>
-      </div>
-      <figure class="mem-hero__portrait">
-        <img
-          src={withBase("/images/lambda-psi-1200.jpg")}
-          alt="Sigma Gamma Rho undergraduate members together"
-          width="1200"
-          height="800"
-          fetchpriority="high"
-        />
-        <figcaption>Scholarship. Sisterhood. Service.</figcaption>
-      </figure>
+  <PageHero
+    stack
+    eyebrow="Prospective Membership"
+    title="A lifetime"
+    highlight="of greater service."
+    copy="Seven Black educators founded our Sorority in 1922. Their legacy continues through women who lead in their communities, serve with purpose, and make a lifelong commitment to one another. Explore the membership pathway that fits your educational journey."
+    image="/optimized/hero-ug-sorors.webp"
+    focal="50% 30%"
+    size="tall"
+  >
+    <a class="btn" href="#eligibility">Explore Membership Pathways</a>
+    <a class="btn btn--outline on-dark" href={withBase("/membership/chapter-locator/")}>
+      Find a Chapter
+    </a>
+  </PageHero>
+  <div class="standards-strip on-dark">
+    <div class="standards-strip__inner">
+      <span>Scholarship</span>
+      <span>Service</span>
+      <span>Leadership</span>
+      <span>Integrity</span>
+      <span>Sisterhood</span>
+      <span>Lifelong Commitment</span>
     </div>
-    <div class="standards-strip">
-      <div class="standards-strip__inner">
-        <span>Scholarship</span>
-        <span>Service</span>
-        <span>Leadership</span>
-        <span>Integrity</span>
-        <span>Sisterhood</span>
-        <span>Lifelong Commitment</span>
-      </div>
-    </div>
-  </section>
+  </div>
 
   <SigmaRule />
 
@@ -529,71 +506,10 @@ const accountabilityLinks = [
 
 <style>
   /* ---- hero ---- */
-  .mem-hero {
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .mem-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-    align-items: center;
-    gap: var(--space-12);
-    padding-block: clamp(3.5rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
-  }
-  .mem-hero__title {
-    margin: 0;
-    font-family: var(--font-head);
-    font-weight: 400;
-    font-size: var(--text-hero);
-    line-height: 1.05;
-    color: #fff;
-  }
-  .mem-hero__title span {
-    color: var(--gold);
-  }
-  .mem-hero__lead {
-    font-size: var(--text-lg);
-    font-weight: 700;
-    color: #fff;
-    max-width: 34rem;
-  }
-  .mem-hero__body {
-    max-width: 34rem;
-    color: rgba(255, 255, 255, 0.82);
-  }
-  .mem-hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-6);
-  }
-  .mem-hero__portrait {
-    margin: 0;
-    border-bottom: 4px solid var(--gold);
-  }
-  .mem-hero__portrait img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    height: auto;
-    object-fit: contain;
-    object-position: center;
-  }
-  .mem-hero__portrait figcaption {
-    padding-block: var(--space-4);
-    color: var(--white);
-    font-size: var(--text-sm);
-  }
-  @media (max-width: 900px) {
-    .mem-hero__grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .mem-hero__portrait img {
-      aspect-ratio: 16 / 10;
-    }
-  }
 
   .standards-strip {
-    background: rgba(0, 0, 0, 0.18);
+    background: var(--navy);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
   .standards-strip__inner {

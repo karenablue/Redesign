@@ -9,7 +9,7 @@
  * are not published, so none are stated.
  */
 import Base from "../layouts/Base.astro";
-import Hero from "../components/Hero.astro";
+import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
 import { withBase } from "../lib/url.js";
 
@@ -72,20 +72,18 @@ const departments = [
   activeTop="Contact"
   description="Contact Sigma Gamma Rho's International Corporate Headquarters: address, phone, email, and an inquiry form."
 >
-  <Hero
-    variant="plain"
-    size="compact"
-    editorial
-    align="left"
-    watermark="ΣΓΡ"
+  <PageHero
+    stack
     eyebrow="Contact Sigma Gamma Rho"
     title="Connect with"
     highlight="Headquarters."
     copy="Find the right team for your question, open a support ticket, or reach International Corporate Headquarters directly."
+    watermark="ΣΓΡ"
+    size="compact"
   >
     <a class="btn" href={TICKET_URL} target="_blank" rel="noopener">Open a Support Ticket <span aria-hidden="true">&#8599;</span></a>
-    <a class="btn btn--outline" href="#headquarters-contact">Contact Details <span aria-hidden="true">&darr;</span></a>
-  </Hero>
+    <a class="btn btn--outline on-dark" href="#headquarters-contact">Contact Details <span aria-hidden="true">&darr;</span></a>
+  </PageHero>
 
   <section class="ct-routing" aria-labelledby="ct-routing-title">
     <div class="container">

@@ -4,7 +4,7 @@
  * carried before the newsroom redesign, unchanged.
  */
 import Base from "../../../layouts/Base.astro";
-import Breadcrumb from "../../../components/Breadcrumb.astro";
+import PageHero from "../../../components/PageHero.astro";
 import { withBase } from "../../../lib/url.js";
 ---
 
@@ -13,18 +13,19 @@ import { withBase } from "../../../lib/url.js";
   activeTop="News & Events"
   description="Sigma Gamma Rho members, partners, and guests gathered in Tampa for the 61st International Biennial Boulé, July 22–26, 2026."
 >
+  <PageHero
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: "Latest News", href: "/news-events/latest-news/" },
+      { label: "61st Biennial Boulé" },
+    ]}
+    eyebrow="Boulé • July 2026"
+    title="Tampa welcomes Sigma Gamma Rho"
+    highlight="for the 61st International Biennial Boulé"
+    size="compact"
+  />
   <article class="story">
     <div class="container story__inner">
-      <Breadcrumb
-        items={[
-          { label: "Home", href: "/" },
-          { label: "Latest News", href: "/news-events/latest-news/" },
-          { label: "61st Biennial Boulé" },
-        ]}
-        spacing="article"
-      />
-      <p class="story__meta">Boulé &bull; July 2026</p>
-      <h1>Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé</h1>
       <figure>
         <img
           src={withBase("/optimized/boule.webp")}
@@ -75,21 +76,6 @@ import { withBase } from "../../../lib/url.js";
   }
   .story__inner {
     max-width: 48rem;
-  }
-  .story__meta {
-    margin: 0;
-    color: var(--muted-2);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .story h1 {
-    margin: var(--space-3) 0 var(--space-8);
-    font-family: var(--font-editorial);
-    font-size: var(--text-hero);
-    line-height: 1.12;
-    letter-spacing: -0.03em;
   }
   .story figure {
     margin: 0 0 var(--space-8);

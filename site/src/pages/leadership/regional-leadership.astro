@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
@@ -157,26 +158,17 @@ const regions = [
   activeTop="Leadership"
   description="Regional leaders connecting international strategy with chapters across Sigma Gamma Rho's five regions."
 >
-  <section class="rl-hero on-dark">
-    <div class="container rl-hero__inner">
-      <p class="eyebrow">Leadership Across the Sisterhood</p>
-      <h1>
-        Five Regions.
-        <br />
-        <span class="editorial-accent">One Standard.</span>
-      </h1>
-      <div class="gold-rule"></div>
-      <p>
-        Regional leaders connect international strategy with chapters, undergraduate leadership,
-        members, and communities across Sigma Gamma Rho's geographic structure.
-      </p>
-      <nav class="rl-jump" aria-label="Regional leadership sections">
-        {regions.map((r) => (
-          <a href={`#${r.id}`}>{r.name}</a>
-        ))}
-      </nav>
-    </div>
-  </section>
+  <PageHero
+    stack
+    eyebrow="Leadership Across the Sisterhood"
+    title="Five regions."
+    highlight="One standard."
+    copy="Regional leaders connect international strategy with chapters, undergraduate leadership, members, and communities across Sigma Gamma Rho's geographic structure."
+    image="/optimized/hero-beta-alpha.webp"
+    focal="50% 45%"
+    jumpLabel="Regional leadership sections"
+    jump={regions.map((r) => ({ href: `#${r.id}`, label: r.name }))}
+  />
 
   <SigmaRule />
 
@@ -251,48 +243,6 @@ const regions = [
 </Base>
 
 <style>
-  .rl-hero {
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .rl-hero__inner {
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: var(--container);
-  }
-  .rl-hero h1 {
-    color: #fff;
-    margin: var(--space-2) 0 0;
-  }
-  .rl-hero h1 span {
-    color: var(--gold);
-  }
-  .rl-hero > .container > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.85);
-    max-width: 44rem;
-  }
-  .rl-jump {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-8);
-  }
-  .rl-jump a {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 999px;
-  }
-  .rl-jump a:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--accent-hover);
-    text-decoration-line: underline;
-    text-decoration-color: var(--gold);
-  }
 
   .region-block {
     padding-block: clamp(2.5rem, 5vw, 3.5rem);

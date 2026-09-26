@@ -1,0 +1,127 @@
+/**
+ * Makes the right-sized WebP copies the page openings (PageHero) use, from
+ * the originals in public/images. Run by hand after adding or swapping a
+ * hero photo:  node scripts/optimize-heroes.mjs
+ *
+ * PageHero shows its photo across the right ~60% of a 1440px band at most,
+ * so 1200px wide is enough for a sharp picture. Each image also gets a
+ * 640px copy (name-640.webp) that phones load instead, through srcset, to
+ * stay inside the slow-phone budget. Smaller originals are not enlarged.
+ * The portrait grids at the end build one image from several archival portraits.
+ */
+import sharp from "sharp";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const src = (f) => join(root, "public", "images", f);
+const out = (f) => join(root, "public", "optimized", f);
+
+const HEROES = {
+  "hero-charter.webp": "sgr-alpha-charter.jpeg",
+  "hero-mosaic-crest.webp": "Sigma Gamma Rho Sorority Mosaic Crest.jpg",
+  "hero-boule-steps.webp": "boule.jpg",
+  "hero-beta-alpha.webp": "Beta Alpha.jpg",
+  "hero-ug-sorors.webp": "ug sorors 5.jpg",
+  "hero-alumnae-sorors.webp": "alumnae sorors 3.jfif",
+  "hero-beta-psi-sigma.webp": "Beta Psi Sigma.jpg",
+  "hero-philos.webp": "Boule Philos.jpg",
+  "hero-swim-1922.webp": "swim-1922-2-768x432.jpg",
+  "hero-youth-symposium.webp": "youth-symposium-2-768x432.jpg",
+  "hero-bigbookbag.webp": "operation-bigbookbag-2.jpg",
+  "hero-capitol-hill.webp": "Congressional Day on the Hill 2.jpg",
+  "hero-capitol-steps.webp": "Congressional Day on the Hill.jpg",
+  "hero-lambda-psi.webp": "lambda-psi-1200.jpg",
+  "hero-photoshoot.webp": "SGRho Photoshoot.jfif",
+  "hero-alumnae-professional.webp": "alumnae sorors 2.jfif",
+  "hero-grand-basileus.webp": "international-grand-basileus-marica-harris-704x1024.jpg",
+};
+
+// Writes the full-size and phone-size copies of one image.
+async function save(name, input) {
+  for (const [file, width, quality] of [
+    [name, 1200, 72],
+    [name.replace(/\.webp$/, "-640.webp"), 640, 56],
+  ]) {
+    const info = await sharp(input)
+      .resize({ width, withoutEnlargement: true })
+      .webp({ quality })
+      .toFile(out(file));
+    console.log(`${file}  ${info.width}x${info.height}  ${Math.round(info.size / 1024)}KB`);
+  }
+}
+
+for (const [name, file] of Object.entries(HEROES)) {
+  await save(name, await sharp(src(file)).rotate().toBuffer());
+}
+
+// Archival portrait grids: several portraits in rows, greyscale, as one
+// image shaped like the photo area (about 3:2), so none is cropped away.
+async function portraits(name, files, cols) {
+  const W = 240;
+  const H = 300;
+  const rows = Math.ceil(files.length / cols);
+  const tiles = await Promise.all(
+    files.map((f) =>
+      sharp(src(f)).rotate().resize(W, H, { fit: "cover", position: "top" }).grayscale().toBuffer()
+    )
+  );
+  const grid = await sharp({
+    create: { width: W * cols, height: H * rows, channels: 3, background: "#081633" },
+  })
+    .composite(
+      tiles.map((input, i) => {
+        const row = Math.floor(i / cols);
+        // A short last row is centred.
+        const inRow = row === rows - 1 ? files.length - row * cols : cols;
+        const offset = ((cols - inRow) * W) / 2;
+        return { input, left: Math.round(offset + (i % cols) * W), top: row * H };
+      })
+    )
+    .png()
+    .toBuffer();
+  await save(name, grid);
+}
+
+// The seven Founders.
+await portraits(
+  "hero-founders.webp",
+  [
+    "our-founders-mary-lou-allison.jpg",
+    "our-founders-dorothy-hanley-whiteside.jpg",
+    "our-founders-vivian-irene-white.jpg",
+    "our-founders-nannie-mae-gahn-johnson-300x300.jpg",
+    "our-founders-hattie-mae-redford-300x300.jpg",
+    "our-founders-bessie-mae-downey-rhoades-300x300.jpg",
+    "our-founders-cubena-mcclure-300x300.jpg",
+  ],
+  4
+);
+// Notable Sigmas of the early century (credited on the Notable Sigmas page).
+await portraits(
+  "hero-notable.webp",
+  [
+    "notable/hattie-mcdaniel.jpg",
+    "notable/alice-allison-dunnigan.jpg",
+    "notable/eva-jessye.jpg",
+    "notable/era-bell-thompson.jpg",
+    "notable/louise-beavers.jpg",
+    "notable/lucille-baldwin-brown.jpg",
+  ],
+  3
+);
+// The first eight Grand Basilei, in order of service.
+await portraits(
+  "hero-past-basilei.webp",
+  [
+    "our-founders-mary-lou-allison.jpg",
+    "past-grand-basilei-edith-marlone-ward.jpg",
+    "past-grand-basilei-fannie-o-bannon.jpg",
+    "past-grand-basilei-edith-roache-walker-300x300.jpg",
+    "past-grand-basilei-bertha-black-rhoda-300x300.jpg",
+    "past-grand-basilei-ethel-ross-smith-300x300.jpg",
+    "past-grand-basilei-sallie-edwards-johnson-300x300.jpg",
+    "past-grand-basilei-edna-douglas-300x300.jpg",
+  ],
+  4
+);

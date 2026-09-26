@@ -373,13 +373,13 @@ test.describe("canaries: each check must catch a deliberately broken page", () =
 
   test("one gold flags a darker, non-brand gold used as text", async ({ page }) => {
     // #8a6510 was the retired --gold-text.
-    await expectGold(page, ".hc-hero h1 span { color: #8a6510 !important; }", "/resources/help-center/", "non-brand gold");
+    await expectGold(page, ".ph__title span { color: #8a6510 !important; }", "/resources/help-center/", "non-brand gold");
   });
 
   test("one gold flags a lighter, non-brand gold on a dark hero", async ({ page }) => {
     // #f0cf5c was the retired --gold-bright: it passes contrast on navy and is
     // still off-brand.
-    await expectGold(page, ".hc-hero h1 span { color: #f0cf5c !important; }", "/resources/help-center/", "non-brand gold");
+    await expectGold(page, ".ph__title span { color: #f0cf5c !important; }", "/resources/help-center/", "non-brand gold");
   });
 
   test("one gold flags brand gold as text on a light ground", async ({ page }) => {

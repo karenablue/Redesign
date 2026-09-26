@@ -9,6 +9,7 @@
  * XXVI marker beside the headline, and a two-link leadership nav.
  */
 import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import Section from "../../components/Section.astro";
 import CtaBand from "../../components/CtaBand.astro";
@@ -55,32 +56,18 @@ const jumps = [
   activeTop="Leadership"
   description="Marica T. Harris serves as the 26th International Grand Basileus of Sigma Gamma Rho Sorority, Incorporated."
 >
-  <section class="gb-hero on-dark">
-    <div class="container gb-hero__inner">
-      <div class="gb-hero__copy">
-        <p class="eyebrow">Office of the Grand Basileus</p>
-        <h1 class="gb-hero__title">
-          Marica T.
-          <br />
-          <span class="editorial-accent">Harris</span>
-        </h1>
-        <p class="gb-hero__title-line">26th International Grand Basileus</p>
-        <p class="gb-hero__intro">
-          Leading Sigma Gamma Rho into its next century of service with experience spanning
-          membership, regional leadership, nonprofit administration, and international growth.
-        </p>
-        <a class="btn gb-hero__action" href="#bio">
-          Explore Her Leadership
-        </a>
-      </div>
-      <div class="gb-hero__portrait">
-        <img
-          src={withBase("/images/international-grand-basileus-marica-harris-704x1024.jpg")}
-          alt="International Grand Basileus Marica T. Harris"
-        />
-      </div>
-    </div>
-  </section>
+  <PageHero
+    stack
+    eyebrow="Office of the Grand Basileus · 26th International Grand Basileus"
+    title="Marica T."
+    highlight="Harris"
+    copy="Leading Sigma Gamma Rho into its next century of service with experience spanning membership, regional leadership, nonprofit administration, and international growth."
+    image="/optimized/hero-grand-basileus.webp"
+    focal="50% 0%"
+    size="tall"
+  >
+    <a class="btn" href="#bio">Explore Her Leadership</a>
+  </PageHero>
 
   <SigmaRule />
 
@@ -188,67 +175,7 @@ const jumps = [
 
 <style>
   /* ---- hero ---- */
-  .gb-hero {
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .gb-hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
-    gap: clamp(2rem, 6vw, 4.5rem);
-    align-items: center;
-    padding-block: clamp(3.5rem, 7vw, 5.5rem);
-  }
-  .gb-hero__title {
-    margin: 0;
-    font-family: var(--font-head);
-    font-weight: 400;
-    font-size: var(--text-hero);
-    line-height: 1.05;
-    color: #fff;
-  }
-  .gb-hero__title span {
-    color: var(--accent-text);
-  }
-  .gb-hero__action {
-    margin-top: var(--space-8);
-  }
   /* The office as a LEMON MILK kicker under the name. */
-  .gb-hero__title-line {
-    margin: var(--space-6) 0 var(--space-4);
-    font-family: var(--font-head);
-    font-weight: 400;
-    font-size: var(--text-lg);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .gb-hero__intro {
-    max-width: 34rem;
-    color: rgba(255, 255, 255, 0.88);
-    margin: 0;
-  }
-  .gb-hero__portrait {
-    position: relative;
-    margin: 0;
-    border-bottom: 4px solid var(--gold);
-    overflow: hidden;
-  }
-  .gb-hero__portrait img {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    display: block;
-  }
-  @media (max-width: 820px) {
-    .gb-hero__inner {
-      grid-template-columns: 1fr;
-    }
-    .gb-hero__portrait {
-      max-width: 320px;
-      margin-inline: auto;
-    }
-  }
 
   /* ---- jump links (not sticky: the site header is already pinned) ---- */
   .gb-jump {

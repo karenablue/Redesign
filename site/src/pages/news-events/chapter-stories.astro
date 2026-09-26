@@ -9,7 +9,7 @@
  * submissions, each section shows how a chapter or soror can contribute.
  */
 import Base from "../../layouts/Base.astro";
-import Breadcrumb from "../../components/Breadcrumb.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 import { getCollection, render } from "astro:content";
@@ -32,26 +32,18 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   activeTop="News & Events"
   description="Service, sisterhood and scholarship in action, reported by Sigma Gamma Rho chapters across every region, and sorors in their own words."
 >
-  <section class="cs-hero">
-    <div class="container">
-      <Breadcrumb
-        items={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Chapter Stories" }]}
-      />
-      <div class="cs-masthead">
-        <div>
-          <p class="eyebrow">One Sigma, Every Region</p>
-          <h1>Chapter stories.<span>Greater service, close to home.</span></h1>
-        </div>
-        <div class="cs-masthead__intro">
-          <p>
-            The national programs come to life in chapters. Here is that work as the chapters report
-            it, and sorors in their own words.
-          </p>
-          <a href="#share">Share your chapter&rsquo;s story <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <PageHero
+    stack
+    crumbs={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Chapter Stories" }]}
+    eyebrow="One Sigma, Every Region"
+    title="Chapter stories."
+    highlight="Greater service, close to home."
+    copy="The national programs come to life in chapters. Here is that work as the chapters report it, and sorors in their own words."
+    image="/optimized/hero-lambda-psi.webp"
+    focal="50% 40%"
+  >
+    <a class="btn" href="#share">Share your chapter&rsquo;s story <span aria-hidden="true">&rarr;</span></a>
+  </PageHero>
 
   <section class="cs-main" aria-labelledby="cs-stories-title">
     <div class="container">
@@ -203,43 +195,6 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 </script>
 
 <style>
-  .cs-hero {
-    padding-block: var(--space-10) var(--space-12);
-    background: var(--bright-white);
-    border-bottom: 1px solid var(--line);
-  }
-  .cs-masthead {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: var(--space-10);
-    align-items: end;
-    margin-top: var(--space-6);
-  }
-  .cs-masthead h1 {
-    margin: 0;
-    color: var(--royal);
-  }
-  .cs-masthead h1 span {
-    display: block;
-    margin-top: var(--space-2);
-    font-family: var(--font-editorial);
-    font-style: italic;
-    font-weight: 500;
-    text-transform: none;
-    letter-spacing: 0;
-    font-size: 0.62em;
-    color: var(--accent-text);
-  }
-  .cs-masthead__intro p {
-    color: var(--muted);
-  }
-  .cs-masthead__intro a,
-  .cs-empty a {
-    color: var(--royal-dark);
-    font-weight: 700;
-    text-decoration-color: var(--gold);
-    text-underline-offset: 3px;
-  }
 
   .cs-main,
   .cs-voices,
@@ -453,10 +408,4 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     margin-top: auto;
   }
 
-  @media (max-width: 900px) {
-    .cs-masthead {
-      grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-6);
-    }
-  }
 </style>

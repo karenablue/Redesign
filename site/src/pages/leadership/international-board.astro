@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { getCollection } from "astro:content";
 import { withBase } from "../../lib/url.js";
@@ -27,23 +27,19 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   activeTop="Leadership"
   description="Sigma Gamma Rho's 2026–2028 International Board of Directors."
 >
-  <Hero
-    variant="plain"
-    editorial
-    align="left"
-    watermark="ΣΓΡ"
+  <PageHero
     eyebrow="2026–2028 Administration"
     title="International Board"
     highlight="of Directors"
     copy="Our International Board of Directors provides strategic leadership to uphold the legacy of our seven illustrious founders and the thousands of celebrated women before us as we seek to further instill Sigma Gamma Rho's core values across the globe."
+    image="/optimized/hero-boule-steps.webp"
+    focal="50% 30%"
   >
-    <a class="btn" href="#officers">
-      Meet the Officers
-    </a>
+    <a class="btn" href="#officers">Meet the Officers</a>
     <a class="btn btn--outline on-dark" href={withBase("/leadership/regional-leadership/")}>
       Meet Regional Leadership
     </a>
-  </Hero>
+  </PageHero>
 
   <section class="ibd-intro">
     <div class="container ibd-intro__grid">
@@ -83,6 +79,7 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
           alt={chair.name}
           width="300"
           height="300"
+          loading="lazy"
         />
         <div class="ibd-chair__body">
           <p class="ibd-role">{chair.role}</p>

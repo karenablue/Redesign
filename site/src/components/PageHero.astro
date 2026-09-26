@@ -1,0 +1,313 @@
+---
+/**
+ * PageHero — the Herstory opening, shared. A navy band with a very large
+ * LEMON MILK title whose second part is the accent (gold on navy), an
+ * optional real photograph across the right of the band under a navy
+ * gradient, an optional ghosted year, and an optional jump bar beneath.
+ *
+ * Photographs are always real Sigma Gamma Rho images, right-sized in
+ * public/optimized/ (scripts/optimize-heroes.mjs), which also writes the
+ * name-640.webp copy phones load. `archival` sets them in
+ * greyscale, as Herstory does, for history pages; present-day pages keep
+ * the royal and gold in colour. Serious and task pages pass no image.
+ *
+ * props:
+ *   eyebrow, title, highlight (the accent part), copy
+ *   image      root-absolute path in /optimized/, decorative (alt="")
+ *   focal      object-position for the photo
+ *   archival   greyscale the photo
+ *   watermark  a ghosted year or word behind the title
+ *   crumbs     Breadcrumb items
+ *   jump       [{ href, label }] in-page links for the bar under the band
+ *   jumpLabel  accessible name for the jump bar
+ *   size       "tall" | "regular" | "compact"
+ *   id         anchor id for the band (e.g. a "back to top" target)
+ *   stack      put the accent part on its own line ("Five regions. / One standard.")
+ * default slot: actions (buttons) or a tool such as a search form
+ */
+import Breadcrumb from "./Breadcrumb.astro";
+import { withBase } from "../lib/url.js";
+import { reg } from "../lib/reg.js";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  highlight?: string;
+  copy?: string;
+  image?: string;
+  focal?: string;
+  archival?: boolean;
+  watermark?: string;
+  crumbs?: { label: string; href?: string }[];
+  jump?: { href: string; label: string }[];
+  jumpLabel?: string;
+  size?: "tall" | "regular" | "compact";
+  stack?: boolean;
+  id?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  highlight,
+  copy,
+  image,
+  focal = "50% 40%",
+  archival = false,
+  watermark,
+  crumbs,
+  jump,
+  jumpLabel = "On this page",
+  size = "regular",
+  stack = false,
+  id,
+} = Astro.props;
+
+// Long titles step down a size so they still sit on two or three lines.
+// A stacked title is sized by its longer line.
+const length = stack
+  ? Math.max(title.length, (highlight ?? "").length)
+  : `${title} ${highlight ?? ""}`.trim().length;
+const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
+---
+
+<section
+  id={id}
+  class:list={[
+    "ph",
+    "on-dark",
+    `ph--${size}`,
+    `ph--${scale}`,
+    { "ph--photo": image, "ph--archival": archival, "ph--stack": stack },
+  ]}
+>
+  {image && (
+    <div class="ph__media">
+      <img
+        src={withBase(image)}
+        srcset={`${withBase(image.replace(/\.webp$/, "-640.webp"))} 640w, ${withBase(image)} 1200w`}
+        sizes="(max-width: 820px) 100vw, 62vw"
+        alt=""
+        fetchpriority="high"
+        style={`object-position:${focal}`}
+      />
+    </div>
+  )}
+  <div class="ph__overlay" aria-hidden="true"></div>
+  {watermark && (
+    <span class="ph__watermark" aria-hidden="true">
+      {watermark}
+    </span>
+  )}
+  <div class="container ph__content">
+    {crumbs && <Breadcrumb items={crumbs} tone="dark" />}
+    {eyebrow && <p class="eyebrow ph__eyebrow" set:html={reg(eyebrow)} />}
+    <h1 class="ph__title">
+      <Fragment set:html={reg(title)} />
+      {highlight && (
+        <>
+          {" "}
+          <span set:html={reg(highlight)} />
+        </>
+      )}
+    </h1>
+    {copy && <p class="ph__copy">{copy}</p>}
+    {Astro.slots.has("default") && (
+      <div class="ph__actions">
+        <slot />
+      </div>
+    )}
+  </div>
+</section>
+{jump && jump.length > 0 && (
+  <nav class="ph-jump" aria-label={jumpLabel}>
+    <div class="container">
+      <span>Explore</span>
+      {jump.map((j) => (
+        <a href={j.href}>{j.label}</a>
+      ))}
+    </div>
+  </nav>
+)}
+
+<style>
+  .ph {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    align-content: center;
+    color: #fff;
+    background: var(--navy);
+  }
+  .ph--tall {
+    min-height: 560px;
+  }
+  .ph--regular {
+    min-height: 460px;
+  }
+  .ph--compact {
+    min-height: 0;
+  }
+
+  /* The photo fills the right of the band; the gradient carries the navy
+     across it so the type always sits on a solid ground. */
+  .ph__media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 62%;
+  }
+  .ph__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Fade the photo in from the left so it has no hard edge. */
+    mask-image: linear-gradient(90deg, transparent 0%, #000 40%);
+  }
+  .ph--archival .ph__media img {
+    filter: grayscale(100%);
+  }
+  .ph__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(8, 22, 51, 1) 0%,
+      rgba(8, 22, 51, 0.96) 40%,
+      rgba(8, 22, 51, 0.72) 56%,
+      rgba(14, 37, 88, 0.36) 78%,
+      rgba(8, 22, 51, 0.18) 100%
+    );
+  }
+  .ph:not(.ph--photo) .ph__overlay {
+    background: radial-gradient(120% 90% at 85% 0%, rgba(32, 65, 165, 0.55), transparent 60%);
+  }
+
+  .ph__watermark {
+    position: absolute;
+    right: -0.06em;
+    bottom: -0.2em;
+    font-family: var(--font-label);
+    font-size: clamp(8rem, 22vw, 20rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .ph__content {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(4rem, 9vw, 6rem);
+  }
+  .ph--compact .ph__content {
+    padding-block: clamp(3rem, 6vw, 4.25rem);
+  }
+  .ph__content > :global(.breadcrumb) {
+    margin-bottom: var(--space-6);
+  }
+  .ph__eyebrow {
+    margin-bottom: var(--space-4);
+  }
+  .ph__title {
+    margin: 0;
+    max-width: 14ch;
+    font-family: var(--font-label);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .ph--xl .ph__title {
+    font-size: clamp(3rem, 8.5vw, 7.25rem);
+  }
+  .ph--lg .ph__title {
+    max-width: 16ch;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+  }
+  .ph--md .ph__title {
+    max-width: 20ch;
+    font-size: clamp(2.1rem, 4.6vw, 3.75rem);
+    line-height: 1.02;
+  }
+  .ph__title span {
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-underline);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+  }
+  .ph--stack .ph__title {
+    max-width: none;
+  }
+  .ph--stack .ph__title span {
+    display: block;
+  }
+  .ph__copy {
+    max-width: 40rem;
+    margin: var(--space-8) 0 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--text-md);
+    line-height: 1.75;
+  }
+  .ph__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .ph-jump {
+    background: var(--navy);
+    border-top: 1px solid var(--line-dark);
+  }
+  .ph-jump .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-6);
+    min-height: 4rem;
+    padding-block: var(--space-3);
+  }
+  .ph-jump span {
+    color: var(--gold);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .ph-jump a {
+    color: var(--white);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ph-jump a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 0.3em;
+  }
+
+  @media (max-width: 820px) {
+    .ph__media {
+      width: 100%;
+    }
+    .ph__media img {
+      mask-image: none;
+    }
+    .ph__overlay,
+    .ph--photo .ph__overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(8, 22, 51, 0.82) 0%,
+        rgba(8, 22, 51, 0.9) 55%,
+        rgba(8, 22, 51, 0.97) 100%
+      );
+    }
+    .ph--tall,
+    .ph--regular {
+      min-height: 0;
+    }
+  }
+</style>

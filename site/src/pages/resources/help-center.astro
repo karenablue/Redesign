@@ -7,7 +7,7 @@
  * hours are not published anywhere, so none are stated.
  */
 import Base from "../../layouts/Base.astro";
-import Breadcrumb from "../../components/Breadcrumb.astro";
+import PageHero from "../../components/PageHero.astro";
 import { withBase } from "../../lib/url.js";
 
 const DESK = "https://helpsgrho1922.freshdesk.com";
@@ -56,45 +56,30 @@ const categories = [
   activeTop="Resources"
   description="Search Sigma Gamma Rho's support knowledge base or open a ticket with International Corporate Headquarters."
 >
-  <section class="hc-hero on-dark">
-    <div class="container hc-hero__inner">
-      <Breadcrumb
-        items={[{ label: "Home", href: "/" }, { label: "Resources" }, { label: "Help Center" }]}
-        tone="dark"
-        align="center"
+  <PageHero
+    stack
+    crumbs={[{ label: "Home", href: "/" }, { label: "Resources" }, { label: "Help Center" }]}
+    eyebrow="Sigma Gamma Rho • Member Support"
+    title="How can we"
+    highlight="help you?"
+    copy="Search the knowledge base for answers, or open a support ticket with International Corporate Headquarters."
+    watermark="ΣΓΡ"
+  >
+    <form class="hc-search" action={`${DESK}/support/search`} method="get" target="_blank" role="search">
+      <label class="visually-hidden" for="hc-term">Search the knowledge base</label>
+      <input
+        id="hc-term"
+        name="term"
+        type="search"
+        placeholder="Search FAQs, policies, and member guidelines"
+        required
       />
-      <p class="eyebrow">Sigma Gamma Rho • Member Support</p>
-      <h1>How can we <span>help you?</span></h1>
-      <p class="hc-hero__lead">
-        Search the knowledge base for answers, or open a support ticket with International Corporate
-        Headquarters.
-      </p>
-      <form
-        class="hc-search"
-        action={`${DESK}/support/search`}
-        method="get"
-        target="_blank"
-        role="search"
-      >
-        <label class="visually-hidden" for="hc-term">
-          Search the knowledge base
-        </label>
-        <input
-          id="hc-term"
-          name="term"
-          type="search"
-          placeholder="Search FAQs, policies, and member guidelines"
-          required
-        />
-        <button class="btn" type="submit">
-          Search
-        </button>
-      </form>
-      <a class="btn btn--outline" href={NEW_TICKET} target="_blank" rel="noopener">
-        Submit a Support Ticket <span aria-hidden="true">&#8599;</span>
-      </a>
-    </div>
-  </section>
+      <button class="btn" type="submit">Search</button>
+    </form>
+    <a class="btn btn--outline on-dark" href={NEW_TICKET} target="_blank" rel="noopener">
+      Submit a Support Ticket <span aria-hidden="true">&#8599;</span>
+    </a>
+  </PageHero>
 
   <section class="hc-main">
     <div class="container">
@@ -156,36 +141,11 @@ const categories = [
 </Base>
 
 <style>
-  .hc-hero {
-    background: var(--navy);
-    color: var(--white);
-  }
-  .hc-hero__inner {
-    max-width: 48rem;
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-    text-align: center;
-  }
-  .hc-hero h1 {
-    margin: 0;
-    color: var(--white);
-    font-size: var(--text-hero);
-    line-height: 1.1;
-  }
-  .hc-hero h1 span {
-    display: block;
-    font-family: var(--font-editorial);
-    font-style: italic;
-    color: var(--gold);
-  }
-  .hc-hero__lead {
-    margin: var(--space-4) auto var(--space-8);
-    max-width: 36rem;
-    color: var(--text-on-dark-lead);
-  }
   .hc-search {
     display: flex;
     gap: var(--space-2);
-    margin: 0 auto var(--space-5);
+    flex: 1 1 100%;
+    margin: 0;
     max-width: 36rem;
   }
   .hc-search input {

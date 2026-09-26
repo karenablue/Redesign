@@ -16,7 +16,7 @@
  * `img-src 'self'` policy holds and Commons is not serving our traffic.
  */
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 import { getCollection } from "astro:content";
@@ -117,21 +117,24 @@ const spotlight = [
   activeTop="About Us"
   description="Sigma Gamma Rho's famous Sorors, honorary members, and member spotlights across law, government, entertainment, education, athletics, and business."
 >
-  <Hero
+  <PageHero
+    stack
     eyebrow="Notable Sigmas"
-    title="Women Who"
-    highlight="Moved the World."
+    title="Women who"
+    highlight="moved the world."
     copy="From firsts in law, government, entertainment, education, athletics, and business to women whose service reshaped entire communities, Sigma Gamma Rho's story is also the story of women whose work reached far beyond themselves."
-    variant="plain"
-    accent="navy"
-    align="left"
-    editorial
-    watermark="ΣΓΡ"
+    image="/optimized/hero-notable.webp"
+    focal="50% 50%"
+    archival
+    size="tall"
+    jump={[
+      { href: "#famous-sorors", label: "Famous Sorors" },
+      { href: "#honorary-members", label: "Honorary Members" },
+      { href: "#member-spotlight", label: "Member Spotlight" },
+    ]}
   >
-    <a href="#famous-sorors" class="btn"> Explore Their Achievements </a>
-    <a href="#honorary-members" class="btn btn--outline on-dark"> Honorary Members </a>
-    <a href="#member-spotlight" class="btn btn--outline on-dark"> Member Spotlight </a>
-  </Hero>
+    <a href="#famous-sorors" class="btn">Explore Their Achievements</a>
+  </PageHero>
 
   <section class="ns-intro">
     <div class="container ns-intro__grid">

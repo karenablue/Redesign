@@ -7,7 +7,7 @@
  * which hosts real headshots at sgrho1922.org.
  */
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import Button from "../../components/Button.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
@@ -81,19 +81,17 @@ const staff = [
   activeTop="About Us"
   description="International Corporate Headquarters keeps the international sisterhood running — every day, in every region."
 >
-  <Hero
-    variant="plain"
-    align="left"
-    editorial
-    watermark="ΣΓΡ"
+  <PageHero
     eyebrow="International Corporate Headquarters"
     title="Here for the"
     highlight="work of sisterhood."
     copy="The people and services behind Sigma Gamma Rho’s daily work. Supporting members, chapters, and regions from our home in Cary, North Carolina."
+    image="/optimized/hero-mosaic-crest.webp"
+    focal="50% 50%"
   >
     <Button href="/resources/help-center/">Get Member Support</Button>
     <Button href="/contact/" variant="outline" onDark>Contact Headquarters</Button>
-  </Hero>
+  </PageHero>
 
   <section class="hq-services" aria-labelledby="hq-services-title">
     <div class="container">

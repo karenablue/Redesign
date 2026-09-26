@@ -1,6 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
-import Breadcrumb from "../../../components/Breadcrumb.astro";
+import PageHero from "../../../components/PageHero.astro";
 import { withBase } from "../../../lib/url.js";
 import { getCollection, render } from "astro:content";
 
@@ -41,23 +41,19 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
   description="Announcements and updates from across the international sisterhood of Sigma Gamma Rho."
   preloadImage="/optimized/boule.webp"
 >
-  <section class="ln-hero">
-    <div class="container">
-      <Breadcrumb
-        items={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Latest News" }]}
-      />
-      <div class="ln-masthead">
-        <div>
-          <p class="eyebrow">The Sigma Gamma Rho Newsroom</p>
-          <h1>Latest news.<span>A sisterhood in motion.</span></h1>
-        </div>
-        <div class="ln-masthead__intro">
-          <p>Stories of service, announcements, and moments that move our international sisterhood forward.</p>
-          <a href={withBase("/news-events/upcoming-events/")}>Explore Events &amp; Calendars <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <PageHero
+    stack
+    crumbs={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Latest News" }]}
+    eyebrow="The Sigma Gamma Rho Newsroom"
+    title="Latest news."
+    highlight="A sisterhood in motion."
+    copy="Stories of service, announcements, and moments that move our international sisterhood forward."
+    size="compact"
+  >
+    <a class="btn btn--outline on-dark" href={withBase("/news-events/upcoming-events/")}>
+      Explore Events &amp; Calendars <span aria-hidden="true">&rarr;</span>
+    </a>
+  </PageHero>
 
   <section class="ln-main">
     <div class="container">
@@ -207,43 +203,6 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
 </script>
 
 <style>
-  .ln-hero {
-    background: var(--cream);
-    padding-block: clamp(3rem, 5vw, 4rem);
-  }
-  .ln-masthead {
-    display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-    gap: var(--space-10);
-    align-items: end;
-    padding-top: var(--space-6);
-  }
-  .ln-hero h1 {
-    margin: var(--space-2) 0 0;
-    font-size: var(--text-hero);
-    line-height: 1.1;
-  }
-  .ln-hero h1 span {
-    display: block;
-    margin-top: var(--space-3);
-    font-family: var(--font-editorial);
-    font-style: italic;
-    font-size: var(--text-h2);
-    letter-spacing: -0.035em;
-    color: var(--navy);
-  }
-  .ln-masthead__intro p {
-    color: var(--muted);
-    margin: 0 0 var(--space-5);
-    font-size: var(--text-base);
-  }
-  .ln-masthead__intro a {
-    display: inline-block;
-    color: var(--royal);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    text-underline-offset: 5px;
-  }
 
   .ln-main {
     background: var(--white);
@@ -472,12 +431,6 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
     }
     .ln-press {
       position: static;
-    }
-  }
-  @media (max-width: 768px) {
-    .ln-masthead {
-      grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-6);
     }
   }
   @media (max-width: 640px) {

@@ -13,7 +13,7 @@
  *   sections    { id, title, blocks[] }[]  — blocks are
  *               { p: string } | { subhead: string } | { list: string[] } | { address: string[] }
  */
-import Breadcrumb from "./Breadcrumb.astro";
+import PageHero from "./PageHero.astro";
 
 interface Block {
   p?: string;
@@ -35,16 +35,21 @@ interface Props {
 }
 
 const { title, updated, draftNote, intro = [], sections } = Astro.props;
+// The last word of the title takes the accent, as on every page opening.
+const words = title.split(" ");
+const titleLast = words.length > 1 ? words.pop() : undefined;
+const titleLead = words.join(" ");
 ---
 
-<section class="legal-hero" id="document-top">
-  <div class="container container--narrow">
-    <Breadcrumb items={[{ label: "Home", href: "/" }, { label: title }]} />
-    <p class="eyebrow">Legal</p>
-    <h1>{title}</h1>
-    <p class="legal-hero__updated">Last updated {updated}</p>
-  </div>
-</section>
+<PageHero
+  id="document-top"
+  crumbs={[{ label: "Home", href: "/" }, { label: title }]}
+  eyebrow="Legal"
+  title={titleLead}
+  highlight={titleLast}
+  copy={`Last updated ${updated}`}
+  size="compact"
+/>
 
 <section class="legal-body">
   <div class="container container--narrow">
@@ -105,18 +110,6 @@ const { title, updated, draftNote, intro = [], sections } = Astro.props;
 </section>
 
 <style>
-  .legal-hero {
-    background: var(--cream);
-    padding-block: clamp(3rem, 6vw, 4rem);
-  }
-  .legal-hero h1 {
-    margin: var(--space-2) 0 0;
-  }
-  .legal-hero__updated {
-    margin: var(--space-3) 0 0;
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
 
   .legal-body {
     background: var(--white);

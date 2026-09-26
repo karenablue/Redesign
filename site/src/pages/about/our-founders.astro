@@ -11,7 +11,7 @@
  * to her full story rather than just swapping a caption.
  */
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import Section from "../../components/Section.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import Card from "../../components/Card.astro";
@@ -144,20 +144,21 @@ const profiles = [
   description="Meet the seven Black educators who founded Sigma Gamma Rho Sorority, Incorporated at Butler University in 1922."
   preloadImage="/optimized/sgr-alpha-charter.webp"
 >
-  <Hero
+  <PageHero
+    stack
     eyebrow="Our Founders · The Seven Pearls"
     title="Seven educators."
     highlight="A lasting purpose."
     copy="Seven Black educators. One shared conviction. A sisterhood created in Indianapolis in 1922 and carried forward for generations."
-    image="/optimized/sgr-alpha-charter.webp"
-    focal="70% 50%"
+    image="/optimized/hero-founders.webp"
+    focal="50% 50%"
+    archival
     watermark="1922"
-    align="left"
-    editorial
+    size="tall"
   >
     <Button href="#seven-pearls">Meet the Seven Pearls</Button>
     <Button href="/about/herstory/" variant="outline" onDark>Explore Our Herstory</Button>
-  </Hero>
+  </PageHero>
 
   <!-- GENESIS -->
   <Section tone="white" eyebrow="Indianapolis • November 12, 1922" title="The Genesis at Butler University" align="left">

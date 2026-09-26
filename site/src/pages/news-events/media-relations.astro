@@ -10,7 +10,7 @@
  * before launch.
  */
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import { withBase } from "../../lib/url.js";
 import { getCollection } from "astro:content";
 
@@ -42,19 +42,18 @@ const releases = (await getCollection("news"))
   activeTop="News & Events"
   description="Press contacts, media inquiries, the approved boilerplate, and official brand resources for Sigma Gamma Rho Sorority, Inc."
 >
-  <Hero
-    variant="plain"
-    editorial
-    align="left"
-    watermark="ΣΓΡ"
+  <PageHero
+    stack
     eyebrow="Press & Communications"
     title="The press desk."
     highlight="The Sigma Gamma Rho story."
     copy="Connect with our media relations team for interviews, official statements, historical archives, and authorized brand resources."
+    image="/optimized/hero-capitol-steps.webp"
+    focal="50% 50%"
   >
     <a class="btn" href="#press-inquiry">Make a Press Inquiry <span aria-hidden="true">&darr;</span></a>
-    <a class="btn btn--outline" href="#brand-resources">Brand Resources <span aria-hidden="true">&darr;</span></a>
-  </Hero>
+    <a class="btn btn--outline on-dark" href="#brand-resources">Brand Resources <span aria-hidden="true">&darr;</span></a>
+  </PageHero>
   <section class="mr-factband" aria-label="Sigma Gamma Rho at a glance">
     <div class="container">
       <ul class="mr-facts">

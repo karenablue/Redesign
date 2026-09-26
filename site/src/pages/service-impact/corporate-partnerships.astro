@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
@@ -183,28 +184,18 @@ const collabs = [
   activeTop="Programs & Impact"
   description="Sigma Gamma Rho collaborates with corporations, nonprofits, and national organizations to strengthen programs and expand community impact."
 >
-  <section class="cp-hero on-dark">
-    <div class="container cp-hero__inner">
-      <p class="eyebrow">Service &amp; Impact</p>
-      <h1>
-        Shared purpose.<br /><span class="editorial-accent">Greater possibilities.</span>
-      </h1>
-      <div class="gold-rule"></div>
-      <p>
-        Sigma Gamma Rho collaborates with corporations, nonprofits, foundations, and national
-        organizations whose resources, expertise, and reach strengthen programs and expand community
-        impact.
-      </p>
-      <div class="cp-hero__actions">
-        <a class="btn" href={FORM_URL} target="_blank" rel="noopener">
-          Start a Partnership
-        </a>
-        <a class="btn btn--outline on-dark" href="#partner-grid">
-          Meet Our Partners
-        </a>
-      </div>
-    </div>
-  </section>
+  <PageHero
+    stack
+    eyebrow="Service & Impact"
+    title="Shared purpose."
+    highlight="Greater possibilities."
+    copy="Sigma Gamma Rho collaborates with corporations, nonprofits, foundations, and national organizations whose resources, expertise, and reach strengthen programs and expand community impact."
+    image="/optimized/hero-bigbookbag.webp"
+    focal="50% 40%"
+  >
+    <a class="btn" href={FORM_URL} target="_blank" rel="noopener">Start a Partnership</a>
+    <a class="btn btn--outline on-dark" href="#partner-grid">Meet Our Partners</a>
+  </PageHero>
 
   <section class="cp-proof">
     <div class="container">
@@ -333,32 +324,6 @@ const collabs = [
 </Base>
 
 <style>
-  .cp-hero {
-    background: var(--navy);
-    color: var(--white);
-  }
-  .cp-hero__inner {
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-  }
-  .cp-hero h1 {
-    color: #fff;
-    margin: var(--space-2) 0 0;
-    max-width: 50rem;
-    font-size: var(--text-hero);
-  }
-  .cp-hero h1 span {
-    color: var(--gold);
-  }
-  .cp-hero > .container > p:not(.eyebrow) {
-    color: var(--text-on-dark-soft);
-    max-width: 42rem;
-  }
-  .cp-hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-8);
-  }
 
   /* ---- proof: three columns, hairline dividers ---- */
   .cp-proof {

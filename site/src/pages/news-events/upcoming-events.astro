@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import { nationalCalendar } from "../../data/national-calendar";
@@ -75,19 +75,18 @@ const categories = [...new Set(listed.map((e) => e.tag))];
   activeTop="News & Events"
   description="Connect, serve, and celebrate with Sigma Gamma Rho sorors across every region."
 >
-  <Hero
-    variant="plain"
-    editorial
-    align="left"
-    watermark="ΣΓΡ"
+  <PageHero
+    stack
     eyebrow="Upcoming Events • National Calendars"
     title="Come together."
     highlight="Carry service forward."
     copy="Connect, serve, and celebrate with sorors across every region. Explore a year of community impact and recognition, then find your next gathering."
+    image="/optimized/hero-capitol-hill.webp"
+    focal="60% 40%"
   >
     <a class="btn" href="#national-calendars">2026–27 National Calendars <span aria-hidden="true">&darr;</span></a>
-    <a class="btn btn--outline" href="#event-list">Events &amp; Gatherings <span aria-hidden="true">&darr;</span></a>
-  </Hero>
+    <a class="btn btn--outline on-dark" href="#event-list">Events &amp; Gatherings <span aria-hidden="true">&darr;</span></a>
+  </PageHero>
 
   <section
     class="section national-calendar"

@@ -8,7 +8,7 @@
  * lives on /resources/vendor/, not here.
  */
 import Base from "../../layouts/Base.astro";
-import Hero from "../../components/Hero.astro";
+import PageHero from "../../components/PageHero.astro";
 import { withBase } from "../../lib/url.js";
 
 const ICHQ_URL = "https://sgrho1922.bamboohr.com/careers";
@@ -48,26 +48,23 @@ const tracks = [
   title="Careers"
   activeTop="Resources"
   description="Staff careers at Sigma Gamma Rho's International Corporate Headquarters and the Sorority's job board for members."
-  preloadImage="/optimized/sgrho-photoshoot.webp"
 >
-  <Hero
-    variant="split"
-    editorial
-    align="left"
+  <PageHero
+    stack
     eyebrow="Careers & Talent Network"
     title="Work with"
     highlight="greater purpose."
     copy="Join the team supporting our sisterhood, or take your next professional step through the Sigma Gamma Rho job board."
-    image="/optimized/sgrho-photoshoot.webp"
-    imageAlt="Sigma Gamma Rho members together"
+    image="/optimized/hero-alumnae-professional.webp"
+    focal="50% 35%"
   >
-        <a class="btn" href={ICHQ_URL} target="_blank" rel="noopener">
-          View Open ICHQ Positions <span aria-hidden="true">&#8599;</span>
-        </a>
-        <a class="btn btn--outline" href={BOARD_URL} target="_blank" rel="noopener">
-          Explore the Job Board <span aria-hidden="true">&#8599;</span>
-        </a>
-  </Hero>
+    <a class="btn" href={ICHQ_URL} target="_blank" rel="noopener">
+      View Open ICHQ Positions <span aria-hidden="true">&#8599;</span>
+    </a>
+    <a class="btn btn--outline on-dark" href={BOARD_URL} target="_blank" rel="noopener">
+      Explore the Job Board <span aria-hidden="true">&#8599;</span>
+    </a>
+  </PageHero>
 
   <section class="ca-tracks">
     <div class="container ca-tracks__grid">

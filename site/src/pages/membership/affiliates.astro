@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import { withBase } from "../../lib/url.js";
 import { reg } from "../../lib/reg.js";
@@ -63,26 +64,17 @@ const affiliates = [
   activeTop="Membership & Intake"
   description="Rhosebuds, Rhoers, and Philos — Sigma Gamma Rho's three affiliate experiences for youth development, leadership, and community partnership."
 >
-  <section class="aff-hero on-dark">
-    <div class="container aff-hero__inner">
-      <p class="eyebrow">Membership • Affiliates</p>
-      <h1>
-        Growing in Service.
-        <br />
-        <span class="editorial-accent">Connected to Sigma.</span>
-      </h1>
-      <div class="gold-rule"></div>
-      <p>
-        Our affiliate structure extends development, service, mentorship, and community connection
-        beyond initiated membership—meeting girls and women at distinct stages of life.
-      </p>
-      <nav class="aff-hero__nav" aria-label="Affiliate groups">
-        {affiliates.map((a) => (
-          <a href={`#${a.key}`}>{a.short}</a>
-        ))}
-      </nav>
-    </div>
-  </section>
+  <PageHero
+    stack
+    eyebrow="Membership • Affiliates"
+    title="Growing in service."
+    highlight="Connected to Sigma."
+    copy="Our affiliate structure extends development, service, mentorship, and community connection beyond initiated membership—meeting girls and women at distinct stages of life."
+    image="/optimized/hero-philos.webp"
+    focal="50% 30%"
+    jumpLabel="Affiliate groups"
+    jump={affiliates.map((a) => ({ href: `#${a.key}`, label: a.short }))}
+  />
 
   <SigmaRule />
 
@@ -184,46 +176,6 @@ const affiliates = [
 </Base>
 
 <style>
-  .aff-hero {
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .aff-hero__inner {
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: var(--container);
-  }
-  .aff-hero h1 {
-    color: #fff;
-    margin: var(--space-2) 0 0;
-  }
-  .aff-hero h1 span {
-    color: var(--gold);
-  }
-  .aff-hero > .container > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.85);
-    max-width: 44rem;
-  }
-  .aff-hero__nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-8);
-  }
-  .aff-hero__nav a {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 999px;
-  }
-  .aff-hero__nav a:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: #fff;
-  }
 
   .aff-intro {
     background: var(--white);

@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
 import { primaryNav } from "../data/nav.js";
 import { withBase } from "../lib/url.js";
 
@@ -11,24 +12,21 @@ const sections = primaryNav.filter((item) => item.href || item.children?.length)
   title="Page Not Found"
   description="That page could not be found on the Sigma Gamma Rho national website."
 >
+  <PageHero
+    stack
+    eyebrow="Error 404"
+    title="We couldn't find"
+    highlight="that page."
+    copy="The link may be outdated, or the address may have a typo. The page you're looking for isn't here — but the rest of the site still is."
+    watermark="404"
+    size="compact"
+  >
+    <a class="btn" href={withBase("/")}>Back to Home</a>
+    <a class="btn btn--outline on-dark" href={withBase("/contact/")}>Contact Headquarters</a>
+  </PageHero>
+
   <section class="nf">
-    <div class="container container--narrow nf__inner">
-      <p class="eyebrow">Error 404</p>
-      <h1>We couldn't find that page.</h1>
-      <p class="nf__lead">
-        The link may be outdated, or the address may have a typo. The page you're looking for isn't
-        here — but the rest of the site still is.
-      </p>
-
-      <div class="nf__actions">
-        <a class="btn" href={withBase("/")}>
-          Back to Home
-        </a>
-        <a class="btn btn--outline" href={withBase("/contact/")}>
-          Contact Headquarters
-        </a>
-      </div>
-
+    <div class="container">
       <nav class="nf__sections" aria-label="Main sections">
         <p class="nf__sections-label">Or head straight to a section</p>
         <ul>
@@ -48,29 +46,9 @@ const sections = primaryNav.filter((item) => item.href || item.children?.length)
     background: var(--cream);
     padding-block: clamp(4rem, 8vw, 7rem);
   }
-  .nf__inner {
-    text-align: center;
-  }
-  .nf h1 {
-    margin: var(--space-2) 0 0;
-  }
-  .nf__lead {
-    max-width: 46ch;
-    margin: var(--space-5) auto 0;
-    color: var(--muted);
-  }
-  .nf__actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-4);
-    margin-top: var(--space-8);
-  }
 
   .nf__sections {
-    margin-top: var(--space-12);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--line);
+    text-align: center;
   }
   .nf__sections-label {
     margin: 0 0 var(--space-4);

@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import { withBase } from "../../lib/url.js";
@@ -99,26 +100,20 @@ const foundations: Foundation[] = [
   activeTop="Programs & Impact"
   description="The National Education Fund, SPEAR Foundation, and Seven Pearls Foundation — Sigma Gamma Rho's partner foundations for education, research, and community support."
 >
-  <section class="pf-hero on-dark">
-    <div class="container pf-hero__inner">
-      <p class="eyebrow">Service &amp; Impact</p>
-      <h1>
-        Give with purpose.<br /><span class="editorial-accent">Help the work grow.</span>
-      </h1>
-      <div class="gold-rule"></div>
-      <p>
-        Through education, research, advocacy, fiscal support, and strategic partnerships, Sigma
-        Gamma Rho's partner foundations help transform community vision into sustained impact.
-      </p>
-      <div class="pf-hero__actions">
-        <a class="btn" href="#foundations">Choose a Foundation</a>
-        <a class="btn btn--outline on-dark" href={withBase("/service-impact/national-programs/")}>Explore the Programs</a>
-      </div>
-    </div>
-    <div class="pf-hero__mark" aria-hidden="true">
-      ΣΓΡ
-    </div>
-  </section>
+  <PageHero
+    stack
+    eyebrow="Service & Impact"
+    title="Give with purpose."
+    highlight="Help the work grow."
+    copy="Through education, research, advocacy, fiscal support, and strategic partnerships, Sigma Gamma Rho's partner foundations help transform community vision into sustained impact."
+    image="/optimized/hero-youth-symposium.webp"
+    focal="60% 40%"
+  >
+    <a class="btn" href="#foundations">Choose a Foundation</a>
+    <a class="btn btn--outline on-dark" href={withBase("/service-impact/national-programs/")}>
+      Explore the Programs
+    </a>
+  </PageHero>
 
   <section class="pf-intro">
     <div class="container pf-intro__grid">
@@ -200,46 +195,6 @@ const foundations: Foundation[] = [
 </Base>
 
 <style>
-  .pf-hero {
-    position: relative;
-    overflow: hidden;
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .pf-hero__inner {
-    position: relative;
-    z-index: 2;
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-  }
-  .pf-hero h1 {
-    color: #fff;
-    margin: var(--space-2) 0 0;
-    font-size: var(--text-hero);
-    max-width: 48rem;
-  }
-  .pf-hero h1 span {
-    color: var(--gold);
-  }
-  .pf-hero > .container > p:not(.eyebrow) {
-    color: var(--text-on-dark-soft);
-    max-width: 42rem;
-  }
-  .pf-hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
-  }
-  .pf-hero__mark {
-    position: absolute;
-    right: -0.5rem;
-    bottom: -2rem;
-    z-index: 1;
-    color: var(--white);
-    opacity: 0.06;
-    font-size: clamp(8rem, 24vw, 24rem);
-    font-family: var(--font-greek);
-  }
 
   .pf-intro {
     background: var(--white);
@@ -353,9 +308,6 @@ const foundations: Foundation[] = [
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-6);
       padding: var(--space-6);
-    }
-    .pf-hero__actions .btn {
-      width: 100%;
     }
   }
 </style>
