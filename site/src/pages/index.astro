@@ -15,6 +15,10 @@
  * Order speaks to members and the public first: the One Sigma message and
  * What's Happening come before heritage, programs and partnerships.
  */
+import membersIcon from "../assets/stat-icons/members.svg?raw";
+import chaptersIcon from "../assets/stat-icons/chapters.svg?raw";
+import statesIcon from "../assets/stat-icons/states.svg?raw";
+import countriesIcon from "../assets/stat-icons/countries.svg?raw";
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import StatBand from "../components/StatBand.astro";
@@ -27,13 +31,14 @@ import { storyMailto, formatStoryDate } from "../lib/stories";
 
 const PORTAL_URL = "https://portal.sgrho1922.org/";
 
-// Figures as type, no icons: a gold rule over each numeral, the same
-// device as Herstory's Key Facts (Karena, 2026-09-26: icons read as generic).
+// Large two-tone icons over each figure, the peer pattern Karena asked for
+// (AKA's stat cards): Phosphor duotone, royal line with a gold fill, no
+// container. The cap for chapters nods to the founding educators.
 const reachStats = [
-  { value: "100,000+", label: "Lifetime Members" },
-  { value: "700+", label: "Collegiate & Alumnae Chapters" },
-  { value: "50+", label: "U.S. States & Territories" },
-  { value: "10", label: "Countries" },
+  { value: "100,000+", label: "Lifetime Members", icon: { svg: membersIcon } },
+  { value: "700+", label: "Collegiate & Alumnae Chapters", icon: { svg: chaptersIcon } },
+  { value: "50+", label: "U.S. States & Territories", icon: { svg: statesIcon } },
+  { value: "10", label: "Countries", icon: { svg: countriesIcon } },
 ];
 
 // Signature programs. Scope lines restate National Programs.
@@ -2218,14 +2223,23 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   :global(body.page-home .statband__label) {
     color: var(--muted);
   }
-  /* A short gold rule over each figure: gold as a mark, never as text. */
-  :global(body.page-home .statband__value::before) {
-    content: "";
+  /* Two-tone icons, no container: royal line, gold fill (gold as a fill,
+     never as text). Decorative, so hidden from assistive tech. */
+  :global(body.page-home .statband__icon) {
     display: block;
-    width: 32px;
-    height: 2px;
-    margin: 0 auto var(--space-5);
-    background: var(--gold);
+    width: clamp(56px, 5.5vw, 76px);
+    height: clamp(56px, 5.5vw, 76px);
+    margin: 0 auto var(--space-4);
+    color: var(--royal);
+  }
+  :global(body.page-home .statband__icon svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  :global(body.page-home .statband__icon .icon-fill) {
+    fill: var(--gold);
+    opacity: 0.55;
   }
   :global(body.page-home .statband__item + .statband__item::before) {
     background: var(--line);
