@@ -6,11 +6,11 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "predev": "node scripts/link-images.mjs",
+    "predev": "node scripts/link-images.mjs && node scripts/vendor-maplibre.mjs",
     "dev": "astro dev --open",
-    "preview:ci": "node scripts/link-images.mjs && astro build && node scripts/serve-dist.mjs 4322",
+    "preview:ci": "node scripts/link-images.mjs && node scripts/vendor-maplibre.mjs && astro build && node scripts/serve-dist.mjs 4322",
     "start": "astro dev --open",
-    "prebuild": "node scripts/link-images.mjs",
+    "prebuild": "node scripts/link-images.mjs && node scripts/vendor-maplibre.mjs",
     "build": "astro build",
     "preview": "astro preview --open",
     "astro": "astro",
@@ -22,10 +22,12 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "sync:chapters": "node scripts/sync-chapters.mjs",
     "verify": "npm run check && npm run lint && npm run format:check"
   },
   "dependencies": {
-    "astro": "^7.2.10"
+    "astro": "^7.2.10",
+    "maplibre-gl": "^6.11.2"
   },
   "allowScripts": {
     "esbuild": true

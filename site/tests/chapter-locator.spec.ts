@@ -1,13 +1,22 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+
+// The list is HQ's chapter records (scripts/sync-chapters.mjs). Chapters named
+// below are checked against that data as retrieved; if a re-sync drops one,
+// pick another from src/data/chapter-directory.json.
+const directory = JSON.parse(
+  readFileSync(new URL("../src/data/chapter-directory.json", import.meta.url), "utf8")
+);
 
 const route = "/membership/chapter-locator/";
 const visibleCards = ".chapter-result:visible";
 
-test("completed import includes all assigned listings and Southeastern chapter search", async ({
+test("every chapter in HQ's records is listed, and Southeastern chapter search works", async ({
   page,
 }) => {
   await page.goto(`${route}?q=Alpha+Beta&region=Southeastern&type=undergraduate`);
-  await expect(page.locator(".chapter-result")).toHaveCount(719);
+  expect(directory.chapters.length).toBeGreaterThan(600);
+  await expect(page.locator(".chapter-result")).toHaveCount(directory.chapters.length);
   await expect(page.locator(visibleCards)).toHaveCount(1);
   await expect(page.locator(visibleCards)).toContainText("Tennessee State University");
   await expect(page.locator(visibleCards)).toContainText("Nashville, TN");
@@ -15,13 +24,17 @@ test("completed import includes all assigned listings and Southeastern chapter s
     "href",
     "https://www.seregionsgrho.org/team-3"
   );
-  await page.goto(`${route}?q=Lambda+Nu+Sigma+Toronto&region=Northeastern&type=alumnae`);
+  await page.goto(`${route}?q=Lambda+Nu+Sigma+Montreal&region=Northeastern&type=alumnae`);
   await expect(page.locator(visibleCards)).toHaveCount(1);
-  await expect(page.locator(visibleCards)).toContainText("Toronto, Ontario, Canada");
-  await page.goto(`${route}?q=Xi+Pi+Virgin&region=Southeastern&type=undergraduate`);
+  await expect(page.locator(visibleCards)).toContainText("Montreal, Canada");
+  // A chapter with its own website links there instead of the regional directory.
+  await expect(page.locator(`${visibleCards} a`)).toHaveAttribute(
+    "href",
+    "https://www.lambdanusigma.ca/"
+  );
+  await page.goto(`${route}?q=Zeta+Upsilon+Sigma&region=Southeastern&type=alumnae`);
   await expect(page.locator(visibleCards)).toHaveCount(1);
   await expect(page.locator(visibleCards)).toContainText("U.S. Virgin Islands");
-  await expect(page.locator(`${visibleCards} .chapter-result__location`)).not.toContainText(",");
 });
 
 test("single-letter chapter sequence comes before double-letter chapter names", async ({
@@ -33,10 +46,10 @@ test("single-letter chapter sequence comes before double-letter chapter names", 
   expect(names.slice(0, 6).map((name) => name.trim())).toEqual([
     "Alpha",
     "Epsilon",
-    "Zeta",
     "Eta",
     "Kappa",
     "Lambda",
+    "Mu",
   ]);
   const allNames = await page.locator(".chapter-result h3").allTextContents();
   expect(allNames.findIndex((name) => name.trim() === "Psi")).toBeLessThan(
@@ -53,7 +66,7 @@ test("search finds sourced chapters by city, university and full state name", as
   );
   await page.getByRole("button", { name: "Alumnae", exact: true }).click();
   await expect(page.locator(visibleCards)).toHaveCount(1);
-  await expect(page.locator(visibleCards)).toContainText("Delta Sigma");
+  await expect(page.locator(visibleCards)).toContainText("Theta Chi Sigma");
   await expect(page.locator(`${visibleCards} a`)).toHaveAttribute(
     "href",
     "https://www.sgrhocentral.com/chapter-locator"
@@ -125,7 +138,7 @@ for (const width of [375, 768, 1440]) {
   });
 }
 
-test("new regional and international sources are searchable with accurate source links", async ({
+test("international chapters are searchable and link to their directory or website", async ({
   page,
 }) => {
   await page.goto(`${route}?q=Ghana&type=alumnae&region=Northeastern`);
@@ -134,7 +147,7 @@ test("new regional and international sources are searchable with accurate source
   await expect(page.locator(visibleCards)).toContainText("Accra, Ghana");
   await expect(page.locator(`${visibleCards} a`)).toHaveAttribute(
     "href",
-    "https://www.sgrhoneregion.org/international-chapters"
+    "https://www.sgrhoneregion.org/chapter-locator-2"
   );
   await page.locator("#chapter-search").fill("Bermuda");
   await page.getByRole("button", { name: "Find Chapters", exact: true }).click();
@@ -146,7 +159,7 @@ test("new regional and international sources are searchable with accurate source
   await expect(page.locator(visibleCards)).toContainText("Baltimore, MD");
   await expect(page.locator(`${visibleCards} a`)).toHaveAttribute(
     "href",
-    "https://www.sgrhoneregion.org/maryland"
+    "https://www.sgrhoneregion.org/chapter-locator-2"
   );
 
   await page.goto(`${route}?q=Nu+Iota&region=Southwestern&type=undergraduate`);
@@ -154,8 +167,19 @@ test("new regional and international sources are searchable with accurate source
   await expect(page.locator(visibleCards)).toContainText("University of Texas at Arlington");
   await expect(page.locator(`${visibleCards} a`)).toHaveAttribute(
     "href",
-    /mid=1xG4niXX33pUVIJBC4e6eWFAjd3LVi3CE/
+    "http://www.uta.edu/greek/"
   );
   await page.goto(`${route}?q=Texas&region=Southwestern`);
   await expect(page.locator(visibleCards).first()).toContainText("Southwestern Region");
+});
+
+test("the map loads on approach and follows the filters", async ({ page }) => {
+  await page.goto(route);
+  const map = page.locator("#chapter-map");
+  await expect(map.locator(".chapter-map__placeholder")).toBeVisible();
+  await map.scrollIntoViewIfNeeded();
+  await expect(map.locator("canvas")).toBeVisible({ timeout: 20_000 });
+  await page.locator("#chapter-search").fill("Texas");
+  await page.getByRole("button", { name: "Find Chapters", exact: true }).click();
+  await expect(page.locator("#search-message")).toContainText('for "Texas"');
 });

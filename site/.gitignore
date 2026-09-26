@@ -4,6 +4,8 @@ dist/
 .astro/
 # local junction to ../images (recreated by scripts/link-images) — see README
 public/images
+# MapLibre browser build, copied from node_modules by scripts/vendor-maplibre.mjs
+public/vendor
 
 # dependencies
 node_modules/

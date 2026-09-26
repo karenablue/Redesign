@@ -1,4 +1,48 @@
-# Chapter directory snapshot
+# Chapter directory
+
+`chapter-directory.json` lists 672 chapters (348 undergraduate,
+324 alumnae; 474 with a map position), built by
+`scripts/sync-chapters.mjs` on 2026-09-26 from HQ's own chapter feed:
+https://sgrho1922.org/wp-json/sgr/v1/chapters (the data behind the current sgrho1922.org Chapter Locator).
+
+Rebuild with `npm run sync:chapters` while that feed exists. When the WordPress
+site is retired, point the script at an export from HQ's member system, or
+edit `chapter-directory.json` directly.
+
+## How the list is made
+
+- **Which chapters:** every undergraduate and graduate (alumnae) record in the
+  feed. All are marked "Open", so the feed is HQ's list of active chapters.
+  Rhoer, Philo and Rhosebud affiliate groups are left out (Karena, 2026-09-26);
+  they have their own Affiliates page, and Rhosebuds are a youth group.
+- **Details:** the feed rarely names a school and gives no location for 158
+  chapters, so `chapter-directory-regional.json` (the earlier snapshot of the
+  five regional directories, 2026-09-18) fills city, state, school and region
+  for chapters it matches by name.
+- **Regions:** from that snapshot where matched, otherwise from the state
+  (every state maps to one region in the snapshot).
+- **Cities** in the feed are often mailing addresses, not campus towns
+  (Psi, Southern Illinois University, is listed in Fairview Heights, IL).
+
+## For HQ to confirm before launch
+
+`chapter-review.json` holds these lists in full.
+
+1. **Is this data meant to be public?** The feed is a Salesforce report export.
+   It includes the report footer "Confidential Information - Do Not Distribute"
+   and a Salesforce copyright line as if they were chapters. The chapter
+   details themselves (names, cities, schools, websites) are already shown on
+   the public locator.
+2. **Rows that are not chapters** (11, dropped): Central General Member, Central Members-At-Large, Northeastern General Member, Northeastern Members-At-Large, Southeastern General Member, Southeastern Members-At-Large, Southwestern General Member, Southwestern Members-At-Large, TEST Undergraduate Chapter, Western General Member, Western Members-At-Large.
+3. **Chapters with no location anywhere** (8, listed by name only): Eta Eta Sigma, Eta Tau Sigma, Eta Upsilon, Iota Iota Sigma, Sarasota/Bradenton, Florida, Staten Island, NY, Tau Eta, Xi Sigma Sigma.
+4. **In the regional directories but not in HQ's list** (85), so not shown.
+   Some may be closed; others may be missing from HQ's records. Examples:
+   Zeta Delta, Rho Pi, Gamma Nu, Gamma Mu Sigma, Beta Gamma, Xi Iota, Tau Alpha, Xi Delta, Zeta, Beta Nu, Gamma Psi, Delta Kappa.
+
+## Earlier snapshot
+
+`chapter-directory-regional.json` is kept as the fallback source above. Its
+provenance notes follow, unchanged.
 
 `chapter-directory.json` contains 719 chapter listings collected September 18,
 2026 from official regional directories, the supplied Southwestern map, and Wikipedia. Each record retains its source URL.

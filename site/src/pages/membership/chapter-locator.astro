@@ -1,5 +1,11 @@
 ---
-/** Search a dated snapshot of official regional listings. */
+/**
+ * Chapter Locator. The list is HQ's own chapter records (the feed behind the
+ * old site's locator), filled out from the regional directories; see
+ * scripts/sync-chapters.mjs and src/data/chapter-directory.md. Undergraduate
+ * and alumnae chapters only. The map is an enhancement over the list: it
+ * loads MapLibre only when scrolled near, and shows whatever the filters show.
+ */
 import directory from "../../data/chapter-directory.json";
 import CardGrid from "../../components/CardGrid.astro";
 import Base from "../../layouts/Base.astro";
@@ -9,6 +15,12 @@ import { compareChapterNames } from "../../lib/chapter-order";
 const chapters = [...directory.chapters].sort(
   (a, b) => compareChapterNames(a.name, b.name) || a.region.localeCompare(b.region)
 );
+const retrieved = new Date(`${directory.retrieved}T12:00:00`).toLocaleDateString("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+const mappedCount = chapters.filter((c) => "lat" in c).length;
 
 const regions = [
   {
@@ -153,8 +165,31 @@ const regions = [
         </button>
       </div>
       <p id="search-message" class="search-note" role="status" aria-live="polite">
-        {directory.chapters.length} published listings
+        {directory.chapters.length} chapters
       </p>
+      <figure class="chapter-map">
+        <div
+          id="chapter-map"
+          class="chapter-map__canvas"
+          data-vendor={withBase("/vendor/maplibre/")}
+          role="region"
+          aria-label="Map of the chapters listed below"
+        >
+          <p class="chapter-map__placeholder">The map loads as you scroll to it.</p>
+        </div>
+        <figcaption>
+          {mappedCount} of {directory.chapters.length} chapters have a map location; every chapter
+          is in the list below. Map data &copy;{" "}
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">
+            OpenStreetMap contributors<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          , tiles by{" "}
+          <a href="https://openfreemap.org" target="_blank" rel="noopener">
+            OpenFreeMap<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          .
+        </figcaption>
+      </figure>
       <CardGrid min="280px" cols={3} gap="var(--space-5)">
         {chapters.map((chapter) => (
           <article
@@ -169,46 +204,54 @@ const regions = [
             data-state={chapter.state}
             data-type={chapter.type}
             data-region={chapter.region}
+            data-name={chapter.name}
+            data-place={[chapter.city, chapter.state].filter(Boolean).join(", ")}
+            {...("lat" in chapter ? { "data-lat": chapter.lat, "data-lng": chapter.lng } : {})}
           >
             <p class="chapter-result__type">
-              {chapter.type === "alumnae" ? "Alumnae" : "Undergraduate"} &middot; {chapter.region}{" "}
-              Region
+              {chapter.type === "alumnae" ? "Alumnae" : "Undergraduate"} &middot;{" "}
+              {chapter.region ? `${chapter.region} Region` : "Region not listed"}
             </p>
             <h3>{chapter.name}</h3>
             <p class="chapter-result__location">
               {[chapter.city, chapter.state].filter(Boolean).join(", ")}
             </p>
             {chapter.university && <p class="chapter-result__university">{chapter.university}</p>}
-            <a
-              href={
-                chapter.source.includes("wikipedia.org")
-                  ? regions.find((region) => region.name === chapter.region)?.href
-                  : chapter.source
-              }
-              target="_blank"
-              rel="noopener"
-            >
-              {chapter.source.includes("google.com/maps")
-                ? "View chapter map"
-                : "View regional directory"}
-              &nearr;
-              <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
-            </a>
+            {chapter.website ? (
+              <a href={chapter.website} target="_blank" rel="noopener">
+                Chapter website &nearr;
+                <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
+              </a>
+            ) : (
+              chapter.region && (
+                <a
+                  href={regions.find((region) => region.name === chapter.region)?.href}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  View regional directory &nearr;
+                  <span class="visually-hidden"> for {chapter.name} (opens in a new tab)</span>
+                </a>
+              )
+            )}
           </article>
         ))}
       </CardGrid>
       <div id="empty-state" class="empty-state" hidden>
         <h3>No listings found in this collection.</h3>
         <p>
-          A missing result does not mean a chapter is unavailable. This collection has partial
-          coverage across five regions. Explore the official regional directories for additional
-          chapters and current information.
+          This list comes from International Corporate Headquarters&rsquo; chapter records as of
+          {retrieved}. If a chapter you expect is missing, its regional directory may have newer
+          information.
         </p>
         <a href="#regional-directories">Browse regional directories &darr;</a>
       </div>
       <button id="show-more" class="btn btn--outline" type="button" hidden>
         Show more chapters
       </button>
+      <p class="directory-source">
+        Chapters listed from International Corporate Headquarters&rsquo; records as of {retrieved}.
+      </p>
       <noscript>
         <p>
           Use your browser's Find feature to search these listings, or browse the official regional
@@ -811,6 +854,49 @@ const regions = [
       flex-basis: 100%;
     }
   }
+
+  /* ---- map ---- */
+  .chapter-map {
+    margin: 0 0 var(--space-8);
+  }
+  .chapter-map__canvas {
+    position: relative;
+    height: clamp(280px, 45vw, 440px);
+    border: 1px solid var(--line);
+    background: var(--tint);
+    overflow: hidden;
+  }
+  .chapter-map__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .chapter-map figcaption {
+    margin-top: var(--space-2);
+    color: var(--muted);
+    font-size: var(--text-xs);
+  }
+  .chapter-map figcaption a {
+    color: var(--royal-dark);
+  }
+  .directory-source {
+    margin-top: var(--space-6);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  :global(.chapter-popup strong) {
+    display: block;
+    color: var(--royal);
+    font-size: var(--text-base);
+  }
+  :global(.chapter-popup span) {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
 </style>
 
 <script>
@@ -854,6 +940,7 @@ const regions = [
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
     });
+    showOnMap(matches);
     empty.hidden = matches.length > 0;
     more.hidden = matches.length <= limit;
     clear.hidden = !query && type === "all" && region.value === "all";
@@ -929,5 +1016,154 @@ const regions = [
     input.focus();
   });
   window.addEventListener("popstate", restore);
+
+  /* ---- map: loaded on approach, fed the same matches as the list ---- */
+  type Maplibre = typeof import("maplibre-gl");
+  const mapEl = document.querySelector<HTMLElement>("#chapter-map");
+  let lastMatches: HTMLElement[] = cards;
+  let setMapData: ((matches: HTMLElement[]) => void) | null = null;
+  function toGeoJSON(matches: HTMLElement[]) {
+    return {
+      type: "FeatureCollection" as const,
+      features: matches
+        .filter((c) => c.dataset.lat && c.dataset.lng)
+        .map((c) => ({
+          type: "Feature" as const,
+          geometry: {
+            type: "Point" as const,
+            coordinates: [Number(c.dataset.lng), Number(c.dataset.lat)],
+          },
+          properties: {
+            name: c.dataset.name ?? "",
+            place: c.dataset.place ?? "",
+            kind: c.dataset.type === "alumnae" ? "Alumnae" : "Undergraduate",
+          },
+        })),
+    };
+  }
+  function showOnMap(matches: HTMLElement[]) {
+    lastMatches = matches;
+    setMapData?.(matches);
+  }
+  async function loadMap() {
+    if (!mapEl) return;
+    const base = mapEl.dataset.vendor ?? "/vendor/maplibre/";
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = `${base}maplibre-gl.css`;
+    document.head.append(css);
+    const gl: Maplibre = await import(/* @vite-ignore */ `${base}maplibre-gl.mjs`);
+    mapEl.textContent = "";
+    const map = new gl.Map({
+      container: mapEl,
+      style: "https://tiles.openfreemap.org/styles/positron",
+      center: [-88, 36],
+      zoom: 3,
+      cooperativeGestures: true,
+      attributionControl: false,
+    });
+    map.addControl(new gl.NavigationControl({ showCompass: false }), "top-right");
+    map.on("load", () => {
+      map.addSource("chapters", {
+        type: "geojson",
+        data: toGeoJSON(lastMatches),
+        cluster: true,
+        clusterRadius: 40,
+      });
+      map.addLayer({
+        id: "clusters",
+        type: "circle",
+        source: "chapters",
+        filter: ["has", "point_count"],
+        paint: {
+          "circle-color": "#2041a5",
+          "circle-stroke-color": "#dfb136",
+          "circle-stroke-width": 2,
+          "circle-radius": ["step", ["get", "point_count"], 14, 10, 18, 50, 24],
+        },
+      });
+      map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "chapters",
+        filter: ["has", "point_count"],
+        // A font OpenFreeMap serves; MapLibre's default stack is a 404 there.
+        layout: {
+          "text-field": ["get", "point_count_abbreviated"],
+          "text-font": ["Noto Sans Bold"],
+          "text-size": 12,
+        },
+        paint: { "text-color": "#ffffff" },
+      });
+      map.addLayer({
+        id: "chapter",
+        type: "circle",
+        source: "chapters",
+        filter: ["!", ["has", "point_count"]],
+        paint: {
+          "circle-color": "#2041a5",
+          "circle-radius": 6,
+          "circle-stroke-color": "#ffffff",
+          "circle-stroke-width": 2,
+        },
+      });
+      map.on("click", "clusters", async (e) => {
+        const feature = e.features?.[0];
+        if (!feature) return;
+        const source = map.getSource("chapters") as import("maplibre-gl").GeoJSONSource;
+        const zoom = await source.getClusterExpansionZoom(feature.properties.cluster_id);
+        map.easeTo({ center: (feature.geometry as GeoJSON.Point).coordinates as [number, number], zoom });
+      });
+      map.on("click", "chapter", (e) => {
+        const feature = e.features?.[0];
+        if (!feature) return;
+        const { name, place, kind } = feature.properties as Record<string, string>;
+        const box = document.createElement("div");
+        box.className = "chapter-popup";
+        const title = document.createElement("strong");
+        title.textContent = name;
+        const detail = document.createElement("span");
+        detail.textContent = [kind, place].filter(Boolean).join(" · ");
+        box.append(title, detail);
+        new gl.Popup({ offset: 10 })
+          .setLngLat((feature.geometry as GeoJSON.Point).coordinates as [number, number])
+          .setDOMContent(box)
+          .addTo(map);
+      });
+      for (const layer of ["clusters", "chapter"]) {
+        map.on("mouseenter", layer, () => (map.getCanvas().style.cursor = "pointer"));
+        map.on("mouseleave", layer, () => (map.getCanvas().style.cursor = ""));
+      }
+      setMapData = (matches) => {
+        const data = toGeoJSON(matches);
+        (map.getSource("chapters") as import("maplibre-gl").GeoJSONSource | undefined)?.setData(data);
+        // A narrowed search zooms to its chapters; the full list shows the country.
+        if (matches.length === cards.length || data.features.length === 0) {
+          map.easeTo({ center: [-88, 36], zoom: 3 });
+          return;
+        }
+        const bounds = new gl.LngLatBounds();
+        for (const f of data.features) bounds.extend(f.geometry.coordinates as [number, number]);
+        map.fitBounds(bounds, { padding: 60, maxZoom: 9, duration: 600 });
+      };
+      setMapData(lastMatches);
+    });
+  }
+  if (mapEl) {
+    const watch = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          watch.disconnect();
+          loadMap().catch(() => {
+            mapEl.innerHTML =
+              '<p class="chapter-map__placeholder">The map could not load. Every chapter is in the list below.</p>';
+          });
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    watch.observe(mapEl);
+  }
+
   restore();
 </script>
