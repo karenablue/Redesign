@@ -176,13 +176,16 @@ if (placed !== basilei.length) {
       <h1>
         Past Grand
         <br />
-        <span>Basilei</span>
+        <span class="editorial-accent">Basilei</span>
       </h1>
       <div class="gold-rule"></div>
       <p>
         For more than a century, the office of Grand Basileus has carried the responsibility of
         guiding Sigma Gamma Rho through growth, change, service, and the work of each generation.
       </p>
+      <a class="btn" href="#archive">
+        Explore the Leadership Archive
+      </a>
     </div>
     <div class="past-hero__years" aria-hidden="true">
       1922&mdash;2024
@@ -221,23 +224,37 @@ if (placed !== basilei.length) {
     <div class="container">
       <div class="pgb-tools" id="archive">
         <nav class="pgb-eras" aria-label="Jump to an era">
-          {eras.map((e) => <a href={`#${e.id}`}>{e.label}</a>)}
+          {eras.map((e) => (
+            <a href={`#${e.id}`}>{e.label}</a>
+          ))}
         </nav>
         {/* Revealed by the script below; without JavaScript the era links and
             full archive still work. */}
         <div class="pgb-search" data-pgb-search hidden>
           <label for="pgb-q">Find a Grand Basileus</label>
-          <input id="pgb-q" type="search" placeholder="Name or year, e.g. 1968" autocomplete="off" />
+          <input
+            id="pgb-q"
+            type="search"
+            placeholder="Name or year, e.g. 1968"
+            autocomplete="off"
+          />
           <p class="pgb-status" aria-live="polite"></p>
         </div>
       </div>
 
       {eras.map((e) => (
         <section class="pgb-era" id={e.id} aria-labelledby={`${e.id}-h`} data-era>
-          <h2 class="pgb-era__title" id={`${e.id}-h`}>{e.label}</h2>
+          <h2 class="pgb-era__title" id={`${e.id}-h`}>
+            {e.label}
+          </h2>
           <ul class="pgb-grid">
             {e.leaders.map((b) => (
-              <li class="pgb-card" data-name={b.name.toLowerCase()} data-from={b.from} data-to={b.to}>
+              <li
+                class="pgb-card"
+                data-name={b.name.toLowerCase()}
+                data-from={b.from}
+                data-to={b.to}
+              >
                 <img
                   class="pgb-card__img"
                   src={withBase(b.img)}
@@ -286,7 +303,7 @@ if (placed !== basilei.length) {
   }
   .past-hero__inner {
     padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: 46rem;
+    max-width: var(--container);
     position: relative;
     z-index: 2;
   }
@@ -299,6 +316,7 @@ if (placed !== basilei.length) {
   }
   .past-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
+    max-width: 42rem;
   }
   .past-hero__years {
     position: absolute;
@@ -429,7 +447,7 @@ if (placed !== basilei.length) {
     color: var(--royal);
     font-family: var(--font-head);
     font-weight: 400;
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
   }
   .pgb-era__title::after {
     content: "";
@@ -455,9 +473,8 @@ if (placed !== basilei.length) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: var(--space-4);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    padding-bottom: var(--space-6);
+    border-bottom: 2px solid var(--gold);
     background: var(--white);
   }
   .pgb-card[hidden] {

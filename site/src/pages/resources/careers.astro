@@ -8,24 +8,15 @@
  * lives on /resources/vendor/, not here.
  */
 import Base from "../../layouts/Base.astro";
-import Breadcrumb from "../../components/Breadcrumb.astro";
+import Hero from "../../components/Hero.astro";
 import { withBase } from "../../lib/url.js";
 
 const ICHQ_URL = "https://sgrho1922.bamboohr.com/careers";
 const BOARD_URL = "https://sgrhojobs.org/";
 
-const photos = [
-  { img: "/images/SGRho Photoshoot.jfif", alt: "Sigma Gamma Rho members together" },
-  {
-    img: "/images/Congressional Day on the Hill.jpg",
-    alt: "Sigma Gamma Rho members at Congressional Day on the Hill",
-  },
-  { img: "/images/alumnae sorors.jpg", alt: "Sigma Gamma Rho alumnae members together" },
-];
-
 const tracks = [
   {
-    kicker: "Track A • ICHQ Careers",
+    kicker: "Work with the Sorority",
     title: "International Corporate Headquarters",
     badge: "Cary, North Carolina",
     body: "Professional staff roles at the operational engine behind the Sorority: membership services, finance, technology, compliance, marketing, and event planning, in service of members and chapters worldwide.",
@@ -38,7 +29,7 @@ const tracks = [
     label: "Browse Openings on BambooHR",
   },
   {
-    kicker: "Track B • Member Job Board",
+    kicker: "Build your career",
     title: "Sigma Gamma Rho Job Board",
     badge: "All industries",
     body: "The Sorority's job board connects members and alumnae with diversity-focused employers, alongside tools for the search itself.",
@@ -58,49 +49,24 @@ const tracks = [
   activeTop="Resources"
   description="Staff careers at Sigma Gamma Rho's International Corporate Headquarters and the Sorority's job board for members."
 >
-  <section class="ca-hero on-dark">
-    <div class="container">
-      <Breadcrumb
-        items={[{ label: "Home", href: "/" }, { label: "Resources" }, { label: "Careers" }]}
-        tone="dark"
-      />
-      <p class="eyebrow">Careers &amp; Talent Network</p>
-      <h1>
-        Work With
-        <br />
-        <span>Greater Purpose.</span>
-      </h1>
-      <p class="ca-hero__lead">
-        Join the team powering international operations in Cary, North Carolina, or tap into the
-        professional network of more than 100,000 Sigma Gamma Rho members.
-      </p>
-      <div class="ca-hero__actions">
+  <Hero
+    variant="split"
+    editorial
+    align="left"
+    eyebrow="Careers & Talent Network"
+    title="Work with"
+    highlight="greater purpose."
+    copy="Join the team supporting our sisterhood, or take your next professional step through the Sigma Gamma Rho job board."
+    image="/images/SGRho Photoshoot.jfif"
+    imageAlt="Sigma Gamma Rho members together"
+  >
         <a class="btn" href={ICHQ_URL} target="_blank" rel="noopener">
           View Open ICHQ Positions <span aria-hidden="true">&#8599;</span>
         </a>
         <a class="btn btn--outline" href={BOARD_URL} target="_blank" rel="noopener">
           Explore the Job Board <span aria-hidden="true">&#8599;</span>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="ca-collage" aria-label="Sisterhood in action">
-    <div class="container ca-collage__grid">
-      {photos.map((p) => (
-        <figure>
-          <img
-            src={withBase(p.img)}
-            alt={p.alt}
-            width="600"
-            height="400"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-      ))}
-    </div>
-  </section>
+  </Hero>
 
   <section class="ca-tracks">
     <div class="container ca-tracks__grid">
@@ -140,62 +106,6 @@ const tracks = [
 </Base>
 
 <style>
-  .ca-hero {
-    background: var(--grad-royal);
-    color: #fff;
-    padding-block: clamp(3rem, 6vw, 4.5rem);
-  }
-  .ca-hero h1 {
-    margin: var(--space-2) 0 0;
-    color: #fff;
-  }
-  .ca-hero h1 span {
-    color: var(--gold);
-  }
-  .ca-hero__lead {
-    max-width: 40rem;
-    margin: var(--space-5) 0 0;
-    color: rgba(255, 255, 255, 0.88);
-    font-size: var(--text-lg);
-  }
-  .ca-hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
-  }
-
-  /* One row of three photos at the same crop. */
-  .ca-collage {
-    background: var(--white);
-    padding-block: var(--space-10) 0;
-  }
-  .ca-collage__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-  }
-  .ca-collage figure {
-    margin: 0;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .ca-collage img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-  }
-  @media (max-width: 640px) {
-    .ca-collage__grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .ca-collage figure:not(:first-child) {
-      display: none;
-    }
-  }
-
   .ca-tracks {
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
@@ -203,14 +113,14 @@ const tracks = [
   .ca-tracks__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
+    gap: var(--space-12);
   }
   .ca-track {
     display: flex;
     flex-direction: column;
-    padding: var(--space-8);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--line-strong);
+    border-radius: 0;
   }
   .ca-kicker {
     margin: 0;
@@ -222,9 +132,9 @@ const tracks = [
   }
   .ca-track h2 {
     margin: var(--space-2) 0 var(--space-3);
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: var(--text-h3);
+    font-family: var(--font-editorial);
+    font-weight: 400;
+    font-size: var(--text-h2);
     color: var(--royal);
   }
   .ca-badge {

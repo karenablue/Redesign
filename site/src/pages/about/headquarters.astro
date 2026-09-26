@@ -7,8 +7,8 @@
  * which hosts real headshots at sgrho1922.org.
  */
 import Base from "../../layouts/Base.astro";
-import Breadcrumb from "../../components/Breadcrumb.astro";
-import SigmaRule from "../../components/SigmaRule.astro";
+import Hero from "../../components/Hero.astro";
+import Button from "../../components/Button.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
@@ -81,25 +81,49 @@ const staff = [
   activeTop="About Us"
   description="International Corporate Headquarters keeps the international sisterhood running — every day, in every region."
 >
-  <section class="hq-hero">
-    <div class="container hq-hero__inner">
-      <Breadcrumb
-        items={[
-          { label: "Home", href: "/" },
-          { label: "About" },
-          { label: "International Corporate Headquarters" },
-        ]}
-      />
-      <p class="eyebrow">About</p>
-      <h1>
-        The Administrative
-        <br />
-        <span>Home of the Sorority.</span>
-      </h1>
-      <p class="hq-hero__lead">
-        International Corporate Headquarters keeps the international sisterhood running &mdash;
-        every day, in every region.
-      </p>
+  <Hero
+    variant="plain"
+    align="left"
+    editorial
+    watermark="ΣΓΡ"
+    eyebrow="International Corporate Headquarters"
+    title="Here for the"
+    highlight="work of sisterhood."
+    copy="The people and services behind Sigma Gamma Rho’s daily work. Supporting members, chapters, and regions from our home in Cary, North Carolina."
+  >
+    <Button href="/resources/help-center/">Get Member Support</Button>
+    <Button href="/contact/" variant="outline" onDark>Contact Headquarters</Button>
+  </Hero>
+
+  <section class="hq-services" aria-labelledby="hq-services-title">
+    <div class="container">
+      <div class="hq-services__heading">
+        <p class="eyebrow">Start Here</p>
+        <h2 id="hq-services-title">How can we help?</h2>
+      </div>
+      <ol class="hq-service-list">
+        <li>
+          <span class="hq-service-list__number" aria-hidden="true">01</span>
+          <div>
+            <h3><a href={withBase("/resources/help-center/")}>Member &amp; Chapter Support <span aria-hidden="true">→</span></a></h3>
+            <p>Find guidance on membership, chapter services, and common questions.</p>
+          </div>
+        </li>
+        <li>
+          <span class="hq-service-list__number" aria-hidden="true">02</span>
+          <div>
+            <h3><a href={withBase("/news-events/media-relations/")}>Media &amp; Brand Inquiries <span aria-hidden="true">→</span></a></h3>
+            <p>Connect with the Sorority’s media resources and communications team.</p>
+          </div>
+        </li>
+        <li>
+          <span class="hq-service-list__number" aria-hidden="true">03</span>
+          <div>
+            <h3><a href="#hq-location">Reach Headquarters <span aria-hidden="true">↓</span></a></h3>
+            <p>Find our office and mailing addresses, telephone number, and email.</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -108,13 +132,14 @@ const staff = [
       <div>
         <p class="eyebrow">What ICHQ Does</p>
         <h2>
-          The Operational Engine <span>Behind the Mission.</span>
+          Every chapter. <span>Every member.</span>
         </h2>
         <p>
           International Corporate Headquarters supports the systems, services, and people that keep
           the Sorority running &mdash; membership services, finance, technology, compliance,
           marketing, and event planning for chapters and members worldwide.
         </p>
+        <a class="hq-text-link" href="#hq-team">Meet the headquarters team <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hq-artifact">
         <img
@@ -126,9 +151,7 @@ const staff = [
     </div>
   </section>
 
-  <SigmaRule />
-
-  <section class="hq-exec">
+  <section class="hq-exec on-dark">
     <div class="container hq-exec__inner">
       <figure class="hq-exec__photo">
         <img
@@ -156,12 +179,12 @@ const staff = [
     </div>
   </section>
 
-  <section class="hq-staff">
+  <section class="hq-staff" id="hq-team">
     <div class="container">
       <div class="hq-heading">
         <p class="eyebrow">Headquarters Team</p>
         <h2>
-          Operational leadership. <span>Institutional continuity.</span>
+          People behind <span>the progress.</span>
         </h2>
         <p>
           The ICHQ staff supports the work that members, chapters, regions, leaders, partners, and
@@ -188,7 +211,7 @@ const staff = [
     </div>
   </section>
 
-  <section class="hq-zigzag">
+  <section class="hq-zigzag hq-location" id="hq-location">
     <div class="container hq-zigzag__row hq-zigzag__row--flip">
       <div>
         <p class="eyebrow">Where We're Located</p>
@@ -204,7 +227,7 @@ const staff = [
         <ul class="hq-facts">
           <li>Office: 1000 Southhill Dr STE 200 &bull; Cary, NC 27513</li>
           <li>Mailing: P.O. Box 27688 &bull; Raleigh, NC 27611</li>
-          <li>Phone: (919) 678-9720</li>
+          <li>Phone: <a href="tel:+19196789720">(919) 678-9720</a></li>
           <li>
             <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>
           </li>
@@ -224,47 +247,98 @@ const staff = [
     title="We're Here to "
     highlight="Help."
     copy="Visit the Help Center or contact Headquarters directly with your question."
-    actions={[{ label: "Visit Help Center", href: "/resources/help-center/" }]}
+    actions={[
+      { label: "Visit Help Center", href: "/resources/help-center/" },
+      { label: "Contact the Team", href: "/contact/", variant: "outline" },
+    ]}
   />
 </Base>
 
 <style>
-  .hq-hero {
+  .hq-services {
     background: var(--cream);
+    padding-block: var(--space-12);
+    border-bottom: 1px solid var(--line);
   }
-  .hq-hero__inner {
-    padding-block: clamp(3rem, 6vw, 4rem);
+  .hq-services__heading {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-8);
   }
-  .hq-hero h1 {
-    max-width: 600px;
-    margin: var(--space-2) 0 0;
+  .hq-services__heading h2 {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    font-size: var(--text-h3);
   }
-  .hq-hero__lead {
-    max-width: 540px;
-    margin: var(--space-5) 0 0;
+  .hq-service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: var(--space-8);
+  }
+  .hq-service-list li {
+    display: flex;
+    gap: var(--space-4);
+    border-top: 1px solid var(--gold);
+    padding-top: var(--space-5);
+  }
+  .hq-service-list__number {
+    font-family: var(--font-editorial);
+    font-size: var(--text-xl);
+    color: var(--royal);
+  }
+  .hq-service-list h3 {
+    font-size: var(--text-base);
+    margin: 0;
+  }
+  .hq-service-list a {
+    text-decoration: none;
+  }
+  .hq-service-list a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .hq-service-list p {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
     color: var(--muted);
+  }
+  .hq-text-link {
+    display: inline-block;
+    margin-top: var(--space-4);
+    font-weight: 700;
+    text-underline-offset: 0.3em;
+  }
+  #hq-team,
+  #hq-location {
+    scroll-margin-top: var(--space-24);
   }
 
   .hq-zigzag {
     background: var(--white);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: var(--section-y);
   }
   .hq-zigzag__row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: var(--space-14);
     align-items: center;
   }
   .hq-zigzag__row h2 {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
   }
   .hq-zigzag__row h2 span {
+    display: block;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
   }
   .hq-zigzag__row p:not(.eyebrow) {
     color: var(--muted);
@@ -292,7 +366,7 @@ const staff = [
     margin: 0;
     padding: var(--space-5);
     border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    border-bottom: 4px solid var(--gold);
     background: var(--cream);
   }
   .hq-artifact img {
@@ -337,8 +411,9 @@ const staff = [
   }
 
   .hq-exec {
-    background: var(--cream);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    background: var(--navy);
+    padding-block: var(--section-y);
+    color: var(--white);
   }
   .hq-exec__inner {
     display: grid;
@@ -349,7 +424,7 @@ const staff = [
   .hq-exec__photo {
     position: relative;
     margin: 0;
-    border-radius: var(--radius-lg);
+    border-bottom: 4px solid var(--gold);
     overflow: hidden;
   }
   .hq-exec__photo img {
@@ -363,8 +438,8 @@ const staff = [
     right: 0;
     bottom: 0;
     padding: var(--space-4);
-    background: linear-gradient(0deg, rgba(8, 22, 51, 0.85), transparent);
-    color: #fff;
+    background: var(--navy);
+    color: var(--white);
     display: flex;
     flex-direction: column;
   }
@@ -372,21 +447,22 @@ const staff = [
     font-size: var(--text-xs);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-on-dark-soft);
   }
   .hq-exec__copy h2 {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+    color: var(--white);
+    font-size: var(--text-h2);
   }
   .hq-exec__copy h2 span {
+    display: block;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
   }
   .hq-exec__copy p:not(.eyebrow) {
-    color: var(--muted);
+    color: var(--text-on-dark-soft);
   }
   @media (max-width: 780px) {
     .hq-exec__inner {
@@ -399,23 +475,21 @@ const staff = [
 
   .hq-staff {
     background: var(--white);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: var(--section-y);
   }
   .hq-heading {
     max-width: 46rem;
-    margin: 0 auto var(--space-10);
-    text-align: center;
+    margin: 0 0 var(--space-12);
   }
   .hq-heading h2 {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
   }
   .hq-heading h2 span {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
   }
   .hq-heading p:not(.eyebrow) {
     color: var(--muted);
@@ -428,7 +502,7 @@ const staff = [
     --hq-gap: var(--space-6);
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--hq-gap);
     margin: 0;
     padding: 0;
@@ -438,9 +512,8 @@ const staff = [
     flex: 0 1 calc((100% - 3 * var(--hq-gap)) / 4);
     display: flex;
     flex-direction: column;
-    padding: var(--space-4);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--line);
     background: var(--white);
   }
   .hq-person__img {
@@ -450,7 +523,7 @@ const staff = [
     aspect-ratio: 4 / 5;
     object-fit: cover;
     object-position: 50% 15%;
-    border-radius: var(--radius);
+    border-bottom: 3px solid var(--gold);
     margin-bottom: var(--space-4);
   }
   .hq-person__name {
@@ -473,6 +546,9 @@ const staff = [
     color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.6;
+  }
+  .hq-location {
+    background: var(--cream);
   }
   @media (max-width: 1000px) {
     .hq-person {

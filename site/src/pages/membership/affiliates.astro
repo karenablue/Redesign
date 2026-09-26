@@ -69,7 +69,7 @@ const affiliates = [
       <h1>
         Growing in Service.
         <br />
-        <span>Connected to Sigma.</span>
+        <span class="editorial-accent">Connected to Sigma.</span>
       </h1>
       <div class="gold-rule"></div>
       <p>
@@ -140,6 +140,9 @@ const affiliates = [
                 <h3 set:html={reg(a.name)} />
                 <p class="aff-lead">{a.lead}</p>
                 <p>{a.body}</p>
+                <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>
+                  Find a Chapter for {a.short}
+                </a>
               </div>
               <div class="aff-stage__side">
                 <dl class="aff-facts">
@@ -187,7 +190,7 @@ const affiliates = [
   }
   .aff-hero__inner {
     padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: 46rem;
+    max-width: var(--container);
   }
   .aff-hero h1 {
     color: #fff;
@@ -198,6 +201,7 @@ const affiliates = [
   }
   .aff-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
+    max-width: 44rem;
   }
   .aff-hero__nav {
     display: flex;

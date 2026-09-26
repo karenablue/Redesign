@@ -28,11 +28,22 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   description="Sigma Gamma Rho's 2026–2028 International Board of Directors."
 >
   <Hero
+    variant="plain"
+    editorial
+    align="left"
+    watermark="ΣΓΡ"
     eyebrow="2026–2028 Administration"
     title="International Board"
     highlight="of Directors"
     copy="Our International Board of Directors provides strategic leadership to uphold the legacy of our seven illustrious founders and the thousands of celebrated women before us as we seek to further instill Sigma Gamma Rho's core values across the globe."
-  />
+  >
+    <a class="btn" href="#officers">
+      Meet the Officers
+    </a>
+    <a class="btn btn--outline on-dark" href={withBase("/leadership/regional-leadership/")}>
+      Meet Regional Leadership
+    </a>
+  </Hero>
 
   <section class="ibd-intro">
     <div class="container ibd-intro__grid">
@@ -56,7 +67,7 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
     </div>
   </section>
 
-  <section class="ibd-grid-section">
+  <section class="ibd-grid-section" id="officers">
     <div class="container">
       <div class="ibd-heading">
         <p class="eyebrow">International Board of Directors</p>
@@ -87,7 +98,14 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
         <ul class="ibd-grid ibd-grid--deputies">
           {deputies.map((b) => (
             <li class="ibd-card">
-              <img class="ibd-photo" src={withBase(b.image)} alt={b.name} width="300" height="300" loading="lazy" />
+              <img
+                class="ibd-photo"
+                src={withBase(b.image)}
+                alt={b.name}
+                width="300"
+                height="300"
+                loading="lazy"
+              />
               <p class="ibd-role">{b.role}</p>
               <h4 class="ibd-name">{b.name}</h4>
               {b.note && <p class="ibd-note">{b.note}</p>}
@@ -100,7 +118,14 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
       <ul class="ibd-grid">
         {officers.map((b) => (
           <li class="ibd-card">
-            <img class="ibd-photo" src={withBase(b.image)} alt={b.name} width="300" height="300" loading="lazy" />
+            <img
+              class="ibd-photo"
+              src={withBase(b.image)}
+              alt={b.name}
+              width="300"
+              height="300"
+              loading="lazy"
+            />
             <p class="ibd-role">{b.role}</p>
             <h4 class="ibd-name">{b.name}</h4>
             {b.note && <p class="ibd-note">{b.note}</p>}
@@ -153,11 +178,10 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   .ibd-grid-section {
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
+    scroll-margin-top: 12rem;
   }
   .ibd-heading {
-    text-align: center;
-    max-width: 40rem;
-    margin: 0 auto var(--space-10);
+    margin-bottom: var(--space-10);
   }
   .ibd-heading h2 {
     margin: var(--space-2) 0 0;
@@ -208,15 +232,12 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   /* The chair: a single wide card, photo beside the text. */
   .ibd-chair {
     display: grid;
-    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-    gap: var(--space-8);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-12);
     align-items: center;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: var(--space-6);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    background: var(--white);
+    padding: var(--space-8);
+    border-bottom: 3px solid var(--gold);
+    background: var(--cream);
   }
   .ibd-more {
     display: inline-block;
@@ -276,6 +297,8 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   }
   .ibd-name--lg {
     font-size: var(--text-h3);
+    font-family: var(--font-editorial);
+    font-weight: 400;
   }
   .ibd-note {
     margin: var(--space-2) 0 0;

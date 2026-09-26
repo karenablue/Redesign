@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
+import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
 const regions = [
@@ -162,7 +163,7 @@ const regions = [
       <h1>
         Five Regions.
         <br />
-        <span>One Standard.</span>
+        <span class="editorial-accent">One Standard.</span>
       </h1>
       <div class="gold-rule"></div>
       <p>
@@ -194,6 +195,10 @@ const regions = [
             <p class="eyebrow">{r.name} Region</p>
             <h2>{r.name}</h2>
             <p class="region-territory">{r.territory}</p>
+            <a class="region-website" href={r.site} target="_blank" rel="noopener">
+              Visit the {r.name} Region <span aria-hidden="true">↗</span>
+              <span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
             <div class="region-socials">
               <a href={r.site} target="_blank" rel="noopener" aria-label="Region website">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -233,6 +238,16 @@ const regions = [
       </div>
     </section>
   ))}
+  <CtaBand
+    eyebrow="From Your Region to Your Community"
+    title="Find your local"
+    highlight="Sigma connection."
+    copy="Connect with an undergraduate or alumnae chapter and explore how Sigma Gamma Rho serves your community."
+    actions={[
+      { label: "Find a Chapter", href: "/membership/chapter-locator/" },
+      { label: "Explore Membership", href: "/membership/become-a-member/", variant: "outline" },
+    ]}
+  />
 </Base>
 
 <style>
@@ -242,7 +257,7 @@ const regions = [
   }
   .rl-hero__inner {
     padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: 46rem;
+    max-width: var(--container);
   }
   .rl-hero h1 {
     color: #fff;
@@ -253,6 +268,7 @@ const regions = [
   }
   .rl-hero > .container > p:not(.eyebrow) {
     color: rgba(255, 255, 255, 0.85);
+    max-width: 44rem;
   }
   .rl-jump {
     display: flex;
@@ -288,7 +304,7 @@ const regions = [
   }
   .region-block__inner {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
     gap: var(--space-12);
     align-items: start;
   }
@@ -311,6 +327,14 @@ const regions = [
     color: var(--muted);
     font-size: var(--text-sm);
     margin: var(--space-3) 0;
+  }
+  .region-website {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    color: var(--royal);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-underline-offset: 0.2em;
   }
   .region-socials {
     display: flex;
@@ -342,13 +366,14 @@ const regions = [
     gap: var(--space-5);
   }
   .region-leader {
-    text-align: center;
+    text-align: left;
   }
   .region-leader img {
     width: 100%;
     aspect-ratio: 1;
-    border-radius: 50%;
+    border-bottom: 3px solid var(--gold);
     object-fit: cover;
+    object-position: center top;
     margin-bottom: var(--space-3);
   }
   .region-leader p {
@@ -371,6 +396,9 @@ const regions = [
   @media (max-width: 480px) {
     .region-leaders {
       grid-template-columns: 1fr;
+    }
+    .region-leader {
+      max-width: 18rem;
     }
   }
 </style>

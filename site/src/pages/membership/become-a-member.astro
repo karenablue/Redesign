@@ -14,6 +14,7 @@ import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import Faq from "../../components/Faq.astro";
 import Carousel from "../../components/Carousel.astro";
+import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
 const sigmaWoman = [
@@ -239,30 +240,38 @@ const accountabilityLinks = [
       <div class="mem-hero__copy">
         <p class="eyebrow">Prospective Membership</p>
         <h1 class="mem-hero__title">
-          Membership
+          A Lifetime
           <br />
-          <span>with Weight.</span>
+          <span class="editorial-accent">of Greater Service.</span>
         </h1>
         <div class="gold-rule"></div>
         <p class="mem-hero__lead">
-          Sigma Gamma Rho seeks women prepared for scholarship, service, discipline, and lifelong
-          accountability.
+          Bring your commitment to scholarship, service, and sisterhood to Sigma Gamma Rho.
         </p>
         <p class="mem-hero__body">
-          This is not casual affiliation. It is a serious commitment to the legacy built by seven
-          Black educators in 1922 — women who understood that sisterhood must be matched by action,
-          integrity, and public responsibility. If you are exploring membership, begin by
-          understanding the standard.
+          Seven Black educators founded our Sorority in 1922. Their legacy continues through women
+          who lead in their communities, serve with purpose, and make a lifelong commitment to one
+          another. Explore the membership pathway that fits your educational journey.
         </p>
         <div class="mem-hero__actions">
-          <a class="btn" href="#sigma-woman">
-            Who We Seek
+          <a class="btn" href="#eligibility">
+            Explore Membership Pathways
           </a>
-          <a class="btn btn--outline on-dark" href="#eligibility">
-            Review Eligibility
+          <a class="btn btn--outline on-dark" href={withBase("/membership/chapter-locator/")}>
+            Find a Chapter
           </a>
         </div>
       </div>
+      <figure class="mem-hero__portrait">
+        <img
+          src={withBase("/images/lambda-psi-1200.jpg")}
+          alt="Sigma Gamma Rho undergraduate members together"
+          width="1200"
+          height="800"
+          fetchpriority="high"
+        />
+        <figcaption>Scholarship. Sisterhood. Service.</figcaption>
+      </figure>
     </div>
     <div class="standards-strip">
       <div class="standards-strip__inner">
@@ -369,6 +378,9 @@ const accountabilityLinks = [
               <li>{r}</li>
             ))}
           </ul>
+          <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>
+            Find an Undergraduate Chapter
+          </a>
         </article>
 
         <article class="pathway" id="alumnae">
@@ -390,6 +402,9 @@ const accountabilityLinks = [
               <li>{r}</li>
             ))}
           </ul>
+          <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>
+            Find an Alumnae Chapter
+          </a>
         </article>
       </div>
     </div>
@@ -500,6 +515,16 @@ const accountabilityLinks = [
       </div>
     </div>
   </section>
+  <CtaBand
+    eyebrow="Your Next Step"
+    title="Service begins"
+    highlight="with connection."
+    copy="Explore a chapter in your community. Chapter and regional leadership can guide you through the official membership process."
+    actions={[
+      { label: "Find a Chapter", href: "/membership/chapter-locator/" },
+      { label: "Membership Questions", href: "/contact/", variant: "outline" },
+    ]}
+  />
 </Base>
 
 <style>
@@ -509,7 +534,10 @@ const accountabilityLinks = [
     color: #fff;
   }
   .mem-hero__grid {
-    max-width: 48rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: center;
+    gap: var(--space-12);
     padding-block: clamp(3.5rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
   }
   .mem-hero__title {
@@ -521,11 +549,7 @@ const accountabilityLinks = [
     color: #fff;
   }
   .mem-hero__title span {
-    color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+    color: var(--gold);
   }
   .mem-hero__lead {
     font-size: var(--text-lg);
@@ -542,6 +566,30 @@ const accountabilityLinks = [
     flex-wrap: wrap;
     gap: var(--space-4);
     margin-top: var(--space-6);
+  }
+  .mem-hero__portrait {
+    margin: 0;
+    border-bottom: 4px solid var(--gold);
+  }
+  .mem-hero__portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+  .mem-hero__portrait figcaption {
+    padding-block: var(--space-4);
+    color: var(--white);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 900px) {
+    .mem-hero__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .mem-hero__portrait img {
+      aspect-ratio: 16 / 10;
+    }
   }
 
   .standards-strip {

@@ -53,6 +53,12 @@ import { withBase } from "../../../lib/url.js";
         </p>
         <footer>26th International Grand Basileus Marica T. Harris</footer>
       </blockquote>
+      <aside class="story__action" aria-labelledby="story-action-title">
+        <p class="eyebrow">Service beyond the gathering</p>
+        <h2 id="story-action-title">See the programs behind the impact.</h2>
+        <p>Explore Project CRADLE Care, Operation BigBookBag, and Swim 1922.</p>
+        <a class="btn" href={withBase("/service-impact/national-programs/")}>Explore Our National Programs <span aria-hidden="true">&rarr;</span></a>
+      </aside>
       <p class="story__back">
         <a href={withBase("/news-events/latest-news/")}>
           <span aria-hidden="true">&larr;</span> Back to Latest News
@@ -80,8 +86,10 @@ import { withBase } from "../../../lib/url.js";
   }
   .story h1 {
     margin: var(--space-3) 0 var(--space-8);
-    font-size: var(--text-h2);
-    line-height: 1.1;
+    font-family: var(--font-editorial);
+    font-size: var(--text-hero);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
   }
   .story figure {
     margin: 0 0 var(--space-8);
@@ -114,6 +122,8 @@ import { withBase } from "../../../lib/url.js";
     color: var(--royal);
     font-size: var(--text-h3);
     line-height: 1.4;
+    font-family: var(--font-editorial);
+    font-style: italic;
   }
   .story blockquote footer {
     margin-top: var(--space-3);
@@ -125,5 +135,22 @@ import { withBase } from "../../../lib/url.js";
     color: var(--royal);
     font-size: var(--text-base);
     font-weight: 700;
+  }
+  .story__action {
+    margin-block: var(--space-12);
+    padding: var(--space-8);
+    background: var(--cream);
+    border: 1px solid var(--line);
+  }
+  .story__action h2 {
+    font-family: var(--font-editorial);
+    font-size: var(--text-h3);
+  }
+  .story__action p {
+    font-size: var(--text-base);
+  }
+  .story__action .eyebrow {
+    color: var(--royal);
+    font-size: var(--text-xs);
   }
 </style>

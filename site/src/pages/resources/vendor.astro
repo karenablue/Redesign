@@ -9,6 +9,7 @@
  * build-time label is only the no-JavaScript fallback.
  */
 import Base from "../../layouts/Base.astro";
+import Hero from "../../components/Hero.astro";
 
 const DIRECTORY_URL = "https://sgrho1922.store/pages/vendordirectory";
 const REPORT_URL = "https://fs20.formsite.com/8i8VIT/azr7aj4amf/index";
@@ -76,23 +77,19 @@ const rfps = [
   activeTop="Resources"
   description="Sigma Gamma Rho's licensed vendor program: verify a vendor, licensing tiers, application windows, and requests for proposal."
 >
-  <section class="ven-hero on-dark">
-    <div class="container ven-hero__inner">
-      <p class="eyebrow">Intellectual Property &amp; Licensing</p>
-      <h1>
-        Authorized
-        <span>Vendor Marketplace</span>
-      </h1>
-      <p class="ven-hero__lead">
-        The licensed vendor program governs authorized use of the Sorority's trademarks, and keeps
-        members' purchases in the hands of vendors who meet its standards.
-      </p>
-      <div class="ven-actions">
-        <a class="btn" href="#verify">Verify a Licensed Vendor <span aria-hidden="true">&darr;</span></a>
-        <a class="btn btn--outline" href="#licensing">Apply for a License <span aria-hidden="true">&darr;</span></a>
-      </div>
-    </div>
-  </section>
+  <Hero
+    variant="plain"
+    editorial
+    align="left"
+    watermark="ΣΓΡ"
+    eyebrow="Intellectual Property & Licensing"
+    title="Our letters."
+    highlight="A shared responsibility."
+    copy="Shop with authorized vendors and explore the licensing program that protects Sigma Gamma Rho's identity."
+  >
+    <a class="btn" href={DIRECTORY_URL} target="_blank" rel="noopener">Verify a Licensed Vendor <span aria-hidden="true">&#8599;</span></a>
+    <a class="btn btn--outline" href="#licensing">Explore Licensing <span aria-hidden="true">&darr;</span></a>
+  </Hero>
 
   <section class="ven-verify" id="verify">
     <div class="container">
@@ -261,34 +258,6 @@ const rfps = [
 </script>
 
 <style>
-  .ven-hero {
-    background: var(--grad-royal);
-    color: #fff;
-  }
-  .ven-hero__inner {
-    max-width: 48rem;
-    padding-block: clamp(3.5rem, 6vw, 5rem);
-  }
-  .ven-hero h1 {
-    margin: var(--space-2) 0 0;
-    color: #fff;
-  }
-  .ven-hero h1 span {
-    display: block;
-    color: var(--gold);
-  }
-  .ven-hero__lead {
-    margin: var(--space-5) 0 0;
-    color: rgba(255, 255, 255, 0.88);
-    font-size: var(--text-lg);
-  }
-  .ven-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
-  }
-
   /* ---- verify ---- */
   .ven-verify {
     background: var(--white);
@@ -343,6 +312,11 @@ const rfps = [
   .ven-heading {
     max-width: 44rem;
     margin-bottom: var(--space-8);
+  }
+  .ven-heading h2 {
+    font-family: var(--font-editorial);
+    font-size: var(--text-h2);
+    letter-spacing: -0.025em;
   }
   .ven-heading p {
     margin: 0;

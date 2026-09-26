@@ -56,7 +56,7 @@ const regions = [
       <h1 class="hero-inner__title">
         Find Your Place
         <br />
-        <span>in the Sisterhood.</span>
+        <span class="editorial-accent">in the Sisterhood.</span>
       </h1>
       <div class="gold-rule"></div>
       <p class="hero-lead">
@@ -64,6 +64,9 @@ const regions = [
         serving campuses and communities throughout the United States and internationally. Search
         chapter listings or browse a regional directory below.
       </p>
+      <a class="btn locator-hero__action" href="#chapter-search-form">
+        Search Chapters
+      </a>
     </div>
     <div class="hero-word" aria-hidden="true">
       CHAPTERS
@@ -306,7 +309,7 @@ const regions = [
     position: relative;
     z-index: 2;
     padding-block: clamp(3.5rem, 7vw, 4.5rem);
-    max-width: 56rem;
+    max-width: var(--container);
   }
   .hero-inner__title {
     max-width: 780px;
@@ -319,10 +322,12 @@ const regions = [
   }
   .hero-inner__title span {
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+  }
+  .locator-hero__action {
+    margin-top: var(--space-6);
+  }
+  .locator-search {
+    scroll-margin-top: 12rem;
   }
   .hero-lead {
     max-width: 42rem;

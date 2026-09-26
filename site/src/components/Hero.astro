@@ -16,6 +16,7 @@
  *   size ("tall"|"regular"|"compact"), as ("h1"|"h2"),
  *   watermark (giant faint decorative word/numeral in the corner)
  *   cinematic (image variant only),
+ *   editorial (left-aligned title with an editorial highlight and heritage rule),
  *   bare (image variant: media and its pause control only — no words over
  *   the footage; the page supplies the headline beneath it)
  * default slot: action buttons (rendered under the copy)
@@ -39,6 +40,7 @@ const {
   as = "h1",
   watermark,
   cinematic = false,
+  editorial = false,
   bare = false,
 } = Astro.props;
 
@@ -51,6 +53,7 @@ const cls = [
   variant === "plain" && `hero--${accent}`,
   variant !== "split" && "on-dark",
   cinematic && variant === "image" && "hero--cinematic",
+  editorial && "hero--editorial",
   bare && variant === "image" && "hero--bare",
 ]
   .filter(Boolean)
@@ -199,8 +202,6 @@ const hasActions = Astro.slots.has("default");
   }
   .hero:not(.hero--left):not(.hero--split) .hero__actions {
     justify-content: center;
-  }
-  .hero:not(.hero--left) .eyebrow {
   }
 
   /* ---------- size ---------- */
@@ -385,6 +386,75 @@ const hasActions = Astro.slots.has("default");
   }
   .hero--plain .hero__text {
     max-width: 800px;
+  }
+
+  /* Campaign typography is opt-in so archival and utility layouts can keep
+     the scale appropriate to their content. The Greek letters are decoration. */
+  .hero--editorial .hero__text {
+    text-align: left;
+    margin-inline: 0;
+  }
+  .hero--editorial .hero__title {
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+  .hero--editorial .hero__title span {
+    display: block;
+    margin-top: var(--space-2);
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.035em;
+  }
+  .hero--editorial.hero--split .hero__title span {
+    color: var(--royal);
+  }
+  .hero--editorial .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .hero--editorial .eyebrow::before {
+    content: "";
+    width: 2.5rem;
+    height: 2px;
+    flex-shrink: 0;
+    background: var(--gold);
+  }
+  .hero--editorial .hero__copy {
+    margin-inline: 0;
+    max-width: 40rem;
+  }
+  .hero--editorial .hero__actions {
+    justify-content: flex-start;
+  }
+  .hero--editorial .hero__watermark {
+    left: auto;
+    right: var(--space-6);
+    bottom: 0;
+    color: var(--white);
+    opacity: 0.06;
+    font-family: var(--font-greek);
+    font-weight: 400;
+    font-size: clamp(8rem, 24vw, 24rem);
+  }
+  .hero--editorial.hero--plain {
+    background: var(--navy);
+    border-bottom: 0;
+  }
+  .hero--editorial.hero--plain.hero--gold {
+    background: var(--gold);
+  }
+  .hero--editorial.hero--plain .hero__content {
+    border-left: 1px solid var(--line-dark);
+  }
+  @media (max-width: 560px) {
+    .hero--editorial .hero__actions {
+      gap: var(--space-3);
+    }
+    .hero--editorial .hero__actions :global(.btn) {
+      width: 100%;
+    }
   }
 
   /* ---------- motion toggle (WCAG 2.2.2) ---------- */

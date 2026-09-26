@@ -16,6 +16,7 @@ import Section from "../../components/Section.astro";
 import CardGrid from "../../components/CardGrid.astro";
 import Card from "../../components/Card.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import Button from "../../components/Button.astro";
 import { withBase } from "../../lib/url.js";
 
 const founders = [
@@ -143,17 +144,22 @@ const profiles = [
   description="Meet the seven Black educators who founded Sigma Gamma Rho Sorority, Incorporated at Butler University in 1922."
 >
   <Hero
-    eyebrow="The Seven Pearls"
-    title="Our"
-    highlight="Founders"
+    eyebrow="Our Founders · The Seven Pearls"
+    title="Seven educators."
+    highlight="A lasting purpose."
     copy="Seven Black educators. One shared conviction. A sisterhood created in Indianapolis in 1922 and carried forward for generations."
     image="/images/sgr-alpha-charter.jpeg"
     focal="70% 50%"
-    watermark="PEARLS"
-  />
+    watermark="1922"
+    align="left"
+    editorial
+  >
+    <Button href="#seven-pearls">Meet the Seven Pearls</Button>
+    <Button href="/about/herstory/" variant="outline" onDark>Explore Our Herstory</Button>
+  </Hero>
 
   <!-- GENESIS -->
-  <Section tone="white" eyebrow="Indianapolis • 1922" title="The Genesis at Butler University">
+  <Section tone="white" eyebrow="Indianapolis • November 12, 1922" title="The Genesis at Butler University" align="left">
     <div class="split">
       <div class="split__copy">
         <p>
@@ -196,13 +202,13 @@ const profiles = [
 
   <!-- SEVEN PORTRAITS -->
   <Section
+    id="seven-pearls"
     tone="cream"
-    heading="feature"
-    centered
+    align="left"
     eyebrow="The Women Who Began It"
     title="Meet the"
     highlight="7 Pearls"
-    lead="Educators whose individual lives, professional work, and shared purpose became the foundation of Sigma Gamma Rho Sorority, Incorporated."
+    lead="Seven individual lives. One shared purpose. Select a portrait to explore the educator behind the legacy."
   >
     <div class="founder-grid">
       <CardGrid min="200px" cols={4}>
@@ -215,6 +221,7 @@ const profiles = [
             title={f.name}
           >
             <p class="tile-role">{f.role}</p>
+            <span class="tile-action">Read her story <span aria-hidden="true">↗</span></span>
           </Card>
         ))}
       </CardGrid>
@@ -230,13 +237,14 @@ const profiles = [
             <img src={withBase(p.img)} alt={`${p.name} ${p.highlight}`} loading="lazy" decoding="async" />
           </figure>
           <div class="profile__copy">
-            <p class="profile__label">{p.label}</p>
+            <p class="profile__label"><span aria-hidden="true">{String(i + 1).padStart(2, "0")} / 07</span> {p.label}</p>
             <h2>
               {p.name} <span>{p.highlight}</span>
             </h2>
             <p class="profile__role">{p.role}</p>
             <div class="profile__rule"></div>
             <p>{p.bio}</p>
+            <a class="profile__return" href="#seven-pearls">Meet all seven founders <span aria-hidden="true">↑</span></a>
           </div>
         </div>
       </article>
@@ -249,8 +257,8 @@ const profiles = [
     highlight="Generations Carry It Forward."
     copy="The Founders did not create Sigma Gamma Rho simply for their own time. They established a structure capable of educating, serving, supporting, and developing Black women across generations. Greater Service. Greater Progress."
     actions={[
-      { label: "Explore Our Herstory", href: "/about/herstory/" },
-      { label: "Service & Impact", href: "/service-impact/national-programs/", variant: "outline" },
+      { label: "Explore Membership", href: "/membership/become-a-member/" },
+      { label: "Their Legacy in Service", href: "/service-impact/national-programs/", variant: "outline" },
     ]}
   />
 </Base>
@@ -265,6 +273,34 @@ const profiles = [
     aspect-ratio: 4 / 5;
     object-position: top center;
   }
+  .founder-grid :global(.card) {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .founder-grid :global(.card__body) {
+    padding: var(--space-5) 0 var(--space-2);
+    border-top: 3px solid var(--gold);
+  }
+  .founder-grid :global(.card__eyebrow) {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .tile-action {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--royal);
+  }
+  :global(#seven-pearls) {
+    scroll-margin-top: var(--space-24);
+  }
 
   /* ---- GENESIS split (matches herstory's "Beginning" pattern) ---- */
   .split {
@@ -274,12 +310,14 @@ const profiles = [
     align-items: center;
   }
   .split__emphasis {
-    font-weight: 700;
+    font-family: var(--font-editorial);
+    font-size: var(--text-h3);
+    line-height: 1.4;
     color: var(--royal);
   }
   .split__figure {
     margin: 0;
-    border-radius: var(--radius-lg);
+    border-bottom: 4px solid var(--gold);
     overflow: hidden;
   }
   .split__figure img {
@@ -292,10 +330,10 @@ const profiles = [
     flex-direction: column;
     padding: var(--space-4) var(--space-6);
     background: var(--royal);
-    color: #fff;
+    color: var(--white);
   }
   .split__figure figcaption small {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-on-dark-soft);
   }
   @media (max-width: 820px) {
     .split {
@@ -306,8 +344,8 @@ const profiles = [
 
   /* ---- FOUNDER PROFILES ---- */
   .profile {
-    padding-block: clamp(2.5rem, 5vw, 3.5rem);
-    scroll-margin-top: 72px;
+    padding-block: var(--section-y);
+    scroll-margin-top: var(--space-24);
   }
   .profile:nth-child(odd) {
     background: var(--white);
@@ -329,7 +367,8 @@ const profiles = [
   }
   .profile__figure {
     margin: 0;
-    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    border: 1px solid var(--line-strong);
     overflow: hidden;
   }
   .profile__figure img {
@@ -339,6 +378,9 @@ const profiles = [
     object-position: top center;
   }
   .profile__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
     color: var(--accent-text);
     font-weight: 700;
     font-size: var(--text-xs);
@@ -348,14 +390,15 @@ const profiles = [
   }
   .profile__copy h2 {
     margin: 0;
-    font-size: var(--text-h3);
+    font-family: var(--font-editorial);
+    font-size: var(--text-h2);
+    font-weight: 500;
+    line-height: 1.15;
   }
   .profile__copy h2 span {
+    display: block;
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+    font-style: italic;
   }
   .profile__role {
     color: var(--muted);
@@ -369,9 +412,18 @@ const profiles = [
     margin: var(--space-4) 0;
     border-radius: 2px;
   }
-  .profile__copy > p:last-child {
+  .profile__copy > p:not([class]) {
     color: var(--ink);
     margin: 0;
+  }
+  .profile__return {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-underline-offset: 0.3em;
   }
   @media (max-width: 820px) {
     .profile__inner {

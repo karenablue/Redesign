@@ -1,8 +1,7 @@
 ---
 /**
- * CtaBand — the dark navy call-to-action band that closes almost every page
- * on the old site right before the footer. One component, gold-ruled, with
- * a one- or two-button row.
+ * CtaBand — a shared editorial closing invitation. The message and next
+ * steps sit beside one another on desktop and stack in reading order on mobile.
  *
  * props:
  *   eyebrow  kicker (optional)
@@ -31,7 +30,9 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 ---
 
 <section class="cta on-dark">
+  <span class="cta__mark" aria-hidden="true">ΣΓΡ</span>
   <div class="container cta__inner">
+    <div class="cta__story">
     {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
     {title && (
       <h2 class="cta__title">
@@ -45,6 +46,7 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
       </h2>
     )}
     {copy && <p class="cta__copy">{copy}</p>}
+    </div>
     {actions.length > 0 && (
       <div class="cta__actions">
         {actions.map((a) => (
@@ -59,14 +61,32 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 
 <style>
   .cta {
+    position: relative;
+    overflow: hidden;
     color: var(--white);
-    background: linear-gradient(160deg, #22459f 0%, var(--royal) 55%, #1c3c8f 100%);
-    border-block: 4px solid var(--gold);
+    background: var(--royal);
+    border-top: 4px solid var(--gold);
+  }
+  .cta__mark {
+    position: absolute;
+    right: var(--space-6);
+    bottom: -0.15em;
+    font-family: var(--font-greek);
+    font-size: clamp(9rem, 22vw, 22rem);
+    line-height: 1;
+    opacity: 0.06;
+    pointer-events: none;
   }
   .cta__inner {
-    padding-block: clamp(3.25rem, 7vw, 5rem);
-    text-align: center;
-    max-width: 760px;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-12);
+    padding-block: var(--section-y);
+  }
+  .cta__story {
+    max-width: 44rem;
   }
   .cta__title {
     margin: 0;
@@ -77,18 +97,42 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
     font-size: var(--text-h2);
   }
   .cta__title span {
+    display: block;
+    margin-top: var(--space-2);
     color: var(--gold);
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
+    text-wrap: balance;
   }
   .cta__copy {
     margin: var(--space-4) 0 0;
     font-size: var(--text-md);
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-on-dark-soft);
   }
   .cta__actions {
-    margin-top: var(--space-8);
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-4);
-    justify-content: center;
+    padding-left: var(--space-8);
+    border-left: 1px solid var(--line-dark);
+  }
+  @media (max-width: 800px) {
+    .cta__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .cta__actions {
+      padding-left: 0;
+      border-left: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 560px) {
+    .cta__actions :global(.btn) {
+      width: 100%;
+    }
   }
 </style>

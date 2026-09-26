@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import CardGrid from "../../components/CardGrid.astro";
 import { withBase } from "../../lib/url.js";
 
 /*
@@ -102,21 +103,20 @@ const foundations: Foundation[] = [
     <div class="container pf-hero__inner">
       <p class="eyebrow">Service &amp; Impact</p>
       <h1>
-        Foundations That <span>Expand the Work</span>
+        Give with purpose.<br /><span class="editorial-accent">Help the work grow.</span>
       </h1>
       <div class="gold-rule"></div>
       <p>
         Through education, research, advocacy, fiscal support, and strategic partnerships, Sigma
         Gamma Rho's partner foundations help transform community vision into sustained impact.
       </p>
-      <nav class="pf-jump" aria-label="Partner foundations">
-        <a href="#nef">National Education Fund</a>
-        <a href="#spear">SPEAR Foundation</a>
-        <a href="#seven-pearls">Seven Pearls Foundation</a>
-      </nav>
+      <div class="pf-hero__actions">
+        <a class="btn" href="#foundations">Choose a Foundation</a>
+        <a class="btn btn--outline on-dark" href={withBase("/service-impact/national-programs/")}>Explore the Programs</a>
+      </div>
     </div>
     <div class="pf-hero__mark" aria-hidden="true">
-      FOUNDATIONS
+      ΣΓΡ
     </div>
   </section>
 
@@ -125,7 +125,7 @@ const foundations: Foundation[] = [
       <div>
         <p class="eyebrow">Extending Greater Service</p>
         <h2>
-          Purpose Backed by <span>Infrastructure</span>
+          Three foundations.<br /><span class="editorial-accent">Distinct ways to help.</span>
         </h2>
       </div>
       <div class="pf-intro__copy">
@@ -142,10 +142,13 @@ const foundations: Foundation[] = [
     </div>
   </section>
 
-  <section class="pf-cards">
-    <ul class="container pf-grid">
-      {foundations.map((f) => (
+  <section class="pf-cards" id="foundations" aria-label="Choose a foundation to support">
+    <div class="container">
+    <CardGrid as="ul" cols={1} min="100%" gap="var(--space-8)">
+      {foundations.map((f, i) => (
         <li class="pf-card" id={f.id}>
+          <div class="pf-card__identity">
+          <p class="eyebrow">Foundation {String(i + 1).padStart(2, "0")}</p>
           <div class="pf-emblem">
             <img
               src={withBase(f.logo)}
@@ -158,6 +161,8 @@ const foundations: Foundation[] = [
           </div>
           <h2>{f.name}</h2>
           <p class="pf-tag">{f.tag}</p>
+          </div>
+          <div class="pf-card__story">
           <p class="pf-lead">{f.lead}</p>
           <p class="pf-body">{f.body}</p>
           <ul class="pf-pillars">
@@ -168,12 +173,14 @@ const foundations: Foundation[] = [
               </li>
             ))}
           </ul>
-          <a class="btn btn--outline pf-action" href={f.link.href} target="_blank" rel="noopener">
+          <a class="btn pf-action" href={f.link.href} target="_blank" rel="noopener">
             {f.link.label} <span aria-hidden="true">&#8599;</span>
           </a>
+          </div>
         </li>
       ))}
-    </ul>
+    </CardGrid>
+    </div>
   </section>
 
   <CtaBand
@@ -203,47 +210,35 @@ const foundations: Foundation[] = [
     position: relative;
     z-index: 2;
     padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: 46rem;
   }
   .pf-hero h1 {
     color: #fff;
     margin: var(--space-2) 0 0;
+    font-size: var(--text-hero);
+    max-width: 48rem;
   }
   .pf-hero h1 span {
     color: var(--gold);
   }
   .pf-hero > .container > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-on-dark-soft);
+    max-width: 42rem;
   }
-  .pf-jump {
+  .pf-hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
     margin-top: var(--space-8);
-  }
-  .pf-jump a {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 999px;
-  }
-  .pf-jump a:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: #fff;
   }
   .pf-hero__mark {
     position: absolute;
     right: -0.5rem;
     bottom: -2rem;
     z-index: 1;
-    color: rgba(255, 255, 255, 0.04);
-    font-size: clamp(4rem, 12vw, 9rem);
-    font-family: var(--font-label);
+    color: var(--white);
+    opacity: 0.06;
+    font-size: clamp(8rem, 24vw, 24rem);
+    font-family: var(--font-greek);
   }
 
   .pf-intro {
@@ -276,37 +271,31 @@ const foundations: Foundation[] = [
     }
   }
 
-  /* Three equal cards on one light canvas. */
+  /* Each foundation has a distinct identity beside its purpose and action. */
   .pf-cards {
     background: var(--cream);
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
-  .pf-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
-    padding-inline: 0;
-    list-style: none;
-  }
   .pf-card {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-6);
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-12);
+    padding: var(--space-10);
     border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    border-top: 3px solid var(--gold);
     background: var(--white);
     scroll-margin-top: 72px;
   }
   .pf-emblem {
     display: grid;
     place-items: center;
-    width: 96px;
-    height: 96px;
+    width: 120px;
+    height: 120px;
     margin-bottom: var(--space-5);
   }
   .pf-emblem img {
-    width: 96px;
-    height: 96px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
   }
   .pf-card h2 {
@@ -314,22 +303,18 @@ const foundations: Foundation[] = [
     color: var(--royal);
     font-family: var(--font-body);
     font-weight: 700;
-    font-size: var(--text-lg);
+    font-size: var(--text-h3);
     line-height: 1.3;
   }
   .pf-tag {
-    align-self: flex-start;
     margin: var(--space-3) 0 0;
-    padding: 0.2rem 0.7rem;
-    border: 1px solid var(--gold);
-    border-radius: 999px;
     color: var(--royal);
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
   }
   .pf-lead {
-    margin: var(--space-5) 0 0;
+    margin: 0;
     color: var(--ink);
     font-weight: 600;
     line-height: 1.5;
@@ -360,16 +345,17 @@ const foundations: Foundation[] = [
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  /* The action sits on the card foot so all three line up. */
   .pf-action {
-    margin-top: auto;
-    align-self: flex-start;
-    white-space: nowrap;
+    margin-top: var(--space-2);
   }
-  @media (max-width: 1000px) {
-    .pf-grid {
+  @media (max-width: 800px) {
+    .pf-card {
       grid-template-columns: minmax(0, 1fr);
-      max-width: 40rem;
+      gap: var(--space-6);
+      padding: var(--space-6);
+    }
+    .pf-hero__actions .btn {
+      width: 100%;
     }
   }
 </style>

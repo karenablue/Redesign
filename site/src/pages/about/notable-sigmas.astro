@@ -60,6 +60,9 @@ const roster = (await getCollection("notableSigmas"))
 // inducted as honorary members.
 const famousSorors = roster.filter((p) => !p.honorary);
 const honoraryMembers = roster.filter((p) => p.honorary);
+const featuredSorors = ["Hattie McDaniel", "Alice Allison Dunnigan"]
+  .map((name) => famousSorors.find((person) => person.name === name))
+  .filter((person) => person !== undefined);
 
 /** Monogram fallback for entries that predate the `initials` field. */
 function monogram(name: string) {
@@ -122,8 +125,10 @@ const spotlight = [
     variant="plain"
     accent="navy"
     align="left"
+    editorial
+    watermark="ΣΓΡ"
   >
-    <a href="#famous-sorors" class="btn btn--outline on-dark"> Famous Sorors </a>
+    <a href="#famous-sorors" class="btn"> Explore Their Achievements </a>
     <a href="#honorary-members" class="btn btn--outline on-dark"> Honorary Members </a>
     <a href="#member-spotlight" class="btn btn--outline on-dark"> Member Spotlight </a>
   </Hero>
@@ -133,14 +138,25 @@ const spotlight = [
       <div>
         <p class="eyebrow">A Living Record of Achievement</p>
         <h2>
-          Not fame for fame's sake. <span>Impact with substance.</span>
+          Achievement <span>across generations.</span>
         </h2>
+        <p class="ns-intro__copy">
+          In culture, public service, classrooms, and communities, Sigma women have opened doors
+          and shaped the world around them. Meet the women whose work is part of that living legacy.
+        </p>
       </div>
-      <p class="ns-intro__copy">
-        This page separates well-known Sorors from honorary members and uses Member Spotlight to
-        feature women whose impact deserves deeper attention. Chapter information appears only when
-        it is known and documented; it is not used as a separate public-facing category.
-      </p>
+      <div class="ns-featured">
+        {featuredSorors.map((person) => (
+          <figure>
+            <img src={withBase(person.image!)} alt={person.name} width="400" height="500" loading="lazy" decoding="async" />
+            <figcaption>
+              <span class="ns-field">{person.field}</span>
+              <strong>{person.name}</strong>
+              <span>{person.note}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -156,7 +172,7 @@ const spotlight = [
           service, education, law, business, journalism, advocacy, medicine, religion, and sport.
           These are initiated members — women who crossed into Sigma Gamma Rho.
         </p>
-        <p class="ns-count">{famousSorors.length} Sorors</p>
+        <p class="ns-count" id="soror-count" role="status" aria-live="polite">{famousSorors.length} Sorors</p>
       </div>
 
       <div class="ns-filters" role="group" aria-label="Filter Famous Sorors">
@@ -166,6 +182,8 @@ const spotlight = [
               class:list={["filter", { "is-active": f.key === "all" }]}
               type="button"
               data-filter={f.key}
+              aria-pressed={f.key === "all" ? "true" : "false"}
+              aria-controls="soror-mosaic"
             >
               {f.label}
             </button>
@@ -209,8 +227,8 @@ const spotlight = [
           Women welcomed into <span>the sisterhood by honor.</span>
         </h2>
         <p>
-          Honorary membership is presented separately from Soror profiles so the distinction remains
-          clear and historically accurate. These women were inducted rather than initiated.
+          Celebrating women inducted as honorary members of Sigma Gamma Rho in recognition of
+          their accomplishments and contributions.
         </p>
         <p class="ns-count ns-count--light">{honoraryMembers.length} honorary members</p>
       </div>
@@ -307,35 +325,67 @@ const spotlight = [
     title="Achievement is visible. "
     highlight="Service remains the standard."
     copy="The women featured here represent only a portion of Sigma Gamma Rho's broader story. Across every generation, members have carried the Sorority's ideals into classrooms, courtrooms, boardrooms, studios, legislatures, communities, and fields of competition."
-    actions={[{ label: "Explore Our Herstory", href: "/about/herstory/" }]}
+    actions={[
+      { label: "Explore Membership", href: "/membership/become-a-member/" },
+      { label: "Discover Our Herstory", href: "/about/herstory/", variant: "outline" },
+    ]}
   />
 </Base>
 
 <style>
   .ns-intro {
-    background: var(--white);
-    padding-block: clamp(3rem, 5vw, 4rem);
+    background: var(--cream);
+    padding-block: var(--section-y);
     border-bottom: 1px solid var(--line);
   }
   .ns-intro__grid {
     display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
     gap: var(--space-12);
-    align-items: start;
+    align-items: center;
   }
   .ns-intro__grid h2 {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
   }
   .ns-intro__grid h2 span {
+    display: block;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
   }
   .ns-intro__copy {
     color: var(--muted);
+  }
+  .ns-featured {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .ns-featured figure {
+    margin: 0;
+  }
+  .ns-featured img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-bottom: 4px solid var(--gold);
+  }
+  .ns-featured figcaption {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .ns-featured strong {
+    font-family: var(--font-editorial);
+    color: var(--royal);
+    font-size: var(--text-xl);
+    line-height: 1.2;
   }
   @media (max-width: 780px) {
     .ns-intro__grid {
@@ -344,15 +394,15 @@ const spotlight = [
   }
 
   .ns-section {
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: var(--section-y);
     background: var(--white);
   }
   .ns-section--dark {
-    background: var(--grad-royal);
-    color: #fff;
+    background: var(--navy);
+    color: var(--white);
   }
   .ns-section--dark p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-on-dark-soft);
   }
   .ns-heading {
     max-width: 46rem;
@@ -360,21 +410,20 @@ const spotlight = [
   }
   .ns-heading h2 {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
   }
   .ns-heading h2 span {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 500;
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
   }
   .ns-heading > p:not(.eyebrow) {
     color: var(--muted);
     margin-top: var(--space-4);
   }
   .ns-section--dark .ns-heading > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-on-dark-soft);
   }
   .eyebrow--light {
     color: var(--gold);
@@ -400,7 +449,8 @@ const spotlight = [
     margin-bottom: var(--space-8);
   }
   .filter {
-    padding: 0.4rem 0.9rem;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-4);
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--white);
@@ -416,7 +466,7 @@ const spotlight = [
   .filter.is-active {
     background: var(--royal);
     border-color: var(--royal);
-    color: #fff;
+    color: var(--white);
   }
 
   .ns-mosaic {
@@ -425,9 +475,9 @@ const spotlight = [
     gap: var(--space-6);
   }
   .ns-card {
-    background: var(--tint);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
+    background: var(--white);
+    border-top: 1px solid var(--line-strong);
+    padding: var(--space-6) 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
@@ -439,18 +489,19 @@ const spotlight = [
     display: none;
   }
   .ns-card--dark {
-    background: rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border-top-color: var(--line-gold);
   }
   /* 64px, not 48px: at 48 a cropped portrait reads as a smudge. Monograms and
      photographs must be the same size or the grid loses its baseline. */
   .ns-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+    width: 88px;
+    height: 104px;
+    border-radius: var(--radius);
     display: grid;
     place-items: center;
     background: var(--royal);
-    color: #fff;
+    color: var(--white);
     font-family: var(--font-label);
     font-size: var(--text-sm);
     margin-bottom: var(--space-2);
@@ -467,7 +518,7 @@ const spotlight = [
     color: var(--navy);
   }
   .ns-card--dark .ns-avatar--photo {
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--deep-blue);
   }
   .ns-field {
     font-size: var(--text-xs);
@@ -485,7 +536,7 @@ const spotlight = [
     font-size: var(--text-md);
   }
   .ns-card--dark h3 {
-    color: #fff;
+    color: var(--white);
   }
   .ns-note {
     color: var(--muted);
@@ -494,7 +545,7 @@ const spotlight = [
     flex: 1;
   }
   .ns-card--dark .ns-note {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-on-dark-soft);
   }
   .ns-chapter {
     font-size: var(--text-xs);
@@ -514,21 +565,22 @@ const spotlight = [
   }
   .ns-spotlight li {
     display: grid;
-    grid-template-columns: 40px 64px 1fr;
+    grid-template-columns: auto auto minmax(0, 1fr);
     gap: var(--space-5);
     align-items: center;
     padding: var(--space-6);
-    background: var(--tint);
-    border-radius: var(--radius-lg);
+    border-top: 1px solid var(--gold);
+    background: var(--cream);
   }
   .ns-spotlight__num {
     font-family: var(--font-label);
     color: var(--accent-text);
-    font-size: var(--text-lg);
+    font-size: var(--text-h2);
   }
   .ns-spotlight h3 {
     margin: var(--space-1) 0;
-    font-size: var(--text-md);
+    font-family: var(--font-editorial);
+    font-size: var(--text-h3);
   }
   .ns-spotlight p:not(.ns-field) {
     color: var(--muted);
@@ -575,17 +627,23 @@ const spotlight = [
 </style>
 
 <script>
-  const buttons = document.querySelectorAll(".filter");
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".ns-filters .filter");
   const cards = document.querySelectorAll("#soror-mosaic .ns-card");
+  const count = document.querySelector("#soror-count");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      const filter = (btn as HTMLElement).dataset.filter;
+      buttons.forEach((b) => {
+        b.classList.toggle("is-active", b === btn);
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      const filter = btn.dataset.filter;
+      let visible = 0;
       cards.forEach((card) => {
         const el = card as HTMLElement;
         el.hidden = filter !== "all" && el.dataset.category !== filter;
+        if (!el.hidden) visible += 1;
       });
+      if (count) count.textContent = `${visible} ${visible === 1 ? "Soror" : "Sorors"}${filter === "all" ? "" : ` · ${btn.textContent?.trim()}`}`;
     });
   });
 </script>

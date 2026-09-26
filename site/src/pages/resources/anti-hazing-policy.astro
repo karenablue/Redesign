@@ -22,7 +22,7 @@ const hazingList = [
       <Breadcrumb
         items={[
           { label: "Home", href: "/" },
-          { label: "Resources", href: "/resources/vendor/" },
+          { label: "Resources" },
           { label: "Anti-Hazing Policy" },
         ]}
       />
@@ -36,6 +36,10 @@ const hazingList = [
         Membership in Sigma Gamma Rho Sorority, Incorporated is grounded in dignity, sisterhood, and
         accountability — never in hazing.
       </p>
+      <div class="ah-hero__actions">
+        <a class="btn" href="#reporting">Report a Concern <span aria-hidden="true">&darr;</span></a>
+        <a class="btn btn--outline" href="#policy-statement">Read the Policy</a>
+      </div>
     </div>
   </section>
 
@@ -147,11 +151,18 @@ const hazingList = [
   .ah-hero h1 {
     max-width: 600px;
     margin: var(--space-2) 0 0;
+    font-size: var(--text-hero);
   }
-  .ah-hero > .container > p:last-child {
+  .ah-hero > .container > p:not(.eyebrow) {
     max-width: 540px;
     margin: var(--space-5) 0 0;
     color: var(--muted);
+  }
+  .ah-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
   }
 
   .ah-main {

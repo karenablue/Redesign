@@ -1,0 +1,44 @@
+---
+import { programLogos, type ProgramLogoName } from "../data/program-logos";
+import { withBase } from "../lib/url.js";
+
+interface Props {
+  name: ProgramLogoName;
+  alt?: string;
+  maxWidth?: number;
+}
+
+const { name, alt = "", maxWidth = 280 } = Astro.props;
+const logo = programLogos[name];
+const [left, top, width, height] = logo.bounds;
+---
+
+<div
+  class="program-mark"
+  style={`--mark-width: ${maxWidth}px; aspect-ratio: ${width} / ${height};`}
+>
+  <img
+    src={withBase(logo.src)}
+    alt={alt}
+    width={logo.width}
+    height={logo.height}
+    loading="lazy"
+    decoding="async"
+    style={`width: ${(logo.width / width) * 100}%; left: ${(-left / width) * 100}%; top: ${(-top / height) * 100}%;`}
+  />
+</div>
+
+<style>
+  .program-mark {
+    position: relative;
+    width: min(100%, var(--mark-width));
+    overflow: hidden;
+    background: var(--white);
+  }
+  .program-mark img {
+    position: absolute;
+    display: block;
+    max-width: none;
+    height: auto;
+  }
+</style>

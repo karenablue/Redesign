@@ -99,12 +99,20 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
       <h1>
         Welcome Back
         <br />
-        <span>to the Sisterhood.</span>
+        <span class="editorial-accent">to the Sisterhood.</span>
       </h1>
       <p>
         Reactivating your membership reconnects you with Sigma Gamma Rho, your chapter, and Sorors
         around the world.
       </p>
+      <div class="rx-actions">
+        <a class="btn" href="#steps">
+          Begin Your Return
+        </a>
+        <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>
+          Find Your Chapter
+        </a>
+      </div>
     </div>
   </section>
 
@@ -288,10 +296,13 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
     max-width: 600px;
     margin: var(--space-2) 0 0;
   }
-  .rx-hero > .container > p:last-child {
+  .rx-hero > .container > p:not(.eyebrow) {
     max-width: 540px;
     margin: var(--space-5) 0 0;
     color: var(--muted);
+  }
+  .rx-hero h1 span {
+    color: var(--royal);
   }
 
   .rx-main {

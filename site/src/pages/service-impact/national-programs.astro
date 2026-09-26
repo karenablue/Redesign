@@ -10,6 +10,9 @@
  * documented program partners and "Service Through the Decades".
  */
 import Base from "../../layouts/Base.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import ProgramLogo from "../../components/ProgramLogo.astro";
+import type { ProgramLogoName } from "../../data/program-logos";
 import { withBase } from "../../lib/url.js";
 
 const heroStats = [
@@ -23,10 +26,22 @@ const PARTNER_URL = "/service-impact/corporate-partnerships/";
 /** Partners already documented on this site (Corporate Partnerships). */
 const programPartners = [
   { name: "USA Swimming", logo: "/images/USA Swimming.svg", note: "Swim 1922" },
-  { name: "National Alliance on Mental Illness", logo: "/images/National Alliance on Mental Illness.jpg", note: "Women's Wellness" },
-  { name: "National Education Fund", logo: "/images/foundations/nef.png", note: "Allied foundation" },
+  {
+    name: "National Alliance on Mental Illness",
+    logo: "/images/National Alliance on Mental Illness.jpg",
+    note: "Women's Wellness",
+  },
+  {
+    name: "National Education Fund",
+    logo: "/images/foundations/nef.png",
+    note: "Allied foundation",
+  },
   { name: "SPEAR Foundation", logo: "/images/foundations/spear.png", note: "Allied foundation" },
-  { name: "Seven Pearls Foundation", logo: "/images/foundations/seven-pearls.png", note: "Allied foundation" },
+  {
+    name: "Seven Pearls Foundation",
+    logo: "/images/foundations/seven-pearls.png",
+    note: "Allied foundation",
+  },
 ];
 
 const jumpLinks = [
@@ -41,7 +56,6 @@ const programs = [
   {
     id: "bigbookbag",
     kicker: "National Initiative • Est. 1996",
-    logo: "/images/Operation BigBookBag.png",
     name: "Operation BigBookBag®",
     lead: "Removing educational barriers by placing the tools students need directly into their hands.",
     body: [
@@ -55,7 +69,6 @@ const programs = [
     id: "wellness",
     flip: true,
     kicker: "National Initiative",
-    logo: "/images/Women’s Wellness Initiative.png",
     name: "Women's Wellness Initiative",
     lead: "Supporting informed, empowered decisions about physical, mental, and emotional health.",
     body: [
@@ -68,7 +81,6 @@ const programs = [
   {
     id: "swim",
     kicker: "National Initiative",
-    logo: "/images/Swim 1922.png",
     name: "SWIM 1922®",
     lead: "Increasing water safety, swimming access, and confidence in communities historically excluded from aquatic participation.",
     body: [
@@ -81,7 +93,6 @@ const programs = [
     id: "cradle",
     flip: true,
     kicker: "National Initiative",
-    logo: "/images/Project Cradle Care.png",
     name: "Project CRADLE Care®",
     lead: "Advancing healthier maternal and infant outcomes through education, advocacy, outreach, and awareness.",
     body: [
@@ -94,7 +105,6 @@ const programs = [
   {
     id: "youth",
     kicker: "National Initiative",
-    logo: "/images/Annual Youth Symposium.png",
     name: "Annual Youth Symposium",
     lead: "A nationwide day of relevant, hands-on programming designed to empower young people and strengthen their futures.",
     body: [
@@ -114,9 +124,11 @@ const programs = [
 >
   <section class="programs-hero on-dark">
     <div class="container programs-hero__inner">
+      <div class="programs-hero__opening">
+      <div>
       <p class="eyebrow">Service &amp; Impact</p>
       <h1 class="programs-hero__title">
-        Greater Service <span>in Action</span>
+        Greater Service <span class="editorial-accent">in action.</span>
       </h1>
       <div class="gold-rule"></div>
       <p class="programs-hero__copy">
@@ -124,6 +136,14 @@ const programs = [
         advancing education, women's wellness, water safety, maternal and infant health, and youth
         development.
       </p>
+      </div>
+      <div class="programs-hero__invitation">
+        <span class="programs-hero__number" aria-hidden="true">05</span>
+        <p>Five national programs.<br />One commitment to community.</p>
+        <a class="btn" href={withBase("/membership/chapter-locator/")}>Connect with a Chapter</a>
+        <a class="programs-hero__support" href={withBase("/service-impact/partner-foundations/")}>Support the Work <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      </div>
 
       <nav class="jump-nav" aria-label="Jump to a national program">
         {jumpLinks.map((j) => (
@@ -170,15 +190,24 @@ const programs = [
         <div class:list={["container program__shell", { "program__shell--flip": i % 2 === 1 }]}>
           <figure class:list={["program__visual", { "program__visual--mark": !p.photo }]}>
             {p.photo ? (
-              <img src={withBase(p.photo)} alt={`${p.name.replace("®", "")} in action`} width="900" height="600" loading="lazy" decoding="async" />
+              <img
+                src={withBase(p.photo)}
+                alt={`${p.name.replace("®", "")} in action`}
+                width="900"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
-              <img src={withBase(p.logo)} alt={`${p.name} mark`} width="468" height="145" loading="lazy" decoding="async" />
+              <ProgramLogo name={p.id as ProgramLogoName} alt={`${p.name} logo`} maxWidth={420} />
             )}
           </figure>
           <div class="program__card">
-            <p class="program__kicker">{p.kicker}</p>
+            <p class="program__kicker"><span class="program__number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {p.kicker}</p>
             {p.photo && (
-              <img class="program__logo" src={withBase(p.logo)} alt="" loading="lazy" decoding="async" />
+              <div class="program__logo">
+                <ProgramLogo name={p.id as ProgramLogoName} />
+              </div>
             )}
             <h2 class="program__name">{p.name}</h2>
             <p class="program__lead">{p.lead}</p>
@@ -230,26 +259,39 @@ const programs = [
         </p>
         <p class="service-history__callout">
           The programs evolve. The obligation remains:{" "}
-          <strong>Greater Service, Greater Progress<sup class="reg">&reg;</sup>.</strong>
+          <strong>
+            Greater Service, Greater Progress<sup class="reg">&reg;</sup>.
+          </strong>
         </p>
       </div>
     </div>
   </section>
+  <CtaBand
+    eyebrow="Put Purpose Into Practice"
+    title="The work happens"
+    highlight="in community."
+    copy="Connect with a local chapter to learn about service opportunities, or bring your organization's resources to a national program."
+    actions={[
+      { label: "Find Your Chapter", href: "/membership/chapter-locator/" },
+      { label: "Become a Partner", href: "/service-impact/corporate-partnerships/", variant: "outline" },
+    ]}
+  />
 </Base>
 
 <style>
   /* ---- hero ---- */
   .programs-hero {
-    background: var(--grad-royal);
-    color: #fff;
-    text-align: center;
+    background: var(--navy);
+    color: var(--white);
   }
   .programs-hero__inner {
     padding-block: clamp(3.5rem, 7vw, 5rem);
   }
-  .programs-hero__inner > :not(.hero-stat-band) {
-    max-width: 50rem;
-    margin-inline: auto;
+  .programs-hero__opening {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: center;
   }
   .programs-hero__title {
     margin: 0;
@@ -259,25 +301,71 @@ const programs = [
     color: #fff;
   }
   .programs-hero__title span {
-    color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+    display: block;
+    color: var(--gold);
   }
   .gold-rule {
-    margin-inline: auto;
+    margin-inline: 0;
   }
   .programs-hero__copy {
     color: rgba(255, 255, 255, 0.88);
     max-width: 40rem;
-    margin-inline: auto;
+    margin-inline: 0;
+  }
+  .programs-hero__invitation {
+    padding-left: var(--space-8);
+    border-left: 1px solid var(--line-dark);
+  }
+  .programs-hero__number {
+    display: block;
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 1;
+    margin-bottom: var(--space-4);
+  }
+  .programs-hero__invitation p {
+    color: var(--text-on-dark-soft);
+    font-size: var(--text-base);
+  }
+  .programs-hero__support {
+    display: block;
+    width: fit-content;
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-underline-offset: 0.3em;
+  }
+  .program__kicker {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .program__number {
+    color: var(--royal);
+    font-family: var(--font-editorial);
+    font-size: var(--text-h3);
+    font-weight: 400;
+  }
+  @media (max-width: 800px) {
+    .programs-hero__opening {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .programs-hero__invitation {
+      padding: var(--space-6) 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--line-dark);
+    }
+    .programs-hero__number {
+      display: none;
+    }
   }
 
   .jump-nav {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--space-3);
     margin-top: var(--space-8);
   }
@@ -409,11 +497,6 @@ const programs = [
     border: 1px solid var(--line);
     background: var(--white);
   }
-  .program__visual--mark img {
-    width: min(100%, 420px);
-    aspect-ratio: auto;
-    object-fit: contain;
-  }
   .program__kicker {
     margin: 0 0 var(--space-4);
     color: var(--muted-2);
@@ -426,10 +509,6 @@ const programs = [
     color: var(--muted);
   }
   .program__logo {
-    display: block;
-    height: 48px;
-    width: auto;
-    max-width: 100%;
     margin-bottom: var(--space-4);
   }
   .program__name {

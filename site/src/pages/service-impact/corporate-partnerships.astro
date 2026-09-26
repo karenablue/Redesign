@@ -1,19 +1,18 @@
 ---
 import Base from "../../layouts/Base.astro";
+import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
 const FORM_URL = "https://forms.office.com/r/ruwe5VFBgr";
 
 /*
- * Figures in the proof block are the ones the site already states (the
- * International Grand Basileus bio: over 100,000 members, 500 chapters).
  * No prospectus PDF or sponsorship tiers exist yet; add them here when HQ
  * publishes them.
  */
 const proof = [
   {
     title: "Multigenerational Reach",
-    body: "More than 100,000 members and 500 chapters worldwide, from collegiate and alumnae chapters to youth affiliates.",
+    body: "Connect with collegiate and alumnae chapters, members, and youth affiliates through a multigenerational sisterhood.",
   },
   {
     title: "Ready-to-Activate Programs",
@@ -188,7 +187,7 @@ const collabs = [
     <div class="container cp-hero__inner">
       <p class="eyebrow">Service &amp; Impact</p>
       <h1>
-        Partnerships That <span>Move the Mission Forward</span>
+        Shared purpose.<br /><span class="editorial-accent">Greater possibilities.</span>
       </h1>
       <div class="gold-rule"></div>
       <p>
@@ -197,11 +196,11 @@ const collabs = [
         impact.
       </p>
       <div class="cp-hero__actions">
-        <a class="btn" href="#partner-grid">
-          Explore Partnerships
+        <a class="btn" href={FORM_URL} target="_blank" rel="noopener">
+          Start a Partnership
         </a>
-        <a class="btn btn--outline on-dark" href={FORM_URL} target="_blank" rel="noopener">
-          Partnership Opportunities
+        <a class="btn btn--outline on-dark" href="#partner-grid">
+          Meet Our Partners
         </a>
       </div>
     </div>
@@ -231,7 +230,7 @@ const collabs = [
       <div class="cp-heading">
         <p class="eyebrow">Strategic Alliances</p>
         <h2>
-          Partnerships Built Into <span>National Programs</span>
+          Partnerships Built Into <span class="editorial-accent">National Programs</span>
         </h2>
       </div>
       <ul class="cp-alliances__row">
@@ -321,45 +320,38 @@ const collabs = [
     </div>
   </section>
 
-  <section class="cp-inquire">
-    <div class="container cp-inquire__inner">
-      <div>
-        <h2>Start a Partnership Conversation</h2>
-        <p>
-          Tell us about your organization and goals. The partnership form goes directly to
-          International Corporate Headquarters.
-        </p>
-      </div>
-      <div class="cp-inquire__actions">
-        <a class="btn" href={FORM_URL} target="_blank" rel="noopener">
-          Submit a Partnership Inquiry <span aria-hidden="true">&#8599;</span>
-        </a>
-        <a class="btn btn--outline" href="mailto:help@sgrho1922.org">
-          Email help@sgrho1922.org
-        </a>
-      </div>
-    </div>
-  </section>
+  <CtaBand
+    eyebrow="Partner with Sigma Gamma Rho"
+    title="Bring your expertise."
+    highlight="Build with our community."
+    copy="Tell International Corporate Headquarters about your organization and the work you want to support."
+    actions={[
+      { label: "Submit a Partnership Inquiry", href: FORM_URL },
+      { label: "Contact Headquarters", href: "mailto:help@sgrho1922.org", variant: "outline" },
+    ]}
+  />
 </Base>
 
 <style>
   .cp-hero {
-    background: var(--grad-royal);
-    color: #fff;
+    background: var(--navy);
+    color: var(--white);
   }
   .cp-hero__inner {
     padding-block: clamp(3.5rem, 6vw, 5rem);
-    max-width: 48rem;
   }
   .cp-hero h1 {
     color: #fff;
     margin: var(--space-2) 0 0;
+    max-width: 50rem;
+    font-size: var(--text-hero);
   }
   .cp-hero h1 span {
     color: var(--gold);
   }
   .cp-hero > .container > p:not(.eyebrow) {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-on-dark-soft);
+    max-width: 42rem;
   }
   .cp-hero__actions {
     display: flex;
@@ -409,7 +401,7 @@ const collabs = [
     }
   }
 
-  /* ---- logo boxes: fixed height, centred, greyscale until hover ---- */
+  /* Partner artwork retains its published colors. */
   .cp-logo {
     display: flex;
     align-items: center;
@@ -421,17 +413,6 @@ const collabs = [
     max-height: 56px;
     max-width: 160px;
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.85;
-    transition:
-      filter 0.2s ease,
-      opacity 0.2s ease;
-  }
-  .partner-card:hover .cp-logo img,
-  .cp-alliance:hover .cp-logo img,
-  .cp-alliance:focus-within .cp-logo img {
-    filter: none;
-    opacity: 1;
   }
   .cp-logo--lg {
     height: 96px;
@@ -439,11 +420,6 @@ const collabs = [
   .cp-logo--lg img {
     max-height: 88px;
     max-width: 200px;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .cp-logo img {
-      transition: none;
-    }
   }
 
   /* ---- strategic alliances ---- */
@@ -659,33 +635,4 @@ const collabs = [
     }
   }
 
-  /* ---- inquiry ---- */
-  .cp-inquire {
-    background: var(--white);
-    padding-block: clamp(3rem, 5vw, 4rem);
-  }
-  .cp-inquire__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-6) var(--space-10);
-    padding: var(--space-8);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-  }
-  .cp-inquire h2 {
-    margin: 0;
-    font-size: var(--text-h3);
-  }
-  .cp-inquire p {
-    margin: var(--space-3) 0 0;
-    color: var(--muted);
-    max-width: 36rem;
-  }
-  .cp-inquire__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
 </style>

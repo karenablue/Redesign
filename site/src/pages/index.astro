@@ -1,42 +1,31 @@
 ---
 /**
- * Home — six sections (Karena's outline, 2026-09-17):
- *
- * A narrative arc, not a dashboard: identity, origin, impact, leadership,
- * then local connections.
- *
- *   1  Hero: the clip runs clean; the slogan, mission and actions sit in the
- *      navy band below it, with the reach ribbon on its edge. 1922 lives in
- *      the eyebrow and the origin story, so the ribbon is scale only.
- *
- * One canvas: everything between the navy band and the navy partner ribbon
- * is Bright White, so photography and type carry the rhythm instead of
- * alternating grounds (Karena, 2026-09-17).
- *   2  Origin: the 1922 charter photograph and founding story.
- *   3  Our work in action: three signature program cards.
- *   4  Into the next century: the Grand Basileus, steward of that legacy.
- *   5  Chapter locator callout, then newsroom beside the events agenda.
- *   6  Greater Together partner ribbon, then the Poodle Portal strip.
+ * Home — mission, reach, heritage, programs, leadership, local connection,
+ * news, partnerships, and member access. The hero carries the mission over
+ * archival imagery; the closing navy section presents the partner network.
+ * Between them, a Bright White canvas lets photography and type set the
+ * rhythm (Karena, 2026-09-17).
  *
  * Copy is drawn from the site's own pages (Grand Basileus bio, National
  * Programs, Herstory, Latest News); no administration theme is published,
  * so none is named.
  */
-import membersIcon from "../assets/stat-icons/women.svg?raw";
-import chaptersIcon from "../assets/stat-icons/landmark.svg?raw";
-import statesIcon from "../assets/stat-icons/us-map.svg?raw";
-import countriesIcon from "../assets/stat-icons/globe.svg?raw";
+import membersIcon from "../assets/stat-icons/members.svg?raw";
+import chaptersIcon from "../assets/stat-icons/chapters.svg?raw";
+import statesIcon from "../assets/stat-icons/states.svg?raw";
+import countriesIcon from "../assets/stat-icons/countries.svg?raw";
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import StatBand from "../components/StatBand.astro";
 import PillarRail from "../components/PillarRail.astro";
 import CardGrid from "../components/CardGrid.astro";
+import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
 import { getCollection } from "astro:content";
 
 const PORTAL_URL = "https://portal.sgrho1922.org/";
 
-// A women-and-sisterhood mark alongside Lucide line icons (license bundled).
+// One line-art family keeps the four measures visually consistent at small sizes.
 const reachStats = [
   { value: "100,000+", label: "Lifetime Members", icon: { svg: membersIcon } },
   { value: "700+", label: "Collegiate & Alumnae Chapters", icon: { svg: chaptersIcon } },
@@ -44,7 +33,7 @@ const reachStats = [
   { value: "10", label: "Countries", icon: { svg: countriesIcon } },
 ];
 
-// 3 — signature programs. Scope lines restate National Programs.
+// Signature programs. Scope lines restate National Programs.
 const signature = [
   {
     tag: "Maternal Health",
@@ -81,7 +70,6 @@ const signature = [
     linkLabel: "Explore Women's Wellness",
     scope: "Encourages informed decisions about physical, mental, and emotional health.",
     href: "/service-impact/national-programs/#wellness",
-    img: "/images/Women’s Wellness Initiative.png",
     isMark: true,
   },
   {
@@ -95,7 +83,7 @@ const signature = [
   },
 ];
 
-// 5 — newsroom: the lead story (it has its own page) and the two latest
+// Newsroom: the lead story (it has its own page) and the two latest
 // items from the news collection; events from the events collection.
 const featuredStory = {
   tag: "Convention",
@@ -123,7 +111,7 @@ const upcoming = (await getCollection("events"))
   .slice(0, 4)
   .map((e) => e.data);
 
-// 6 — partners: the fourteen on Corporate Partnerships plus the allied
+// Partners: the fourteen on Corporate Partnerships plus the allied
 // foundations. External logos open the partner's own site.
 const partnerLogos = [
   {
@@ -202,23 +190,24 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   description="Sigma Gamma Rho Sorority, Incorporated — a century of scholarship, sisterhood, leadership, and service. Greater Service, Greater Progress."
   bodyClass="page-home"
 >
-  <!-- 1 — the hero carries the message directly over the moving image. -->
+  <!-- The hero carries the message directly over the moving image. -->
   <Hero
     cinematic
     video="/images/sgrho-hero.mp4"
     image="/images/sgr-alpha-charter.jpeg"
-    eyebrow="1922 — Today"
-    title="Greater Service,"
-    highlight="Greater Progress®"
-    copy="A global sisterhood working to enhance the quality of life for women and their families through community service, civil and social action."
+    eyebrow="Sigma Gamma Rho · Since 1922"
+    title="Seven founders."
+    highlight="A century of greater service."
+    copy="From maternal health and water safety to educational opportunity, Sigma Gamma Rho puts sisterhood to work in communities across the country and beyond."
     size="tall"
     align="left"
+    watermark="ΣΓΡ"
   >
-    <a class="btn" href={withBase("/service-impact/national-programs/")}>
-      Explore Our Impact <span aria-hidden="true">&rarr;</span>
+    <a class="btn" href={withBase("/membership/become-a-member/")}>
+      Join the Sisterhood <span aria-hidden="true">&rarr;</span>
     </a>
-    <a class="btn btn--outline" href={withBase("/membership/become-a-member/")}>
-      Explore Membership <span aria-hidden="true">&rarr;</span>
+    <a class="btn btn--outline" href={withBase("/service-impact/national-programs/")}>
+      Explore Our Impact <span aria-hidden="true">&rarr;</span>
     </a>
   </Hero>
 
@@ -226,36 +215,36 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     <StatBand stats={reachStats} tone="navy" />
   </section>
 
-  <!-- 2 — origin: where the work comes from. -->
+  <!-- Origin: where the work comes from. -->
   <section class="section legacy">
     <div class="container legacy__grid">
       <div class="legacy__dateline">
         <span class="legacy__year" aria-hidden="true">
-          1922
+          1924
         </span>
         <p class="eyebrow">
           Indianapolis, Indiana
           <br />
-          November 12, 1922
+          1924
         </p>
       </div>
       <figure class="legacy__figure" id="our-legacy">
         <img
           src={withBase("/images/sgr-alpha-charter.jpeg")}
-          alt="Alpha Chapter charter members, 1922"
+          alt="Alpha Chapter charter members, 1924"
           loading="lazy"
           decoding="async"
         />
         <figcaption>
-          <span>From the beginning</span> Alpha Chapter charter members, 1922
+          <span>From the beginning</span> Alpha Chapter charter members, 1924
         </figcaption>
       </figure>
       <div class="legacy__copy">
         <p class="eyebrow">Living Legacy</p>
         <h2 class="legacy__title">Seven Educators. One Radical Idea.</h2>
         <p>
-          On November 12, 1922, seven Black educators founded Sigma Gamma Rho at Butler University
-          in Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
+          In 1922, seven Black educators founded Sigma Gamma Rho at Butler University in
+          Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
           civic courage, a foundation that still shapes every chapter today.
         </p>
         <div class="legacy__links">
@@ -274,26 +263,31 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </section>
 
-  <!-- 3 — the mission in motion. -->
+  <!-- The mission in motion. -->
   <section class="section work" id="national-programs" aria-labelledby="work-title">
     <div class="container">
-      <div class="work__head">
+      <div class="work__head on-dark">
         <p class="work__count">
-          <strong>5</strong>
+          <strong>05</strong>
           <span>
             National
             <br />
             Programs
           </span>
         </p>
-        <div>
+        <div class="work__intro">
+          <p class="eyebrow">Our Work in Action</p>
           <h2 class="work__label" id="work-title">
-            Our Work in Action
+            Greater Service,
+            <em>Greater Progress®</em>
           </h2>
           <p>
             Five national programs, bringing the Sorority's mission into classrooms, clinics, and
             pools.
           </p>
+          <a class="work__support" href={withBase("/service-impact/partner-foundations/")}>
+            Explore Ways to Support <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
       </div>
       <CardGrid as="ul" min="320px" cols={3}>
@@ -305,14 +299,18 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
                 { "program-row__media--mark": "isMark" in x && x.isMark },
               ]}
             >
-              <img
-                src={withBase(x.img)}
-                alt=""
-                width="960"
-                height="540"
-                loading="lazy"
-                decoding="async"
-              />
+              {"isMark" in x && x.isMark ? (
+                <ProgramLogo name="wellness" maxWidth={420} />
+              ) : (
+                <img
+                  src={withBase(x.img)}
+                  alt=""
+                  width="960"
+                  height="540"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
               <figcaption class="program-row__badge">{x.tag}</figcaption>
             </figure>
             <div class="program-row__copy">
@@ -330,15 +328,21 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
         ))}
       </CardGrid>
 
-      <p class="center-link">
-        <a href={withBase("/service-impact/national-programs/")}>
-          Explore All National Programs <span aria-hidden="true">&rarr;</span>
-        </a>
-      </p>
+      <div class="work__invitation">
+        <div>
+          <p class="eyebrow">Carry the Work Forward</p>
+          <h3>More opportunity.<br /><span class="editorial-accent">With your support.</span></h3>
+          <p>Explore the foundations supporting education, leadership, and community service.</p>
+        </div>
+        <div class="work__actions">
+          <a class="btn" href={withBase("/service-impact/partner-foundations/")}>Choose a Foundation to Support <span aria-hidden="true">&rarr;</span></a>
+          <a href={withBase("/service-impact/national-programs/")}>Explore All National Programs <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 4 — into the next century: leadership, after the legacy it carries. -->
+  <!-- Into the next century: leadership, after the legacy it carries. -->
   <section class="section vision" id="grand-basileus" aria-labelledby="vision-title">
     <div class="container vision__grid">
       <figure class="vision__portrait">
@@ -388,23 +392,40 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </section>
 
-  <!-- A compact route into the chapter network. -->
-  <section class="chapter-callout" aria-labelledby="chapter-callout-title">
+  <!-- The chapter network is the bridge from national mission to local action. -->
+  <section class="chapter-callout on-dark" aria-labelledby="chapter-callout-title">
+    <span class="chapter-callout__mark" aria-hidden="true">
+      ΣΓΡ
+    </span>
     <div class="container chapter-callout__inner">
-      <div>
-        <p class="eyebrow">Connect Locally</p>
-        <h2 id="chapter-callout-title">Find a Chapter</h2>
+      <div class="chapter-callout__story">
+        <p class="eyebrow">Across Five Regions and Beyond</p>
+        <h2 id="chapter-callout-title">
+          Find your chapter.
+          <em>Carry the legacy forward.</em>
+        </h2>
         <p>
           Connect with collegiate and alumnae chapters across our five regions and internationally.
         </p>
+        <a class="btn" href={withBase("/membership/chapter-locator/")}>
+          Open the Chapter Locator <span aria-hidden="true">&rarr;</span>
+        </a>
       </div>
-      <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>
-        Open the Chapter Locator <span aria-hidden="true">&rarr;</span>
-      </a>
+      <div class="chapter-callout__next">
+        <p>More Ways to Engage</p>
+        <a href={withBase("/membership/become-a-member/")}>
+          <span>Join the Sisterhood</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href={withBase("/membership/reactivate/")}>
+          <span>Reactivate Membership</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- 5b — a featured dispatch beside the events agenda. -->
+  <!-- A featured dispatch beside the events agenda. -->
   <section class="section dispatch" id="whats-happening" aria-labelledby="dispatch-title">
     <div class="container">
       <div class="dispatch__head">
@@ -505,7 +526,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </section>
 
-  <!-- 6 — Greater Together. -->
+  <!-- Greater Together. -->
   <section
     class="section section--navy partnership on-dark"
     id="partnerships"
@@ -662,6 +683,41 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
 </Base>
 
 <style>
+  .work__invitation {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-10);
+    margin-top: var(--space-12);
+    padding: var(--space-10);
+    border-top: 3px solid var(--gold);
+    background: var(--cream);
+  }
+  .work__invitation h3 {
+    font-size: var(--text-h3);
+  }
+  .work__invitation p:last-child {
+    max-width: 34rem;
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: var(--text-base);
+  }
+  .work__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--royal);
+  }
+  @media (max-width: 800px) {
+    .work__invitation {
+      grid-template-columns: 1fr;
+      padding: var(--space-6);
+      gap: var(--space-6);
+    }
+  }
   /* The wider canvas is a homepage layout decision; brand colors stay
      inherited from the shared token palette. */
   :global(body.page-home) {
@@ -687,6 +743,61 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
 
   .eyebrow {
     margin: 0 0 var(--space-4);
+  }
+  :global(body.page-home .hero__title) {
+    text-transform: none;
+    letter-spacing: -0.04em;
+  }
+  :global(body.page-home .hero__title span) {
+    display: block;
+    color: var(--gold);
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+  :global(body.page-home .hero__watermark) {
+    right: -0.03em;
+    bottom: -0.24em;
+    left: auto;
+    color: color-mix(in srgb, var(--white) 9%, transparent);
+    font-family: var(--font-greek);
+    font-size: clamp(14rem, 32vw, 36rem);
+    font-weight: 400;
+  }
+  :global(body.page-home .hero--cinematic .hero__scrim) {
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--navy) 94%, transparent) 0%,
+        color-mix(in srgb, var(--navy) 78%, transparent) 34%,
+        color-mix(in srgb, var(--navy) 34%, transparent) 68%,
+        color-mix(in srgb, var(--navy) 8%, transparent) 100%
+      ),
+      linear-gradient(to top, color-mix(in srgb, var(--navy) 50%, transparent), transparent 55%);
+  }
+  :global(body.page-home .hero__copy) {
+    max-width: 40rem;
+    font-size: clamp(1.05rem, 0.9rem + 0.7vw, 1.4rem);
+    line-height: 1.6;
+    color: var(--text-on-dark-lead);
+  }
+  :global(body.page-home .hero__actions) {
+    margin-top: var(--space-8);
+  }
+  :global(body.page-home .hero__actions .btn) {
+    min-width: 220px;
+    justify-content: center;
+  }
+  @media (max-width: 820px) {
+    :global(body.page-home .hero--cinematic .hero__scrim) {
+      background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--navy) 56%, transparent),
+        color-mix(in srgb, var(--navy) 78%, transparent)
+      );
+    }
   }
   .center-link {
     margin: clamp(2.5rem, 4vw, 3.5rem) 0 0;
@@ -839,43 +950,83 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   /* 3 — our work in action */
   .work__head {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    align-items: center;
+    grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1fr);
+    gap: clamp(var(--space-6), 5vw, var(--space-16));
+    align-items: start;
     margin-bottom: clamp(2rem, 4vw, 3rem);
+    padding: clamp(var(--space-8), 5vw, var(--space-16));
+    border-left: var(--space-2) solid var(--gold);
+    background: var(--navy);
+    color: var(--white);
   }
   /* One count for the set, rather than a number stamped on every card. */
   .work__count {
     display: flex;
-    align-items: center;
-    gap: var(--space-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
     margin: 0;
-    padding-right: clamp(1.5rem, 4vw, 3.5rem);
-    border-right: 1px solid var(--line);
+    padding-right: clamp(var(--space-6), 4vw, var(--space-12));
+    border-right: 1px solid var(--line-dark);
   }
   .work__count strong {
     font-family: var(--font-head);
     font-weight: 400;
-    font-size: clamp(3.5rem, 2rem + 5vw, 6rem);
+    font-size: clamp(4.5rem, 3rem + 5vw, 7rem);
     line-height: 0.85;
-    color: var(--royal);
+    color: var(--gold);
   }
   .work__count span {
-    color: var(--muted);
+    color: var(--white);
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.12em;
     line-height: 1.4;
     text-transform: uppercase;
   }
-  .work__label {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-h3);
+  .work__intro .eyebrow {
+    margin: 0 0 var(--space-5);
+    color: var(--gold);
   }
-  .work__head p {
+  .work__label {
+    margin: 0 0 var(--space-5);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .work__label em {
+    display: block;
+    color: var(--gold);
+    font-family: var(--font-editorial);
+    font-weight: 400;
+  }
+  .work__intro > p:not(.eyebrow) {
     margin: 0;
     max-width: 44rem;
-    color: var(--muted);
+    color: var(--text-on-dark-soft);
+    font-size: var(--text-md);
+  }
+  .work__support {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    margin-top: var(--space-6);
+    border-bottom: 2px solid var(--gold);
+    color: var(--white);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .work__support:hover {
+    color: var(--gold);
+  }
+  .work__support span {
+    color: var(--gold);
+    font-size: var(--text-lg);
   }
   @media (max-width: 700px) {
     .work__head {
@@ -883,11 +1034,16 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
       gap: var(--space-5);
     }
     .work__count {
-      padding-right: 0;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: var(--space-4);
+      padding: 0 0 var(--space-5);
       border-right: 0;
+      border-bottom: 1px solid var(--line-dark);
     }
   }
-  /* Equal features make the program purposes and next steps comparable. */
+  /* Two wider opening stories and three supporting stories interrupt the
+     catalog rhythm while keeping every program route visible. */
   .program-row {
     display: flex;
     flex-direction: column;
@@ -904,10 +1060,12 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     aspect-ratio: 16 / 10;
     object-fit: cover;
   }
-  .program-row__media--mark img {
-    object-fit: contain;
+  .program-row__media--mark {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
     padding: var(--space-8);
-    background: var(--tint);
+    background: var(--white);
   }
   @media (min-width: 900px) {
     .work :global(.card-grid--capped) {
@@ -916,11 +1074,29 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     .program-row {
       grid-column: span 2;
     }
-    .program-row:nth-child(4) {
-      grid-column: 2 / span 2;
+    .program-row:nth-child(-n + 2) {
+      grid-column: span 3;
+    }
+    .program-row:nth-child(-n + 2) h3 {
+      min-height: 0;
+      font-size: clamp(2rem, 1.4rem + 1.6vw, 2.75rem);
+    }
+  }
+  @media (min-width: 701px) and (max-width: 899px) {
+    .work :global(.card-grid--capped) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .program-row:nth-child(5) {
-      grid-column: 4 / span 2;
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: center;
+      gap: var(--space-8);
+      border-top: 1px solid var(--gold);
+      padding-top: var(--space-8);
+    }
+    .program-row:nth-child(5) .program-row__copy {
+      padding-top: 0;
     }
   }
   .program-row__badge {
@@ -1110,15 +1286,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   .legacy__pillars :global(.pillar__body) {
     grid-column: 2;
   }
-  .work__head {
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--gold);
-  }
-  .work__label {
-    font-family: var(--font-editorial);
-    font-size: var(--text-h2);
-    font-weight: 600;
-  }
   @media (max-width: 900px) {
     .legacy__grid {
       grid-template-columns: minmax(0, 1fr);
@@ -1142,40 +1309,105 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   }
 
   .chapter-callout {
-    background: var(--bright-white);
-    padding-block: var(--space-6);
+    position: relative;
+    overflow: hidden;
+    background: var(--royal);
+    color: var(--white);
+    padding-block: var(--section-y);
+  }
+  .chapter-callout__mark {
+    position: absolute;
+    right: -0.08em;
+    bottom: -0.24em;
+    color: color-mix(in srgb, var(--white) 8%, transparent);
+    font-family: var(--font-greek);
+    font-size: clamp(14rem, 32vw, 36rem);
+    line-height: 1;
+    pointer-events: none;
   }
   .chapter-callout__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-6);
-    padding-block: var(--space-8);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
+    align-items: end;
+    gap: clamp(var(--space-10), 8vw, var(--space-24));
+  }
+  .chapter-callout__story {
+    max-width: 50rem;
   }
   .chapter-callout .eyebrow {
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-6);
+    color: var(--white);
   }
   .chapter-callout h2 {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--space-6);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 2rem + 3vw, 5rem);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+  }
+  .chapter-callout h2 em {
+    display: block;
+    color: var(--gold);
     font-family: var(--font-editorial);
-    font-size: var(--text-h3);
-    font-weight: 600;
+    font-weight: 400;
+    letter-spacing: -0.03em;
   }
-  .chapter-callout p:not(.eyebrow) {
-    max-width: 40rem;
-    margin: 0;
-    color: var(--muted);
+  .chapter-callout__story > p:not(.eyebrow) {
+    max-width: 38rem;
+    margin: 0 0 var(--space-8);
+    color: var(--text-on-dark-soft);
+    font-size: var(--text-md);
+  }
+  .chapter-callout__next {
+    border-top: 2px solid var(--gold);
+    padding-top: var(--space-5);
+  }
+  .chapter-callout__next > p {
+    margin: 0 0 var(--space-5);
+    color: var(--white);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .chapter-callout__next a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 72px;
+    border-top: 1px solid var(--line-dark);
+    color: var(--white);
     font-size: var(--text-base);
+    font-weight: 700;
+    text-decoration: none;
   }
-  .chapter-callout .btn {
-    flex-shrink: 0;
+  .chapter-callout__next a:hover {
+    color: var(--gold);
+  }
+  .chapter-callout__next a span:last-child {
+    color: var(--gold);
+    font-size: var(--text-xl);
+  }
+  @media (max-width: 900px) {
+    .chapter-callout__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-12);
+    }
+    .chapter-callout__next {
+      max-width: 38rem;
+    }
   }
   @media (max-width: 600px) {
-    .chapter-callout .btn {
+    .chapter-callout h2 {
+      font-size: clamp(2.5rem, 9vw, 3.75rem);
+    }
+    .chapter-callout__story .btn {
       width: 100%;
+      justify-content: center;
       white-space: normal;
     }
   }
@@ -1786,6 +2018,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   }
   :global(body.page-home .statband__value) {
     color: var(--royal);
+    font-size: clamp(1.6rem, 0.9rem + 3.2vw, 3.25rem);
   }
   :global(body.page-home .statband__label) {
     color: var(--muted);
@@ -1793,21 +2026,41 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   :global(body.page-home .statband__icon) {
     display: grid;
     place-items: center;
-    width: 52px;
-    height: 52px;
+    width: 60px;
+    height: 60px;
     margin-bottom: var(--space-4);
-    padding: var(--space-3);
+    border: 1px solid var(--gold);
+    border-radius: 50%;
     color: var(--royal);
-    background: var(--tint);
-    border-bottom: 2px solid var(--gold);
-    border-radius: var(--radius);
+    background: var(--cream);
   }
   :global(body.page-home .statband__icon svg) {
-    width: 26px;
-    height: 26px;
+    width: 36px;
+    height: 36px;
+  }
+  :global(body.page-home .statband__icon .icon-accent) {
+    fill: var(--gold);
+    stroke: none;
   }
   :global(body.page-home .statband__item + .statband__item::before) {
     background: var(--line);
+  }
+  @media (max-width: 1200px) {
+    :global(body.page-home .statband__row) {
+      flex-wrap: wrap;
+      row-gap: var(--space-8);
+    }
+    :global(body.page-home .statband__item) {
+      flex: 0 0 50%;
+    }
+    :global(body.page-home .statband__item + .statband__item::before) {
+      display: none;
+    }
+  }
+  @media (min-width: 1201px) {
+    :global(body.page-home .statband__value) {
+      font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+    }
   }
   /* Keep the pause control clear of the hero copy and image focal point. */
   :global(body.page-home .hero__motion-toggle) {
@@ -1816,9 +2069,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   }
   :global(body.page-home .hero--cinematic .hero__content) {
     padding-bottom: clamp(5rem, 10vw, 8rem);
-  }
-  :global(body.page-home .statband__value) {
-    font-size: clamp(1.6rem, 0.9rem + 3.2vw, 3.25rem);
   }
 
   /* Pre-footer member strip: navy on gold (8.9:1). */

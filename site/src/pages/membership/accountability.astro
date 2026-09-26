@@ -191,7 +191,7 @@ const cellsForRecord = (
       <h1>
         Membership
         <br />
-        <span>Accountability.</span>
+        <span class="editorial-accent">Accountability.</span>
       </h1>
     </div>
   </section>
@@ -211,6 +211,14 @@ const cellsForRecord = (
           Sorority, Inc.<sup class="reg">&reg;</sup> Intake, events, or representation on behalf of
           the Sorority by these individuals, or by unrecognized chapters, are unauthorized.
         </p>
+        <div class="ma-notice__actions">
+          <a class="btn" href={REGISTER_URL} target="_blank" rel="noopener">
+            Check the Official Register <span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+          <a class="btn btn--outline" href={withBase("/contact/")}>
+            Verify Standing with Headquarters
+          </a>
+        </div>
       </div>
 
       <ul class="ma-cards">
@@ -218,16 +226,17 @@ const cellsForRecord = (
           <li class="ma-card">
             <h2>{c.title}</h2>
             <p>{c.body}</p>
-            <a class="btn btn--outline" href={`#category-${c.key}`} data-category={c.key}>
-              {c.action}
-            </a>
+            {c.records.length > 0 && (
+              <a class="btn btn--outline" href={`#category-${c.key}`} data-category={c.key}>
+                {c.action}
+              </a>
+            )}
           </li>
         ))}
       </ul>
       <p class="ma-note">
-        Each category has its own official list below so members, chapters, and the public can
-        distinguish between member suspensions, chapter suspensions, expulsions, charter
-        revocations, and denouncements without confusion. For the official HQ listing, visit the
+        International Corporate Headquarters maintains the current official listing. To check a
+        member's or chapter's standing, visit the
         <a href={REGISTER_URL} target="_blank" rel="noopener">
           member portal register
         </a>
@@ -235,87 +244,89 @@ const cellsForRecord = (
       </p>
 
       <div class="ma-registers">
-        {categories.map((category) => (
-          <section
-            class="ma-register"
-            id={`category-${category.key}`}
-            aria-labelledby={`category-${category.key}-title`}
-          >
-            <div class="ma-register__header">
-              <div>
-                <p class="eyebrow">Official Register</p>
-                <h2 id={`category-${category.key}-title`}>{category.title}</h2>
+        {categories
+          .filter((category) => category.records.length > 0)
+          .map((category) => (
+            <section
+              class="ma-register"
+              id={`category-${category.key}`}
+              aria-labelledby={`category-${category.key}-title`}
+            >
+              <div class="ma-register__header">
+                <div>
+                  <p class="eyebrow">Official Register</p>
+                  <h2 id={`category-${category.key}-title`}>{category.title}</h2>
+                </div>
               </div>
-            </div>
 
-            <form class="ma-register__search" role="search">
-              <label for={`search-${category.key}`}>Filter {category.title}</label>
-              <div class="ma-search__controls">
-                <input
-                  id={`search-${category.key}`}
-                  name={`search-${category.key}`}
-                  type="search"
-                  placeholder="Search this table"
-                  autocomplete="off"
-                  data-register-search
-                />
-                <button class="btn btn--outline" type="reset">
-                  Clear
-                </button>
-              </div>
-              <p class="ma-search__status" aria-live="polite">
-                Showing all records.
-              </p>
-            </form>
+              <form class="ma-register__search" role="search">
+                <label for={`search-${category.key}`}>Filter {category.title}</label>
+                <div class="ma-search__controls">
+                  <input
+                    id={`search-${category.key}`}
+                    name={`search-${category.key}`}
+                    type="search"
+                    placeholder="Search this table"
+                    autocomplete="off"
+                    data-register-search
+                  />
+                  <button class="btn btn--outline" type="reset">
+                    Clear
+                  </button>
+                </div>
+                <p class="ma-search__status" aria-live="polite">
+                  Showing all records.
+                </p>
+              </form>
 
-            <div class="ma-register__table-wrap">
-              <table class="ma-register__table">
-                <thead>
-                  <tr>
-                    {category.columns.map((column) => (
-                      <th scope="col">{column}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {category.records.length === 0 ? (
+              <div class="ma-register__table-wrap">
+                <table class="ma-register__table">
+                  <thead>
                     <tr>
-                      <td class="ma-register__empty" colspan={category.columns.length}>
-                        No public records are published here. Visit the member portal register for
-                        current official information.
-                      </td>
+                      {category.columns.map((column) => (
+                        <th scope="col">{column}</th>
+                      ))}
                     </tr>
-                  ) : (
-                    category.records.map((record) => (
-                      <tr
-                        class={category.key.includes("suspensions") ? "is-suspension-row" : ""}
-                        data-record-row
-                      >
-                        {cellsForRecord(record, category.key).map((cell) => (
-                          <td>
-                            {cell.status ? (
-                              <span
-                                class={`status-badge status-badge--${cell.status.toLowerCase().replace(/\s+/g, "-")}`}
-                              >
-                                {cell.status}
-                              </span>
-                            ) : (
-                              cell.value
-                            )}
-                          </td>
-                        ))}
+                  </thead>
+                  <tbody>
+                    {category.records.length === 0 ? (
+                      <tr>
+                        <td class="ma-register__empty" colspan={category.columns.length}>
+                          No public records are published here. Visit the member portal register for
+                          current official information.
+                        </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    ) : (
+                      category.records.map((record) => (
+                        <tr
+                          class={category.key.includes("suspensions") ? "is-suspension-row" : ""}
+                          data-record-row
+                        >
+                          {cellsForRecord(record, category.key).map((cell) => (
+                            <td>
+                              {cell.status ? (
+                                <span
+                                  class={`status-badge status-badge--${cell.status.toLowerCase().replace(/\s+/g, "-")}`}
+                                >
+                                  {cell.status}
+                                </span>
+                              ) : (
+                                cell.value
+                              )}
+                            </td>
+                          ))}
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-            <p class="ma-register__note" data-register-count>
-              {category.records.length} record{category.records.length === 1 ? "" : "s"}
-            </p>
-          </section>
-        ))}
+              <p class="ma-register__note" data-register-count>
+                {category.records.length} record{category.records.length === 1 ? "" : "s"}
+              </p>
+            </section>
+          ))}
       </div>
 
       <div class="ma-verify">
@@ -368,6 +379,12 @@ const cellsForRecord = (
 </script>
 
 <style>
+  .ma-notice__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
   .ma-hero {
     position: relative;
     min-height: 460px;

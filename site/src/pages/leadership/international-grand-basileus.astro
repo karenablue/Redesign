@@ -11,6 +11,7 @@
 import Base from "../../layouts/Base.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import Section from "../../components/Section.astro";
+import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
 
 const ledger = [
@@ -61,13 +62,16 @@ const jumps = [
         <h1 class="gb-hero__title">
           Marica T.
           <br />
-          <span>Harris</span>
+          <span class="editorial-accent">Harris</span>
         </h1>
         <p class="gb-hero__title-line">26th International Grand Basileus</p>
         <p class="gb-hero__intro">
           Leading Sigma Gamma Rho into its next century of service with experience spanning
           membership, regional leadership, nonprofit administration, and international growth.
         </p>
+        <a class="btn gb-hero__action" href="#bio">
+          Explore Her Leadership
+        </a>
       </div>
       <div class="gb-hero__portrait">
         <img
@@ -81,7 +85,9 @@ const jumps = [
   <SigmaRule />
 
   <nav class="gb-jump container" aria-label="On this page">
-    {jumps.map((j) => <a href={j.href}>{j.label}</a>)}
+    {jumps.map((j) => (
+      <a href={j.href}>{j.label}</a>
+    ))}
   </nav>
 
   <Section tone="white" id="bio">
@@ -102,7 +108,9 @@ const jumps = [
         </p>
         <h3 class="overview__list-title">Leadership milestones</h3>
         <ul class="milestones">
-          {milestones.map((m) => <li>{m}</li>)}
+          {milestones.map((m) => (
+            <li>{m}</li>
+          ))}
         </ul>
       </div>
     </div>
@@ -124,7 +132,9 @@ const jumps = [
     <div class="profile">
       <p class="eyebrow">Education &amp; Professional Experience</p>
       <div class="profile__head">
-        <span class="profile__roman" aria-hidden="true">XXVI</span>
+        <span class="profile__roman" aria-hidden="true">
+          XXVI
+        </span>
         <h2>
           Prepared to Lead <span>Institutionally.</span>
         </h2>
@@ -134,10 +144,11 @@ const jumps = [
           <h3>Education &amp; career</h3>
           <p>
             Mrs. Harris has earned several degrees — including a Bachelor of Arts in Psychology, a
-            Master of Arts in Counseling, and a Master's in Social Work from prestigious institutions.
-            In addition to her educational experience, Mrs. Harris brings over 25 years of
-            professional expertise working in the non-profit sector as a senior administrator,
-            leading teams, program operations, talent acquisition, and fiscal oversight.
+            Master of Arts in Counseling, and a Master's in Social Work from prestigious
+            institutions. In addition to her educational experience, Mrs. Harris brings over 25
+            years of professional expertise working in the non-profit sector as a senior
+            administrator, leading teams, program operations, talent acquisition, and fiscal
+            oversight.
           </p>
         </div>
         <div>
@@ -166,6 +177,13 @@ const jumps = [
       <b aria-hidden="true">&rarr;</b>
     </a>
   </nav>
+  <CtaBand
+    eyebrow="Leadership in Action"
+    title="A shared purpose."
+    highlight="A greater impact."
+    copy="Explore the national programs that bring Sigma Gamma Rho's commitment to education, health, and community service to life."
+    actions={[{ label: "Explore National Programs", href: "/service-impact/national-programs/" }]}
+  />
 </Base>
 
 <style>
@@ -191,10 +209,9 @@ const jumps = [
   }
   .gb-hero__title span {
     color: var(--accent-text);
-    text-decoration-line: underline;
-    text-decoration-color: var(--accent-underline);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.16em;
+  }
+  .gb-hero__action {
+    margin-top: var(--space-8);
   }
   /* The office as a LEMON MILK kicker under the name. */
   .gb-hero__title-line {
@@ -214,7 +231,7 @@ const jumps = [
   .gb-hero__portrait {
     position: relative;
     margin: 0;
-    border-radius: var(--radius-lg);
+    border-bottom: 4px solid var(--gold);
     overflow: hidden;
   }
   .gb-hero__portrait img {

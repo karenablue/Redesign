@@ -63,9 +63,8 @@ const categories = [
         tone="dark"
         align="center"
       />
-      <h1>
-        How Can We <span>Help You?</span>
-      </h1>
+      <p class="eyebrow">Sigma Gamma Rho • Member Support</p>
+      <h1>How can we <span>help you?</span></h1>
       <p class="hc-hero__lead">
         Search the knowledge base for answers, or open a support ticket with International Corporate
         Headquarters.
@@ -158,8 +157,8 @@ const categories = [
 
 <style>
   .hc-hero {
-    background: var(--grad-royal);
-    color: #fff;
+    background: var(--navy);
+    color: var(--white);
   }
   .hc-hero__inner {
     max-width: 48rem;
@@ -168,15 +167,20 @@ const categories = [
   }
   .hc-hero h1 {
     margin: 0;
-    color: #fff;
+    color: var(--white);
+    font-size: var(--text-hero);
+    line-height: 1.1;
   }
   .hc-hero h1 span {
+    display: block;
+    font-family: var(--font-editorial);
+    font-style: italic;
     color: var(--gold);
   }
   .hc-hero__lead {
     margin: var(--space-4) auto var(--space-8);
     max-width: 36rem;
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--text-on-dark-lead);
   }
   .hc-search {
     display: flex;
@@ -189,9 +193,9 @@ const categories = [
     min-width: 0;
     min-height: 48px;
     padding: 0.7rem 1.1rem;
-    border: 1px solid #fff;
+    border: 1px solid var(--white);
     border-radius: var(--radius);
-    background: #fff;
+    background: var(--white);
     color: var(--ink);
     font: inherit;
   }
@@ -223,9 +227,8 @@ const categories = [
   .hc-pillars li {
     display: flex;
     flex-direction: column;
-    padding: var(--space-6);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--line-strong);
   }
   .hc-pillars h3 {
     margin: 0 0 var(--space-3);
@@ -241,6 +244,10 @@ const categories = [
     color: var(--royal);
     font-size: var(--text-sm);
     font-weight: 700;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
   }
   .hc-cats {
     display: grid;
