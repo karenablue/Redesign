@@ -32,7 +32,10 @@ edit `chapter-directory.json` directly.
    It includes the report footer "Confidential Information - Do Not Distribute"
    and a Salesforce copyright line as if they were chapters. The chapter
    details themselves (names, cities, schools, websites) are already shown on
-   the public locator.
+   the public locator. Site owner's call (Karena, 2026-09-26): fine to use. The
+   locator only tells visitors which chapters exist and where; nothing beyond
+   what the live locator already publishes. Worth a courtesy note to HQ that
+   their feed still carries the report footer.
 2. **Rows that are not chapters** (11, dropped): Central General Member, Central Members-At-Large, Northeastern General Member, Northeastern Members-At-Large, Southeastern General Member, Southeastern Members-At-Large, Southwestern General Member, Southwestern Members-At-Large, TEST Undergraduate Chapter, Western General Member, Western Members-At-Large.
 3. **Chapters with no location anywhere** (8, listed by name only): Eta Eta Sigma, Eta Tau Sigma, Eta Upsilon, Iota Iota Sigma, Sarasota/Bradenton, Florida, Staten Island, NY, Tau Eta, Xi Sigma Sigma.
 4. **In the regional directories but not in HQ's list** (85), so not shown.
