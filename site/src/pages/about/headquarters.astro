@@ -12,7 +12,13 @@ import FactSheet from "../../components/FactSheet.astro";
 import LinkGrid from "../../components/LinkGrid.astro";
 import Button from "../../components/Button.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import BioDialog from "../../components/BioDialog.astro";
 import { withBase } from "../../lib/url.js";
+import ichqBios from "../../data/ichq-bios.json";
+
+// Full biographies, verbatim from sgrho1922.org (see the data file).
+const bios = ichqBios.bios as Record<string, string[]>;
+const slug = (name: string) => name.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
 
 const staff = [
   {
@@ -188,6 +194,17 @@ const staff = [
           executive, she brings a background in business transformation, leadership development,
           financial literacy, and process improvement.
         </p>
+        <BioDialog
+          id="bio-karen-williams"
+          name="Dr. Karen Y. Williams"
+          role="Executive Director"
+          image="/images/ichq/karen-w-headshot-2024.jpg"
+          tone="dark"
+        >
+          {bios["Dr. Karen Y. Williams"].map((para) => (
+            <p>{para}</p>
+          ))}
+        </BioDialog>
       </div>
     </div>
   </section>
@@ -218,6 +235,13 @@ const staff = [
             <h3 class="hq-person__name">{s.name}</h3>
             <p class="hq-person__title">{s.title}</p>
             <p class="hq-person__note">{s.note}</p>
+            {bios[s.name] && (
+              <BioDialog id={`bio-${slug(s.name)}`} name={s.name} role={s.title} image={s.img}>
+                {bios[s.name].map((para) => (
+                  <p>{para}</p>
+                ))}
+              </BioDialog>
+            )}
           </li>
         ))}
       </ul>

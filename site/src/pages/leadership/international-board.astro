@@ -2,15 +2,22 @@
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
+import BioDialog from "../../components/BioDialog.astro";
 import { withBase } from "../../lib/url.js";
 
 // Officers are markdown in src/content/board/ so HQ can update the board
-// after each Boule without editing this page. Frontmatter only: every
-// field is structured, so there is no markdown body to render.
-const board = (await getCollection("board"))
-  .sort((a, b) => a.data.order - b.data.order)
-  .map((entry) => entry.data);
+// after each Boule without editing this page. The markdown body, when there
+// is one, is the officer's biography, opened with "Read bio".
+const board = await Promise.all(
+  (await getCollection("board"))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (entry) => ({
+      ...entry.data,
+      slug: entry.id,
+      Bio: entry.body?.trim() ? (await render(entry)).Content : null,
+    }))
+);
 
 /**
  * Officer tiers, derived from the data so a new board sorts itself:
@@ -106,6 +113,11 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
               <p class="ibd-role">{b.role}</p>
               <h4 class="ibd-name">{b.name}</h4>
               {b.note && <p class="ibd-note">{b.note}</p>}
+              {b.Bio && (
+                <BioDialog id={`bio-${b.slug}`} name={b.name} role={b.role} image={b.image}>
+                  <b.Bio />
+                </BioDialog>
+              )}
             </li>
           ))}
         </ul>

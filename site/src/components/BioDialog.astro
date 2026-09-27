@@ -1,0 +1,201 @@
+---
+/**
+ * BioDialog — a "Read bio" button that opens the person's full biography
+ * in a dialog, as sgrho1922.org does for headquarters staff (Karena,
+ * 2026-09-26). The native <dialog> gives focus handling, Escape to close
+ * and a backdrop; clicking the backdrop also closes it.
+ *
+ * props:
+ *   id       unique per page
+ *   name, role, image (root-absolute, optional)
+ *   tone     "light" (default) or "dark", for the button on a navy band
+ * default slot: the biography (paragraphs)
+ *
+ * The name is not a heading: the dialog sits between cards whose heading
+ * levels vary by page, and aria-labelledby already names the dialog.
+ */
+import { withBase } from "../lib/url.js";
+
+interface Props {
+  id: string;
+  name: string;
+  role: string;
+  image?: string;
+  tone?: "light" | "dark";
+}
+const { id, name, role, image, tone = "light" } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={["bio-open", { "bio-open--dark": tone === "dark" }]}
+  data-bio-open={id}
+  aria-haspopup="dialog"
+>
+  Read bio<span class="visually-hidden"> of {name}</span>
+</button>
+<dialog class="bio" id={id} aria-labelledby={`${id}-name`}>
+  <div class="bio__inner">
+    <button type="button" class="bio__close" data-bio-close>
+      Close<span class="visually-hidden"> {name}'s bio</span>
+    </button>
+    <header class="bio__head">
+      {image && <img src={withBase(image)} alt="" width="96" height="96" />}
+      <div>
+        <p class="bio__name" id={`${id}-name`}>{name}</p>
+        <p class="bio__role">{role}</p>
+      </div>
+    </header>
+    <div class="bio__body">
+      <slot />
+    </div>
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-bio-open]").forEach((button) => {
+    const dialog = document.getElementById(button.dataset.bioOpen!) as HTMLDialogElement | null;
+    if (!dialog) return;
+    button.addEventListener("click", () => dialog.showModal());
+    dialog.querySelector("[data-bio-close]")?.addEventListener("click", () => dialog.close());
+    // A click on the backdrop lands on the dialog element itself.
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+</script>
+
+<style>
+  .bio-open {
+    align-self: flex-start;
+    margin-top: var(--space-3);
+    padding: var(--space-1) 0;
+    border: 0;
+    border-bottom: 1px solid var(--gold);
+    background: none;
+    color: var(--royal);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .bio-open:hover {
+    color: var(--navy);
+  }
+  .bio-open--dark {
+    color: #fff;
+  }
+  .bio-open--dark:hover {
+    color: var(--gold);
+  }
+
+  .bio {
+    width: min(44rem, calc(100% - 2rem));
+    max-height: min(85vh, 52rem);
+    padding: 0;
+    border: 0;
+    border-top: 4px solid var(--gold);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 24px 60px rgba(8, 22, 51, 0.35);
+  }
+  .bio::backdrop {
+    background: rgba(8, 22, 51, 0.62);
+  }
+  /* The name and Close stay put; only the biography scrolls. */
+  .bio[open] {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: bio-in 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @keyframes bio-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bio[open] {
+      animation: none;
+    }
+  }
+  .bio__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .bio__body {
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: var(--space-2);
+  }
+  .bio__close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--navy);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .bio__close:hover {
+    border-color: var(--gold);
+  }
+  .bio__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding-right: 6rem;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .bio__head img {
+    flex: none;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 15%;
+  }
+  .bio__name {
+    margin: 0;
+    color: var(--royal);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+  .bio__role {
+    margin: var(--space-1) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .bio__body :global(p) {
+    margin: 0 0 var(--space-4);
+    color: var(--ink);
+    font-size: var(--text-base);
+    line-height: 1.75;
+  }
+  .bio__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  @media (max-width: 540px) {
+    .bio__head {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-right: 0;
+      padding-top: var(--space-10);
+    }
+  }
+</style>
