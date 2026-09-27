@@ -17,7 +17,10 @@
  *
  * Direction (Karena, 2026-09-26, from the homepage concepts): concept A's
  * magazine cover opens the page (HomeCover), and the legacy section takes
- * concept B's 1922 / Today pairs, divided by a gold seam.
+ * concept B's 1922 / Today pairs, divided by a gold seam. Tightened the
+ * same day: Chapter Stories appears only once stories exist, the
+ * partnership story cards (also on Corporate Partnerships) and the member
+ * strip (the header and cover already link the portal) are gone.
  */
 import membersIcon from "../assets/stat-icons/members.svg?raw";
 import chaptersIcon from "../assets/stat-icons/chapters.svg?raw";
@@ -31,9 +34,8 @@ import CardGrid from "../components/CardGrid.astro";
 import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
 import { getCollection } from "astro:content";
-import { storyMailto, formatStoryDate } from "../lib/stories";
+import { formatStoryDate } from "../lib/stories";
 
-const PORTAL_URL = "https://portal.sgrho1922.org/";
 
 // Large two-tone icons over each figure, the peer pattern Karena asked for
 // (AKA's stat cards): Phosphor duotone, royal line with a gold fill, no
@@ -383,7 +385,10 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </section>
 
-  <!-- Chapter stories and member voices: the national mission, close to home. -->
+  <!-- Chapter stories and member voices: the national mission, close to home.
+       Shown only once chapters have sent stories; until then the invitation
+       to share one lives on the Chapter Stories page. -->
+  {chapterStories.length > 0 && (
   <section class="section across" aria-labelledby="across-title">
     <div class="container">
       <div class="across__head">
@@ -395,7 +400,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
           All chapter stories <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
-      {chapterStories.length > 0 ? (
         <div class="across__grid" data-reveal>
           <ul class="across__stories">
             {chapterStories.map((s) => (
@@ -418,25 +422,9 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
             </figure>
           )}
         </div>
-      ) : (
-        <div class="across__invite">
-          <p class="across__invite-lead">
-            Your chapter&rsquo;s service belongs here.
-          </p>
-          <p>
-            Book drives, swim lessons, health screenings, scholarships: tell headquarters what your
-            chapter did, and it can be featured for sorors and neighbors across the country.
-          </p>
-          <div class="across__actions">
-            <a class="btn" href={storyMailto}>Share a Chapter Story</a>
-            <a class="arrow-link" href={withBase("/news-events/chapter-stories/#share")}>
-              What to send <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      )}
     </div>
   </section>
+  )}
 
   <!-- Origin: where the work comes from. -->
   <section class="section legacy" aria-labelledby="legacy-title">
@@ -539,9 +527,14 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
             Five national programs, bringing the Sorority's mission into classrooms, clinics, and
             pools.
           </p>
-          <a class="work__support" href={withBase("/service-impact/partner-foundations/")}>
-            Explore Ways to Support <span aria-hidden="true">&rarr;</span>
-          </a>
+          <div class="work__links">
+            <a class="work__support" href={withBase("/service-impact/national-programs/")}>
+              Explore All National Programs <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="work__support" href={withBase("/service-impact/partner-foundations/")}>
+              Explore Ways to Support <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
         </div>
       </div>
       <CardGrid as="ul" min="320px" cols={3} data-reveal data-reveal-stagger>
@@ -582,17 +575,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
         ))}
       </CardGrid>
 
-      <div class="work__invitation">
-        <div>
-          <p class="eyebrow">Carry the Work Forward</p>
-          <h3>More opportunity.<br /><span class="editorial-accent">With your support.</span></h3>
-          <p>Explore the foundations supporting education, leadership, and community service.</p>
-        </div>
-        <div class="work__actions">
-          <a class="btn" href={withBase("/service-impact/partner-foundations/")}>Choose a Foundation to Support <span aria-hidden="true">&rarr;</span></a>
-          <a href={withBase("/service-impact/national-programs/")}>Explore All National Programs <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -685,36 +667,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
             </li>
           ))}
       </ul>
-      <div class="collaboration-stories">
-        <CardGrid min="300px" cols={2}>
-          <article class="collaboration-story">
-            <p class="eyebrow">Water Safety &amp; Access</p>
-            <h3>
-              USA Swimming <span aria-hidden="true">&times;</span> SWIM 1922
-            </h3>
-            <p>
-              Swimming professionals and Sigma chapters bring water safety education and
-              learn-to-swim opportunities into local communities.
-            </p>
-            <a href={withBase("/service-impact/national-programs/#swim")}>
-              See the program in action <span aria-hidden="true">&rarr;</span>
-            </a>
-          </article>
-          <article class="collaboration-story">
-            <p class="eyebrow">Financial Empowerment</p>
-            <h3>
-              Chase <span aria-hidden="true">&times;</span> Community Education
-            </h3>
-            <p>
-              Financial literacy workshops and wealth-building education connect members with
-              resources for their financial futures.
-            </p>
-            <a href={withBase("/service-impact/corporate-partnerships/")}>
-              Discover our partnerships <span aria-hidden="true">&rarr;</span>
-            </a>
-          </article>
-        </CardGrid>
-      </div>
       <div class="foundation-showcase" id="allied-foundations" aria-labelledby="foundation-title">
         <div class="foundation-showcase__intro">
           <p class="eyebrow">Supporting Greater Progress</p>
@@ -748,20 +700,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
 
     <div class="container partnership__inner">
-      <div class="partnership__actions">
-        <a
-          class="arrow-link partnership__action"
-          href={withBase("/service-impact/corporate-partnerships/")}
-        >
-          Partner With Sigma <span aria-hidden="true">&rarr;</span>
-        </a>
-        <a
-          class="arrow-link partnership__action"
-          href={withBase("/service-impact/partner-foundations/")}
-        >
-          Support Our Work <span aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
       <p class="partnership__fineprint">
         Sigma Gamma Rho Sorority, Incorporated is a 501(c)(7). Tax-deductible contributions are
         directed through our 501(c)(3) foundation partners — the{" "}
@@ -791,18 +729,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     </div>
   </aside>
 
-  <!-- Pre-footer member strip. -->
-  <aside class="portal-strip" aria-label="Member login">
-    <div class="container portal-strip__inner">
-      <p>
-        <strong>Active Soror?</strong> Access resources, dues, and member records inside the Poodle
-        Portal.
-      </p>
-      <a class="btn btn--navy" href={PORTAL_URL} target="_blank" rel="noopener">
-        Log in to Poodle Portal <span aria-hidden="true">&#8599;</span>
-      </a>
-    </div>
-  </aside>
 </Base>
 
 <style>
@@ -889,28 +815,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .across__invite {
-    max-width: 46rem;
-    padding: var(--space-8);
-    border: 1px solid var(--line);
-    background: var(--white);
-  }
-  .across__invite-lead {
-    margin: 0 0 var(--space-3);
-    font-family: var(--font-editorial);
-    font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.75rem);
-    color: var(--royal);
-  }
-  .across__invite p:not(.across__invite-lead) {
-    color: var(--muted);
-  }
-  .across__actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-4) var(--space-8);
-    margin-top: var(--space-6);
-  }
   @media (max-width: 900px) {
     .across__grid {
       grid-template-columns: minmax(0, 1fr);
@@ -918,41 +822,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     }
   }
 
-  .work__invitation {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    align-items: center;
-    gap: var(--space-10);
-    margin-top: var(--space-12);
-    padding: var(--space-10);
-    border-top: 3px solid var(--gold);
-    background: var(--cream);
-  }
-  .work__invitation h3 {
-    font-size: var(--text-h3);
-  }
-  .work__invitation p:last-child {
-    max-width: 34rem;
-    margin-bottom: 0;
-    color: var(--muted);
-    font-size: var(--text-base);
-  }
-  .work__actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-5);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: var(--royal);
-  }
-  @media (max-width: 800px) {
-    .work__invitation {
-      grid-template-columns: 1fr;
-      padding: var(--space-6);
-      gap: var(--space-6);
-    }
-  }
   /* The wider canvas is a homepage layout decision; brand colors stay
      inherited from the shared token palette. */
   :global(body.page-home) {
@@ -1256,6 +1125,11 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     max-width: 44rem;
     color: var(--text-on-dark-soft);
     font-size: var(--text-md);
+  }
+  .work__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-8);
   }
   .work__support {
     display: inline-flex;
@@ -2048,42 +1922,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     line-height: 1.4;
     text-align: center;
   }
-  .collaboration-stories {
-    margin-top: var(--space-10);
-  }
-  .collaboration-story {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: var(--space-8);
-    border-left: 3px solid var(--gold);
-    background: var(--deep-blue);
-  }
-  .collaboration-story h3 {
-    color: var(--white);
-    font-family: var(--font-editorial);
-    font-size: var(--text-h3);
-    font-weight: 600;
-    line-height: 1.25;
-  }
-  .collaboration-story h3 span {
-    color: var(--gold);
-  }
-  .collaboration-story > p:not(.eyebrow) {
-    font-size: var(--text-base);
-    color: var(--white);
-  }
-  .collaboration-story a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    min-height: 44px;
-    margin-top: auto;
-    color: var(--gold);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    text-underline-offset: 0.25em;
-  }
   @media (max-width: 900px) {
     .partnership__pitch {
       grid-template-columns: minmax(0, 1fr);
@@ -2207,25 +2045,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     .foundation-grid {
       grid-template-columns: minmax(0, 1fr);
     }
-    .partnership__action {
-      white-space: normal;
-    }
-  }
-  .partnership__actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    margin-bottom: clamp(3rem, 5vw, 4rem);
-  }
-  .arrow-link.partnership__action {
-    color: var(--accent-text);
-    border-bottom-color: var(--line-gold);
-    font-size: var(--text-lg);
-  }
-  .arrow-link.partnership__action:hover {
-    border-color: var(--white);
-    color: var(--white);
   }
   .partnership__fineprint {
     max-width: 46rem;
@@ -2356,20 +2175,4 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   }
 
   /* Pre-footer member strip: navy on gold (8.9:1). */
-  .portal-strip {
-    background: var(--gold);
-    color: var(--navy);
-    padding-block: var(--space-6);
-  }
-  .portal-strip__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4) var(--space-8);
-  }
-  .portal-strip p {
-    margin: 0;
-    font-size: var(--text-lg);
-  }
 </style>
