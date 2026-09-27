@@ -1,0 +1,123 @@
+---
+/**
+ * LinkGrid — Herstory's "Firsts & distinctions" grid, shared, for links: a
+ * hairline-ruled grid of cells, no numbers and no shadows. Each cell is a
+ * link with a bold label and a one-line note. Pair it with a heading beside
+ * it (Herstory sets the heading to the left of the grid).
+ *
+ * props:
+ *   items  [{ label, note, href, external? }]
+ *   cols   columns on wide screens (default 3)
+ */
+import { withBase } from "../lib/url.js";
+
+interface Item {
+  label: string;
+  note?: string;
+  href: string;
+  external?: boolean;
+}
+interface Props {
+  items: Item[];
+  cols?: number;
+}
+
+const { items, cols = 3 } = Astro.props;
+const hrefFor = (item: Item) =>
+  item.external || item.href.startsWith("#") ? item.href : withBase(item.href);
+const arrowFor = (item: Item) => (item.external ? "↗" : item.href.startsWith("#") ? "↓" : "→");
+---
+
+<ul class="lgrid" data-cols={cols} style={`--lgrid-cols:${cols}`}>
+  {items.map((item) => (
+    <li>
+      <a
+        href={hrefFor(item)}
+        target={item.external ? "_blank" : undefined}
+        rel={item.external ? "noopener" : undefined}
+      >
+        <strong>
+          {item.label}
+          <span class="lgrid__arrow" aria-hidden="true">
+            {arrowFor(item)}
+          </span>
+        </strong>
+        {item.note && <small>{item.note}</small>}
+        {item.external && <span class="visually-hidden"> (opens in a new tab)</span>}
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .lgrid {
+    display: grid;
+    grid-template-columns: repeat(var(--lgrid-cols), minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .lgrid li {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .lgrid a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+    min-height: 9rem;
+    padding: var(--space-5);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 0.18s ease;
+  }
+  .lgrid a:hover {
+    background: var(--tint);
+  }
+  .lgrid strong {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    color: var(--royal);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+  }
+  .lgrid a:hover strong {
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 0.25em;
+  }
+  .lgrid__arrow {
+    flex: none;
+    transition: transform 0.18s ease;
+  }
+  .lgrid a:hover .lgrid__arrow {
+    transform: translateX(3px);
+  }
+  .lgrid small {
+    color: var(--muted);
+    font-size: var(--text-xs);
+    line-height: 1.7;
+  }
+  @media (max-width: 900px) {
+    .lgrid:not([data-cols="1"]) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 540px) {
+    .lgrid[data-cols] {
+      grid-template-columns: 1fr;
+    }
+    .lgrid a {
+      min-height: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lgrid__arrow {
+      transition: none;
+    }
+  }
+</style>

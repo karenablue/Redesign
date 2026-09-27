@@ -7,7 +7,8 @@
  * figures, unchanged), then a 60/40 showcase per program on one light canvas:
  * a large photograph and a narrative card. A program with no real photograph
  * shows its official mark in a framed panel until one is supplied. Closes on
- * documented program partners and "Service Through the Decades".
+ * documented program partners and "Service Through the Decades", set as
+ * Herstory's century band (gold rules, the founding year ghosted behind).
  */
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
@@ -500,11 +501,30 @@ const programs = [
   }
 
   /* ---- service history ---- */
+  /* Herstory's century band: white ground between gold rules, with the
+     founding year ghosted behind the words. */
   .service-history {
-    background: var(--cream);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 8vw, 6rem);
+    background: var(--white);
+    border-block: 2px solid var(--gold);
+  }
+  .service-history::before {
+    content: "1922";
+    position: absolute;
+    top: 50%;
+    left: -1.5rem;
+    transform: translateY(-50%);
+    color: rgba(32, 65, 165, 0.05);
+    font-family: var(--font-label);
+    font-size: clamp(8rem, 16vw, 17.5rem);
+    line-height: 1;
+    pointer-events: none;
   }
   .service-history__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
     gap: var(--space-12);
@@ -524,11 +544,15 @@ const programs = [
   .service-history__copy p {
     color: var(--muted);
   }
-  .service-history__callout {
+  .service-history__copy .service-history__callout {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--gold);
+    font-size: var(--text-lg);
     font-weight: 700;
     color: var(--royal);
   }
-  .service-history__callout strong {
+  .service-history__copy .service-history__callout strong {
     color: var(--accent-text);
   }
   @media (max-width: 780px) {

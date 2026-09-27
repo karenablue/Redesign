@@ -8,6 +8,8 @@
  */
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
+import FactSheet from "../../components/FactSheet.astro";
+import LinkGrid from "../../components/LinkGrid.astro";
 import Button from "../../components/Button.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { withBase } from "../../lib/url.js";
@@ -94,34 +96,30 @@ const staff = [
   </PageHero>
 
   <section class="hq-services" aria-labelledby="hq-services-title">
-    <div class="container">
+    <div class="container hq-services__inner">
       <div class="hq-services__heading">
         <p class="eyebrow">Start Here</p>
         <h2 id="hq-services-title">How can we help?</h2>
       </div>
-      <ol class="hq-service-list">
-        <li>
-          <span class="hq-service-list__number" aria-hidden="true">01</span>
-          <div>
-            <h3><a href={withBase("/resources/help-center/")}>Member &amp; Chapter Support <span aria-hidden="true">→</span></a></h3>
-            <p>Find guidance on membership, chapter services, and common questions.</p>
-          </div>
-        </li>
-        <li>
-          <span class="hq-service-list__number" aria-hidden="true">02</span>
-          <div>
-            <h3><a href={withBase("/news-events/media-relations/")}>Media &amp; Brand Inquiries <span aria-hidden="true">→</span></a></h3>
-            <p>Connect with the Sorority’s media resources and communications team.</p>
-          </div>
-        </li>
-        <li>
-          <span class="hq-service-list__number" aria-hidden="true">03</span>
-          <div>
-            <h3><a href="#hq-location">Reach Headquarters <span aria-hidden="true">↓</span></a></h3>
-            <p>Find our office and mailing addresses, telephone number, and email.</p>
-          </div>
-        </li>
-      </ol>
+      <LinkGrid
+        items={[
+          {
+            label: "Member & Chapter Support",
+            note: "Find guidance on membership, chapter services, and common questions.",
+            href: "/resources/help-center/",
+          },
+          {
+            label: "Media & Brand Inquiries",
+            note: "Connect with the Sorority’s media resources and communications team.",
+            href: "/news-events/media-relations/",
+          },
+          {
+            label: "Reach Headquarters",
+            note: "Find our office and mailing addresses, telephone number, and email.",
+            href: "#hq-location",
+          },
+        ]}
+      />
     </div>
   </section>
 
@@ -222,14 +220,17 @@ const staff = [
         </p>
         {/* Cary matches the site footer and Herstory. The Raleigh P.O. box is
             kept as the mailing address; HQ should confirm it is current. */}
-        <ul class="hq-facts">
-          <li>Office: 1000 Southhill Dr STE 200 &bull; Cary, NC 27513</li>
-          <li>Mailing: P.O. Box 27688 &bull; Raleigh, NC 27611</li>
-          <li>Phone: <a href="tel:+19196789720">(919) 678-9720</a></li>
-          <li>
-            <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>
-          </li>
-        </ul>
+        <div class="hq-facts">
+          <FactSheet
+            cols={2}
+            items={[
+              { label: "Office", lines: ["1000 Southhill Dr", "STE 200", "Cary, NC 27513"] },
+              { label: "Mailing", lines: ["P.O. Box 27688", "Raleigh, NC 27611"] },
+              { label: "Phone", lines: ["(919) 678-9720"], href: "tel:+19196789720" },
+              { label: "Email", lines: ["help@sgrho1922.org"], href: "mailto:help@sgrho1922.org" },
+            ]}
+          />
+        </div>
       </div>
       <figure class="hq-zigzag__art">
         <img
@@ -258,12 +259,12 @@ const staff = [
     padding-block: var(--space-12);
     border-bottom: 1px solid var(--line);
   }
-  .hq-services__heading {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-8);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-8);
+  /* Herstory's "Firsts" layout: the heading beside a ruled grid. */
+  .hq-services__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: start;
   }
   .hq-services__heading h2 {
     margin: 0;
@@ -271,40 +272,8 @@ const staff = [
     font-weight: 500;
     font-size: var(--text-h3);
   }
-  .hq-service-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-    gap: var(--space-8);
-  }
-  .hq-service-list li {
-    display: flex;
-    gap: var(--space-4);
-    border-top: 1px solid var(--gold);
-    padding-top: var(--space-5);
-  }
-  .hq-service-list__number {
-    font-family: var(--font-editorial);
-    font-size: var(--text-xl);
-    color: var(--royal);
-  }
-  .hq-service-list h3 {
-    font-size: var(--text-base);
-    margin: 0;
-  }
-  .hq-service-list a {
-    text-decoration: none;
-  }
-  .hq-service-list a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-  .hq-service-list p {
-    margin: var(--space-3) 0 0;
-    font-size: var(--text-sm);
-    color: var(--muted);
+  .hq-facts {
+    margin-top: var(--space-6);
   }
   .hq-text-link {
     display: inline-block;
@@ -382,23 +351,10 @@ const staff = [
     font-size: var(--text-sm);
     text-align: center;
   }
-  .hq-facts {
-    margin: var(--space-5) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .hq-facts li {
-    padding: var(--space-3) 0;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .hq-facts a {
-    color: var(--royal);
-    font-weight: 700;
-    text-decoration: none;
-  }
   @media (max-width: 780px) {
+    .hq-services__inner {
+      grid-template-columns: 1fr;
+    }
     .hq-zigzag__row,
     .hq-zigzag__row--flip {
       grid-template-columns: 1fr;

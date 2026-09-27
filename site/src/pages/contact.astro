@@ -11,7 +11,8 @@
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
-import { withBase } from "../lib/url.js";
+import FactSheet from "../components/FactSheet.astro";
+import LinkGrid from "../components/LinkGrid.astro";
 
 const EMAIL = "help@sgrho1922.org";
 const TICKET_URL = "https://helpsgrho1922.freshdesk.com/support/tickets/new";
@@ -85,25 +86,13 @@ const departments = [
   </PageHero>
 
   <section class="ct-routing" aria-labelledby="ct-routing-title">
-    <div class="container">
+    <div class="container ct-routing__inner">
       <div class="ct-routing__heading">
         <p class="eyebrow">Start Here</p>
         <h2 id="ct-routing-title">Choose the Right Destination</h2>
         <p>Many common requests already have a dedicated resource and a faster next step.</p>
       </div>
-      <ul class="ct-routes">
-        {routes.map((route) => (
-          <li>
-            <a href={withBase(route.href)}>
-              <span>
-                <strong>{route.label}</strong>
-                <small>{route.note}</small>
-              </span>
-              <b aria-hidden="true">&rarr;</b>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <LinkGrid items={routes.map((r) => ({ label: r.label, note: r.note, href: r.href }))} />
     </div>
   </section>
 
@@ -111,36 +100,15 @@ const departments = [
     <div class="container ct-grid">
       <aside class="ct-card">
         <h2>International Corporate Headquarters</h2>
-        <dl>
-          <div>
-            <dt>Office</dt>
-            <dd>
-              1000 Southhill Dr, STE 200
-              <br />
-              Cary, NC 27513
-            </dd>
-          </div>
-          <div>
-            <dt>Mailing</dt>
-            <dd>
-              P.O. Box 27688
-              <br />
-              Raleigh, NC 27611
-            </dd>
-          </div>
-          <div>
-            <dt>Phone</dt>
-            <dd>
-              <a href="tel:+19196789720">(919) 678-9720</a>
-            </dd>
-          </div>
-          <div>
-            <dt>Email</dt>
-            <dd>
-              <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-            </dd>
-          </div>
-        </dl>
+        <FactSheet
+          cols={1}
+          items={[
+            { label: "Office", lines: ["1000 Southhill Dr, STE 200", "Cary, NC 27513"] },
+            { label: "Mailing", lines: ["P.O. Box 27688", "Raleigh, NC 27611"] },
+            { label: "Phone", lines: ["(919) 678-9720"], href: "tel:+19196789720" },
+            { label: "Email", lines: [EMAIL], href: `mailto:${EMAIL}` },
+          ]}
+        />
       </aside>
 
       <form
@@ -256,68 +224,30 @@ const departments = [
     padding-block: clamp(3rem, 5vw, 4.5rem);
     background: var(--white);
   }
-  .ct-routing__heading {
+  /* Herstory's "Firsts" layout: the heading beside a ruled grid. */
+  .ct-routing__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
-    gap: var(--space-4) var(--space-10);
-    align-items: end;
-    margin-bottom: var(--space-8);
-  }
-  .ct-routing__heading .eyebrow {
-    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: start;
   }
   .ct-routing__heading h2,
   .ct-routing__heading p {
     margin: 0;
   }
   .ct-routing__heading h2 {
+    margin-bottom: var(--space-4);
+  }
+  .ct-routing__heading h2 {
     font-family: var(--font-editorial);
+    font-size: clamp(1.9rem, 3vw, 2.5rem);
+    line-height: 1.1;
     letter-spacing: -0.025em;
   }
   .ct-routing__heading p:last-child {
     color: var(--muted);
-  }
-  .ct-routes {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .ct-routes a {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-4);
-    height: 100%;
-    padding: var(--space-5);
-    border-top: 1px solid var(--line-strong);
-    background: var(--cream);
-    color: var(--ink);
-    text-decoration: none;
-    transition:
-      box-shadow 0.18s ease,
-      transform 0.18s ease;
-  }
-  .ct-routes a:hover {
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-2px);
-  }
-  .ct-routes strong,
-  .ct-routes small {
-    display: block;
-  }
-  .ct-routes strong {
-    color: var(--navy);
-  }
-  .ct-routes small {
-    margin-top: var(--space-2);
-    color: var(--muted);
-    font-size: var(--text-xs);
-    line-height: 1.5;
-  }
-  .ct-routes b {
-    color: var(--royal);
+    font-size: var(--text-base);
+    line-height: 1.7;
   }
 
   .ct-main {
@@ -331,11 +261,13 @@ const departments = [
     gap: var(--space-10);
     align-items: start;
   }
-  .ct-card,
   .ct-form {
     padding: var(--space-8);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
+  }
+  .ct-card {
+    padding-top: var(--space-2);
   }
   .ct-card h2,
   .ct-form h2 {
@@ -344,28 +276,6 @@ const departments = [
     font-weight: 700;
     font-size: var(--text-lg);
     color: var(--ink);
-  }
-  .ct-card dl {
-    display: grid;
-    gap: var(--space-4);
-    margin: 0;
-  }
-  .ct-card dt {
-    color: var(--muted);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .ct-card dd {
-    margin: var(--space-1) 0 0;
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .ct-card dd a {
-    color: var(--royal);
-    font-weight: 700;
-    overflow-wrap: anywhere;
   }
   .ct-form {
     display: grid;
@@ -392,21 +302,14 @@ const departments = [
     width: 100%;
   }
   @media (max-width: 900px) {
-    .ct-routing__heading,
-    .ct-routes {
+    .ct-routing__inner {
       grid-template-columns: minmax(0, 1fr);
     }
     .ct-grid {
       grid-template-columns: minmax(0, 1fr);
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .ct-routes a {
-      transition: none;
-    }
-  }
   @media (max-width: 560px) {
-    .ct-card,
     .ct-form {
       padding: var(--space-5);
     }
