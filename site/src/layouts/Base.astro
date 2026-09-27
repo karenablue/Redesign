@@ -8,6 +8,7 @@
  *   description   meta description
  *   activeTop     current top-level nav label (see SiteHeader)
  *   image         social share image path (root-absolute), optional
+ *   noindex       keep the page out of search engines (design concepts)
  *   preloadImage  the page's largest above-the-fold image (root-absolute),
  *                 fetched first at high priority. Pass it only for an image
  *                 the browser cannot discover early, such as a video poster.
@@ -24,6 +25,7 @@ const {
   image = "/images/SGR-Logo-Shield.png",
   bodyClass,
   preloadImage,
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = title
@@ -39,6 +41,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
 

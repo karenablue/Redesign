@@ -1,0 +1,282 @@
+---
+/**
+ * Homepage concept C: The Wall. The first screen is a wall of real members
+ * from across the sisterhood, with one navy panel in the middle carrying
+ * the message. Everything after the wall is deliberately quiet. The tiles
+ * are square crops of the site's own photographs (public/optimized/
+ * concepts/wall-*.webp). Design review only (noindex); not linked.
+ */
+import Base from "../../layouts/Base.astro";
+import ConceptBar from "../../components/ConceptBar.astro";
+import { withBase } from "../../lib/url.js";
+
+const PORTAL_URL = "https://portal.sgrho1922.org/";
+const tiles = Array.from({ length: 16 }, (_, i) => `/optimized/concepts/wall-${String(i + 1).padStart(2, "0")}.webp`);
+const programs = [
+  { name: "Project CRADLE Care®", what: "Supporting Black maternal health", href: "#cradle" },
+  { name: "SWIM 1922®", what: "Teaching water safety", href: "#swim" },
+  { name: "Operation BigBookBag®", what: "Equipping students to learn", href: "#bigbookbag" },
+  { name: "Women's Wellness Initiative", what: "Supporting women's well-being", href: "#wellness" },
+  { name: "Annual Youth Symposium", what: "Strengthening young futures", href: "#youth" },
+];
+---
+
+<Base
+  title="Concept C: The Wall"
+  description="Homepage design concept C."
+  bodyClass="concept concept-c"
+  noindex
+>
+  <ConceptBar current="c" />
+
+  <section class="wall" aria-labelledby="wall-title">
+    <div class="wall__panel on-dark">
+      <h1 id="wall-title">
+        100,000+ women.
+        <span>One Sigma.</span>
+      </h1>
+      <p>
+        Since 1922, sisterhood at work in collegiate and alumnae chapters across 50+ states and
+        territories and 10 countries.
+      </p>
+      <div class="wall__actions">
+        <a class="btn" href={withBase("/membership/become-a-member/")}>Become a member</a>
+        <a class="btn btn--outline on-dark" href={withBase("/membership/chapter-locator/")}>
+          Find a chapter
+        </a>
+      </div>
+      <a class="wall__login" href={PORTAL_URL} target="_blank" rel="noopener">
+        Member login<span class="visually-hidden"> (opens the Poodle Portal in a new tab)</span>
+      </a>
+    </div>
+    {tiles.map((src, i) => (
+      <img
+        class="wall__tile"
+        src={withBase(src)}
+        alt=""
+        width="360"
+        height="360"
+        style={`--i:${i}`}
+        fetchpriority={i < 6 ? "high" : undefined}
+      />
+    ))}
+  </section>
+
+  <section class="story container" aria-labelledby="story-title">
+    <img
+      src={withBase("/optimized/concepts/board-boule.webp")}
+      alt="The 2026–2028 International Board of Directors on stage at the 61st Boulé in Tampa"
+      loading="lazy"
+    />
+    <div>
+      <p class="story__when">July 2026</p>
+      <h2 id="story-title">Tampa welcomes Sigma Gamma Rho for the 61st Boulé</h2>
+      <p>
+        Thousands of members, partners, and guests gathered at the Tampa Convention Center, the first
+        Sigma Gamma Rho international convention in Tampa since 1976.
+      </p>
+      <a href={withBase("/news-events/latest-news/61st-biennial-boule/")}>Read the story</a>
+    </div>
+  </section>
+
+  <section class="work" aria-labelledby="work-title">
+    <div class="container">
+      <h2 id="work-title">Five national programs</h2>
+      <ul>
+        {programs.map((p) => (
+          <li>
+            <a href={withBase(`/service-impact/national-programs/${p.href}`)}>
+              <strong>{p.name}</strong>
+              <span>{p.what}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---- The wall: the one bold moment ---- */
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    height: min(calc(100svh - 7rem), 860px);
+    min-height: 34rem;
+    gap: 3px;
+    background: var(--navy);
+  }
+  .wall__panel {
+    grid-column: 2 / span 4;
+    grid-row: 2 / span 2;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    background: var(--navy);
+    color: #fff;
+    box-shadow: 0 0 0 3px var(--navy);
+  }
+  .wall__tile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    animation: tile-in 900ms var(--ease-out-strong) both;
+    animation-delay: calc(var(--i) * 45ms);
+  }
+  @keyframes tile-in {
+    from {
+      opacity: 0;
+      transform: scale(1.04);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wall__tile {
+      animation: none;
+    }
+  }
+  .wall h1 {
+    margin: 0;
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6.4vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: #fff;
+  }
+  .wall h1 span {
+    display: block;
+    color: var(--gold);
+  }
+  .wall__panel > p {
+    max-width: 36rem;
+    margin: var(--space-5) 0 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--text-md);
+    line-height: 1.6;
+  }
+  .wall__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .wall__login {
+    align-self: flex-start;
+    margin-top: var(--space-4);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* ---- After the wall, quiet ---- */
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+  .story img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .story__when {
+    margin: 0 0 var(--space-2);
+    color: var(--royal);
+    font-weight: 700;
+  }
+  .story h2 {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.15;
+    color: var(--navy);
+  }
+  .story p:not(.story__when) {
+    margin: var(--space-4) 0;
+    color: var(--muted);
+    font-size: var(--text-md);
+    line-height: 1.7;
+  }
+  .story a {
+    color: var(--royal);
+    font-weight: 700;
+  }
+  .work {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    background: var(--tint);
+  }
+  .work h2 {
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+    color: var(--navy);
+  }
+  .work ul {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .work a {
+    display: block;
+    padding-top: var(--space-4);
+    border-top: 2px solid var(--gold);
+    text-decoration: none;
+  }
+  .work strong {
+    display: block;
+    color: var(--royal);
+  }
+  .work span {
+    display: block;
+    margin-top: var(--space-1);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .work a:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 900px) {
+    .wall {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: 22vw auto;
+      grid-auto-rows: 22vw;
+      height: auto;
+    }
+    .wall__panel {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .story {
+      grid-template-columns: 1fr;
+    }
+    .work ul {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 540px) {
+    .wall {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: 30vw auto;
+      grid-auto-rows: 30vw;
+    }
+    /* 15 tiles fill three columns evenly. */
+    .wall__tile:last-of-type {
+      display: none;
+    }
+    .work ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

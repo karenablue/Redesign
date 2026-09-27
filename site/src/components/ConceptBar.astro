@@ -1,0 +1,77 @@
+---
+/**
+ * ConceptBar — switches between the homepage design concepts, the current
+ * homepage and AKA's, for side-by-side review. Concept pages only; delete
+ * with src/pages/concepts/ once a direction is chosen.
+ */
+import { withBase } from "../lib/url.js";
+
+interface Props {
+  current: "a" | "b" | "c";
+}
+const { current } = Astro.props;
+const concepts = [
+  { key: "a", label: "A: The Cover", href: "/concepts/a/" },
+  { key: "b", label: "B: 1922 / Today", href: "/concepts/b/" },
+  { key: "c", label: "C: The Wall", href: "/concepts/c/" },
+];
+---
+
+<nav class="concept-bar" aria-label="Homepage concepts">
+  <div class="container concept-bar__inner">
+    <span class="concept-bar__title">Homepage concepts</span>
+    <ul>
+      {concepts.map((c) => (
+        <li>
+          <a href={withBase(c.href)} aria-current={c.key === current ? "page" : undefined}>
+            {c.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a href={withBase("/")}>Current homepage</a>
+      </li>
+      <li>
+        <a href="https://www.aka1908.com/" target="_blank" rel="noopener">
+          AKA’s homepage<span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .concept-bar {
+    background: #fff8d6;
+    border-bottom: 1px solid var(--gold);
+    font-size: var(--text-sm);
+  }
+  .concept-bar__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-6);
+    padding-block: var(--space-3);
+  }
+  .concept-bar__title {
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .concept-bar ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .concept-bar a {
+    color: var(--royal);
+    font-weight: 600;
+  }
+  .concept-bar a[aria-current="page"] {
+    color: var(--navy);
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+  }
+</style>
