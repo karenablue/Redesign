@@ -32,6 +32,8 @@ const HEROES = {
   "hero-photoshoot.webp": "SGRho Photoshoot.jfif",
   "hero-alumnae-professional.webp": "alumnae sorors 2.jfif",
   "hero-grand-basileus.webp": "international-grand-basileus-marica-harris-704x1024.jpg",
+  // The 2026 International Board on stage at the 61st Boulé (sgrho1922.org).
+  "hero-board-boule.webp": "live-2026/International-Board-of-Directors-2026-1.webp",
 };
 
 // Writes the full-size and phone-size copies of one image.
@@ -124,23 +126,6 @@ await portraits(
     "past-grand-basilei-edna-douglas-300x300.jpg",
   ],
   4
-);
-// The 2026–2028 International Board of Directors, in the page's order.
-await portraits(
-  "hero-board.webp",
-  [
-    "international-grand-basileus-marica-harris-704x1024.jpg",
-    "first-grand-anti-basileus-miranda-moore-704x1024.jpg",
-    "second-grand-anti-basileus-ledaviah-terry.jpg",
-    "International-Grand-Grammateus-Sharron-Barnes-Headshot-2024-300x300.jpg",
-    "International-Grand-Anti-Grammateus-Jasmine-Ervin-Headshot-2026.jpg",
-    "International-Grand-Tamiochus-Debbie-Wilburn-2026.jpg",
-    "International-Editor-in-Chief-Aurora-Shira-Amos-Headshot-2024-300x300.jpg",
-    "International-Grand-Epistoleus-Elaina-Hamilton-Headshot-2024-300x300.jpg",
-    "International-Legal-Advisor-Joyvan-Malbon-Griffin-2026.jpg",
-  ],
-  5,
-  { colour: true }
 );
 // The five Syntaktes (Regional Directors): Central, Northeastern,
 // Southeastern, Southwestern, Western.
