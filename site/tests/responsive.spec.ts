@@ -111,3 +111,22 @@ test("tap targets meet WCAG 2.5.8, allowing the spacing exception", async ({ pag
 
   expect(offenders, `Targets under 24px that also fail the spacing exception:\n${offenders.join("\n")}`).toEqual([]);
 });
+
+/**
+ * On a small phone, every page opening shows its first action without
+ * scrolling. 360x640 is a small Android phone's browser viewport once the
+ * address and tool bars take their share of the screen.
+ */
+test("page openings show their first action on a small phone's first screen", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  const late: string[] = [];
+  for (const route of ROUTES) {
+    await page.goto(route, { waitUntil: "load" });
+    const bottom = await page.evaluate(() => {
+      const first = document.querySelector(".ph__actions .btn, .ph__actions input");
+      return first ? first.getBoundingClientRect().bottom : null;
+    });
+    if (bottom !== null && bottom > 640) late.push(`${route} (first action ends at ${Math.round(bottom)}px)`);
+  }
+  expect(late, `First action below the first screen:\n${late.join("\n")}`).toEqual([]);
+});

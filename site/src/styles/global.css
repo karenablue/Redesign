@@ -41,6 +41,19 @@
   src: url("/fonts/LemonMilkMedium-mLZYV.woff") format("woff");
 }
 
+/* Montserrat arrives from Google Fonts a moment after first paint. Until it
+   does, text is set in Arial scaled to Montserrat's measurements, so lines
+   wrap the same before and after and nothing below them jumps. (The same
+   metric-matched fallback Next.js generates for Montserrat.) */
+@font-face {
+  font-family: "Montserrat Fallback";
+  src: local("Arial");
+  size-adjust: 112.83%;
+  ascent-override: 85.79%;
+  descent-override: 22.25%;
+  line-gap-override: 0%;
+}
+
 *,
 *::before,
 *::after {

@@ -60,7 +60,7 @@
   --container-home: 1400px;
 
   /* --- Type — three roles, see the header note + AGENTS.md §6 ------ */
-  --font-body: "Montserrat", system-ui, Arial, sans-serif;
+  --font-body: "Montserrat", "Montserrat Fallback", system-ui, Arial, sans-serif;
   --font-head: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-label: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-display: "LEMON MILK", "Oswald", "Arial Narrow", system-ui, sans-serif;
