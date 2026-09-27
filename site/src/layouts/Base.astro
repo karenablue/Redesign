@@ -8,6 +8,8 @@
  *   description   meta description
  *   activeTop     current top-level nav label (see SiteHeader)
  *   image         social share image path (root-absolute), optional
+ *   preloadSrcset / preloadSizes  make that preload responsive, matching
+ *                 the image's own srcset and sizes
  *   noindex       keep the page out of search engines (design concepts)
  *   preloadImage  the page's largest above-the-fold image (root-absolute),
  *                 fetched first at high priority. Pass it only for an image
@@ -25,6 +27,8 @@ const {
   image = "/images/SGR-Logo-Shield.png",
   bodyClass,
   preloadImage,
+  preloadSrcset,
+  preloadSizes,
   noindex = false,
 } = Astro.props;
 
@@ -58,7 +62,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <link rel="preload" as="font" type="font/woff" href={withBase("/fonts/LemonMilkMedium-mLZYV.woff")} crossorigin />
     <link rel="preload" as="font" type="font/woff" href={withBase("/fonts/LemonMilkRegular-X3XE2.woff")} crossorigin />
     {preloadImage && (
-      <link rel="preload" as="image" href={withBase(preloadImage)} fetchpriority="high" />
+      <link
+        rel="preload"
+        as="image"
+        href={withBase(preloadImage)}
+        imagesrcset={preloadSrcset}
+        imagesizes={preloadSizes}
+        fetchpriority="high"
+      />
     )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

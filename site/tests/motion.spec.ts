@@ -1,10 +1,15 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * WCAG 2.2.2 (Pause, Stop, Hide) for the homepage hero video, plus
+ * WCAG 2.2.2 (Pause, Stop, Hide) for the hero video, plus
  * prefers-reduced-motion. The clip loops forever, so without a working
  * control there is no way to stop it.
+ *
+ * The homepage now opens on a still cover (2026-09-26); the video version of
+ * the cover lives on a comparison page until Karena chooses between them.
+ * If the video wins and moves back to "/", point VIDEO_PAGE there.
  */
+const VIDEO_PAGE = "/concepts/cover-video/";
 
 test.describe("hero video, default motion settings", () => {
   test("autoplays on a wide viewport, and the toggle pauses and resumes it", async ({ page }) => {
@@ -12,13 +17,13 @@ test.describe("hero video, default motion settings", () => {
       (page.viewportSize()?.width ?? 0) < 900,
       "narrow viewports deliberately do not stream the clip — covered by the next test"
     );
-    await page.goto("/", { waitUntil: "load" });
+    await page.goto(VIDEO_PAGE, { waitUntil: "load" });
 
-    const video = page.locator("video[data-hero-video]");
+    const video = page.locator("video[data-cover-video]");
     await expect(video).toHaveCount(1);
     await expect(video).toHaveAttribute("aria-hidden", "true");
 
-    const toggle = page.locator("[data-hero-motion]");
+    const toggle = page.locator("[data-cover-toggle]");
     await expect(toggle).toBeVisible();
     await expect(toggle).toHaveAttribute("aria-pressed", "false");
     await expect
@@ -49,8 +54,8 @@ test.describe("hero video, default motion settings", () => {
       (page.viewportSize()?.width ?? 0) >= 900,
       "wide viewports stream it — covered by the previous test"
     );
-    await page.goto("/", { waitUntil: "load" });
-    const video = page.locator("video[data-hero-video]");
+    await page.goto(VIDEO_PAGE, { waitUntil: "load" });
+    const video = page.locator("video[data-cover-video]");
 
     // preload="none" plus no autoplay attribute: nothing should be buffered.
     await page.waitForTimeout(1200);
@@ -65,7 +70,7 @@ test.describe("hero video, default motion settings", () => {
     expect(state.hasPoster, "the poster carries the hero instead").toBe(true);
 
     // Opting in must still work.
-    const toggle = page.locator("[data-hero-motion]");
+    const toggle = page.locator("[data-cover-toggle]");
     await expect(toggle).toHaveAttribute("aria-pressed", "true");
     await expect(toggle).toContainText(/play/i);
     await toggle.click();
@@ -83,13 +88,13 @@ test.describe("hero video, prefers-reduced-motion", () => {
     // emulateMedia is unambiguous, and must run before goto so the hero's
     // inline script sees the preference on first evaluation.
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/", { waitUntil: "networkidle" });
+    await page.goto(VIDEO_PAGE, { waitUntil: "networkidle" });
 
     expect(
       await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches),
       "guard: the reduced-motion emulation must actually be active, or this test proves nothing"
     ).toBe(true);
-    const video = page.locator("video[data-hero-video]");
+    const video = page.locator("video[data-cover-video]");
     await page.waitForTimeout(1200);
 
     const state = await video.evaluate((v: HTMLVideoElement) => ({
@@ -100,7 +105,7 @@ test.describe("hero video, prefers-reduced-motion", () => {
     expect(state.currentTime, "reduced motion must not advance the video").toBe(0);
 
     // The control must report "play", so a user who wants the motion can get it.
-    const toggle = page.locator("[data-hero-motion]");
+    const toggle = page.locator("[data-cover-toggle]");
     await expect(toggle).toHaveAttribute("aria-pressed", "true");
     await expect(toggle).toContainText(/play/i);
 

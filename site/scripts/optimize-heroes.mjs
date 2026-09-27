@@ -157,3 +157,22 @@ await portraits(
   4,
   { colour: true }
 );
+
+// The homepage cover and its then-and-now pairs. The cover runs full width,
+// so it gets a 1920px copy for large screens and a 900px copy for phones.
+async function wide(name, file, widths, { grey = false } = {}) {
+  for (const [suffix, width, quality] of widths) {
+    // trim: scanned archival prints carry a white border.
+    let p = sharp(src(file)).rotate();
+    if (grey) p = sharp(await p.trim({ background: "#ffffff", threshold: 40 }).toBuffer());
+    p = p.resize({ width, withoutEnlargement: true });
+    if (grey) p = p.grayscale();
+    const info = await p.webp({ quality }).toFile(out(name.replace(/\.webp$/, `${suffix}.webp`)));
+    console.log(`${name.replace(/\.webp$/, `${suffix}.webp`)}  ${info.width}x${info.height}  ${Math.round(info.size / 1024)}KB`);
+  }
+}
+await wide("home-cover.webp", "Beta Alpha.jpg", [["", 1920, 66], ["-900", 900, 62], ["-640", 640, 56]]);
+await wide("home-join.webp", "live-2026/sigma-gamma-rho-join.webp", [["", 1600, 68]]);
+await wide("home-butler.webp", "College Avenue Campus.jpg", [["", 800, 72]], { grey: true });
+await wide("home-charter.webp", "sgr-alpha-charter.jpeg", [["", 768, 72]], { grey: true });
+await wide("home-boule-stage.webp", "live-2026/International-Board-of-Directors-2026-2.webp", [["", 960, 72]]);
