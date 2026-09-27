@@ -19,9 +19,6 @@ const out = (f) => join(root, "public", "optimized", f);
 
 const HEROES = {
   "hero-charter.webp": "sgr-alpha-charter.jpeg",
-  "hero-mosaic-crest.webp": "Sigma Gamma Rho Sorority Mosaic Crest.jpg",
-  "hero-boule-steps.webp": "boule.jpg",
-  "hero-beta-alpha.webp": "Beta Alpha.jpg",
   "hero-ug-sorors.webp": "ug sorors 5.jpg",
   "hero-alumnae-sorors.webp": "alumnae sorors 3.jfif",
   "hero-beta-psi-sigma.webp": "Beta Psi Sigma.jpg",
@@ -55,15 +52,18 @@ for (const [name, file] of Object.entries(HEROES)) {
   await save(name, await sharp(src(file)).rotate().toBuffer());
 }
 
-// Archival portrait grids: several portraits in rows, greyscale, as one
-// image shaped like the photo area (about 3:2), so none is cropped away.
-async function portraits(name, files, cols) {
+// Portrait grids: several portraits in rows as one image shaped like the
+// photo area (about 2:1 to 3:2), so none is cropped away. Greyscale for the
+// archival pages; `{ colour: true }` for present-day leadership and staff.
+async function portraits(name, files, cols, { colour = false } = {}) {
   const W = 240;
   const H = 300;
   const rows = Math.ceil(files.length / cols);
   const tiles = await Promise.all(
     files.map((f) =>
-      sharp(src(f)).rotate().resize(W, H, { fit: "cover", position: "top" }).grayscale().toBuffer()
+      (colour ? sharp(src(f)).rotate() : sharp(src(f)).rotate().grayscale())
+        .resize(W, H, { fit: "cover", position: "top" })
+        .toBuffer()
     )
   );
   const grid = await sharp({
@@ -124,4 +124,51 @@ await portraits(
     "past-grand-basilei-edna-douglas-300x300.jpg",
   ],
   4
+);
+// The 2026–2028 International Board of Directors, in the page's order.
+await portraits(
+  "hero-board.webp",
+  [
+    "international-grand-basileus-marica-harris-704x1024.jpg",
+    "first-grand-anti-basileus-miranda-moore-704x1024.jpg",
+    "second-grand-anti-basileus-ledaviah-terry.jpg",
+    "International-Grand-Grammateus-Sharron-Barnes-Headshot-2024-300x300.jpg",
+    "International-Grand-Anti-Grammateus-Jasmine-Ervin-Headshot-2026.jpg",
+    "International-Grand-Tamiochus-Debbie-Wilburn-2026.jpg",
+    "International-Editor-in-Chief-Aurora-Shira-Amos-Headshot-2024-300x300.jpg",
+    "International-Grand-Epistoleus-Elaina-Hamilton-Headshot-2024-300x300.jpg",
+    "International-Legal-Advisor-Joyvan-Malbon-Griffin-2026.jpg",
+  ],
+  5,
+  { colour: true }
+);
+// The five Syntaktes (Regional Directors): Central, Northeastern,
+// Southeastern, Southwestern, Western.
+await portraits(
+  "hero-regional.webp",
+  [
+    "regional-leadership-central-syntaktes.jpg",
+    "regional-leadership-northeastern-syntaktes-300x300.jpg",
+    "regional-leadership-southeastern-syntaktes-300x300.jpg",
+    "regional-leadership-southwestern-syntaktes-300x300.jpg",
+    "regional-leadership-western-syntaktes-300x300.jpg",
+  ],
+  3,
+  { colour: true }
+);
+// International Corporate Headquarters: the Executive Director and the team.
+await portraits(
+  "hero-ichq.webp",
+  [
+    "ichq/karen-w-headshot-2024.jpg",
+    "ichq/amy-headshot-2024.webp",
+    "ichq/gwen-headshot-2024.jpg",
+    "ichq/asha-headshot-2024.jpg",
+    "ichq/karya-headshot-2024.jpg",
+    "ichq/nicole-headshot-2024.jpg",
+    "ichq/juneann-headshot-2024.jpg",
+    "ichq/joshua-headshot-2025.jpg",
+  ],
+  4,
+  { colour: true }
 );

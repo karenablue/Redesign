@@ -11,12 +11,21 @@
  * greyscale, as Herstory does, for history pages; present-day pages keep
  * the royal and gold in colour. Serious and task pages pass no image.
  *
+ * Each page can add one detail of its own, so the openings don't all read
+ * alike: a gold year `badge` on the photo (Herstory's 1922 badge), a
+ * `caption` on the photo, or a gold-ruled numeral `detail` under the
+ * actions. Use only facts the page itself states.
+ *
  * props:
  *   eyebrow, title, highlight (the accent part), copy
+ *   lead       a bolder first sentence, before `copy`
  *   image      root-absolute path in /optimized/, decorative (alt="")
  *   focal      object-position for the photo
  *   archival   greyscale the photo
- *   watermark  a ghosted year or word behind the title
+ *   badge      { label, value } gold circle on the photo's edge
+ *   caption    short line set on the photo
+ *   detail     { value, label } numeral and line under the actions
+ *   watermark  a ghosted year or word; shown only on pages without a photo
  *   crumbs     Breadcrumb items
  *   jump       [{ href, label }] in-page links for the bar under the band
  *   jumpLabel  accessible name for the jump bar
@@ -34,9 +43,13 @@ interface Props {
   title: string;
   highlight?: string;
   copy?: string;
+  lead?: string;
   image?: string;
   focal?: string;
   archival?: boolean;
+  badge?: { label: string; value: string };
+  caption?: string;
+  detail?: { value: string; label: string };
   watermark?: string;
   crumbs?: { label: string; href?: string }[];
   jump?: { href: string; label: string }[];
@@ -51,9 +64,13 @@ const {
   title,
   highlight,
   copy,
+  lead,
   image,
   focal = "50% 40%",
   archival = false,
+  badge,
+  caption,
+  detail,
   watermark,
   crumbs,
   jump,
@@ -68,7 +85,7 @@ const {
 const length = stack
   ? Math.max(title.length, (highlight ?? "").length)
   : `${title} ${highlight ?? ""}`.trim().length;
-const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
+const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : "sm";
 ---
 
 <section
@@ -91,11 +108,18 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
         fetchpriority="high"
         style={`object-position:${focal}`}
       />
+      {caption && <p class="ph__caption">{caption}</p>}
     </div>
   )}
   <div class="ph__overlay" aria-hidden="true"></div>
-  {watermark && (
-    <span class="ph__watermark" aria-hidden="true">
+  {image && badge && (
+    <p class="ph__badge">
+      <small>{badge.label}</small>
+      <strong>{badge.value}</strong>
+    </p>
+  )}
+  {!image && watermark && (
+    <span class:list={["ph__watermark", { "ph__watermark--long": watermark.length > 4 }]} aria-hidden="true">
       {watermark}
     </span>
   )}
@@ -111,11 +135,18 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
         </>
       )}
     </h1>
+    {lead && <p class="ph__lead">{lead}</p>}
     {copy && <p class="ph__copy">{copy}</p>}
     {Astro.slots.has("default") && (
       <div class="ph__actions">
         <slot />
       </div>
+    )}
+    {detail && (
+      <p class="ph__detail">
+        <span class="ph__detail-value">{detail.value}</span>
+        <span class="ph__detail-label">{detail.label}</span>
+      </p>
     )}
   </div>
 </section>
@@ -183,17 +214,69 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
     background: radial-gradient(120% 90% at 85% 0%, rgba(32, 65, 165, 0.55), transparent 60%);
   }
 
+  /* Sits whole inside the band's bottom-right corner, below the title. */
   .ph__watermark {
     position: absolute;
-    right: -0.06em;
-    bottom: -0.2em;
+    bottom: var(--space-8);
+    right: max(var(--gutter), calc((100% - var(--container)) / 2));
     font-family: var(--font-label);
-    font-size: clamp(8rem, 22vw, 20rem);
+    font-size: clamp(5rem, 10vw, 10rem);
     line-height: 1;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
     color: rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
     pointer-events: none;
     user-select: none;
+  }
+  .ph__watermark--long {
+    font-size: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  .ph__caption {
+    position: absolute;
+    right: var(--space-5);
+    bottom: var(--space-5);
+    z-index: 2;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    background: rgba(8, 22, 51, 0.72);
+    color: #fff;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Herstory's year badge: a gold disc on the photo, in the band's
+     bottom-right corner, clear of the title. */
+  .ph__badge {
+    position: absolute;
+    z-index: 3;
+    bottom: clamp(1.5rem, 4vw, 2.5rem);
+    right: max(var(--gutter), calc((100% - var(--container)) / 2));
+    width: 96px;
+    height: 96px;
+    margin: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    border-radius: 50%;
+    color: var(--navy);
+    background: var(--gold);
+    box-shadow: 0 12px 26px rgba(8, 22, 51, 0.28);
+  }
+  .ph__badge small {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .ph__badge strong {
+    margin-top: 2px;
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1;
   }
 
   .ph__content {
@@ -220,16 +303,21 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
     color: #fff;
   }
   .ph--xl .ph__title {
-    font-size: clamp(3rem, 8.5vw, 7.25rem);
+    font-size: clamp(2.5rem, 8.5vw, 7.25rem);
   }
   .ph--lg .ph__title {
     max-width: 16ch;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.1rem, 6vw, 5rem);
   }
   .ph--md .ph__title {
     max-width: 20ch;
-    font-size: clamp(2.1rem, 4.6vw, 3.75rem);
+    font-size: clamp(1.8rem, 4.6vw, 3.75rem);
     line-height: 1.02;
+  }
+  .ph--sm .ph__title {
+    max-width: 30ch;
+    font-size: clamp(1.6rem, 3.4vw, 2.75rem);
+    line-height: 1.08;
   }
   .ph__title span {
     color: var(--accent-text);
@@ -244,6 +332,17 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
   .ph--stack .ph__title span {
     display: block;
   }
+  .ph__lead {
+    max-width: 40rem;
+    margin: var(--space-8) 0 0;
+    color: #fff;
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: 1.6;
+  }
+  .ph__lead + .ph__copy {
+    margin-top: var(--space-4);
+  }
   .ph__copy {
     max-width: 40rem;
     margin: var(--space-8) 0 0;
@@ -256,6 +355,29 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
     flex-wrap: wrap;
     gap: var(--space-3);
     margin-top: var(--space-8);
+  }
+
+  .ph__detail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    max-width: 30rem;
+    margin: var(--space-10) 0 0;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--gold);
+  }
+  .ph__detail-value {
+    flex: none;
+    font-family: var(--font-label);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1;
+    color: var(--gold);
+  }
+  .ph__detail-label {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1.5;
   }
 
   .ph-jump {
@@ -308,6 +430,17 @@ const scale = length <= 14 ? "xl" : length <= 30 ? "lg" : "md";
     .ph--tall,
     .ph--regular {
       min-height: 0;
+    }
+    /* On a phone the photo is only a backdrop, and the badge and the
+       ghosted watermark would sit on the text. */
+    .ph__badge,
+    .ph__watermark {
+      display: none;
+    }
+    .ph__caption {
+      top: var(--space-4);
+      right: var(--gutter);
+      bottom: auto;
     }
   }
 </style>

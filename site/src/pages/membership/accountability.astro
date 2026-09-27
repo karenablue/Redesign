@@ -221,6 +221,8 @@ const cellsForRecord = (
     image="/optimized/hero-charter.webp"
     focal="66% 42%"
     archival
+    jumpLabel="The five lists"
+    jump={categories.map((c) => ({ href: `#category-${c.key}`, label: c.title }))}
   />
 
   <section class="ma-main">
@@ -250,19 +252,6 @@ const cellsForRecord = (
         </div>
       </div>
 
-      <ul class="ma-cards">
-        {categories.map((c) => (
-          <li class="ma-card">
-            <h2>{c.title}</h2>
-            <p>{c.body}</p>
-            {c.records.length > 0 && (
-              <a class="btn btn--outline" href={`#category-${c.key}`} data-category={c.key}>
-                {c.action}
-              </a>
-            )}
-          </li>
-        ))}
-      </ul>
       <p class="ma-note">
         International Corporate Headquarters maintains the official listing.
         {lastListed && (
@@ -280,9 +269,7 @@ const cellsForRecord = (
       </p>
 
       <div class="ma-registers" id="registers">
-        {categories
-          .filter((category) => category.records.length > 0)
-          .map((category) => (
+        {categories.map((category) => (
             <section
               class="ma-register"
               id={`category-${category.key}`}
@@ -292,28 +279,31 @@ const cellsForRecord = (
                 <div>
                   <p class="eyebrow">Official Register</p>
                   <h2 id={`category-${category.key}-title`}>{category.title}</h2>
+                  <p class="ma-register__intro">{category.body}</p>
                 </div>
               </div>
 
-              <form class="ma-register__search" role="search">
-                <label for={`search-${category.key}`}>Filter {category.title}</label>
-                <div class="ma-search__controls">
-                  <input
-                    id={`search-${category.key}`}
-                    name={`search-${category.key}`}
-                    type="search"
-                    placeholder="Search this table"
-                    autocomplete="off"
-                    data-register-search
-                  />
-                  <button class="btn btn--outline" type="reset">
-                    Clear
-                  </button>
-                </div>
-                <p class="ma-search__status" aria-live="polite">
-                  Showing all records.
-                </p>
-              </form>
+              {category.records.length > 0 && (
+                <form class="ma-register__search" role="search">
+                  <label for={`search-${category.key}`}>Filter {category.title}</label>
+                  <div class="ma-search__controls">
+                    <input
+                      id={`search-${category.key}`}
+                      name={`search-${category.key}`}
+                      type="search"
+                      placeholder="Search this table"
+                      autocomplete="off"
+                      data-register-search
+                    />
+                    <button class="btn btn--outline" type="reset">
+                      Clear
+                    </button>
+                  </div>
+                  <p class="ma-search__status" aria-live="polite">
+                    Showing all records.
+                  </p>
+                </form>
+              )}
 
               <div class="ma-register__table-wrap">
                 <table class="ma-register__table">
@@ -328,8 +318,10 @@ const cellsForRecord = (
                     {category.records.length === 0 ? (
                       <tr>
                         <td class="ma-register__empty" colspan={category.columns.length}>
-                          No public records are published here. Visit the member portal register for
-                          current official information.
+                          This list has not been published on this site yet. To check whether
+                          someone is in good standing, contact International Corporate
+                          Headquarters at{" "}
+                          <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>.
                         </td>
                       </tr>
                     ) : (
@@ -358,9 +350,11 @@ const cellsForRecord = (
                 </table>
               </div>
 
-              <p class="ma-register__note" data-register-count>
-                {category.records.length} record{category.records.length === 1 ? "" : "s"}
-              </p>
+              {category.records.length > 0 && (
+                <p class="ma-register__note" data-register-count>
+                  {category.records.length} record{category.records.length === 1 ? "" : "s"}
+                </p>
+              )}
             </section>
           ))}
       </div>
@@ -451,38 +445,6 @@ const cellsForRecord = (
   }
 
   /* Three categories: white cards, a royal top rule, the action on the foot. */
-  .ma-cards {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
-    margin: var(--space-12) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .ma-card {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-4) 0 0;
-    border-top: 1px solid var(--gold);
-    background: transparent;
-  }
-  .ma-card h2 {
-    margin: 0 0 var(--space-3);
-    color: var(--royal);
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: var(--text-lg);
-  }
-  .ma-card p {
-    margin: 0 0 var(--space-6);
-    color: var(--muted);
-    font-size: var(--text-sm);
-    line-height: 1.7;
-  }
-  .ma-card .btn {
-    margin-top: auto;
-    align-self: flex-start;
-  }
   .ma-note {
     margin: var(--space-4) 0 0;
     color: var(--muted);
@@ -537,6 +499,13 @@ const cellsForRecord = (
     padding: var(--space-8) 0;
     border-top: 1px solid var(--gold);
     background: var(--cream);
+  }
+  .ma-register__intro {
+    max-width: 46rem;
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
   }
   .ma-register__header {
     display: flex;
@@ -641,10 +610,5 @@ const cellsForRecord = (
   .ma-verify a:not(.btn) {
     color: var(--royal);
     font-weight: 700;
-  }
-  @media (max-width: 900px) {
-    .ma-cards {
-      grid-template-columns: minmax(0, 1fr);
-    }
   }
 </style>
