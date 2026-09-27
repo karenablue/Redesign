@@ -176,3 +176,8 @@ await wide("home-join.webp", "live-2026/sigma-gamma-rho-join.webp", [["", 1600, 
 await wide("home-butler.webp", "College Avenue Campus.jpg", [["", 800, 72]], { grey: true });
 await wide("home-charter.webp", "sgr-alpha-charter.jpeg", [["", 768, 72]], { grey: true });
 await wide("home-boule-stage.webp", "live-2026/International-Board-of-Directors-2026-2.webp", [["", 960, 72]]);
+
+// Full-width page covers (PageHero `cover`): the original width, plus a
+// 640px phone copy.
+await wide("cover-ug-sorors.webp", "ug sorors 5.jpg", [["", 1440, 68], ["-640", 640, 58]]);
+await wide("cover-beta-psi-sigma.webp", "Beta Psi Sigma.jpg", [["", 1365, 68], ["-640", 640, 58]]);

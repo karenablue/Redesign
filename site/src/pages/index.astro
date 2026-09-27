@@ -30,6 +30,7 @@ import Base from "../layouts/Base.astro";
 import HomeCover from "../components/HomeCover.astro";
 import StatBand from "../components/StatBand.astro";
 import PillarRail from "../components/PillarRail.astro";
+import ThenNow from "../components/ThenNow.astro";
 import CardGrid from "../components/CardGrid.astro";
 import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
@@ -453,51 +454,33 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
 
       {/* Then and now, divided by a gold seam: the archive in black and
           white, the sisterhood today in colour. */}
-      <div class="then-now" data-reveal>
-        <figure class="then-now__then" id="our-legacy">
-          <img
-            src={withBase("/optimized/home-charter.webp")}
-            alt="Alpha Chapter charter members, 1924"
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="then-now__year" aria-hidden="true">1924</span>
-          <figcaption>
-            <span>From the beginning</span> Alpha Chapter charter members, Indianapolis, Indiana,
-            1924
-          </figcaption>
-        </figure>
-        <figure class="then-now__now">
-          <img
-            src={withBase("/optimized/hero-beta-psi-sigma.webp")}
-            alt="Four members in yellow, laughing together on a brick wall"
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="then-now__year then-now__year--now" aria-hidden="true">Today</span>
-          <figcaption>700+ collegiate and alumnae chapters today</figcaption>
-        </figure>
-      </div>
-      <div class="then-now" data-reveal>
-        <figure class="then-now__then">
-          <img
-            src={withBase("/optimized/home-butler.webp")}
-            alt="Historic Butler University campus"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>Butler University, Indianapolis</figcaption>
-        </figure>
-        <figure class="then-now__now">
-          <img
-            src={withBase("/optimized/home-boule-stage.webp")}
-            alt="The 2026–2028 International Board of Directors on stage at the 61st Boulé"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>The 61st International Biennial Boulé, Tampa, 2026</figcaption>
-        </figure>
-      </div>
+      <ThenNow
+        then={{
+          img: "/optimized/home-charter.webp",
+          alt: "Alpha Chapter charter members, 1924",
+          label: "From the beginning",
+          caption: "Alpha Chapter charter members, Indianapolis, Indiana, 1924",
+          year: "1924",
+        }}
+        now={{
+          img: "/optimized/hero-beta-psi-sigma.webp",
+          alt: "Four members in yellow, laughing together on a brick wall",
+          caption: "700+ collegiate and alumnae chapters today",
+          year: "Today",
+        }}
+      />
+      <ThenNow
+        then={{
+          img: "/optimized/home-butler.webp",
+          alt: "Historic Butler University campus",
+          caption: "Butler University, Indianapolis",
+        }}
+        now={{
+          img: "/optimized/home-boule-stage.webp",
+          alt: "The 2026–2028 International Board of Directors on stage at the 61st Boulé",
+          caption: "The 61st International Biennial Boulé, Tampa, 2026",
+        }}
+      />
 
       <div class="legacy__pillars">
         <PillarRail />
@@ -1324,61 +1307,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   .legacy__links .arrow-link {
     white-space: normal;
   }
-  .then-now {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    background: var(--gold);
-  }
-  .then-now + .then-now {
-    margin-top: 4px;
-  }
-  .then-now figure {
-    position: relative;
-    margin: 0;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--navy);
-  }
-  .then-now img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  /* The year sits on a navy tab, so it reads over any photograph (and gold
-     type stays on navy). */
-  .then-now__year {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: var(--space-3) var(--space-5) var(--space-2);
-    background: var(--navy);
-    font-family: var(--font-label);
-    font-size: clamp(2rem, 4.5vw, 3.75rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    color: #fff;
-  }
-  .then-now__year--now {
-    color: var(--gold);
-  }
-  .then-now figcaption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: var(--space-10) var(--space-5) var(--space-4);
-    background: linear-gradient(0deg, rgba(8, 22, 51, 0.88), rgba(8, 22, 51, 0));
-    color: #fff;
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-  .then-now figcaption span {
-    display: block;
-    color: var(--gold);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
   .legacy__pillars {
     margin-top: clamp(2.5rem, 5vw, 3.5rem);
     padding-block: var(--space-8);
@@ -1428,12 +1356,6 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
       max-width: 18ch;
     }
   }
-  @media (max-width: 600px) {
-    .then-now {
-      grid-template-columns: 1fr;
-    }
-  }
-
   .chapter-callout {
     position: relative;
     overflow: hidden;

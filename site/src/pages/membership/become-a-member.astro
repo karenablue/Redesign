@@ -12,6 +12,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
+import ThenNow from "../../components/ThenNow.astro";
 import SigmaRule from "../../components/SigmaRule.astro";
 import Faq from "../../components/Faq.astro";
 import Carousel from "../../components/Carousel.astro";
@@ -243,7 +244,9 @@ const accountabilityLinks = [
     highlight="of greater service."
     lead="Bring your commitment to scholarship, service, and sisterhood to Sigma Gamma Rho."
     copy="Seven Black educators founded our Sorority in 1922. Their legacy continues through women who lead in their communities, serve with purpose, and make a lifelong commitment to one another. Explore the membership pathway that fits your educational journey."
-    image="/optimized/hero-ug-sorors.webp"
+    image="/optimized/cover-ug-sorors.webp"
+    imageWidth={1440}
+    cover
     caption="Scholarship. Sisterhood. Service."
     focal="50% 30%"
     size="tall"
@@ -289,6 +292,22 @@ const accountabilityLinks = [
           </li>
         ))}
       </ul>
+      <div class="sigma-woman__pair">
+        <ThenNow
+          then={{
+            img: "/optimized/home-charter.webp",
+            alt: "Alpha Chapter charter members, 1924",
+            caption: "Alpha Chapter charter members, Indianapolis, Indiana, 1924",
+            year: "1924",
+          }}
+          now={{
+            img: "/optimized/hero-lambda-psi.webp",
+            alt: "Sigma Gamma Rho undergraduate members together",
+            caption: "Undergraduate members today",
+            year: "Today",
+          }}
+        />
+      </div>
     </div>
   </section>
 
@@ -509,6 +528,9 @@ const accountabilityLinks = [
 <style>
   /* ---- hero ---- */
 
+  .sigma-woman__pair {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
   .standards-strip {
     background: var(--navy);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);

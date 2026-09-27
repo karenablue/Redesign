@@ -1,0 +1,128 @@
+---
+/**
+ * ThenNow — concept B's pair, shared: the archive in black and white beside
+ * the sisterhood today in colour, divided by a gold seam. An optional year
+ * sits on a navy tab in the corner (so it reads over any photograph, and
+ * gold type stays on navy). Captions state only what the site already says.
+ *
+ * props:
+ *   then, now  { img, alt, caption, label?, year? }
+ *              img is root-absolute; `then` is shown in greyscale
+ *   ratio      aspect ratio of each photograph (default 16 / 10)
+ *   yearAt     "top" (a navy tab in the corner, default) or "caption" (set
+ *              large in the caption, for portraits, where a corner tab
+ *              would sit on someone's head)
+ */
+import { withBase } from "../lib/url.js";
+
+interface Side {
+  img: string;
+  alt: string;
+  caption: string;
+  label?: string;
+  year?: string;
+}
+interface Props {
+  then: Side;
+  now: Side;
+  ratio?: string;
+  yearAt?: "top" | "caption";
+}
+const { then, now, ratio = "16 / 10", yearAt = "top" } = Astro.props;
+---
+
+<div class="then-now" style={`--tn-ratio:${ratio}`} data-reveal>
+  {[then, now].map((side, i) => (
+    <figure class:list={["then-now__side", i === 0 ? "then-now__then" : "then-now__now"]}>
+      <img src={withBase(side.img)} alt={side.alt} loading="lazy" decoding="async" />
+      {side.year && yearAt === "top" && (
+        <span class:list={["then-now__year", { "then-now__year--now": i === 1 }]} aria-hidden="true">
+          {side.year}
+        </span>
+      )}
+      <figcaption>
+        {side.year && yearAt === "caption" && (
+          <b class:list={["then-now__cap-year", { "then-now__year--now": i === 1 }]} aria-hidden="true">
+            {side.year}
+          </b>
+        )}
+        {side.label && <span>{side.label}</span>}
+        {side.caption}
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .then-now {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: var(--gold);
+  }
+  .then-now + .then-now {
+    margin-top: 4px;
+  }
+  .then-now__side {
+    position: relative;
+    margin: 0;
+    aspect-ratio: var(--tn-ratio);
+    overflow: hidden;
+    background: var(--navy);
+  }
+  .then-now__side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .then-now__then img {
+    filter: grayscale(100%);
+  }
+  .then-now__year {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: var(--space-3) var(--space-5) var(--space-2);
+    background: var(--navy);
+    font-family: var(--font-label);
+    font-size: clamp(2rem, 4.5vw, 3.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .then-now__year--now {
+    color: var(--gold);
+  }
+  .then-now figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--space-10) var(--space-5) var(--space-4);
+    background: linear-gradient(0deg, rgba(8, 22, 51, 0.88), rgba(8, 22, 51, 0));
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .then-now__cap-year {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .then-now figcaption span {
+    display: block;
+    color: var(--gold);
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  @media (max-width: 600px) {
+    .then-now {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

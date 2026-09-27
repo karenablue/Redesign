@@ -32,6 +32,11 @@
  *   size       "tall" | "regular" | "compact"
  *   id         anchor id for the band (e.g. a "back to top" target)
  *   settle     the photo settles into place once, slowly (motion pilot)
+ *   cover      the homepage's magazine cover: the photograph runs the full
+ *              width, the title across the top and the words at the foot,
+ *              faces clear between (Karena, 2026-09-26). Needs a photo at
+ *              least ~1400px wide; pass its width as imageWidth.
+ *   imageWidth the full-size image's width, for srcset (default 1200)
  *   stack      put the accent part on its own line ("Five regions. / One standard.")
  * default slot: actions (buttons) or a tool such as a search form
  */
@@ -58,6 +63,8 @@ interface Props {
   size?: "tall" | "regular" | "compact";
   stack?: boolean;
   settle?: boolean;
+  cover?: boolean;
+  imageWidth?: number;
   id?: string;
 }
 
@@ -80,6 +87,8 @@ const {
   size = "regular",
   stack = false,
   settle = false,
+  cover = false,
+  imageWidth = 1200,
   id,
 } = Astro.props;
 
@@ -104,6 +113,7 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
       "ph--stack": stack,
       "ph--lead": lead,
       "ph--settle": settle,
+      "ph--cover": cover && image,
     },
   ]}
 >
@@ -111,8 +121,8 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
     <div class="ph__media">
       <img
         src={withBase(image)}
-        srcset={`${withBase(image.replace(/\.webp$/, "-640.webp"))} 640w, ${withBase(image)} 1200w`}
-        sizes="(max-width: 820px) 100vw, 62vw"
+        srcset={`${withBase(image.replace(/\.webp$/, "-640.webp"))} 640w, ${withBase(image)} ${imageWidth}w`}
+        sizes={cover ? "100vw" : "(max-width: 820px) 100vw, 62vw"}
         alt=""
         fetchpriority="high"
         style={`object-position:${focal}`}
@@ -144,19 +154,21 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
         </>
       )}
     </h1>
-    {lead && <p class="ph__lead">{lead}</p>}
-    {copy && <p class="ph__copy">{copy}</p>}
-    {Astro.slots.has("default") && (
-      <div class="ph__actions">
-        <slot />
-      </div>
-    )}
-    {detail && (
-      <p class="ph__detail">
-        <span class="ph__detail-value">{detail.value}</span>
-        <span class="ph__detail-label">{detail.label}</span>
-      </p>
-    )}
+    <div class="ph__foot">
+      {lead && <p class="ph__lead">{lead}</p>}
+      {copy && <p class="ph__copy">{copy}</p>}
+      {Astro.slots.has("default") && (
+        <div class="ph__actions">
+          <slot />
+        </div>
+      )}
+      {detail && (
+        <p class="ph__detail">
+          <span class="ph__detail-value">{detail.value}</span>
+          <span class="ph__detail-label">{detail.label}</span>
+        </p>
+      )}
+    </div>
   </div>
 </section>
 {jump && jump.length > 0 && (
@@ -427,6 +439,42 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
   .ph--settle .ph__media img {
     animation: sgr-settle 14s var(--ease-out-strong) both;
   }
+  /* ---- Cover: the photograph runs the full width, like the homepage ---- */
+  .ph--cover {
+    min-height: min(calc(100svh - 6.75rem), 820px);
+    align-content: stretch;
+  }
+  /* The photograph starts below the title, so faces are never under the
+     type: the title sits on navy, the photo rises out of it. */
+  .ph--cover .ph__media {
+    top: 30%;
+    width: 100%;
+  }
+  .ph--cover .ph__media img {
+    mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+  }
+  .ph--cover .ph__overlay {
+    background:
+      linear-gradient(0deg, rgba(8, 22, 51, 0.96) 0%, rgba(8, 22, 51, 0.7) 30%, rgba(8, 22, 51, 0) 58%),
+      linear-gradient(90deg, rgba(8, 22, 51, 0.7) 0%, rgba(8, 22, 51, 0) 50%);
+  }
+  .ph--cover .ph__content {
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--space-8) var(--space-12);
+  }
+  .ph--cover .ph__title {
+    max-width: none;
+  }
+  .ph--cover .ph__foot {
+    margin-top: auto;
+    padding-top: var(--space-16);
+  }
+  .ph--cover .ph__lead,
+  .ph--cover .ph__copy {
+    max-width: 38rem;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ph--settle .ph__media img {
       animation: none;
@@ -458,8 +506,15 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
       background: radial-gradient(120% 70% at 100% 0%, rgba(32, 65, 165, 0.5), transparent 60%);
     }
     .ph--tall,
-    .ph--regular {
+    .ph--regular,
+    .ph--cover {
       min-height: 0;
+    }
+    .ph--cover .ph__foot {
+      padding-top: 0;
+    }
+    .ph--cover .ph__content {
+      padding-block: var(--space-10) var(--space-6);
     }
     /* The ghosted watermark would sit on the text. */
     .ph__watermark {
@@ -520,7 +575,7 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
     /* With a bold lead line, the buttons follow it and the longer paragraph
        comes after them, so the buttons stay on the first screen. The
        paragraph is prose, not a control, so focus order is unchanged. */
-    .ph--lead .ph__content {
+    .ph--lead .ph__foot {
       display: flex;
       flex-direction: column;
     }
