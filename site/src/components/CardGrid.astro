@@ -13,15 +13,16 @@
  *   cols  optional max column count on wide viewports (e.g. 3, 4)
  *   gap   grid gap (default "var(--space-8)")
  *   as    wrapper element (default "div"; use "ul" for list semantics)
+ *   other attributes (e.g. data-reveal) pass through to the wrapper
  */
-const { min = "280px", cols, gap = "var(--space-8)", as = "div" } = Astro.props;
+const { min = "280px", cols, gap = "var(--space-8)", as = "div", ...rest } = Astro.props;
 const Tag = as;
 const style = [`--card-min:${min}`, `--card-gap:${gap}`, cols && `--card-cols:${cols}`]
   .filter(Boolean)
   .join(";");
 ---
 
-<Tag class:list={["card-grid", { "card-grid--capped": cols }]} style={style}>
+<Tag class:list={["card-grid", { "card-grid--capped": cols }]} style={style} {...rest}>
   <slot />
 </Tag>
 

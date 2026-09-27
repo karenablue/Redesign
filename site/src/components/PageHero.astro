@@ -31,6 +31,7 @@
  *   jumpLabel  accessible name for the jump bar
  *   size       "tall" | "regular" | "compact"
  *   id         anchor id for the band (e.g. a "back to top" target)
+ *   settle     the photo settles into place once, slowly (motion pilot)
  *   stack      put the accent part on its own line ("Five regions. / One standard.")
  * default slot: actions (buttons) or a tool such as a search form
  */
@@ -56,6 +57,7 @@ interface Props {
   jumpLabel?: string;
   size?: "tall" | "regular" | "compact";
   stack?: boolean;
+  settle?: boolean;
   id?: string;
 }
 
@@ -77,6 +79,7 @@ const {
   jumpLabel = "On this page",
   size = "regular",
   stack = false,
+  settle = false,
   id,
 } = Astro.props;
 
@@ -95,7 +98,13 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
     "on-dark",
     `ph--${size}`,
     `ph--${scale}`,
-    { "ph--photo": image, "ph--archival": archival, "ph--stack": stack, "ph--lead": lead },
+    {
+      "ph--photo": image,
+      "ph--archival": archival,
+      "ph--stack": stack,
+      "ph--lead": lead,
+      "ph--settle": settle,
+    },
   ]}
 >
   {image && (
@@ -414,6 +423,16 @@ const scale = length <= 14 ? "xl" : length <= 22 ? "lg" : length <= 48 ? "md" : 
   /* Phones and small tablets: the text sits on solid navy, first, so the
      buttons stay on the first screen; the photo follows as a strip under
      it, where it can be seen, rather than hiding behind a dark overlay. */
+  /* The photo settles into place once, over 14 seconds (global.css). */
+  .ph--settle .ph__media img {
+    animation: sgr-settle 14s var(--ease-out-strong) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ph--settle .ph__media img {
+      animation: none;
+    }
+  }
+
   @media (max-width: 820px) {
     .ph {
       grid-template-rows: auto auto;

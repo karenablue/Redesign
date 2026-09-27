@@ -333,7 +333,7 @@ const regions = [
 
   <!-- THE BEGINNING -->
   <section class="hs-section" id="origins">
-    <div class="container hs-split">
+    <div class="container hs-split" data-reveal>
       <div class="hs-story-copy">
         <p class="eyebrow eyebrow--rule">The Beginning</p>
         <h2>
@@ -384,7 +384,7 @@ const regions = [
         </h2>
         <p>The essential facts behind more than a century of Sigma Gamma Rho history.</p>
       </div>
-      <div class="hs-facts-grid">
+      <div class="hs-facts-grid" data-reveal data-reveal-stagger>
         {facts.map((f) => (
           <article class="hs-fact-card">
             <p class="hs-fact-label">{f.label}</p>
@@ -421,7 +421,7 @@ const regions = [
           Greek-letter organizations.
         </p>
       </div>
-      <div class="hs-firsts-list">
+      <div class="hs-firsts-list" data-reveal data-reveal-stagger>
         {firsts.map((f) => (
           <article>
             <div>
@@ -436,7 +436,7 @@ const regions = [
 
   <!-- MISSION & VISION -->
   <section class="hs-mv" id="mission-vision">
-    <div class="container hs-mv__inner">
+    <div class="container hs-mv__inner" data-reveal>
       <article>
         <h2>Mission</h2>
         <p>
@@ -473,7 +473,7 @@ const regions = [
       </div>
       <div class="hs-century__story">
         {timeline.map((t) => (
-          <div class:list={["hs-chapter", t.side === "right" && "hs-chapter--right"]}>
+          <div class:list={["hs-chapter", t.side === "right" && "hs-chapter--right"]} data-reveal>
             <div class="hs-chapter__year">
               <span class="hs-chapter__pill">
                 {/* Ranges break after the dash so "1950s–1960s" fits the rail. */}
@@ -544,7 +544,7 @@ const regions = [
           and generations of leadership.
         </p>
       </div>
-      <div class="hs-region-grid">
+      <div class="hs-region-grid" data-reveal data-reveal-stagger>
         {regions.map((r) => (
           <article class="hs-region-card">
             <div class="hs-region-top">
@@ -578,7 +578,7 @@ const regions = [
         alt="Sigma Gamma Rho commemorative stained glass"
       />
     </figure>
-    <div class="hs-legacy__copy">
+    <div class="hs-legacy__copy" data-reveal>
       <p class="eyebrow eyebrow--rule">A Living Legacy</p>
       <h2>
         History That Still <span>Requires Something of Us</span>
@@ -642,6 +642,13 @@ const regions = [
     background-size: cover;
     background-position: 66% 42%;
     filter: grayscale(100%);
+    /* Settles into place once, slowly (global.css). */
+    animation: sgr-settle 14s var(--ease-out-strong) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hs-hero__image {
+      animation: none;
+    }
   }
   .hs-hero__overlay {
     position: absolute;

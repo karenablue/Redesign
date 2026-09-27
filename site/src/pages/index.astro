@@ -237,7 +237,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
 
   <!-- The administration theme leads: One Sigma, in the Grand Basileus's words. -->
   <section class="section vision" id="grand-basileus" aria-labelledby="vision-title">
-    <div class="container vision__grid">
+    <div class="container vision__grid" data-reveal>
       <figure class="vision__portrait">
         <span class="vision__edition" aria-hidden="true">
           XXVI
@@ -304,7 +304,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
           Opportunities to come together.
         </p>
       </div>
-      <div class="dispatch__grid">
+      <div class="dispatch__grid" data-reveal>
         <div class="newsroom">
           <h3 class="dispatch__label">Official Newsroom</h3>
           <article class="news-lead">
@@ -402,7 +402,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
         </a>
       </div>
       {chapterStories.length > 0 ? (
-        <div class="across__grid">
+        <div class="across__grid" data-reveal>
           <ul class="across__stories">
             {chapterStories.map((s) => (
               <li>
@@ -446,7 +446,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
 
   <!-- Origin: where the work comes from. -->
   <section class="section legacy">
-    <div class="container legacy__grid">
+    <div class="container legacy__grid" data-reveal>
       <div class="legacy__dateline">
         <span class="legacy__year" aria-hidden="true">
           1924
@@ -519,7 +519,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
           </a>
         </div>
       </div>
-      <CardGrid as="ul" min="320px" cols={3}>
+      <CardGrid as="ul" min="320px" cols={3} data-reveal data-reveal-stagger>
         {signature.map((x) => (
           <li class="program-row">
             <figure
@@ -576,7 +576,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     <span class="chapter-callout__mark" aria-hidden="true">
       ΣΓΡ
     </span>
-    <div class="container chapter-callout__inner">
+    <div class="container chapter-callout__inner" data-reveal>
       <div class="chapter-callout__story">
         <p class="eyebrow">Across Five Regions and Beyond</p>
         <h2 id="chapter-callout-title">
@@ -610,7 +610,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
     id="partnerships"
     aria-labelledby="partnership-title"
   >
-    <div class="container partnership__pitch">
+    <div class="container partnership__pitch" data-reveal>
       <div>
         <p class="eyebrow">Partnerships with Purpose</p>
         <h2 class="partnership__title" id="partnership-title">
@@ -634,7 +634,7 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
       </div>
     </div>
 
-    <div class="container partner-showcase">
+    <div class="container partner-showcase" data-reveal>
       <div class="partner-showcase__head">
         <h3 class="partner-showcase__label">Corporate &amp; Community Partners</h3>
         <p>Shared purpose. Meaningful connections.</p>

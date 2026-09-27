@@ -133,6 +133,7 @@ const programs = [
     focal="60% 40%"
     stack
     size="tall"
+    settle
     detail={{ value: "05", label: "Five national programs. One commitment to community." }}
     jumpLabel="Jump to a national program"
     jump={jumpLinks.map((j) => ({ href: `#${j.id}`, label: j.label }))}
@@ -144,10 +145,10 @@ const programs = [
   </PageHero>
   <section class="programs-stats on-dark" aria-label="National program reach">
     <div class="container">
-      <div class="hero-stat-band">
+      <div class="hero-stat-band" data-reveal data-reveal-stagger>
         {heroStats.map((s) => (
           <div class="hero-stat">
-            <strong>{s.value}</strong>
+            <strong data-count>{s.value}</strong>
             <span>{s.label}</span>
           </div>
         ))}
@@ -156,7 +157,7 @@ const programs = [
   </section>
 
   <section class="service-intro">
-    <div class="container service-intro__inner">
+    <div class="container service-intro__inner" data-reveal>
       <div>
         <p class="eyebrow">A Tradition of Service</p>
         <h2>
@@ -180,7 +181,10 @@ const programs = [
   <div class="showcase">
     {programs.map((p, i) => (
       <section id={p.id} class:list={["program", { "program--alt": i % 2 === 1 }]}>
-        <div class:list={["container program__shell", { "program__shell--flip": i % 2 === 1 }]}>
+        <div
+          class:list={["container program__shell", { "program__shell--flip": i % 2 === 1 }]}
+          data-reveal
+        >
           <figure class:list={["program__visual", { "program__visual--mark": !p.photo }]}>
             {p.photo ? (
               <img
@@ -224,7 +228,7 @@ const programs = [
   <section class="partners-strip" aria-labelledby="partners-title">
     <div class="container">
       <h2 id="partners-title">Program Partners &amp; Allied Foundations</h2>
-      <ul>
+      <ul data-reveal data-reveal-stagger>
         {programPartners.map((x) => (
           <li>
             <img src={withBase(x.logo)} alt={x.name} loading="lazy" decoding="async" />
@@ -236,7 +240,7 @@ const programs = [
   </section>
 
   <section class="service-history">
-    <div class="container service-history__inner">
+    <div class="container service-history__inner" data-reveal>
       <div>
         <p class="eyebrow">A Broader Service Legacy</p>
         <h2>
