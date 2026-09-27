@@ -33,7 +33,12 @@ export default defineConfig({
   },
 
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"] } },
+    {
+      name: "desktop",
+      use: { ...devices["Desktop Chrome"] },
+      // The slow-phone speed checks run in their own project, below.
+      grepInvert: /slow phone, every page/,
+    },
     // Mobile matters disproportionately here and is where the layout bugs
     // actually live. Pixel 7 uses the same Chromium binary, so this project
     // costs no extra download.
@@ -46,6 +51,18 @@ export default defineConfig({
       name: "mobile",
       use: { ...devices["Pixel 7"] },
       testMatch: /(smoke|motion)\.spec\.ts/,
+    },
+    // The slow-phone speed checks throttle the CPU relative to this machine,
+    // so running them beside other tests measured the other tests too: the
+    // homepage read 1.9s alone and 2.6-3.0s mid-suite. They run last, on
+    // their own, once desktop and mobile have finished. (If either of those
+    // fails, Playwright skips this project; fix that first.)
+    {
+      name: "speed",
+      use: { ...devices["Desktop Chrome"] },
+      testMatch: /performance\.spec\.ts/,
+      grep: /slow phone, every page/,
+      dependencies: ["desktop", "mobile"],
     },
   ],
 

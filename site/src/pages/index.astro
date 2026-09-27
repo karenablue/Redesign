@@ -215,8 +215,9 @@ const foundationDetails: Record<string, { focus: string; summary: string }> = {
   preloadSrcset={`${withBase("/optimized/home-cover-640.webp")} 640w, ${withBase("/optimized/home-cover-900.webp")} 900w, ${withBase("/optimized/home-cover.webp")} 1920w`}
   preloadSizes="100vw"
 >
-  <!-- The cover: One Sigma as the masthead over a chapter photograph. -->
-  <HomeCover />
+  <!-- The cover: One Sigma as the masthead over the hero film (the chapter
+       photograph underneath is the first paint, and all phones get). -->
+  <HomeCover video />
 
   <section class="reach-band on-dark">
     <StatBand stats={reachStats} tone="navy" />

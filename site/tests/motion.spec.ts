@@ -5,11 +5,9 @@ import { test, expect } from "@playwright/test";
  * prefers-reduced-motion. The clip loops forever, so without a working
  * control there is no way to stop it.
  *
- * The homepage now opens on a still cover (2026-09-26); the video version of
- * the cover lives on a comparison page until Karena chooses between them.
- * If the video wins and moves back to "/", point VIDEO_PAGE there.
+ * The homepage cover plays the film over a still photograph (2026-09-26).
  */
-const VIDEO_PAGE = "/concepts/cover-video/";
+const VIDEO_PAGE = "/";
 
 test.describe("hero video, default motion settings", () => {
   test("autoplays on a wide viewport, and the toggle pauses and resumes it", async ({ page }) => {
@@ -63,11 +61,13 @@ test.describe("hero video, default motion settings", () => {
       paused: v.paused,
       networkState: v.networkState, // 0 EMPTY / 1 IDLE — not 2 LOADING
       buffered: v.buffered.length,
-      hasPoster: !!v.getAttribute("poster"),
     }));
     expect(state.paused, "a phone must not autoplay the hero clip").toBe(true);
     expect(state.buffered, "nothing should be buffered before the visitor asks").toBe(0);
-    expect(state.hasPoster, "the poster carries the hero instead").toBe(true);
+    await expect(
+      page.locator("img.cover__media"),
+      "the still photograph carries the cover instead"
+    ).toBeVisible();
 
     // Opting in must still work.
     const toggle = page.locator("[data-cover-toggle]");

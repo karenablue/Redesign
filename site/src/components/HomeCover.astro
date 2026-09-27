@@ -8,8 +8,11 @@
  * stories. The faces stay clear between the masthead and the words.
  *
  * props:
- *   video  play the hero film behind the cover instead of the still
- *          (for comparison; the film has its own words set into it)
+ *   video  play the hero film behind the cover (Karena, 2026-09-26). The
+ *          still stays underneath as the first paint, and is all that
+ *          shows on phones, with reduced motion, or on Save-Data. The
+ *          film has words set into it ("Envision ..."), so it runs under a
+ *          heavier navy wash; ask HQ for the footage without titles.
  */
 import { withBase } from "../lib/url.js";
 
@@ -43,28 +46,26 @@ const still = {
 ---
 
 <section class:list={["cover", "on-dark", { "cover--video": video }]} aria-labelledby="cover-title">
-  {video ? (
+  <img
+    class="cover__media"
+    src={still.src}
+    srcset={still.srcset}
+    sizes="100vw"
+    alt="Chapter members in yellow dresses, standing in a line on a lawn"
+    fetchpriority="high"
+  />
+  {video && (
     <video
-      class="cover__media"
+      class="cover__media cover__film"
       muted
       loop
       playsinline
       preload="none"
-      poster={withBase("/optimized/home-cover.webp")}
       aria-hidden="true"
       data-cover-video
     >
       <source src={withBase("/images/sgrho-hero.mp4")} type="video/mp4" />
     </video>
-  ) : (
-    <img
-      class="cover__media"
-      src={still.src}
-      srcset={still.srcset}
-      sizes="100vw"
-      alt="Chapter members in yellow dresses, standing in a line on a lawn"
-      fetchpriority="high"
-    />
   )}
   <div class="cover__shade" aria-hidden="true"></div>
   <div class="container cover__grid">
@@ -121,8 +122,11 @@ const still = {
       window.matchMedia("(min-width: 900px)").matches &&
       !conn?.saveData;
     if (film && toggle) {
+      const cover = film.closest(".cover");
       const sync = () => {
         const paused = film.paused;
+        film.classList.toggle("is-playing", !paused);
+        cover?.classList.toggle("is-film", !paused);
         toggle.setAttribute("aria-pressed", String(paused));
         toggle.textContent = paused ? "Play background video" : "Pause background video";
       };
@@ -152,8 +156,16 @@ const still = {
     object-fit: cover;
     object-position: 50% 58%;
   }
-  .cover:not(.cover--video) .cover__media {
+  .cover__media:not(.cover__film) {
     animation: sgr-settle 12s var(--ease-out-strong) both;
+  }
+  /* The film fades in over the still once it is actually playing. */
+  .cover__film {
+    opacity: 0;
+    transition: opacity 900ms var(--ease-out-strong);
+  }
+  .cover__film.is-playing {
+    opacity: 1;
   }
   .cover__shade {
     position: absolute;
@@ -162,10 +174,10 @@ const still = {
       linear-gradient(180deg, rgba(8, 22, 51, 0.7) 0%, rgba(8, 22, 51, 0) 34%),
       linear-gradient(0deg, rgba(8, 22, 51, 0.94) 0%, rgba(8, 22, 51, 0.6) 38%, rgba(8, 22, 51, 0) 70%);
   }
-  .cover--video .cover__shade {
+  .cover--video.is-film .cover__shade {
     background:
-      linear-gradient(180deg, rgba(8, 22, 51, 0.8) 0%, rgba(8, 22, 51, 0.35) 40%),
-      linear-gradient(0deg, rgba(8, 22, 51, 0.95) 0%, rgba(8, 22, 51, 0.7) 45%, rgba(8, 22, 51, 0.3) 75%);
+      linear-gradient(180deg, rgba(8, 22, 51, 0.88) 0%, rgba(8, 22, 51, 0.62) 45%),
+      linear-gradient(0deg, rgba(8, 22, 51, 0.97) 0%, rgba(8, 22, 51, 0.78) 45%, rgba(8, 22, 51, 0.45) 80%);
   }
 
   /* A magazine cover: the masthead across the top, over the trees; the
@@ -318,7 +330,7 @@ const still = {
       object-position: 42% 62%;
     }
     .cover__shade,
-    .cover--video .cover__shade {
+    .cover--video.is-film .cover__shade {
       background: linear-gradient(
         180deg,
         rgba(8, 22, 51, 0.7) 0,
