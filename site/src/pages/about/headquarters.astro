@@ -136,6 +136,23 @@ const staff = [
           marketing, and event planning for chapters and members worldwide.
         </p>
         <a class="hq-text-link" href="#hq-team">Meet the headquarters team <span aria-hidden="true">↓</span></a>
+        {/* HQ's certification, as published on sgrho1922.org. It runs
+            November 2025 to November 2026: replace the badge with the
+            renewal, or remove this block, when it lapses. */}
+        <div class="hq-gptw">
+          <img
+            src={withBase("/images/live-2026/great-place-to-work-certified.svg")}
+            alt="Great Place To Work Certified, November 2025 to November 2026, USA"
+            width="66"
+            height="112"
+            loading="lazy"
+          />
+          <p>
+            <strong>Great Place To Work<sup>&reg;</sup> Certified</strong>
+            Our employees have spoken: International Corporate Headquarters is certified for
+            November 2025 to November 2026.
+          </p>
+        </div>
       </div>
       <figure class="hq-artifact">
         <img
@@ -274,6 +291,31 @@ const staff = [
   }
   .hq-facts {
     margin-top: var(--space-6);
+  }
+  .hq-gptw {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    max-width: 30rem;
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+  .hq-gptw img {
+    flex: none;
+    width: 66px;
+    height: auto;
+  }
+  .hq-gptw p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .hq-gptw strong {
+    display: block;
+    color: var(--navy);
+    font-size: var(--text-base);
   }
   .hq-text-link {
     display: inline-block;
