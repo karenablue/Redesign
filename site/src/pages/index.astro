@@ -36,6 +36,7 @@ import Base from "../layouts/Base.astro";
 import HomeCover from "../components/HomeCover.astro";
 import StatBand from "../components/StatBand.astro";
 import ThenNow from "../components/ThenNow.astro";
+import PearlStrand from "../components/PearlStrand.astro";
 import CardGrid from "../components/CardGrid.astro";
 import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
@@ -241,6 +242,7 @@ const glance = [
   {
     label: "Official Colors",
     title: "Royal Blue & Gold",
+    swatches: true,
     body: "An enduring hallmark of regal character and commitment to sisterhood.",
   },
 ];
@@ -520,6 +522,7 @@ const glance = [
         >
           1922
         </p>
+        <PearlStrand />
         <figcaption>
           Inside the numerals, the seven Founders: Mary Lou Allison Gardner Little, Dorothy
           Hanley Whiteside, Vivian Irene White Marbury, Nannie Mae Gahn Johnson, Hattie Mae
@@ -591,6 +594,12 @@ const glance = [
         {glance.map((f) => (
           <li>
             <p class="glance__label">{f.label}</p>
+            {"swatches" in f && f.swatches && (
+              <span class="glance__swatches" aria-hidden="true">
+                <i class="glance__swatch glance__swatch--royal"></i>
+                <i class="glance__swatch glance__swatch--gold"></i>
+              </span>
+            )}
             <p class="glance__fact">
               {"keep" in f && f.keep ? (
                 <>
@@ -1421,11 +1430,12 @@ const glance = [
   .legacy__signature {
     margin: 0 0 clamp(2rem, 4vw, 3.5rem);
   }
+  .legacy__signature :global(.pearls) {
+    margin-top: var(--space-5);
+  }
   .legacy__signature figcaption {
     max-width: 46rem;
-    margin-top: var(--space-4);
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--gold);
+    margin-top: var(--space-3);
     color: var(--muted);
     font-size: var(--text-xs);
     line-height: 1.6;
@@ -1518,6 +1528,26 @@ const glance = [
     font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
     font-weight: 600;
     line-height: 1.25;
+  }
+  /* The colours themselves, beside their names. */
+  .glance__swatches {
+    display: flex;
+    margin: var(--space-1) 0 var(--space-3);
+  }
+  .glance__swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--cream);
+  }
+  .glance__swatch + .glance__swatch {
+    margin-left: -8px;
+  }
+  .glance__swatch--royal {
+    background: var(--royal);
+  }
+  .glance__swatch--gold {
+    background: var(--gold);
   }
   .glance__keep {
     white-space: nowrap;

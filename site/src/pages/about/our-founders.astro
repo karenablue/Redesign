@@ -18,6 +18,7 @@ import CardGrid from "../../components/CardGrid.astro";
 import Card from "../../components/Card.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import Button from "../../components/Button.astro";
+import PearlStrand from "../../components/PearlStrand.astro";
 import { withBase } from "../../lib/url.js";
 
 const founders = [
@@ -240,6 +241,7 @@ const profiles = [
     highlight="7 Pearls"
     lead="Seven individual lives. One shared purpose. Select a portrait to explore the educator behind the legacy."
   >
+    <div class="founder-pearls"><PearlStrand /></div>
     <div class="founder-grid">
       <CardGrid min="200px" cols={4}>
         {founders.map((f) => (
@@ -349,6 +351,10 @@ const profiles = [
   }
   :global(#seven-pearls) {
     scroll-margin-top: var(--space-24);
+  }
+  /* Seven pearls over the seven portraits (PearlStrand). */
+  .founder-pearls {
+    margin-bottom: var(--space-8);
   }
 
   /* ---- GENESIS split (matches herstory's "Beginning" pattern) ---- */
