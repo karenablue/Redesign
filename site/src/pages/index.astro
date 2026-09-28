@@ -34,9 +34,7 @@ import statesIcon from "../assets/stat-icons/states.svg?raw";
 import countriesIcon from "../assets/stat-icons/countries.svg?raw";
 import Base from "../layouts/Base.astro";
 import HomeCover from "../components/HomeCover.astro";
-import StatBand from "../components/StatBand.astro";
 import ThenNow from "../components/ThenNow.astro";
-import PearlStrand from "../components/PearlStrand.astro";
 import CardGrid from "../components/CardGrid.astro";
 import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
@@ -53,6 +51,12 @@ const reachStats = [
   { value: "50+", label: "U.S. States & Territories", icon: { svg: statesIcon } },
   { value: "10", label: "Countries", icon: { svg: countriesIcon } },
 ];
+// The figure and its "+" are set apart so the "+" can take the gold.
+const [leadStat, ...restStats] = reachStats.map((s) => ({
+  ...s,
+  figure: s.value.replace(/\+$/, ""),
+  plus: s.value.endsWith("+"),
+}));
 
 // Signature programs. Scope lines restate National Programs.
 const signature = [
@@ -260,8 +264,39 @@ const glance = [
        photograph underneath is the first paint, and all phones get). -->
   <HomeCover video />
 
-  <section class="reach-band on-dark">
-    <StatBand stats={reachStats} tone="navy" />
+  <!-- One Sigma by the numbers: one lead figure at poster scale and three
+       beside it, on the cover's navy. Large two-colour icons (the AKA
+       pattern Karena chose), gold line on navy. -->
+  <section class="reach on-dark" aria-labelledby="reach-title">
+    <div class="container reach__grid">
+      <div class="reach__lead" data-reveal>
+        <h2 class="eyebrow reach__title" id="reach-title">One Sigma, by the Numbers</h2>
+        <span class="reach__icon reach__icon--lead" aria-hidden="true">
+          <Fragment set:html={leadStat.icon.svg} />
+        </span>
+        <p class="reach__value reach__value--lead">
+          <span data-count>{leadStat.figure}</span>
+          {leadStat.plus && <span class="reach__plus">+</span>}
+        </p>
+        <p class="reach__label reach__label--lead">{leadStat.label}</p>
+      </div>
+      <ul class="reach__list" data-reveal data-reveal-stagger>
+        {restStats.map((s) => (
+          <li>
+            <span class="reach__icon" aria-hidden="true">
+              <Fragment set:html={s.icon.svg} />
+            </span>
+            <span class="reach__text">
+              <span class="reach__value">
+                <span data-count>{s.figure}</span>
+                {s.plus && <span class="reach__plus">+</span>}
+              </span>
+              <span class="reach__label">{s.label}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 
   <!-- The administration theme leads: One Sigma, in the Grand Basileus's words. -->
@@ -522,7 +557,6 @@ const glance = [
         >
           1922
         </p>
-        <PearlStrand />
         <figcaption>
           Inside the numerals, the seven Founders: Mary Lou Allison Gardner Little, Dorothy
           Hanley Whiteside, Vivian Irene White Marbury, Nannie Mae Gahn Johnson, Hattie Mae
@@ -1430,12 +1464,11 @@ const glance = [
   .legacy__signature {
     margin: 0 0 clamp(2rem, 4vw, 3.5rem);
   }
-  .legacy__signature :global(.pearls) {
-    margin-top: var(--space-5);
-  }
   .legacy__signature figcaption {
     max-width: 46rem;
-    margin-top: var(--space-3);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--gold);
     color: var(--muted);
     font-size: var(--text-xs);
     line-height: 1.6;
@@ -2184,10 +2217,6 @@ const glance = [
     backdrop-filter: blur(6px);
   }
 
-  .reach-band {
-    background: radial-gradient(circle at 15% 0%, var(--hero-glow), transparent 42%), var(--navy);
-    padding-block: var(--space-8);
-  }
   :global(body.page-home .hero__title span) {
     display: block;
   }
@@ -2198,67 +2227,121 @@ const glance = [
     }
   }
 
-  /* The reach metrics follow the hero as a clear, separate proof band. */
-  :global(body.page-home .statband--navy) {
-    position: relative;
-    z-index: 3;
-    top: 0;
-    margin-top: 0;
-    background: transparent;
+  /* One Sigma by the numbers, on the cover's navy. */
+  .reach {
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+    background: var(--navy);
+    color: #fff;
   }
-  :global(body.page-home .statband--navy::before),
-  :global(body.page-home .statband--navy::after) {
-    display: none;
+  .reach__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2.5rem, 6vw, 5rem);
   }
-  :global(body.page-home .statband__inner) {
-    padding: clamp(var(--space-5), 3vw, var(--space-8)) clamp(var(--space-5), 3vw, var(--space-8));
-    border-radius: var(--radius-lg);
-    background: var(--white);
-    box-shadow: var(--shadow-reach);
+  .reach__lead {
+    container-type: inline-size;
   }
-  :global(body.page-home .statband__value) {
-    color: var(--royal);
-    font-size: clamp(1.6rem, 0.9rem + 3.2vw, 3.25rem);
+  .reach__title {
+    margin-bottom: var(--space-8);
   }
-  :global(body.page-home .statband__label) {
-    color: var(--muted);
-  }
-  /* Two-tone icons, no container: royal line, gold fill (gold as a fill,
-     never as text). Decorative, so hidden from assistive tech. */
-  :global(body.page-home .statband__icon) {
+  .reach__icon {
     display: block;
-    width: clamp(56px, 5.5vw, 76px);
-    height: clamp(56px, 5.5vw, 76px);
-    margin: 0 auto var(--space-4);
-    color: var(--royal);
+    flex: none;
+    width: 60px;
+    height: 60px;
+    color: var(--gold);
   }
-  :global(body.page-home .statband__icon svg) {
+  .reach__icon--lead {
+    width: clamp(72px, 8vw, 104px);
+    height: clamp(72px, 8vw, 104px);
+    margin-bottom: var(--space-5);
+  }
+  .reach__icon :global(svg) {
     display: block;
     width: 100%;
     height: 100%;
   }
-  :global(body.page-home .statband__icon .icon-fill) {
-    fill: var(--gold);
-    opacity: 0.55;
+  /* Gold line, a soft white fill: two colours, like the peer sites' icons. */
+  .reach__icon :global(.icon-fill) {
+    fill: #fff;
+    opacity: 0.16;
   }
-  :global(body.page-home .statband__item + .statband__item::before) {
-    background: var(--line);
+  /* The members icon masks its back figures with the card colour; on navy
+     that mask must be navy. */
+  .reach__icon :global([fill="#fff"]) {
+    fill: var(--navy);
   }
-  @media (max-width: 1200px) {
-    :global(body.page-home .statband__row) {
-      flex-wrap: wrap;
-      row-gap: var(--space-8);
+  .reach__icon :global([stroke="#fff"]) {
+    stroke: var(--navy);
+  }
+  .reach__value {
+    display: block;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 1.6rem + 2.6vw, 3.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: #fff;
+  }
+  /* The lead figure spans its column. */
+  .reach__value--lead {
+    font-size: 19.5cqi;
+    line-height: 0.85;
+    letter-spacing: -0.035em;
+  }
+  .reach__plus {
+    color: var(--gold);
+  }
+  .reach__label {
+    display: block;
+    margin-top: var(--space-2);
+    color: rgba(255, 255, 255, 0.86);
+    font-size: var(--text-base);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .reach__label--lead {
+    margin-top: var(--space-4);
+    color: #fff;
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+  .reach__list {
+    margin: 0;
+    padding: 0 0 0 clamp(2rem, 5vw, 4rem);
+    list-style: none;
+    border-left: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+  }
+  .reach__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+  }
+  .reach__list li + li {
+    border-top: 1px solid var(--line-dark);
+  }
+  @media (max-width: 900px) {
+    .reach__grid {
+      grid-template-columns: minmax(0, 1fr);
     }
-    :global(body.page-home .statband__item) {
-      flex: 0 0 50%;
-    }
-    :global(body.page-home .statband__item + .statband__item::before) {
-      display: none;
+    .reach__list {
+      padding: 0;
+      border-left: 0;
+      border-top: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
     }
   }
-  @media (min-width: 1201px) {
-    :global(body.page-home .statband__value) {
-      font-size: clamp(2rem, 2.6vw, 2.75rem);
+  @media (max-width: 420px) {
+    .reach__icon {
+      width: 48px;
+      height: 48px;
+    }
+    .reach__list li {
+      gap: var(--space-4);
     }
   }
   /* Keep the pause control clear of the hero copy and image focal point. */
