@@ -13,6 +13,17 @@ consent and videographer credit before launch, as for every photo on the site.
 | bigbookbag-impact-day.jpg | Members with backpacks for Operation BigBookBag®, Community Impact Day, 1920x1080 frame at 0:17.0 | Day Two Recap, https://www.youtube.com/watch?v=slzVqMzU9PE |
 | marquee.jpg | The "Boulé by the Bay" marquee on the waterfront at dusk, 1920x1080 frame at 0:49.4 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
 | waterfront-gathering.jpg | Members celebrating at the waterfront gathering, 1920x1080 frame at 0:05.5 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| sash-procession.jpg | Members processing in sashes at a Boulé session, frame at 0:37.9 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| cultured-pearls.jpg | Members, one in a Cultured Pearl sash, waving, frame at 0:24.05 | Day One Recap, https://www.youtube.com/watch?v=vzQeEqQWZ6s |
+| impact-day-packing.jpg | Volunteers packing boxes on Community Impact Day, frame at 0:41.1 | Day Two Recap, https://www.youtube.com/watch?v=slzVqMzU9PE |
+| registration-welcome.jpg | A member waving in the convention hall, frame at 0:23.1 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| sorors-photo.jpg | Sorors posing for a phone photo, frame at 0:15.3 | Day One Recap, https://www.youtube.com/watch?v=vzQeEqQWZ6s |
+| choir.jpg | The choir on stage in blue with gold stoles, frame at 0:41.9 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| waterfront-rhoer.jpg | Members at the waterfront gathering, frame at 0:04.2 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| undergraduates.jpg | Undergraduates in ΣΓΡ jackets waving, frame at 0:56.8 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| reception-dance.jpg | Members dancing at a reception, frame at 0:43.2 | Day One Recap, https://www.youtube.com/watch?v=vzQeEqQWZ6s |
+| impact-day-partner.jpg | Members with a partner volunteer on Community Impact Day, frame at 0:42.3 | Day Two Recap, https://www.youtube.com/watch?v=slzVqMzU9PE |
+| plenary-dance.jpg | A member dancing in the plenary hall, frame at 0:10.9 | Day Two Recap, https://www.youtube.com/watch?v=slzVqMzU9PE |
 
 Film shot list, in order (source times):
 

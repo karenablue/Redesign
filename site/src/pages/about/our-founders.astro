@@ -19,6 +19,7 @@ import Card from "../../components/Card.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import Button from "../../components/Button.astro";
 import PearlStrand from "../../components/PearlStrand.astro";
+import DriftBand from "../../components/DriftBand.astro";
 import { withBase } from "../../lib/url.js";
 
 const founders = [
@@ -231,6 +232,20 @@ const profiles = [
     </div>
   </section>
 
+  <!-- The seven names as the portraits' prelude (hidden from screen
+       readers: each name follows below). -->
+  <DriftBand
+    words={[
+      "Mary Lou Allison Gardner Little",
+      "Dorothy Hanley Whiteside",
+      "Vivian Irene White Marbury",
+      "Nannie Mae Gahn Johnson",
+      "Hattie Mae Annette Dulin Redford",
+      "Bessie Mae Downey Rhoades Martin",
+      "Cubena McClure",
+    ]}
+  />
+
   <!-- SEVEN PORTRAITS -->
   <Section
     id="seven-pearls"
@@ -295,6 +310,8 @@ const profiles = [
   </section>
 
   <CtaBand
+    image="/optimized/cta-cultured-pearls.webp"
+    focal="60% 30%"
     eyebrow="Their Legacy, Our Responsibility"
     title="Seven Women Began the Work. "
     highlight="Generations Carry It Forward."

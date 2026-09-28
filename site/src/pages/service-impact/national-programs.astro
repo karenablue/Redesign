@@ -13,6 +13,7 @@
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import DriftBand from "../../components/DriftBand.astro";
 import ProgramLogo from "../../components/ProgramLogo.astro";
 import type { ProgramLogoName } from "../../data/program-logos";
 import { withBase } from "../../lib/url.js";
@@ -181,6 +182,18 @@ const programs = [
     </div>
   </section>
 
+  <!-- The focus areas named in this page's opening, as the programs'
+       prelude (hidden from screen readers: the opening states them). -->
+  <DriftBand
+    words={[
+      "Education",
+      "Women's Wellness",
+      "Water Safety",
+      "Maternal & Infant Health",
+      "Youth Development",
+    ]}
+  />
+
   <div class="showcase">
     {programs.map((p, i) => (
       <section id={p.id} class:list={["program", { "program--alt": i % 2 === 1 }]}>
@@ -272,6 +285,8 @@ const programs = [
     </div>
   </section>
   <CtaBand
+    image="/optimized/home-bigbookbag-boule.webp"
+    focal="50% 45%"
     eyebrow="Put Purpose Into Practice"
     title="The work happens"
     highlight="in community."

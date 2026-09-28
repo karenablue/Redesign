@@ -1,7 +1,10 @@
 ---
 /**
- * CtaBand — a shared editorial closing invitation. The message and next
- * steps sit beside one another on desktop and stack in reading order on mobile.
+ * CtaBand — a shared editorial closing invitation. With a photograph
+ * (2026-09-28) it takes the homepage's "Find your chapter" treatment: navy,
+ * a real picture fading in from the right, the words and actions on the
+ * solid side. On phones the picture sits on top and the words follow on
+ * navy. Navy, not royal, so it stands apart from the royal footer below.
  *
  * props:
  *   eyebrow  kicker (optional)
@@ -9,7 +12,11 @@
  *   highlight optional gold trailing fragment
  *   copy     supporting line (optional)
  *   actions  [{ label, href, variant? }]  variant "solid" (default) | "outline"
+ *   image    root-absolute path in /optimized/ (a name-640.webp copy must
+ *            exist); decorative. Without one, the band keeps the ghosted ΣΓΡ.
+ *   focal    object-position for the photograph
  */
+import { withBase } from "../lib/url.js";
 import Button from "./Button.astro";
 import { reg } from "../lib/reg.js";
 
@@ -24,20 +31,40 @@ interface Props {
   highlight?: string;
   copy?: string;
   actions?: CtaAction[];
+  image?: string;
+  focal?: string;
 }
 
-const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
+const { eyebrow, title, highlight, copy, actions = [], image, focal = "50% 40%" } = Astro.props;
+// Long closing lines step down a size so they don't stack six lines deep.
+const long = `${title ?? ""}${highlight ?? ""}`.length > 42;
 ---
 
-<section class="cta on-dark">
-  <span class="cta__mark" aria-hidden="true">
-    ΣΓΡ
-  </span>
+<section class:list={["cta", "on-dark", { "cta--photo": image }]}>
+  {image ? (
+    <div class="cta__media" aria-hidden="true">
+      <img
+        src={withBase(image)}
+        srcset={`${withBase(image.replace(/\.webp$/, "-640.webp"))} 640w, ${withBase(image)} 1200w`}
+        sizes="(min-width: 801px) 60vw, 100vw"
+        alt=""
+        width="1200"
+        height="675"
+        loading="lazy"
+        decoding="async"
+        style={`object-position: ${focal}`}
+      />
+    </div>
+  ) : (
+    <span class="cta__mark" aria-hidden="true">
+      ΣΓΡ
+    </span>
+  )}
   <div class="container cta__inner" data-reveal>
     <div class="cta__story">
       {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
       {title && (
-        <h2 class="cta__title">
+        <h2 class:list={["cta__title", { "cta__title--long": long }]}>
           {title}
           {highlight && (
             <>
@@ -141,6 +168,85 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
   @media (max-width: 560px) {
     .cta__actions :global(.btn) {
       width: 100%;
+    }
+  }
+
+  /* ---- With a photograph ---- */
+  .cta--photo {
+    background: var(--navy);
+  }
+  /* The picture fills the right 55%, so the whole frame (faces included)
+     stays in view; its left edge melts into the navy. */
+  .cta__media {
+    position: absolute;
+    inset: 0 0 0 45%;
+  }
+  .cta__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Solid navy under the words on the left, the picture opening up on the
+     right. */
+  .cta__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      #081633 0%,
+      rgba(8, 22, 51, 0.72) 22%,
+      rgba(8, 22, 51, 0.12) 52%,
+      rgba(8, 22, 51, 0) 100%
+    );
+  }
+  /* One column: the message, then the actions under it, all on the navy. */
+  .cta--photo .cta__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+    padding-block: clamp(4.5rem, 3rem + 5vw, 7.5rem);
+  }
+  .cta--photo .cta__story {
+    max-width: 34rem;
+  }
+  /* Both lines in the display face, the second in gold (allowed on navy). */
+  .cta--photo .cta__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 1.4rem + 3vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .cta--photo .cta__title--long {
+    font-size: clamp(1.9rem, 1.3rem + 2vw, 2.9rem);
+  }
+  .cta--photo .cta__title span {
+    margin-top: 0;
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: 400;
+  }
+  .cta--photo .eyebrow,
+  .cta--photo .eyebrow :global(.reg) {
+    color: var(--gold);
+  }
+  .cta--photo .cta__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 0;
+    border-left: 0;
+  }
+  @media (max-width: 800px) {
+    .cta__media {
+      position: relative;
+      inset: auto;
+      height: 15rem;
+    }
+    .cta__media::after {
+      background: linear-gradient(180deg, rgba(8, 22, 51, 0.1) 0%, rgba(8, 22, 51, 0) 40%, #081633 100%);
+    }
+    .cta--photo .cta__inner {
+      padding-block: var(--space-4) var(--space-16);
     }
   }
 </style>

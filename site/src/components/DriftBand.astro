@@ -1,0 +1,102 @@
+---
+/**
+ * DriftBand — a navy band of display type with the Greek letters Σ Γ Ρ in
+ * gold between the words (the homepage aims band, 2026-09-27, made shared).
+ * It drifts sideways as it crosses the screen: tied to the scroll, so it
+ * never moves on its own, and it stays still with reduced motion.
+ *
+ * Use words the page already states (its aims, its focus areas, its
+ * Founders), one band per page at most, and never next to another navy
+ * block, so it stays a signature rather than a pattern.
+ *
+ * props:
+ *   words  the words to run, in order
+ *   label  what screen readers hear once; omit when the words repeat
+ *          content already on the page (the band is then hidden from them)
+ */
+interface Props {
+  words: string[];
+  label?: string;
+}
+const { words, label } = Astro.props;
+const marks = ["Σ", "Γ", "Ρ"];
+---
+
+<div class="drift on-dark" data-drift>
+  {label && <p class="visually-hidden">{label}</p>}
+  <div class="drift__track" aria-hidden="true">
+    {Array.from({ length: 4 }).map((_, set) => (
+      <span class="drift__set">
+        {words.map((w, i) => (
+          <>
+            <span>{w}</span>
+            <span class="drift__mark">{marks[(set * words.length + i) % marks.length]}</span>
+          </>
+        ))}
+      </span>
+    ))}
+  </div>
+</div>
+
+<script>
+  const bands = document.querySelectorAll<HTMLElement>("[data-drift]");
+  if (bands.length && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let queued = false;
+    const place = () => {
+      queued = false;
+      for (const band of bands) {
+        const track = band.querySelector<HTMLElement>(".drift__track");
+        const box = band.getBoundingClientRect();
+        if (!track || box.bottom < 0 || box.top > innerHeight) continue;
+        const progress = Math.min(1, Math.max(0, (innerHeight - box.top) / (innerHeight + box.height)));
+        // The same unhurried pace whatever the words: at most half a screen
+        // width over the band's whole pass.
+        const distance = Math.min(track.scrollWidth * 0.2, innerWidth * 0.5);
+        track.style.transform = `translate3d(${-progress * distance}px, 0, 0)`;
+      }
+    };
+    addEventListener(
+      "scroll",
+      () => {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(place);
+        }
+      },
+      { passive: true }
+    );
+    place();
+  }
+</script>
+
+<style>
+  .drift {
+    overflow: hidden;
+    padding-block: clamp(1.25rem, 2.5vw, 2rem);
+    background: var(--navy);
+    color: #fff;
+  }
+  .drift__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  .drift__set {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    padding-right: clamp(1.25rem, 3vw, 2.5rem);
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 1.2rem + 4.5vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* Gold on navy is allowed. */
+  .drift__mark {
+    font-family: var(--font-greek);
+    font-size: 0.72em;
+    color: var(--gold);
+  }
+</style>

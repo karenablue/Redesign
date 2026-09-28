@@ -39,6 +39,18 @@ const HEROES = {
   "home-bigbookbag-boule.webp": "boule-2026/bigbookbag-impact-day.jpg",
   "hero-boule-marquee.webp": "boule-2026/marquee.jpg",
   "hero-boule-gathering.webp": "boule-2026/waterfront-gathering.jpg",
+  // Closing-band (CtaBand) photographs, one per page, from the same films.
+  "cta-procession.webp": "boule-2026/sash-procession.jpg",
+  "cta-cultured-pearls.webp": "boule-2026/cultured-pearls.jpg",
+  "cta-impact-packing.webp": "boule-2026/impact-day-packing.jpg",
+  "cta-welcome.webp": "boule-2026/registration-welcome.jpg",
+  "cta-sorors-photo.webp": "boule-2026/sorors-photo.jpg",
+  "cta-choir.webp": "boule-2026/choir.jpg",
+  "cta-waterfront.webp": "boule-2026/waterfront-rhoer.jpg",
+  "cta-undergraduates.webp": "boule-2026/undergraduates.jpg",
+  "cta-reception.webp": "boule-2026/reception-dance.jpg",
+  "cta-impact-partner.webp": "boule-2026/impact-day-partner.jpg",
+  "cta-plenary-dance.webp": "boule-2026/plenary-dance.jpg",
 };
 
 // Writes the full-size and phone-size copies of one image.
