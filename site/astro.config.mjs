@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
@@ -29,4 +30,12 @@ export default defineConfig({
       },
     },
   },
+
+  // Every public page, for search engines (sitemap-index.xml). The design
+  // concepts are noindex and the 404 is not a page to find, so both stay out.
+  integrations: [
+    sitemap({
+      filter: (page) => !/\/concepts\/|\/404\/?$/.test(page),
+    }),
+  ],
 });
