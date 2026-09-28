@@ -159,6 +159,8 @@ const regions = [
   description="Regional leaders connecting international strategy with chapters across Sigma Gamma Rho's five regions."
 >
   <PageHero
+    editorial
+    mobileFullImage
     stack
     eyebrow="Leadership Across the Sisterhood"
     title="Five regions."
@@ -174,7 +176,7 @@ const regions = [
 
   {regions.map((r) => (
     <section id={r.id} class:list={["region-block", { "region-block--dark": r.dark }]}>
-      <div class="container region-block__inner">
+      <div class="container region-block__inner" data-reveal>
         <div class="region-heading">
           <img
             class="region-logo"
@@ -243,7 +245,6 @@ const regions = [
 </Base>
 
 <style>
-
   .region-block {
     padding-block: clamp(2.5rem, 5vw, 3.5rem);
     background: var(--white);

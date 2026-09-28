@@ -101,6 +101,7 @@ const foundations: Foundation[] = [
   description="The National Education Fund, SPEAR Foundation, and Seven Pearls Foundation — Sigma Gamma Rho's partner foundations for education, research, and community support."
 >
   <PageHero
+    editorial
     stack
     eyebrow="Service & Impact"
     title="Give with purpose."
@@ -109,7 +110,9 @@ const foundations: Foundation[] = [
     image="/optimized/hero-youth-symposium.webp"
     focal="60% 40%"
   >
-    <a class="btn" href="#foundations">Choose a Foundation</a>
+    <a class="btn" href="#foundations">
+      Choose a Foundation
+    </a>
     <a class="btn btn--outline on-dark" href={withBase("/service-impact/national-programs/")}>
       Explore the Programs
     </a>
@@ -120,7 +123,9 @@ const foundations: Foundation[] = [
       <div>
         <p class="eyebrow">Extending Greater Service</p>
         <h2>
-          Three foundations.<br /><span class="editorial-accent">Distinct ways to help.</span>
+          Three foundations.
+          <br />
+          <span class="editorial-accent">Distinct ways to help.</span>
         </h2>
       </div>
       <div class="pf-intro__copy">
@@ -139,42 +144,42 @@ const foundations: Foundation[] = [
 
   <section class="pf-cards" id="foundations" aria-label="Choose a foundation to support">
     <div class="container">
-    <CardGrid as="ul" cols={1} min="100%" gap="var(--space-8)">
-      {foundations.map((f, i) => (
-        <li class="pf-card" id={f.id}>
-          <div class="pf-card__identity">
-          <p class="eyebrow">Foundation {String(i + 1).padStart(2, "0")}</p>
-          <div class="pf-emblem">
-            <img
-              src={withBase(f.logo)}
-              alt=""
-              width="96"
-              height="96"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <h2>{f.name}</h2>
-          <p class="pf-tag">{f.tag}</p>
-          </div>
-          <div class="pf-card__story">
-          <p class="pf-lead">{f.lead}</p>
-          <p class="pf-body">{f.body}</p>
-          <ul class="pf-pillars">
-            {f.pillars.map((it) => (
-              <li>
-                <h3>{it.title}</h3>
-                <p>{it.body}</p>
-              </li>
-            ))}
-          </ul>
-          <a class="btn pf-action" href={f.link.href} target="_blank" rel="noopener">
-            {f.link.label} <span aria-hidden="true">&#8599;</span>
-          </a>
-          </div>
-        </li>
-      ))}
-    </CardGrid>
+      <CardGrid as="ul" cols={1} min="100%" gap="var(--space-8)">
+        {foundations.map((f, i) => (
+          <li class="pf-card" id={f.id}>
+            <div class="pf-card__identity">
+              <p class="eyebrow">Foundation {String(i + 1).padStart(2, "0")}</p>
+              <div class="pf-emblem">
+                <img
+                  src={withBase(f.logo)}
+                  alt=""
+                  width="96"
+                  height="96"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h2>{f.name}</h2>
+              <p class="pf-tag">{f.tag}</p>
+            </div>
+            <div class="pf-card__story">
+              <p class="pf-lead">{f.lead}</p>
+              <p class="pf-body">{f.body}</p>
+              <ul class="pf-pillars">
+                {f.pillars.map((it) => (
+                  <li>
+                    <h3>{it.title}</h3>
+                    <p>{it.body}</p>
+                  </li>
+                ))}
+              </ul>
+              <a class="btn pf-action" href={f.link.href} target="_blank" rel="noopener">
+                {f.link.label} <span aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </li>
+        ))}
+      </CardGrid>
     </div>
   </section>
 
@@ -195,7 +200,6 @@ const foundations: Foundation[] = [
 </Base>
 
 <style>
-
   .pf-intro {
     background: var(--white);
     padding-block: clamp(3rem, 5vw, 4rem);

@@ -14,9 +14,11 @@ import PageHero from "../../components/PageHero.astro";
 const DIRECTORY_URL = "https://sgrho1922.store/pages/vendordirectory";
 const REPORT_URL = "https://fs20.formsite.com/8i8VIT/azr7aj4amf/index";
 const INTEREST_URL = "https://fs20.formsite.com/8i8VIT/fygbapbygy/index";
-const GUIDELINES_URL = "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
+const GUIDELINES_URL =
+  "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
 const HQ_VENDORS_URL = "https://sgrho1922.org/vendors/";
-const BECOME_URL = "https://helpsgrho1922.freshdesk.com/support/solutions/articles/69000836285-how-do-i-become-a-licensed-vendor-";
+const BECOME_URL =
+  "https://helpsgrho1922.freshdesk.com/support/solutions/articles/69000836285-how-do-i-become-a-licensed-vendor-";
 const VENDOR_KB_URL = "https://helpsgrho1922.freshdesk.com/support/solutions/folders/69000647096";
 
 const tiers = [
@@ -39,7 +41,11 @@ const tiers = [
     name: "Partners & Collaborators",
     fee: "$1,000",
     note: "Applications considered year-round",
-    items: ["0–22% royalties based on project scope", "Quarterly reporting", "Eligible for participation opportunities"],
+    items: [
+      "0–22% royalties based on project scope",
+      "Quarterly reporting",
+      "Eligible for participation opportunities",
+    ],
   },
 ];
 
@@ -51,7 +57,11 @@ const windows = [
   { fy: "FY30", years: "2029–2030", open: "2029-01-01", close: "2029-03-30" },
 ];
 const fmt = (d: string) =>
-  new Date(`${d}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  new Date(`${d}T12:00:00`).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 const statusAt = (w: (typeof windows)[number], now: Date) => {
   const today = now.toISOString().slice(0, 10);
   return today < w.open ? "Upcoming" : today > w.close ? "Closed" : "Open";
@@ -59,16 +69,41 @@ const statusAt = (w: (typeof windows)[number], now: Date) => {
 const buildDate = new Date();
 
 const responsibilities = [
-  { title: "Brand Guidelines & Standards", note: "Logo usage, colors, typography, and visual identity (PDF).", href: GUIDELINES_URL },
-  { title: "How to Become a Licensed Vendor", note: "Requirements, artwork review, payment, and proof of insurance.", href: BECOME_URL },
-  { title: "Vendor Support Articles", note: "Compliance, visibility, and Boulé vendor guides.", href: VENDOR_KB_URL },
-  { title: "Official Vendor Information", note: "HQ's vendor page, with forms and current notices.", href: HQ_VENDORS_URL },
+  {
+    title: "Brand Guidelines & Standards",
+    note: "Logo usage, colors, typography, and visual identity (PDF).",
+    href: GUIDELINES_URL,
+  },
+  {
+    title: "How to Become a Licensed Vendor",
+    note: "Requirements, artwork review, payment, and proof of insurance.",
+    href: BECOME_URL,
+  },
+  {
+    title: "Vendor Support Articles",
+    note: "Compliance, visibility, and Boulé vendor guides.",
+    href: VENDOR_KB_URL,
+  },
+  {
+    title: "Official Vendor Information",
+    note: "HQ's vendor page, with forms and current notices.",
+    href: HQ_VENDORS_URL,
+  },
 ];
 
 const rfps = [
-  { title: "Strategic Planning (2025–26)", href: "https://sgrho1922.org/wp-content/uploads/2026/05/SGR-RFP-Strategic-Planning-2025-26.pdf" },
-  { title: "Compensation Analysis Services", href: "https://sgrho1922.org/wp-content/uploads/2026/05/SGR-RFP-Compensation-Analysis-Services.pdf" },
-  { title: "Records Management", href: "https://sgrho1922.org/wp-content/uploads/2026/05/SGR-RFP-Records-Management.pdf" },
+  {
+    title: "Strategic Planning (2025–26)",
+    href: "https://sgrho1922.org/wp-content/uploads/2026/05/SGR-RFP-Strategic-Planning-2025-26.pdf",
+  },
+  {
+    title: "Compensation Analysis Services",
+    href: "https://sgrho1922.org/wp-content/uploads/2026/05/SGR-RFP-Compensation-Analysis-Services.pdf",
+  },
+  {
+    title: "Records Management",
+    href: "https://sgrho1922.org/wp-content/uploads/2026/05/SGR-RFP-Records-Management.pdf",
+  },
 ];
 ---
 
@@ -78,16 +113,20 @@ const rfps = [
   description="Sigma Gamma Rho's licensed vendor program: verify a vendor, licensing tiers, application windows, and requests for proposal."
 >
   <PageHero
+    tone="paper"
+    editorial
     stack
     eyebrow="Intellectual Property & Licensing"
     title="Our letters."
     highlight="A shared responsibility."
     copy="Shop with authorized vendors and explore the licensing program that protects Sigma Gamma Rho's identity."
-    image="/optimized/hero-photoshoot.webp"
-    focal="50% 35%"
   >
-    <a class="btn" href={DIRECTORY_URL} target="_blank" rel="noopener">Verify a Licensed Vendor <span aria-hidden="true">&#8599;</span></a>
-    <a class="btn btn--outline on-dark" href="#licensing">Explore Licensing <span aria-hidden="true">&darr;</span></a>
+    <a class="btn" href={DIRECTORY_URL} target="_blank" rel="noopener">
+      Verify a Licensed Vendor <span aria-hidden="true">&#8599;</span>
+    </a>
+    <a class="btn btn--outline on-dark" href="#licensing">
+      Explore Licensing <span aria-hidden="true">&darr;</span>
+    </a>
   </PageHero>
 
   <section class="ven-verify" id="verify">
@@ -106,7 +145,8 @@ const rfps = [
             Open the Licensed Vendor Directory <span aria-hidden="true">&#8599;</span>
           </a>
           <a class="ven-report" href={REPORT_URL} target="_blank" rel="noopener">
-            Report infringing merchandise or vendor misconduct <span aria-hidden="true">&#8599;</span>
+            Report infringing merchandise or vendor misconduct{" "}
+            <span aria-hidden="true">&#8599;</span>
           </a>
         </div>
       </div>
@@ -175,7 +215,12 @@ const rfps = [
                   {fmt(w.open).replace(/, \d{4}$/, "")} – {fmt(w.close)}
                 </td>
                 <td>
-                  <span class="ven-status" data-open={w.open} data-close={w.close} data-state={statusAt(w, buildDate)}>
+                  <span
+                    class="ven-status"
+                    data-open={w.open}
+                    data-close={w.close}
+                    data-state={statusAt(w, buildDate)}
+                  >
                     {statusAt(w, buildDate)}
                   </span>
                 </td>
@@ -192,9 +237,9 @@ const rfps = [
       <div>
         <h2>Authorization Carries Responsibility</h2>
         <p>
-          Licensees follow Sigma Gamma Rho's brand guidelines and submit mockups of licensed products
-          for artwork review before launch. Upon acceptance, vendors provide the required payment
-          and proof of insurance.
+          Licensees follow Sigma Gamma Rho's brand guidelines and submit mockups of licensed
+          products for artwork review before launch. Upon acceptance, vendors provide the required
+          payment and proof of insurance.
         </p>
       </div>
       <ul class="ven-rows">
@@ -237,7 +282,11 @@ const rfps = [
           ))}
         </ul>
         <p class="ven-rfp__note">
-          See <a href={HQ_VENDORS_URL} target="_blank" rel="noopener">HQ's vendor page</a> for the latest list.
+          See{" "}
+          <a href={HQ_VENDORS_URL} target="_blank" rel="noopener">
+            HQ's vendor page
+          </a>{" "}
+          for the latest list.
         </p>
       </div>
     </div>

@@ -76,16 +76,20 @@ const categories = [...new Set(listed.map((e) => e.tag))];
   description="Connect, serve, and celebrate with Sigma Gamma Rho sorors across every region."
 >
   <PageHero
+    tone="paper"
+    editorial
     stack
     eyebrow="Upcoming Events • National Calendars"
     title="Come together."
     highlight="Carry service forward."
     copy="Connect, serve, and celebrate with sorors across every region. Explore a year of community impact and recognition, then find your next gathering."
-    image="/optimized/hero-capitol-hill.webp"
-    focal="60% 40%"
   >
-    <a class="btn" href="#national-calendars">2026–27 National Calendars <span aria-hidden="true">&darr;</span></a>
-    <a class="btn btn--outline on-dark" href="#event-list">Events &amp; Gatherings <span aria-hidden="true">&darr;</span></a>
+    <a class="btn" href="#national-calendars">
+      2026–27 National Calendars <span aria-hidden="true">&darr;</span>
+    </a>
+    <a class="btn btn--outline on-dark" href="#event-list">
+      Events &amp; Gatherings <span aria-hidden="true">&darr;</span>
+    </a>
   </PageHero>
 
   <section
@@ -161,7 +165,11 @@ const categories = [...new Set(listed.map((e) => e.tag))];
               <featured.Body />
             </div>
             {featured.start && (
-              <a class="ue-ics" href={withBase(`/news-events/calendar/${featured.id}.ics`)} download>
+              <a
+                class="ue-ics"
+                href={withBase(`/news-events/calendar/${featured.id}.ics`)}
+                download
+              >
                 Add to calendar
                 <span class="visually-hidden">: {featured.title} (.ics file)</span>
               </a>
@@ -210,7 +218,11 @@ const categories = [...new Set(listed.map((e) => e.tag))];
                       <e.Body />
                     </div>
                     {e.start && (
-                      <a class="ue-ics" href={withBase(`/news-events/calendar/${e.id}.ics`)} download>
+                      <a
+                        class="ue-ics"
+                        href={withBase(`/news-events/calendar/${e.id}.ics`)}
+                        download
+                      >
                         Add to calendar
                         <span class="visually-hidden">: {e.title} (.ics file)</span>
                       </a>
@@ -225,7 +237,6 @@ const categories = [...new Set(listed.map((e) => e.tag))];
       <p class="ue-empty" hidden>
         No events in this category right now.
       </p>
-
     </div>
   </section>
   <CtaBand

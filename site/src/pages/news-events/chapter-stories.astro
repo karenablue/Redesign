@@ -22,7 +22,9 @@ const stories = await Promise.all(
 );
 const voices = (await getCollection("voices"))
   .map((v) => v.data)
-  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || b.consentDate.localeCompare(a.consentDate));
+  .sort(
+    (a, b) => (a.order ?? 999) - (b.order ?? 999) || b.consentDate.localeCompare(a.consentDate)
+  );
 const regions = [...new Set(stories.map((s) => s.region))].sort();
 const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 ---
@@ -33,8 +35,13 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   description="Service, sisterhood and scholarship in action, reported by Sigma Gamma Rho chapters across every region, and sorors in their own words."
 >
   <PageHero
+    editorial
     stack
-    crumbs={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Chapter Stories" }]}
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: "News & Events" },
+      { label: "Chapter Stories" },
+    ]}
     eyebrow="One Sigma, Every Region"
     title="Chapter stories."
     highlight="Greater service, close to home."
@@ -42,18 +49,26 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     image="/optimized/hero-lambda-psi.webp"
     focal="50% 40%"
   >
-    <a class="btn" href="#share">Share your chapter&rsquo;s story <span aria-hidden="true">&rarr;</span></a>
+    <a class="btn" href="#share">
+      Share your chapter&rsquo;s story <span aria-hidden="true">&rarr;</span>
+    </a>
   </PageHero>
 
   <section class="cs-main" aria-labelledby="cs-stories-title">
     <div class="container">
-      <h2 class="cs-section-title" id="cs-stories-title">From the chapters</h2>
+      <h2 class="cs-section-title" id="cs-stories-title">
+        From the chapters
+      </h2>
 
       {regions.length > 1 && (
         <div class="cs-filters" role="group" aria-label="Filter stories by region" hidden>
-          <button type="button" class="is-active" aria-pressed="true" data-region="all">All Regions</button>
+          <button type="button" class="is-active" aria-pressed="true" data-region="all">
+            All Regions
+          </button>
           {regions.map((r) => (
-            <button type="button" aria-pressed="false" data-region={slug(r)}>{r}</button>
+            <button type="button" aria-pressed="false" data-region={slug(r)}>
+              {r}
+            </button>
           ))}
         </div>
       )}
@@ -64,7 +79,14 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
             <li class="cs-story" data-region={slug(s.region)}>
               <article>
                 {s.image && (
-                  <img src={withBase(s.image)} alt={s.imageAlt} width="960" height="600" loading="lazy" decoding="async" />
+                  <img
+                    src={withBase(s.image)}
+                    alt={s.imageAlt}
+                    width="960"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 )}
                 <div class="cs-story__copy">
                   <p class="cs-meta">
@@ -77,7 +99,9 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
                     {s.place && <> &middot; {s.place}</>} &middot;{" "}
                     <time datetime={s.date}>{formatStoryDate(s.date)}</time>
                   </p>
-                  <div class="cs-body"><s.Body /></div>
+                  <div class="cs-body">
+                    <s.Body />
+                  </div>
                 </div>
               </article>
             </li>
@@ -99,13 +123,17 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   <section class="cs-voices" aria-labelledby="cs-voices-title">
     <div class="container">
       <p class="eyebrow">In Their Own Words</p>
-      <h2 class="cs-section-title" id="cs-voices-title">Member voices</h2>
+      <h2 class="cs-section-title" id="cs-voices-title">
+        Member voices
+      </h2>
       {voices.length > 0 ? (
         <ul class="cs-quotes">
           {voices.map((v) => (
             <li>
               <figure>
-                <blockquote><p>&ldquo;{v.quote}&rdquo;</p></blockquote>
+                <blockquote>
+                  <p>&ldquo;{v.quote}&rdquo;</p>
+                </blockquote>
                 <figcaption>
                   <strong>{v.name}</strong>
                   <span>{[v.role, v.chapter, v.region].filter(Boolean).join(" · ")}</span>
@@ -126,7 +154,9 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   <section class="cs-share" id="share" aria-labelledby="cs-share-title">
     <div class="container">
       <p class="eyebrow">Contribute</p>
-      <h2 class="cs-section-title" id="cs-share-title">Share your chapter&rsquo;s story</h2>
+      <h2 class="cs-section-title" id="cs-share-title">
+        Share your chapter&rsquo;s story
+      </h2>
       <p class="cs-share__intro">
         International Corporate Headquarters reviews every submission and publishes a selection.
         Send it to <a href={storyMailto}>{SUBMIT_EMAIL}</a>.
@@ -145,7 +175,9 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
               publication
             </li>
           </ul>
-          <a class="btn" href={storyMailto}>Email a Chapter Story</a>
+          <a class="btn" href={storyMailto}>
+            Email a Chapter Story
+          </a>
         </div>
         <div class="cs-share__card">
           <h3>A member voice</h3>
@@ -156,7 +188,9 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
             <li>Your chapter and region</li>
             <li>Your written permission to publish them on this website</li>
           </ul>
-          <a class="btn btn--outline" href={voiceMailto}>Email a Member Voice</a>
+          <a class="btn btn--outline" href={voiceMailto}>
+            Email a Member Voice
+          </a>
         </div>
       </div>
     </div>
@@ -195,7 +229,6 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 </script>
 
 <style>
-
   .cs-main,
   .cs-voices,
   .cs-share {
@@ -407,5 +440,4 @@ const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   .cs-share__card .btn {
     margin-top: auto;
   }
-
 </style>

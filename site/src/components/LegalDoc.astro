@@ -42,6 +42,8 @@ const titleLead = words.join(" ");
 ---
 
 <PageHero
+  tone="paper"
+  editorial
   id="document-top"
   crumbs={[{ label: "Home", href: "/" }, { label: title }]}
   eyebrow="Legal"
@@ -52,64 +54,102 @@ const titleLead = words.join(" ");
 />
 
 <section class="legal-body">
-  <div class="container container--narrow">
-    {draftNote && (
-      <p class="legal-note" role="note">
-        {draftNote}
-      </p>
-    )}
-
-    {intro.map((p) => (
-      <p class="legal-intro">{p}</p>
-    ))}
-
-    <nav class="legal-toc" aria-labelledby="legal-toc-title">
-      <div class="legal-toc__heading">
-        <p class="eyebrow" id="legal-toc-title">
-          In This Document
+  <div class="container">
+    <div class="legal-overview">
+      {draftNote && (
+        <p class="legal-note" role="note">
+          {draftNote}
         </p>
-        <span>{sections.length} sections</span>
-      </div>
-      <ol>
-        {sections.map((s) => (
-          <li>
-            <a href={`#${s.id}`}>{s.title}</a>
-          </li>
-        ))}
-      </ol>
-    </nav>
+      )}
 
-    {sections.map((s) => (
-      <section class="legal-section" id={s.id}>
-        <h2>{s.title}</h2>
-        {s.blocks.map((b) =>
-          b.subhead ? (
-            <h3>{b.subhead}</h3>
-          ) : b.list ? (
-            <ul>
-              {b.list.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          ) : b.address ? (
-            <address>
-              {b.address.map((line) => (
-                <span>{line}</span>
-              ))}
-            </address>
-          ) : (
-            <p>{b.p}</p>
-          )
-        )}
-        <a class="legal-section__top" href="#document-top">
-          Back to top <span aria-hidden="true">&uarr;</span>
-        </a>
-      </section>
-    ))}
+      {intro.map((p) => (
+        <p class="legal-intro">{p}</p>
+      ))}
+    </div>
+    <div class="legal-layout">
+      <nav class="legal-toc" aria-labelledby="legal-toc-title">
+        <div class="legal-toc__heading">
+          <p class="eyebrow" id="legal-toc-title">
+            In This Document
+          </p>
+          <span>{sections.length} sections</span>
+        </div>
+        <ol>
+          {sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.title}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <div class="legal-reading">
+        {sections.map((s) => (
+          <section class="legal-section" id={s.id}>
+            <h2>{s.title}</h2>
+            {s.blocks.map((b) =>
+              b.subhead ? (
+                <h3>{b.subhead}</h3>
+              ) : b.list ? (
+                <ul>
+                  {b.list.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              ) : b.address ? (
+                <address>
+                  {b.address.map((line) => (
+                    <span>{line}</span>
+                  ))}
+                </address>
+              ) : (
+                <p>{b.p}</p>
+              )
+            )}
+            <a class="legal-section__top" href="#document-top">
+              Back to top <span aria-hidden="true">&uarr;</span>
+            </a>
+          </section>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
+  .legal-overview {
+    max-width: 760px;
+    margin: 0 auto var(--space-10);
+  }
+  .legal-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.7fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .legal-layout .legal-toc {
+    position: sticky;
+    top: var(--space-24);
+    max-height: calc(100svh - 8rem);
+    overflow-y: auto;
+    margin: 0;
+    background: var(--cream);
+    border-radius: 0;
+  }
+  .legal-layout .legal-toc a {
+    display: block;
+    padding-block: var(--space-1);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 900px) {
+    .legal-layout {
+      grid-template-columns: 1fr;
+    }
+    .legal-layout .legal-toc {
+      position: static;
+      max-height: none;
+    }
+  }
 
   .legal-body {
     background: var(--white);

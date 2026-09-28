@@ -146,6 +146,7 @@ const profiles = [
   preloadImage="/optimized/sgr-alpha-charter.webp"
 >
   <PageHero
+    editorial
     stack
     eyebrow="Our Founders · The Seven Pearls"
     title="Seven educators."
@@ -158,11 +159,18 @@ const profiles = [
     size="tall"
   >
     <Button href="#seven-pearls">Meet the Seven Pearls</Button>
-    <Button href="/about/herstory/" variant="outline" onDark>Explore Our Herstory</Button>
+    <Button href="/about/herstory/" variant="outline" onDark>
+      Explore Our Herstory
+    </Button>
   </PageHero>
 
   <!-- GENESIS -->
-  <Section tone="white" eyebrow="Indianapolis • November 12, 1922" title="The Genesis at Butler University" align="left">
+  <Section
+    tone="white"
+    eyebrow="Indianapolis • November 12, 1922"
+    title="The Genesis at Butler University"
+    align="left"
+  >
     <div class="split">
       <div class="split__copy">
         <p>
@@ -243,7 +251,9 @@ const profiles = [
             title={f.name}
           >
             <p class="tile-role">{f.role}</p>
-            <span class="tile-action">Read her story <span aria-hidden="true">↗</span></span>
+            <span class="tile-action">
+              Read her story <span aria-hidden="true">↗</span>
+            </span>
           </Card>
         ))}
       </CardGrid>
@@ -256,17 +266,26 @@ const profiles = [
       <article id={p.id} class:list={["profile", { "profile--flip": i % 2 === 1 }]}>
         <div class="container profile__inner">
           <figure class="profile__figure">
-            <img src={withBase(p.img)} alt={`${p.name} ${p.highlight}`} loading="lazy" decoding="async" />
+            <img
+              src={withBase(p.img)}
+              alt={`${p.name} ${p.highlight}`}
+              loading="lazy"
+              decoding="async"
+            />
           </figure>
           <div class="profile__copy">
-            <p class="profile__label"><span aria-hidden="true">{String(i + 1).padStart(2, "0")} / 07</span> {p.label}</p>
+            <p class="profile__label">
+              <span aria-hidden="true">{String(i + 1).padStart(2, "0")} / 07</span> {p.label}
+            </p>
             <h2>
               {p.name} <span>{p.highlight}</span>
             </h2>
             <p class="profile__role">{p.role}</p>
             <div class="profile__rule"></div>
             <p>{p.bio}</p>
-            <a class="profile__return" href="#seven-pearls">Meet all seven founders <span aria-hidden="true">↑</span></a>
+            <a class="profile__return" href="#seven-pearls">
+              Meet all seven founders <span aria-hidden="true">↑</span>
+            </a>
           </div>
         </div>
       </article>
@@ -280,7 +299,11 @@ const profiles = [
     copy="The Founders did not create Sigma Gamma Rho simply for their own time. They established a structure capable of educating, serving, supporting, and developing Black women across generations. Greater Service. Greater Progress."
     actions={[
       { label: "Explore Membership", href: "/membership/become-a-member/" },
-      { label: "Their Legacy in Service", href: "/service-impact/national-programs/", variant: "outline" },
+      {
+        label: "Their Legacy in Service",
+        href: "/service-impact/national-programs/",
+        variant: "outline",
+      },
     ]}
   />
 </Base>

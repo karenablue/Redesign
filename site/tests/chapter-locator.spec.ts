@@ -184,13 +184,28 @@ test("the map loads on approach and follows the filters", async ({ page }) => {
   await expect(page.locator("#search-message")).toContainText('for "Texas"');
 });
 
+test("the chapter list remains usable when the map style cannot load", async ({ page }) => {
+  await page.route("https://tiles.openfreemap.org/styles/positron", (request) => request.abort());
+  await page.goto(route);
+  const map = page.locator("#chapter-map");
+  await map.scrollIntoViewIfNeeded();
+  await expect(map.getByRole("status")).toContainText("The map could not load");
+  await expect(map.locator("canvas")).toHaveCount(0);
+  await page.locator("#chapter-search").fill("Texas");
+  await page.getByRole("button", { name: "Find Chapters", exact: true }).click();
+  await expect(page.locator("#search-message")).toContainText('for "Texas"');
+  await expect(page.locator(visibleCards).first()).toBeVisible();
+});
+
 test("chapters show a logo for each social account, and bad web addresses fall back", async ({
   page,
 }) => {
   // HQ's "website" for Theta Epsilon is its Facebook page: shown as the logo.
   await page.goto(`${route}?q=Theta+Epsilon+Los+Angeles`);
   await expect(page.locator(visibleCards)).toHaveCount(1);
-  const facebook = page.getByRole("link", { name: "Theta Epsilon on Facebook (opens in a new tab)" });
+  const facebook = page.getByRole("link", {
+    name: "Theta Epsilon on Facebook (opens in a new tab)",
+  });
   await expect(facebook).toHaveAttribute("href", "https://www.facebook.com/thetaepsgrho");
   await expect(facebook.locator("svg")).toBeVisible();
   await expect(page.locator(visibleCards)).not.toContainText("Chapter website");

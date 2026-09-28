@@ -35,6 +35,7 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   description="Sigma Gamma Rho's 2026–2028 International Board of Directors."
 >
   <PageHero
+    editorial
     eyebrow="2026–2028 Administration"
     title="International Board"
     highlight="of Directors"
@@ -42,7 +43,9 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
     image="/optimized/hero-board-boule.webp"
     focal="55% 40%"
   >
-    <a class="btn" href="#officers">Meet the Officers</a>
+    <a class="btn" href="#officers">
+      Meet the Officers
+    </a>
     <a class="btn btn--outline on-dark" href={withBase("/leadership/regional-leadership/")}>
       Meet Regional Leadership
     </a>
@@ -79,7 +82,7 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
         </h2>
       </div>
       <h3 class="ibd-tier">Executive Officers</h3>
-      <article class="ibd-chair">
+      <article class="ibd-chair" data-reveal>
         <img
           class="ibd-photo"
           src={withBase(chair.image)}
@@ -234,8 +237,7 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
     aspect-ratio: 1 / 1;
     object-fit: cover;
     object-position: 50% 20%;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-bottom: 2px solid var(--gold);
   }
 
   /* The chair: a single wide card, photo beside the text. */
@@ -244,9 +246,11 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     gap: var(--space-12);
     align-items: center;
-    padding: var(--space-8);
-    border-bottom: 3px solid var(--gold);
+    padding: 0;
     background: var(--cream);
+  }
+  .ibd-chair__body {
+    padding: var(--space-8) var(--space-8) var(--space-8) 0;
   }
   .ibd-more {
     display: inline-block;
@@ -279,9 +283,8 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   }
   .ibd-card {
     flex: 0 1 calc((100% - 2 * var(--ibd-gap)) / 3);
-    padding: var(--space-5);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--line);
     background: var(--white);
   }
   .ibd-grid--deputies .ibd-card {
@@ -301,8 +304,10 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
   .ibd-name {
     margin: var(--space-1) 0 0;
     color: var(--royal);
-    font-size: var(--text-md);
     line-height: 1.35;
+    font-family: var(--font-editorial);
+    font-size: var(--text-xl);
+    font-weight: 500;
   }
   .ibd-name--lg {
     font-size: var(--text-h3);
@@ -323,6 +328,10 @@ const officers = board.filter((b) => b !== chair && !deputies.includes(b));
     .ibd-chair {
       grid-template-columns: 1fr;
       text-align: center;
+      gap: 0;
+    }
+    .ibd-chair__body {
+      padding: var(--space-6);
     }
     .ibd-chair .ibd-photo {
       max-width: 240px;

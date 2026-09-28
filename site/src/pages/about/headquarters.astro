@@ -18,7 +18,11 @@ import ichqBios from "../../data/ichq-bios.json";
 
 // Full biographies, verbatim from sgrho1922.org (see the data file).
 const bios = ichqBios.bios as Record<string, string[]>;
-const slug = (name: string) => name.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
+const slug = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/[^a-z]+/g, "-")
+    .replace(/^-|-$/g, "");
 
 const staff = [
   {
@@ -90,6 +94,7 @@ const staff = [
   description="International Corporate Headquarters keeps the international sisterhood running — every day, in every region."
 >
   <PageHero
+    editorial
     eyebrow="International Corporate Headquarters"
     title="Here for the"
     highlight="work of sisterhood."
@@ -98,7 +103,9 @@ const staff = [
     focal="50% 25%"
   >
     <Button href="/resources/help-center/">Get Member Support</Button>
-    <Button href="/contact/" variant="outline" onDark>Contact Headquarters</Button>
+    <Button href="/contact/" variant="outline" onDark>
+      Contact Headquarters
+    </Button>
   </PageHero>
 
   <section class="hq-services" aria-labelledby="hq-services-title">
@@ -141,7 +148,9 @@ const staff = [
           the Sorority running &mdash; membership services, finance, technology, compliance,
           marketing, and event planning for chapters and members worldwide.
         </p>
-        <a class="hq-text-link" href="#hq-team">Meet the headquarters team <span aria-hidden="true">↓</span></a>
+        <a class="hq-text-link" href="#hq-team">
+          Meet the headquarters team <span aria-hidden="true">↓</span>
+        </a>
         {/* HQ's certification, as published on sgrho1922.org. It runs
             November 2025 to November 2026: replace the badge with the
             renewal, or remove this block, when it lapses. */}
@@ -154,7 +163,9 @@ const staff = [
             loading="lazy"
           />
           <p>
-            <strong>Great Place To Work<sup>&reg;</sup> Certified</strong>
+            <strong>
+              Great Place To Work<sup>&reg;</sup> Certified
+            </strong>
             Our employees have spoken: International Corporate Headquarters is certified for
             November 2025 to November 2026.
           </p>

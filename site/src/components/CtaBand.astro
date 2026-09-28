@@ -30,22 +30,24 @@ const { eyebrow, title, highlight, copy, actions = [] } = Astro.props;
 ---
 
 <section class="cta on-dark">
-  <span class="cta__mark" aria-hidden="true">ΣΓΡ</span>
-  <div class="container cta__inner">
+  <span class="cta__mark" aria-hidden="true">
+    ΣΓΡ
+  </span>
+  <div class="container cta__inner" data-reveal>
     <div class="cta__story">
-    {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
-    {title && (
-      <h2 class="cta__title">
-        {title}
-        {highlight && (
-          <>
-            {" "}
-            <span>{highlight}</span>
-          </>
-        )}
-      </h2>
-    )}
-    {copy && <p class="cta__copy">{copy}</p>}
+      {eyebrow && <p class="eyebrow" set:html={reg(eyebrow)} />}
+      {title && (
+        <h2 class="cta__title">
+          {title}
+          {highlight && (
+            <>
+              {" "}
+              <span>{highlight}</span>
+            </>
+          )}
+        </h2>
+      )}
+      {copy && <p class="cta__copy">{copy}</p>}
     </div>
     {actions.length > 0 && (
       <div class="cta__actions">

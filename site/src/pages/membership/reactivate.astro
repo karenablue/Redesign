@@ -87,6 +87,7 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
   description="Who needs to reactivate, the Poodle Portal steps, what your assessment covers, and how transfers work in Sigma Gamma Rho."
 >
   <PageHero
+    editorial
     stack
     crumbs={[
       { label: "Home", href: "/" },
@@ -100,8 +101,12 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
     image="/optimized/hero-alumnae-sorors.webp"
     focal="50% 35%"
   >
-    <a class="btn" href="#steps">Begin Your Return</a>
-    <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>Find Your Chapter</a>
+    <a class="btn" href="#steps">
+      Begin Your Return
+    </a>
+    <a class="btn btn--outline" href={withBase("/membership/chapter-locator/")}>
+      Find Your Chapter
+    </a>
   </PageHero>
 
   <section class="rx-main">
@@ -276,7 +281,6 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "");
 </Base>
 
 <style>
-
   .rx-main {
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);

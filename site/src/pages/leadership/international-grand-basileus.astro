@@ -57,6 +57,8 @@ const jumps = [
   description="Marica T. Harris serves as the 26th International Grand Basileus of Sigma Gamma Rho Sorority, Incorporated."
 >
   <PageHero
+    editorial
+    mobileFullImage
     stack
     eyebrow="Office of the Grand Basileus"
     title="Marica T."
@@ -67,7 +69,9 @@ const jumps = [
     size="tall"
     detail={{ value: "XXVI", label: "26th International Grand Basileus" }}
   >
-    <a class="btn" href="#bio">Explore Her Leadership</a>
+    <a class="btn" href="#bio">
+      Explore Her Leadership
+    </a>
   </PageHero>
 
   <SigmaRule />
@@ -79,7 +83,7 @@ const jumps = [
   </nav>
 
   <Section tone="white" id="bio">
-    <div class="overview">
+    <div class="overview" data-reveal>
       <div class="overview__label">
         <p class="eyebrow">International Leadership</p>
         <h2>
@@ -106,7 +110,7 @@ const jumps = [
 
   <Section tone="cream" pad="tight" id="highlights">
     <h2 class="visually-hidden">Highlights</h2>
-    <ul class="ledger">
+    <ul class="ledger" data-reveal data-reveal-stagger>
       {ledger.map((item) => (
         <li class="ledger__item">
           <h3>{item.title}</h3>
@@ -117,7 +121,7 @@ const jumps = [
   </Section>
 
   <Section tone="white" id="experience">
-    <div class="profile">
+    <div class="profile" data-reveal>
       <p class="eyebrow">Education &amp; Professional Experience</p>
       <div class="profile__head">
         <span class="profile__roman" aria-hidden="true">

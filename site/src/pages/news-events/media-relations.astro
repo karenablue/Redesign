@@ -16,7 +16,8 @@ import { getCollection } from "astro:content";
 
 const PRESS_EMAIL = "help@sgrho1922.org";
 const ASSETS_URL = "https://sgrho1922.org/media-inquiries/";
-const GUIDELINES_URL = "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
+const GUIDELINES_URL =
+  "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
 
 const facts = [
   { value: "1922", label: "Founded at Butler University" },
@@ -28,8 +29,20 @@ const facts = [
 const boilerplate =
   "Sigma Gamma Rho Sorority, Inc. was founded on November 12, 1922, at Butler University in Indianapolis, Indiana, by seven educators. Guided by its motto, “Greater Service, Greater Progress,” the Sorority has grown to more than 100,000 members in 500 chapters in the United States and internationally. Its national programs advance education, women's wellness, water safety, maternal and infant health, and youth leadership, including Operation BigBookBag, Swim 1922, and Project CRADLE Care. The Sorority's International Corporate Headquarters is in Cary, North Carolina.";
 
-const topics = ["National Programs", "Leadership Commentary", "Boulé & Events", "Partnerships", "History & Archives", "Other"];
-const requestTypes = ["Radio / TV interview", "Print / digital interview", "Written statement", "Historical archives"];
+const topics = [
+  "National Programs",
+  "Leadership Commentary",
+  "Boulé & Events",
+  "Partnerships",
+  "History & Archives",
+  "Other",
+];
+const requestTypes = [
+  "Radio / TV interview",
+  "Print / digital interview",
+  "Written statement",
+  "Historical archives",
+];
 
 const releases = (await getCollection("news"))
   .sort((a, b) => a.data.order - b.data.order)
@@ -43,16 +56,20 @@ const releases = (await getCollection("news"))
   description="Press contacts, media inquiries, the approved boilerplate, and official brand resources for Sigma Gamma Rho Sorority, Inc."
 >
   <PageHero
+    tone="paper"
+    editorial
     stack
     eyebrow="Press & Communications"
     title="The press desk."
     highlight="The Sigma Gamma Rho story."
     copy="Connect with our media relations team for interviews, official statements, historical archives, and authorized brand resources."
-    image="/optimized/hero-capitol-steps.webp"
-    focal="50% 50%"
   >
-    <a class="btn" href="#press-inquiry">Make a Press Inquiry <span aria-hidden="true">&darr;</span></a>
-    <a class="btn btn--outline on-dark" href="#brand-resources">Brand Resources <span aria-hidden="true">&darr;</span></a>
+    <a class="btn" href="#press-inquiry">
+      Make a Press Inquiry <span aria-hidden="true">&darr;</span>
+    </a>
+    <a class="btn btn--outline on-dark" href="#brand-resources">
+      Brand Resources <span aria-hidden="true">&darr;</span>
+    </a>
   </PageHero>
   <section class="mr-factband" aria-label="Sigma Gamma Rho at a glance">
     <div class="container">
@@ -76,16 +93,22 @@ const releases = (await getCollection("news"))
         <dl>
           <div>
             <dt>Media line</dt>
-            <dd><a href="tel:+19199285061">(919) 928-5061</a></dd>
+            <dd>
+              <a href="tel:+19199285061">(919) 928-5061</a>
+            </dd>
           </div>
           <div>
             <dt>Headquarters</dt>
-            <dd><a href="tel:+19196789720">(919) 678-9720</a></dd>
+            <dd>
+              <a href="tel:+19196789720">(919) 678-9720</a>
+            </dd>
           </div>
           <div>
             <dt>Email</dt>
             <dd>
-              <a href={`mailto:${PRESS_EMAIL}?subject=${encodeURIComponent("Media Inquiry")}`}>{PRESS_EMAIL}</a>
+              <a href={`mailto:${PRESS_EMAIL}?subject=${encodeURIComponent("Media Inquiry")}`}>
+                {PRESS_EMAIL}
+              </a>
               <span>Use the subject line &ldquo;Media Inquiry.&rdquo;</span>
             </dd>
           </div>
@@ -93,17 +116,43 @@ const releases = (await getCollection("news"))
         <p class="mr-note">Include your deadline so time-sensitive requests can be prioritized.</p>
       </aside>
 
-      <form id="press-inquiry" class="mr-form inquiry-form" data-compose data-subject="Media Inquiry" data-subject-field="mf-outlet" action={`mailto:${PRESS_EMAIL}`} method="post" enctype="text/plain">
+      <form
+        id="press-inquiry"
+        class="mr-form inquiry-form"
+        data-compose
+        data-subject="Media Inquiry"
+        data-subject-field="mf-outlet"
+        action={`mailto:${PRESS_EMAIL}`}
+        method="post"
+        enctype="text/plain"
+      >
         <h2>Submit a Press Inquiry</h2>
-        <p class="mr-form__hint">This opens a pre-filled email in your mail app, addressed to the press desk.</p>
+        <p class="mr-form__hint">
+          This opens a pre-filled email in your mail app, addressed to the press desk.
+        </p>
         <div class="inquiry-form__row">
           <label>
             <span>Full name</span>
-            <input id="mf-name" data-label="Name" name="name" type="text" autocomplete="name" required />
+            <input
+              id="mf-name"
+              data-label="Name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            />
           </label>
           <label>
             <span>Media outlet</span>
-            <input id="mf-outlet" data-label="Outlet" name="outlet" type="text" autocomplete="organization" placeholder="Publication, network, or platform" required />
+            <input
+              id="mf-outlet"
+              data-label="Outlet"
+              name="outlet"
+              type="text"
+              autocomplete="organization"
+              placeholder="Publication, network, or platform"
+              required
+            />
           </label>
         </div>
         <div class="inquiry-form__row">
@@ -111,7 +160,9 @@ const releases = (await getCollection("news"))
             <span>Topic</span>
             <select id="mf-topic" data-label="Topic" name="topic" required>
               <option value="">Choose a topic</option>
-              {topics.map((t) => <option>{t}</option>)}
+              {topics.map((t) => (
+                <option>{t}</option>
+              ))}
             </select>
           </label>
           <label>
@@ -124,7 +175,13 @@ const releases = (await getCollection("news"))
           <div class="inquiry-form__checks">
             {requestTypes.map((r, i) => (
               <label class="inquiry-form__check">
-                <input id={`mf-type-${i}`} data-label="Request" type="checkbox" name="request" value={r} />
+                <input
+                  id={`mf-type-${i}`}
+                  data-label="Request"
+                  type="checkbox"
+                  name="request"
+                  value={r}
+                />
                 <span>{r}</span>
               </label>
             ))}
@@ -132,18 +189,30 @@ const releases = (await getCollection("news"))
         </fieldset>
         <label>
           <span>Details</span>
-          <textarea id="mf-details" data-body name="details" rows="5" placeholder="Your angle, questions, and who you hope to speak with."></textarea>
+          <textarea
+            id="mf-details"
+            data-body
+            name="details"
+            rows="5"
+            placeholder="Your angle, questions, and who you hope to speak with."
+          ></textarea>
         </label>
-        <button class="btn" type="submit">Submit Press Inquiry <span aria-hidden="true">&rarr;</span></button>
+        <button class="btn" type="submit">
+          Submit Press Inquiry <span aria-hidden="true">&rarr;</span>
+        </button>
       </form>
     </div>
   </section>
 
   <section class="mr-about">
     <div class="container mr-about__inner">
-      <h2>About Sigma Gamma Rho Sorority, Inc.<sup class="reg">&reg;</sup></h2>
+      <h2>
+        About Sigma Gamma Rho Sorority, Inc.<sup class="reg">&reg;</sup>
+      </h2>
       <p id="boilerplate">{boilerplate}</p>
-      <button class="btn btn--outline" type="button" id="copy-boilerplate" hidden>Copy Boilerplate Text</button>
+      <button class="btn btn--outline" type="button" id="copy-boilerplate" hidden>
+        Copy Boilerplate Text
+      </button>
       <p class="mr-copied" role="status" aria-live="polite"></p>
     </div>
   </section>
@@ -155,7 +224,8 @@ const releases = (await getCollection("news"))
         <ul class="mr-links">
           <li>
             <a href={withBase("/leadership/international-grand-basileus/")}>
-              Marica T. Harris, 26th International Grand Basileus <span aria-hidden="true">&rarr;</span>
+              Marica T. Harris, 26th International Grand Basileus{" "}
+              <span aria-hidden="true">&rarr;</span>
             </a>
           </li>
           <li>
@@ -175,12 +245,17 @@ const releases = (await getCollection("news"))
         <ul class="mr-links">
           <li>
             <a href={withBase("/news-events/latest-news/61st-biennial-boule/")}>
-              Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé <span aria-hidden="true">&rarr;</span>
+              Tampa Welcomes Sigma Gamma Rho for the 61st International Biennial Boulé{" "}
+              <span aria-hidden="true">&rarr;</span>
             </a>
           </li>
           {releases.map((r) => (
             <li>
-              <a href={withBase("/news-events/latest-news/")}>
+              <a
+                href={withBase(r.href ?? "/news-events/latest-news/")}
+                target={r.external ? "_blank" : undefined}
+                rel={r.external ? "noopener" : undefined}
+              >
                 {r.title} <span aria-hidden="true">&rarr;</span>
               </a>
             </li>

@@ -83,7 +83,9 @@ const regions = [
       label: "Undergraduate and alumnae chapters in Headquarters’ records",
     }}
   >
-    <a class="btn" href="#chapter-search-form">Search Chapters</a>
+    <a class="btn" href="#chapter-search-form">
+      Search Chapters
+    </a>
   </PageHero>
 
   <section class="directory-section" aria-labelledby="directory-title">
@@ -598,7 +600,9 @@ const regions = [
     height: 36px;
     border-radius: 50%;
     color: var(--royal);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
   .chapter-result__social a:hover {
     background: var(--tint);
@@ -1051,8 +1055,22 @@ const regions = [
       cooperativeGestures: true,
       attributionControl: false,
     });
+    // Style and tile failures arrive after construction through map events.
+    // Retain the searchable directory when the map cannot initialize.
+    let mapReady = false;
+    let mapFailed = false;
+    map.on("error", () => {
+      if (mapReady || mapFailed) return;
+      mapFailed = true;
+      setMapData = null;
+      map.remove();
+      mapEl.innerHTML =
+        '<p class="chapter-map__placeholder" role="status">The map could not load. Every chapter is in the list below.</p>';
+    });
     map.addControl(new gl.NavigationControl({ showCompass: false }), "top-right");
     map.on("load", () => {
+      if (mapFailed) return;
+      mapReady = true;
       map.addSource("chapters", {
         type: "geojson",
         data: toGeoJSON(lastMatches),
@@ -1101,7 +1119,10 @@ const regions = [
         if (!feature) return;
         const source = map.getSource("chapters") as import("maplibre-gl").GeoJSONSource;
         const zoom = await source.getClusterExpansionZoom(feature.properties.cluster_id);
-        map.easeTo({ center: (feature.geometry as GeoJSON.Point).coordinates as [number, number], zoom });
+        map.easeTo({
+          center: (feature.geometry as GeoJSON.Point).coordinates as [number, number],
+          zoom,
+        });
       });
       map.on("click", "chapter", (e) => {
         const feature = e.features?.[0];
@@ -1125,7 +1146,9 @@ const regions = [
       }
       setMapData = (matches) => {
         const data = toGeoJSON(matches);
-        (map.getSource("chapters") as import("maplibre-gl").GeoJSONSource | undefined)?.setData(data);
+        (map.getSource("chapters") as import("maplibre-gl").GeoJSONSource | undefined)?.setData(
+          data
+        );
         // A narrowed search zooms to its chapters; the full list shows the country.
         if (matches.length === cards.length || data.features.length === 0) {
           map.easeTo({ center: [-88, 36], zoom: 3 });

@@ -42,6 +42,8 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
   preloadImage="/optimized/boule.webp"
 >
   <PageHero
+    tone="paper"
+    editorial
     stack
     crumbs={[{ label: "Home", href: "/" }, { label: "News & Events" }, { label: "Latest News" }]}
     eyebrow="The Sigma Gamma Rho Newsroom"
@@ -57,7 +59,7 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
 
   <section class="ln-main">
     <div class="container">
-      <article class="ln-lead">
+      <article class="ln-lead" data-reveal>
         <a class="ln-lead__media" href={withBase(LEAD_URL)} tabindex="-1" aria-hidden="true">
           <img src={withBase("/optimized/boule.webp")} alt="" width="1200" height="675" />
           <span class="ln-lead__badge">International Boulé</span>
@@ -122,7 +124,7 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
           </ul>
 
           <ul class="ln-archive">
-            {archive.map((c) => (
+            {archive.map((c, index) => (
               <li class="ln-row" data-topic={slug(c.topic)}>
                 {c.image ? (
                   <img
@@ -134,7 +136,9 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
                     decoding="async"
                   />
                 ) : (
-                  <span class="ln-row__blank" aria-hidden="true" />
+                  <span class="ln-row__blank" aria-hidden="true">
+                    {String(index + 3).padStart(2, "0")}
+                  </span>
                 )}
                 <div>
                   <p class="ln-meta">
@@ -203,7 +207,6 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
 </script>
 
 <style>
-
   .ln-main {
     background: var(--white);
     padding-block: clamp(3rem, 6vw, 4.5rem);
@@ -222,21 +225,20 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
     display: grid;
     grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
     gap: var(--space-10);
-    align-items: center;
+    align-items: stretch;
     padding-bottom: var(--space-14);
     border-bottom: 1px solid var(--line);
   }
   .ln-lead__media {
     position: relative;
     display: block;
-    border-radius: var(--radius);
     overflow: hidden;
   }
   .ln-lead__media img {
     display: block;
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
+    height: 100%;
+    min-height: 360px;
     object-fit: cover;
   }
   .ln-lead__badge {
@@ -251,6 +253,19 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+  }
+  .ln-lead__copy {
+    padding-block: var(--space-6);
+  }
+  @media (max-width: 820px) {
+    .ln-lead__media img {
+      min-height: 0;
+      aspect-ratio: 16 / 10;
+      height: auto;
+    }
+    .ln-lead__copy {
+      padding: 0;
+    }
   }
   .ln-lead h2 {
     margin: var(--space-3) 0 var(--space-4);
@@ -387,7 +402,13 @@ const LEAD_URL = "/news-events/latest-news/61st-biennial-boule/";
     border-radius: var(--radius);
   }
   .ln-row__blank {
-    background: var(--tint);
+    display: grid;
+    place-items: center;
+    background: var(--cream);
+    color: var(--royal);
+    font-family: var(--font-editorial);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    border-radius: 0;
   }
   .ln-empty {
     color: var(--muted);

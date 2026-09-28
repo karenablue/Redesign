@@ -118,6 +118,7 @@ const spotlight = [
   description="Sigma Gamma Rho's famous Sorors, honorary members, and member spotlights across law, government, entertainment, education, athletics, and business."
 >
   <PageHero
+    editorial
     stack
     eyebrow="Notable Sigmas"
     title="Women who"
@@ -133,7 +134,9 @@ const spotlight = [
       { href: "#member-spotlight", label: "Member Spotlight" },
     ]}
   >
-    <a href="#famous-sorors" class="btn">Explore Their Achievements</a>
+    <a href="#famous-sorors" class="btn">
+      Explore Their Achievements
+    </a>
   </PageHero>
 
   <section class="ns-intro">
@@ -144,14 +147,21 @@ const spotlight = [
           Achievement <span>across generations.</span>
         </h2>
         <p class="ns-intro__copy">
-          In culture, public service, classrooms, and communities, Sigma women have opened doors
-          and shaped the world around them. Meet the women whose work is part of that living legacy.
+          In culture, public service, classrooms, and communities, Sigma women have opened doors and
+          shaped the world around them. Meet the women whose work is part of that living legacy.
         </p>
       </div>
       <div class="ns-featured">
         {featuredSorors.map((person) => (
           <figure>
-            <img src={withBase(person.image!)} alt={person.name} width="400" height="500" loading="lazy" decoding="async" />
+            <img
+              src={withBase(person.image!)}
+              alt={person.name}
+              width="400"
+              height="500"
+              loading="lazy"
+              decoding="async"
+            />
             <figcaption>
               <span class="ns-field">{person.field}</span>
               <strong>{person.name}</strong>
@@ -175,49 +185,47 @@ const spotlight = [
           service, education, law, business, journalism, advocacy, medicine, religion, and sport.
           These are initiated members — women who crossed into Sigma Gamma Rho.
         </p>
-        <p class="ns-count" id="soror-count" role="status" aria-live="polite">{famousSorors.length} Sorors</p>
+        <p class="ns-count" id="soror-count" role="status" aria-live="polite">
+          {famousSorors.length} Sorors
+        </p>
       </div>
 
       <div class="ns-filters" role="group" aria-label="Filter Famous Sorors">
-        {
-          filters.map((f) => (
-            <button
-              class:list={["filter", { "is-active": f.key === "all" }]}
-              type="button"
-              data-filter={f.key}
-              aria-pressed={f.key === "all" ? "true" : "false"}
-              aria-controls="soror-mosaic"
-            >
-              {f.label}
-            </button>
-          ))
-        }
+        {filters.map((f) => (
+          <button
+            class:list={["filter", { "is-active": f.key === "all" }]}
+            type="button"
+            data-filter={f.key}
+            aria-pressed={f.key === "all" ? "true" : "false"}
+            aria-controls="soror-mosaic"
+          >
+            {f.label}
+          </button>
+        ))}
       </div>
 
       <div class="ns-mosaic" id="soror-mosaic">
-        {
-          famousSorors.map((p) => (
-            <article class="ns-card" data-category={p.cat}>
-              {p.image ? (
-                <img
-                  class="ns-avatar ns-avatar--photo"
-                  src={withBase(p.image)}
-                  alt={p.name}
-                  width="64"
-                  height="64"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <span class="ns-avatar">{p.initials || monogram(p.name)}</span>
-              )}
-              <p class="ns-field">{p.field}</p>
-              <h3>{p.name}</h3>
-              <p class="ns-note">{p.note}</p>
-              {p.chapter && <span class="ns-chapter">{p.chapter}</span>}
-            </article>
-          ))
-        }
+        {famousSorors.map((p) => (
+          <article class="ns-card" data-category={p.cat}>
+            {p.image ? (
+              <img
+                class="ns-avatar ns-avatar--photo"
+                src={withBase(p.image)}
+                alt={p.name}
+                width="64"
+                height="64"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span class="ns-avatar">{p.initials || monogram(p.name)}</span>
+            )}
+            <p class="ns-field">{p.field}</p>
+            <h3>{p.name}</h3>
+            <p class="ns-note">{p.note}</p>
+            {p.chapter && <span class="ns-chapter">{p.chapter}</span>}
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -230,35 +238,33 @@ const spotlight = [
           Women welcomed into <span>the sisterhood by honor.</span>
         </h2>
         <p>
-          Celebrating women inducted as honorary members of Sigma Gamma Rho in recognition of
-          their accomplishments and contributions.
+          Celebrating women inducted as honorary members of Sigma Gamma Rho in recognition of their
+          accomplishments and contributions.
         </p>
         <p class="ns-count ns-count--light">{honoraryMembers.length} honorary members</p>
       </div>
       <div class="ns-mosaic ns-mosaic--honorary">
-        {
-          honoraryMembers.map((p) => (
-            <article class="ns-card ns-card--dark">
-              {p.image ? (
-                <img
-                  class="ns-avatar ns-avatar--photo"
-                  src={withBase(p.image)}
-                  alt={p.name}
-                  width="64"
-                  height="64"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <span class="ns-avatar">{p.initials || monogram(p.name)}</span>
-              )}
-              <p class="ns-field">{p.field}</p>
-              <h3>{p.name}</h3>
-              <p class="ns-note">{p.note}</p>
-              {p.chapter && <span class="ns-chapter ns-chapter--light">{p.chapter}</span>}
-            </article>
-          ))
-        }
+        {honoraryMembers.map((p) => (
+          <article class="ns-card ns-card--dark">
+            {p.image ? (
+              <img
+                class="ns-avatar ns-avatar--photo"
+                src={withBase(p.image)}
+                alt={p.name}
+                width="64"
+                height="64"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span class="ns-avatar">{p.initials || monogram(p.name)}</span>
+            )}
+            <p class="ns-field">{p.field}</p>
+            <h3>{p.name}</h3>
+            <p class="ns-note">{p.note}</p>
+            {p.chapter && <span class="ns-chapter ns-chapter--light">{p.chapter}</span>}
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -276,52 +282,48 @@ const spotlight = [
         </p>
       </div>
       <ol class="ns-spotlight">
-        {
-          spotlight.map((s) => (
-            <li>
-              <span class="ns-spotlight__num">{s.n}</span>
-              <span class="ns-avatar">{monogram(s.name)}</span>
-              <div>
-                <p class="ns-field">{s.field}</p>
-                <h3>{s.name}</h3>
-                <p>{s.note}</p>
-              </div>
-            </li>
-          ))
-        }
+        {spotlight.map((s) => (
+          <li>
+            <span class="ns-spotlight__num">{s.n}</span>
+            <span class="ns-avatar">{monogram(s.name)}</span>
+            <div>
+              <p class="ns-field">{s.field}</p>
+              <h3>{s.name}</h3>
+              <p>{s.note}</p>
+            </div>
+          </li>
+        ))}
       </ol>
     </div>
   </section>
 
-  {
-    credits.length > 0 && (
-      <section class="ns-section ns-credits" id="photography-credits">
-        <div class="container">
-          <h2 class="ns-credits__title">Photography credits</h2>
-          <p class="ns-credits__intro">
-            Portraits are reproduced under Creative Commons licences, which require attribution.
-            Photographs not listed here are in the public domain. Where no freely licensed
-            photograph exists, a monogram is shown rather than an unlicensed image.
-          </p>
-          <ul class="ns-credits__list">
-            {credits.map((p) => (
-              <li>
-                <strong>{p.name}</strong> — {p.credit},{" "}
-                {p.licenseUrl ? (
-                  <a href={p.licenseUrl} rel="license noopener" target="_blank">
-                    {p.license}
-                  </a>
-                ) : (
-                  p.license
-                )}
-                , via Wikimedia Commons
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )
-  }
+  {credits.length > 0 && (
+    <section class="ns-section ns-credits" id="photography-credits">
+      <div class="container">
+        <h2 class="ns-credits__title">Photography credits</h2>
+        <p class="ns-credits__intro">
+          Portraits are reproduced under Creative Commons licences, which require attribution.
+          Photographs not listed here are in the public domain. Where no freely licensed photograph
+          exists, a monogram is shown rather than an unlicensed image.
+        </p>
+        <ul class="ns-credits__list">
+          {credits.map((p) => (
+            <li>
+              <strong>{p.name}</strong> — {p.credit},{" "}
+              {p.licenseUrl ? (
+                <a href={p.licenseUrl} rel="license noopener" target="_blank">
+                  {p.license}
+                </a>
+              ) : (
+                p.license
+              )}
+              , via Wikimedia Commons
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <CtaBand
     eyebrow="Greater Service, Greater Progress®"
@@ -652,7 +654,8 @@ const spotlight = [
         el.hidden = filter !== "all" && el.dataset.category !== filter;
         if (!el.hidden) visible += 1;
       });
-      if (count) count.textContent = `${visible} ${visible === 1 ? "Soror" : "Sorors"}${filter === "all" ? "" : ` · ${btn.textContent?.trim()}`}`;
+      if (count)
+        count.textContent = `${visible} ${visible === 1 ? "Soror" : "Sorors"}${filter === "all" ? "" : ` · ${btn.textContent?.trim()}`}`;
     });
   });
 </script>

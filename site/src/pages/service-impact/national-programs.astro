@@ -125,6 +125,7 @@ const programs = [
   description="Sigma Gamma Rho's national programs in education, health, swimming access, maternal care, and youth leadership."
 >
   <PageHero
+    editorial
     eyebrow="Service & Impact"
     title="Greater service"
     highlight="in action."
@@ -138,7 +139,9 @@ const programs = [
     jumpLabel="Jump to a national program"
     jump={jumpLinks.map((j) => ({ href: `#${j.id}`, label: j.label }))}
   >
-    <a class="btn" href={withBase("/membership/chapter-locator/")}>Connect with a Chapter</a>
+    <a class="btn" href={withBase("/membership/chapter-locator/")}>
+      Connect with a Chapter
+    </a>
     <a class="btn btn--outline on-dark" href={withBase("/service-impact/partner-foundations/")}>
       Support the Work
     </a>
@@ -200,7 +203,12 @@ const programs = [
             )}
           </figure>
           <div class="program__card">
-            <p class="program__kicker"><span class="program__number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {p.kicker}</p>
+            <p class="program__kicker">
+              <span class="program__number" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>{" "}
+              {p.kicker}
+            </p>
             {p.photo && (
               <div class="program__logo">
                 <ProgramLogo name={p.id as ProgramLogoName} />
@@ -270,7 +278,11 @@ const programs = [
     copy="Connect with a local chapter to learn about service opportunities, or bring your organization's resources to a national program."
     actions={[
       { label: "Find Your Chapter", href: "/membership/chapter-locator/" },
-      { label: "Become a Partner", href: "/service-impact/corporate-partnerships/", variant: "outline" },
+      {
+        label: "Become a Partner",
+        href: "/service-impact/corporate-partnerships/",
+        variant: "outline",
+      },
     ]}
   />
 </Base>
@@ -291,7 +303,6 @@ const programs = [
     font-size: var(--text-h3);
     font-weight: 400;
   }
-
 
   /* One horizontal ribbon: three equal columns with hairline dividers. */
   .programs-stats {
