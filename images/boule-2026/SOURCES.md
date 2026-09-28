@@ -11,6 +11,8 @@ consent and videographer credit before launch, as for every photo on the site.
 | boule-2026-film.mp4 | 15 s homepage cover film, 1600x900, no sound, no on-screen text. Eight shots, slowed to 80%, lightly graded, joined with 0.3 s fades. | See the shot list below |
 | plenary-crowd.jpg | Members cheering at the Boulé, 1920x1080 frame at 0:07.9 | Day Two Recap, https://www.youtube.com/watch?v=slzVqMzU9PE |
 | bigbookbag-impact-day.jpg | Members with backpacks for Operation BigBookBag®, Community Impact Day, 1920x1080 frame at 0:17.0 | Day Two Recap, https://www.youtube.com/watch?v=slzVqMzU9PE |
+| marquee.jpg | The "Boulé by the Bay" marquee on the waterfront at dusk, 1920x1080 frame at 0:49.4 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
+| waterfront-gathering.jpg | Members celebrating at the waterfront gathering, 1920x1080 frame at 0:05.5 | Day 3–4 Recap, https://www.youtube.com/watch?v=3Q2vuvK09lI |
 
 Film shot list, in order (source times):
 

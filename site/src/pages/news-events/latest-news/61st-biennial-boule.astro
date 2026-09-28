@@ -1,7 +1,8 @@
 ---
 /**
  * Full story for the Latest News lead item. Copy is the text the lead card
- * carried before the newsroom redesign, unchanged.
+ * carried before the newsroom redesign, unchanged. Photographs are frames
+ * from HQ's own Boulé recap films (images/boule-2026/SOURCES.md).
  */
 import Base from "../../../layouts/Base.astro";
 import PageHero from "../../../components/PageHero.astro";
@@ -25,18 +26,21 @@ import { withBase } from "../../../lib/url.js";
     size="compact"
   />
   <article class="story">
+    {/* The lead picture runs wider than the text, the way a feature opens. */}
+    <figure class="container story__lead">
+      <img
+        src={withBase("/optimized/hero-boule-marquee.webp")}
+        srcset={`${withBase("/optimized/hero-boule-marquee-640.webp")} 640w, ${withBase("/optimized/hero-boule-marquee.webp")} 1200w`}
+        sizes="(min-width: 1148px) 1100px, 100vw"
+        alt="Members beside the lit Boulé by the Bay sign on the Tampa waterfront at dusk"
+        width="1200"
+        height="675"
+      />
+      <figcaption>
+        61st International Biennial Boulé &bull; Tampa, Florida &bull; July 22&ndash;26, 2026
+      </figcaption>
+    </figure>
     <div class="container story__inner">
-      <figure>
-        <img
-          src={withBase("/optimized/boule.webp")}
-          alt="Sigma Gamma Rho members at the 61st International Biennial Boulé in Tampa"
-          width="1200"
-          height="675"
-        />
-        <figcaption>
-          61st International Biennial Boulé &bull; Tampa, Florida &bull; July 22&ndash;26, 2026
-        </figcaption>
-      </figure>
       <p>
         Thousands of members, partners, and guests gathered at the Tampa Convention Center July
         22&ndash;26 for the 61st International Biennial Boulé &mdash; the first Sigma Gamma Rho
@@ -47,6 +51,19 @@ import { withBase } from "../../../lib/url.js";
         economic impact, alongside on-the-ground service including 300 newborn care packages, 3,000
         backpacks for K&ndash;8 students, and 300 free swim lessons for local youth.
       </p>
+      <figure>
+        <img
+          src={withBase("/optimized/home-bigbookbag-boule.webp")}
+          srcset={`${withBase("/optimized/home-bigbookbag-boule-640.webp")} 640w, ${withBase("/optimized/home-bigbookbag-boule.webp")} 1200w`}
+          sizes="(min-width: 800px) 48rem, 100vw"
+          alt="Members holding up backpacks for students during the Boulé's Community Impact Day"
+          width="1200"
+          height="675"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Operation BigBookBag&reg; &bull; Community Impact Day, Tampa</figcaption>
+      </figure>
       <blockquote>
         <p>
           &ldquo;Our presence in Tampa represents an investment in people, partnerships, and
@@ -79,6 +96,18 @@ import { withBase } from "../../../lib/url.js";
   }
   .story figure {
     margin: 0 0 var(--space-8);
+  }
+  .story .story__lead {
+    margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .story .story__lead img {
+    aspect-ratio: 21 / 9;
+    object-position: 50% 62%;
+  }
+  @media (max-width: 700px) {
+    .story .story__lead img {
+      aspect-ratio: 16 / 9;
+    }
   }
   .story figure img {
     display: block;

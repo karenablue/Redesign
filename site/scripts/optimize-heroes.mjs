@@ -34,6 +34,11 @@ const HEROES = {
   "hero-grand-basileus.webp": "international-grand-basileus-marica-harris-704x1024.jpg",
   // The 2026 International Board on stage at the 61st Boulé (sgrho1922.org).
   "hero-board-boule.webp": "live-2026/International-Board-of-Directors-2026-1.webp",
+  // Frames from HQ's own 61st Boulé recap films (boule-2026/SOURCES.md).
+  "home-boule-plenary.webp": "boule-2026/plenary-crowd.jpg",
+  "home-bigbookbag-boule.webp": "boule-2026/bigbookbag-impact-day.jpg",
+  "hero-boule-marquee.webp": "boule-2026/marquee.jpg",
+  "hero-boule-gathering.webp": "boule-2026/waterfront-gathering.jpg",
 };
 
 // Writes the full-size and phone-size copies of one image.
