@@ -87,7 +87,15 @@ const year = new Date().getFullYear();
       ))}
     </span>
   </div>
-  <p class="site-footer__tagline">Greater Service, Greater Progress<sup class="reg">&reg;</sup> &mdash; Far Over 100 Years</p>
+  {/* Every page closes on the motto at poster scale (2026-09-27): the
+      homepage's display-type signature, carried to all pages. */}
+  <div class="container site-footer__motto">
+    <p class="site-footer__motto-words">
+      <span>Greater Service,</span>
+      <span>Greater Progress<sup class="reg">&reg;</sup></span>
+    </p>
+    <p class="site-footer__tagline">Far Over 100 Years</p>
+  </div>
 </footer>
 
 <style>
@@ -212,15 +220,35 @@ const year = new Date().getFullYear();
   .site-footer__legal a:hover {
     color: var(--gold);
   }
-  .site-footer__tagline {
+  /* Gold is allowed on this dark ground; at this size it passes as large
+     text on the royal end of the gradient too. Sized to the column (cqi). */
+  .site-footer__motto {
+    container-type: inline-size;
+    padding-block: clamp(2.5rem, 5vw, 4rem) var(--space-8);
+  }
+  .site-footer__motto-words {
+    display: flex;
+    flex-direction: column;
     margin: 0;
-    padding: var(--space-4) 0 var(--space-8);
-    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 9.4cqi;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
     color: var(--gold);
-    font-family: var(--font-body);
+  }
+  .site-footer__motto-words .reg {
+    font-size: 0.3em;
+    vertical-align: 1.9em;
+  }
+  .site-footer__tagline {
+    margin: var(--space-5) 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-family: var(--font-editorial);
     font-style: italic;
-    font-size: var(--text-sm);
-    letter-spacing: 0.04em;
+    font-size: var(--text-md);
   }
 
   @media (max-width: 900px) {

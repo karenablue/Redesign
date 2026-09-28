@@ -104,6 +104,33 @@ await portraits(
   ],
   4
 );
+// The seven Founders side by side, as the texture inside the homepage's
+// photo-filled 1922: narrow greyscale crops, so every face falls in view.
+{
+  const founders = [
+    "our-founders-mary-lou-allison.jpg",
+    "our-founders-dorothy-hanley-whiteside.jpg",
+    "our-founders-vivian-irene-white.jpg",
+    "our-founders-nannie-mae-gahn-johnson-300x300.jpg",
+    "our-founders-hattie-mae-redford-300x300.jpg",
+    "our-founders-bessie-mae-downey-rhoades-300x300.jpg",
+    "our-founders-cubena-mcclure-300x300.jpg",
+  ];
+  const [w, h] = [300, 630];
+  const tiles = await Promise.all(
+    founders.map((f) =>
+      sharp(src(f)).rotate().resize({ width: w, height: h, fit: "cover", position: "attention" })
+        .greyscale().normalise().toBuffer()
+    )
+  );
+  const strip = await sharp({ create: { width: w * founders.length, height: h, channels: 3, background: "#777" } })
+    .composite(tiles.map((input, i) => ({ input, left: i * w, top: 0 })))
+    .png()
+    .toBuffer();
+  await sharp(strip).webp({ quality: 70 }).toFile(out("founders-strip.webp"));
+  await sharp(strip).resize({ width: 1050 }).webp({ quality: 66 }).toFile(out("founders-strip-1050.webp"));
+  console.log("founders-strip.webp  2100x630, founders-strip-1050.webp  1050x315");
+}
 // Notable Sigmas of the early century (credited on the Notable Sigmas page).
 await portraits(
   "hero-notable.webp",

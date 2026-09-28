@@ -461,11 +461,73 @@ const glance = [
   )}
 
   <!-- Origin: where the work comes from. -->
+  <!-- The three aims as one band of display type between news and heritage.
+       It drifts a little with the scroll (never on its own, and not at all
+       with reduced motion). Screen readers get the words once. -->
+  <div class="aims on-dark" data-aims>
+    <p class="visually-hidden">Sisterhood. Scholarship. Service.</p>
+    <div class="aims__track" aria-hidden="true">
+      {Array.from({ length: 4 }).map(() => (
+        <span class="aims__set">
+          <span>Sisterhood</span>
+          <span class="aims__mark">&Sigma;</span>
+          <span>Scholarship</span>
+          <span class="aims__mark">&Gamma;</span>
+          <span>Service</span>
+          <span class="aims__mark">&Rho;</span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <script>
+    // The aims band drifts sideways as it crosses the screen: tied to the
+    // scroll, so it never moves on its own, and still with reduced motion.
+    const band = document.querySelector<HTMLElement>("[data-aims]");
+    const track = band?.querySelector<HTMLElement>(".aims__track");
+    if (band && track && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      let queued = false;
+      const place = () => {
+        queued = false;
+        const box = band.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, (innerHeight - box.top) / (innerHeight + box.height)));
+        track.style.transform = `translate3d(${-progress * 20}%, 0, 0)`;
+      };
+      addEventListener(
+        "scroll",
+        () => {
+          if (!queued) {
+            queued = true;
+            requestAnimationFrame(place);
+          }
+        },
+        { passive: true }
+      );
+      place();
+    }
+  </script>
+
   <section class="section legacy" aria-labelledby="legacy-title">
     <div class="container">
+      <p class="eyebrow">Living Legacy</p>
+      {/* The signature: the founding year as a picture, filled with the
+          seven Founders (Herstory's year-as-graphic device, at poster scale). */}
+      <figure class="legacy__signature">
+        <p
+          class="legacy__year"
+          aria-hidden="true"
+          style={`--year-fill: image-set(url("${withBase("/optimized/founders-strip-1050.webp")}") 1x, url("${withBase("/optimized/founders-strip.webp")}") 2x)`}
+        >
+          1922
+        </p>
+        <figcaption>
+          Inside the numerals, the seven Founders: Mary Lou Allison Gardner Little, Dorothy
+          Hanley Whiteside, Vivian Irene White Marbury, Nannie Mae Gahn Johnson, Hattie Mae
+          Annette Dulin Redford, Bessie Mae Downey Rhoades Martin and Cubena McClure.
+        </figcaption>
+      </figure>
       <div class="legacy__head" data-reveal>
         <div>
-          <p class="eyebrow">Living Legacy</p>
           <h2 class="legacy__title" id="legacy-title">
             Seven Educators.
             <br />
@@ -1349,6 +1411,76 @@ const glance = [
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-5);
     }
+  }
+
+  /* The signature 1922: the year as a picture, filled with the seven
+     Founders in royal. Sized to the column (cqi), so it spans it exactly. */
+  .legacy > .container {
+    container-type: inline-size;
+  }
+  .legacy__signature {
+    margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  }
+  .legacy__signature figcaption {
+    max-width: 46rem;
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--gold);
+    color: var(--muted);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+  .legacy__year {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(6rem, 26vw, 22rem);
+    font-size: 46cqi;
+    line-height: 0.8;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    color: var(--royal);
+  }
+  @supports ((background-clip: text) or (-webkit-background-clip: text)) {
+    .legacy__year {
+      background: var(--year-fill) center 30% / cover, var(--royal);
+      background-blend-mode: multiply;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  /* The three aims as a band of display type; the Greek letters in gold,
+     which is allowed on navy. */
+  .aims {
+    overflow: hidden;
+    padding-block: clamp(1.25rem, 2.5vw, 2rem);
+    background: var(--navy);
+    color: #fff;
+  }
+  .aims__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  .aims__set {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    padding-right: clamp(1.25rem, 3vw, 2.5rem);
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 1.2rem + 4.5vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .aims__mark {
+    font-family: var(--font-greek);
+    font-size: 0.72em;
+    color: var(--gold);
   }
 
   /* At a glance: a data sheet, not cards. Each fact sits under a thin gold
