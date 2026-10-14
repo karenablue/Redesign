@@ -5,19 +5,11 @@
  * socialLinks). The column grid uses fr units, not the fixed-px tracks the
  * old footer shipped with.
  */
-import {
-  footerColumns,
-  footerContact,
-  footerLegal,
-  headerActions,
-  socialLinks,
-} from "../data/nav.js";
-import Button from "./Button.astro";
+import { footerColumns, footerContact, footerLegal, socialLinks } from "../data/nav.js";
 import { withBase } from "../lib/url.js";
 import { socialPaths } from "../lib/social-icons";
 
 const year = new Date().getFullYear();
-const portal = headerActions.find((a) => a.external);
 ---
 
 <footer class="site-footer on-dark">
@@ -54,33 +46,35 @@ const portal = headerActions.find((a) => a.external);
           </li>
         ))}
       </ul>
-      <address class="site-footer__address">
+    </div>
+
+    {footerColumns.map((col) => (
+      <nav class="site-footer__col" aria-label={col.title}>
+        <p class="site-footer__col-title">{col.title}</p>
+        <ul>
+          {col.links.map((l) => (
+            <li>
+              <a
+                href={withBase(l.href)}
+                {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="site-footer__col">
+      <p class="site-footer__col-title">{footerContact.title}</p>
+      <address>
         {footerContact.lines.map((line) => (
           <span>{line}</span>
         ))}
         <a href={`tel:${footerContact.phone}`}>{footerContact.phoneLabel}</a>
         <a href={`mailto:${footerContact.email}`}>{footerContact.email}</a>
       </address>
-      {portal && (
-        <Button href={portal.href} onDark class="site-footer__login">
-          Member Login
-        </Button>
-      )}
-    </div>
-
-    <div class="site-footer__links">
-      {footerColumns.map((col) => (
-        <nav class="site-footer__col" aria-label={col.title}>
-          <p class="site-footer__col-title">{col.title}</p>
-          <ul>
-            {col.links.map((l) => (
-              <li>
-                <a href={withBase(l.href)}>{l.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ))}
     </div>
   </div>
 
@@ -113,36 +107,9 @@ const portal = headerActions.find((a) => a.external);
   }
   .site-footer__top {
     display: grid;
-    grid-template-columns: minmax(16rem, 0.8fr) 2fr;
-    gap: var(--space-8);
-    align-items: start;
-    padding-block: clamp(3rem, 2.5rem + 2vw, 4.5rem) var(--space-10);
-  }
-  .site-footer__links {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1.3fr repeat(4, 1fr);
     gap: var(--space-10) var(--space-8);
-  }
-  .site-footer__brand {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-5);
-  }
-  .site-footer__address {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    font-style: normal;
-    font-size: var(--text-sm);
-    color: rgba(255, 255, 255, 0.82);
-  }
-  .site-footer__address a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .site-footer__address a:hover {
-    text-decoration: underline;
+    padding-block: clamp(4rem, 3rem + 4vw, 6rem) var(--space-12);
   }
   .site-footer__logo {
     display: flex;
@@ -151,7 +118,7 @@ const portal = headerActions.find((a) => a.external);
     /* FY2027 minimum for the full Coat of Arms is 1 1/3in x 1in, so the
        crest runs at 128px here and nothing crowds it: clear space below is
        a third of its height. */
-    gap: var(--space-5);
+    gap: var(--space-10);
     text-decoration: none;
     color: var(--white);
   }
@@ -177,7 +144,7 @@ const portal = headerActions.find((a) => a.external);
   .site-footer__social {
     display: flex;
     gap: var(--space-2);
-    margin: 0;
+    margin: var(--space-6) 0 0;
     padding: 0;
     list-style: none;
   }
@@ -287,12 +254,12 @@ const portal = headerActions.find((a) => a.external);
 
   @media (max-width: 900px) {
     .site-footer__top {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (max-width: 560px) {
-    .site-footer__links {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .site-footer__top {
+      grid-template-columns: 1fr;
     }
   }
 </style>
