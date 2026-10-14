@@ -71,6 +71,11 @@ const symbols = [
     </a>
   </PageHero>
 
+  <p class="container of-hint">
+    Looking for the foundations that raise funds for scholarships and programs? See
+    <a href={withBase("/service-impact/partner-foundations/")}>Partner Foundations</a>.
+  </p>
+
   <section class="of-mv" id="mission" aria-label="Mission and vision">
     <div class="container of-mv__inner">
       <article>
@@ -103,7 +108,9 @@ const symbols = [
   <section class="of-symbols" id="symbols" aria-labelledby="of-symbols-title">
     <div class="container">
       <p class="eyebrow">Official Symbols</p>
-      <h2 class="of-symbols__title" id="of-symbols-title">The marks of a Sigma woman.</h2>
+      <h2 class="of-symbols__title" id="of-symbols-title">
+        The marks of a Sigma woman.
+      </h2>
       <FactSheet items={symbols} cols={3} />
       <p class="of-symbols__more">
         The Founders, the charter, and a century of firsts are told on{" "}
@@ -127,6 +134,15 @@ const symbols = [
 </Base>
 
 <style>
+  .of-hint {
+    margin-block: var(--space-6, 1.5rem) 0;
+    color: var(--ink-soft, inherit);
+    font-size: 0.95rem;
+  }
+  .of-hint a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
   .of-mv {
     background: var(--white);
     padding-block: var(--section-y);
