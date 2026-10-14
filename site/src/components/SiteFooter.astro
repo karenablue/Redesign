@@ -5,40 +5,17 @@
  * socialLinks). The column grid uses fr units, not the fixed-px tracks the
  * old footer shipped with.
  */
-import {
-  footerColumns,
-  footerContact,
-  footerLegal,
-  headerActions,
-  socialLinks,
-} from "../data/nav.js";
-import Button from "./Button.astro";
+import { footerContact, footerLegal, primaryNav, socialLinks } from "../data/nav.js";
 import { withBase } from "../lib/url.js";
 import { socialPaths } from "../lib/social-icons";
 
 const year = new Date().getFullYear();
+// Each section links to its first page; the dropdowns hold the rest.
+const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.children?.[0]?.href }));
 ---
 
 <footer class="site-footer on-dark">
   <div class="container site-footer__top">
-    {footerColumns.map((col) => (
-      <nav class="site-footer__col" aria-label={col.title}>
-        <p class="site-footer__col-title">{col.title}</p>
-        <ul>
-          {col.links.map((l) => (
-            <li>
-              <a
-                href={withBase(l.href)}
-                {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    ))}
-
     <div class="site-footer__brand">
       <a href={withBase("/")} class="site-footer__logo" aria-label="Sigma Gamma Rho home">
         <img
@@ -73,19 +50,6 @@ const year = new Date().getFullYear();
       </ul>
     </div>
 
-    <div class="site-footer__actions">
-      {headerActions.map((x) => (
-        <Button
-          href={x.href}
-          variant={x.variant === "solid" ? "solid" : "outline"}
-          onDark
-          {...(x.external ? { target: "_blank", rel: "noopener" } : {})}
-        >
-          {x.label}
-        </Button>
-      ))}
-    </div>
-
     <div class="site-footer__col site-footer__contact">
       <p class="site-footer__col-title">{footerContact.title}</p>
       <address>
@@ -97,6 +61,12 @@ const year = new Date().getFullYear();
       </address>
     </div>
   </div>
+
+  <nav class="container site-footer__sections" aria-label="Site sections">
+    {sections.map((s) => (
+      <a href={withBase(s.href)}>{s.label}</a>
+    ))}
+  </nav>
 
   <div class="container site-footer__bottom">
     <span>&copy; {year} Sigma Gamma Rho Sorority, Inc. All rights reserved.</span>
@@ -127,24 +97,29 @@ const year = new Date().getFullYear();
   }
   .site-footer__top {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-10) var(--space-8);
     padding-block: clamp(4rem, 3rem + 4vw, 6rem) var(--space-12);
   }
-  /* Row 1: the six nav sections. Row 2: crest + social, the header actions,
-     and contact. */
-  .site-footer__top > .site-footer__brand {
-    grid-column: 1 / 3;
-  }
-  .site-footer__actions {
-    grid-column: 3 / 5;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
-  }
   .site-footer__contact {
-    grid-column: 5 / 7;
+    justify-self: end;
+    min-width: 14rem;
+  }
+  .site-footer__sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-8);
+    padding-block: var(--space-6);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .site-footer__sections a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .site-footer__sections a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
   .site-footer__logo {
     display: flex;
@@ -287,24 +262,12 @@ const year = new Date().getFullYear();
     font-size: var(--text-md);
   }
 
-  @media (max-width: 1100px) {
-    .site-footer__top {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .site-footer__top > .site-footer__brand,
-    .site-footer__actions,
-    .site-footer__contact {
-      grid-column: 1 / -1;
-    }
-  }
-  @media (max-width: 900px) {
-    .site-footer__top {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 560px) {
+  @media (max-width: 700px) {
     .site-footer__top {
       grid-template-columns: 1fr;
+    }
+    .site-footer__contact {
+      justify-self: start;
     }
   }
 </style>
