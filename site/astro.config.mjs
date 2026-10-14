@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   // Public URL the finished site will live at. Used for canonical URLs and
   // sitemap. Update to the real domain before launch.
-  site: "https://www.sgrho1922.org",
+  site: process.env.SITE_URL || "https://www.sgrho1922.org",
 
   // If the site is served from a sub-path (e.g. GitHub Pages project site at
   // https://user.github.io/Redesign/), set base: "/Redesign". All internal
