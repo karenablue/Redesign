@@ -21,7 +21,6 @@ export const primaryNav = [
     children: [
       { label: "Herstory", href: "/about/herstory/" },
       { label: "Our Founders", href: "/about/our-founders/" },
-      { label: "Our Foundations", href: "/about/herstory/#mission-vision" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
       { label: "Anti-Hazing Policy", href: "/about/anti-hazing-policy/" },
     ],
@@ -88,40 +87,12 @@ export const headerActions = [
   { label: "Donate", href: "/service-impact/partner-foundations/", variant: "outline" },
 ];
 
-/* Footer link columns. Kept separate from primaryNav because the footer
-   groups links differently (e.g. "Programs", Poodle Portal). */
-export const footerColumns = [
-  {
-    title: "About",
-    links: [
-      { label: "Our History", href: "/about/herstory/" },
-      { label: "Our Founders", href: "/about/our-founders/" },
-      { label: "Our Foundations", href: "/about/herstory/#mission-vision" },
-      { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
-      { label: "Headquarters", href: "/leadership/headquarters/" },
-    ],
-  },
-  {
-    title: "Membership",
-    links: [
-      { label: "Become a Member", href: "/membership/become-a-member/" },
-      { label: "Reactivate", href: "/membership/reactivate/" },
-      { label: "Chapter Locator", href: "/membership/chapter-locator/" },
-      { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
-      { label: "Accountability", href: "/membership/accountability/" },
-    ],
-  },
-  {
-    title: "Programs",
-    links: [
-      { label: "National Programs", href: "/service-impact/national-programs/" },
-      { label: "Scholarships", href: "/service-impact/partner-foundations/#nef" },
-      { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
-      { label: "Affiliates", href: "/service-impact/affiliates/" },
-      { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
-    ],
-  },
-];
+/* Footer link columns. Derived from primaryNav so the footer always matches
+   the header: same sections, same labels, same order. */
+export const footerColumns = primaryNav.map((section) => ({
+  title: section.label,
+  links: section.children ?? (section.href ? [{ label: section.label, href: section.href }] : []),
+}));
 
 /* Bottom-bar legal links — site-wide utility pages, kept out of primaryNav
    and footerColumns because they belong in the copyright row. */
