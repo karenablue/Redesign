@@ -5,13 +5,19 @@
  * socialLinks). The column grid uses fr units, not the fixed-px tracks the
  * old footer shipped with.
  */
-import { footerContact, footerLegal, primaryNav, socialLinks } from "../data/nav.js";
+import {
+  footerColumns,
+  footerContact,
+  footerLegal,
+  headerActions,
+  socialLinks,
+} from "../data/nav.js";
+import Button from "./Button.astro";
 import { withBase } from "../lib/url.js";
 import { socialPaths } from "../lib/social-icons";
 
 const year = new Date().getFullYear();
-// Each section links to its first page; the dropdowns hold the rest.
-const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.children?.[0]?.href }));
+const portal = headerActions.find((a) => a.external);
 ---
 
 <footer class="site-footer on-dark">
@@ -48,25 +54,35 @@ const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.chil
           </li>
         ))}
       </ul>
-    </div>
-
-    <div class="site-footer__col site-footer__contact">
-      <p class="site-footer__col-title">{footerContact.title}</p>
-      <address>
+      <address class="site-footer__address">
         {footerContact.lines.map((line) => (
           <span>{line}</span>
         ))}
         <a href={`tel:${footerContact.phone}`}>{footerContact.phoneLabel}</a>
         <a href={`mailto:${footerContact.email}`}>{footerContact.email}</a>
       </address>
+      {portal && (
+        <Button href={portal.href} onDark class="site-footer__login">
+          Member Login
+        </Button>
+      )}
+    </div>
+
+    <div class="site-footer__links">
+      {footerColumns.map((col) => (
+        <nav class="site-footer__col" aria-label={col.title}>
+          <p class="site-footer__col-title">{col.title}</p>
+          <ul>
+            {col.links.map((l) => (
+              <li>
+                <a href={withBase(l.href)}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
     </div>
   </div>
-
-  <nav class="container site-footer__sections" aria-label="Site sections">
-    {sections.map((s) => (
-      <a href={withBase(s.href)}>{s.label}</a>
-    ))}
-  </nav>
 
   <div class="container site-footer__bottom">
     <span>&copy; {year} Sigma Gamma Rho Sorority, Inc. All rights reserved.</span>
@@ -97,29 +113,36 @@ const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.chil
   }
   .site-footer__top {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(16rem, 0.8fr) 2fr;
+    gap: var(--space-8);
+    align-items: start;
+    padding-block: clamp(3rem, 2.5rem + 2vw, 4.5rem) var(--space-10);
+  }
+  .site-footer__links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-10) var(--space-8);
-    padding-block: clamp(4rem, 3rem + 4vw, 6rem) var(--space-12);
   }
-  .site-footer__contact {
-    justify-self: end;
-    min-width: 14rem;
-  }
-  .site-footer__sections {
+  .site-footer__brand {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3) var(--space-8);
-    padding-block: var(--space-6);
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
   }
-  .site-footer__sections a {
-    color: var(--white);
+  .site-footer__address {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-style: normal;
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .site-footer__address a {
+    color: inherit;
     text-decoration: none;
-    font-weight: 600;
   }
-  .site-footer__sections a:hover {
+  .site-footer__address a:hover {
     text-decoration: underline;
-    text-underline-offset: 0.2em;
   }
   .site-footer__logo {
     display: flex;
@@ -128,7 +151,7 @@ const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.chil
     /* FY2027 minimum for the full Coat of Arms is 1 1/3in x 1in, so the
        crest runs at 128px here and nothing crowds it: clear space below is
        a third of its height. */
-    gap: var(--space-10);
+    gap: var(--space-5);
     text-decoration: none;
     color: var(--white);
   }
@@ -154,7 +177,7 @@ const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.chil
   .site-footer__social {
     display: flex;
     gap: var(--space-2);
-    margin: var(--space-6) 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -262,12 +285,14 @@ const sections = primaryNav.map((s) => ({ label: s.label, href: s.href ?? s.chil
     font-size: var(--text-md);
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     .site-footer__top {
       grid-template-columns: 1fr;
     }
-    .site-footer__contact {
-      justify-self: start;
+  }
+  @media (max-width: 560px) {
+    .site-footer__links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>
