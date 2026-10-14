@@ -42,6 +42,7 @@ export const primaryNav = [
       { label: "Become a Member", href: "/membership/become-a-member/" },
       { label: "Reactivate Membership", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
+      { label: "Membership Accountability", href: "/membership/accountability/" },
     ],
   },
   {
@@ -50,6 +51,7 @@ export const primaryNav = [
       { label: "National Programs", href: "/service-impact/national-programs/" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
       { label: "Affiliates", href: "/service-impact/affiliates/" },
+      { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
     ],
   },
   {
