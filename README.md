@@ -1,20 +1,10 @@
 # SGRho National Website — Redesign
 
-This repo holds two things side by side on purpose:
+An [Astro](https://astro.build) rebuild of the Sigma Gamma Rho Sorority, Inc. national site.
 
-- **Repo root** (`index.html`, `about/`, `leadership/`, `membership/`, `images/`, …) —
-  the original Figma Make export. It is **reference only**: existing content,
-  copy, and images to pull from. Nothing in the rebuild imports it.
-- **[`site/`](site/)** — the actual rebuild, in progress. An Astro project with
-  a real component/design system, replacing the flat per-page HTML in the root.
+- **[`site/`](site/)** — the Astro project. See [`site/README.md`](site/README.md) to run it and how it's organized.
+- **`images/`** — shared logos and imagery; `site/` links to it (`site/scripts/link-images.mjs`).
+- **`photo-library/`** — supplied source photography.
+- **`SGR-Brand-Guidelines-FY2027.pdf`** — the official brand guidelines.
 
-**Work happens in `site/`.** See [`site/README.md`](site/README.md) for how to
-run it, how it's organized, and how to port a page from the root reference into
-the new system.
-
-The source transfer, account setup, content approvals, and launch checks are
-documented in [`site/HANDOFF.md`](site/HANDOFF.md).
-
-When the rebuild is finished, the root reference pages get deleted and `site/`
-is promoted to the repo root (see "When the rebuild is done" in
-`site/README.md`).
+The source transfer, account setup, content approvals, and launch checks are in [`site/HANDOFF.md`](site/HANDOFF.md).
