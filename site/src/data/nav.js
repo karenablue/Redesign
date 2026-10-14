@@ -21,7 +21,7 @@ export const primaryNav = [
     children: [
       { label: "Herstory", href: "/about/herstory/" },
       { label: "Our Founders", href: "/about/our-founders/" },
-      { label: "Our Foundations", href: "/about/our-foundations/" },
+      { label: "Our Foundations", href: "/about/herstory/#mission-vision" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
       { label: "Anti-Hazing Policy", href: "/about/anti-hazing-policy/" },
     ],
@@ -96,7 +96,7 @@ export const footerColumns = [
     links: [
       { label: "Our History", href: "/about/herstory/" },
       { label: "Our Founders", href: "/about/our-founders/" },
-      { label: "Our Foundations", href: "/about/our-foundations/" },
+      { label: "Our Foundations", href: "/about/herstory/#mission-vision" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
       { label: "Headquarters", href: "/leadership/headquarters/" },
     ],
