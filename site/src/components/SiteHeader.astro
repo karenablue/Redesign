@@ -925,4 +925,70 @@ const joinAction = headerActions.find((action) => action.label === "Join");
       padding: var(--space-4);
     }
   }
+
+  /* ---------- motion (UX in Motion: continuity + offset & delay) ----------
+     Menus grow out of the control that opened them, so the viewer sees where
+     they came from instead of a panel appearing from nowhere. Short, ease-out,
+     and off entirely under prefers-reduced-motion. */
+  @media (min-width: 1280px) {
+    .site-nav__menu {
+      transform: translate(-50%, -6px);
+      transition:
+        opacity 160ms var(--ease-out-strong),
+        transform 200ms var(--ease-out-strong),
+        visibility 0s linear 160ms;
+    }
+    .site-nav__item.is-open > .site-nav__menu {
+      transform: translate(-50%, 0);
+      transition-delay: 0s;
+    }
+    .site-nav__menu li {
+      opacity: 0;
+      transform: translateY(-4px);
+      transition:
+        opacity 160ms var(--ease-out-strong),
+        transform 200ms var(--ease-out-strong);
+    }
+    .site-nav__item.is-open > .site-nav__menu li {
+      opacity: 1;
+      transform: none;
+    }
+    .site-nav__item.is-open > .site-nav__menu li:nth-child(2) {
+      transition-delay: 25ms;
+    }
+    .site-nav__item.is-open > .site-nav__menu li:nth-child(3) {
+      transition-delay: 50ms;
+    }
+    .site-nav__item.is-open > .site-nav__menu li:nth-child(4) {
+      transition-delay: 75ms;
+    }
+    .site-nav__item.is-open > .site-nav__menu li:nth-child(n + 5) {
+      transition-delay: 100ms;
+    }
+  }
+  @keyframes sgr-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .search-panel:not([hidden]),
+  .nav-bar.is-menu-open .nav-panel {
+    animation: sgr-panel-in 220ms var(--ease-out-strong) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav__menu,
+    .site-nav__menu li {
+      transition: none;
+      transform: none;
+    }
+    .search-panel:not([hidden]),
+    .nav-bar.is-menu-open .nav-panel {
+      animation: none;
+    }
+  }
 </style>
