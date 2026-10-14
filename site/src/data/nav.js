@@ -32,8 +32,8 @@ export const primaryNav = [
       { label: "International Grand Basileus", href: "/leadership/international-grand-basileus/" },
       { label: "Board of Directors", href: "/leadership/international-board/" },
       { label: "Regional Leadership", href: "/leadership/regional-leadership/" },
-      { label: "International Corporate Headquarters", href: "/leadership/headquarters/" },
       { label: "Past Grand Basilei", href: "/leadership/past-grand-basilei/" },
+      { label: "International Corporate Headquarters", href: "/leadership/headquarters/" },
     ],
   },
   {
@@ -42,6 +42,7 @@ export const primaryNav = [
       { label: "Become a Member", href: "/membership/become-a-member/" },
       { label: "Reactivate Membership", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
+      { label: "Affiliates", href: "/service-impact/affiliates/" },
       { label: "Membership Accountability", href: "/membership/accountability/" },
     ],
   },
@@ -50,7 +51,6 @@ export const primaryNav = [
     children: [
       { label: "National Programs", href: "/service-impact/national-programs/" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
-      { label: "Affiliates", href: "/service-impact/affiliates/" },
       { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
     ],
   },
@@ -67,10 +67,9 @@ export const primaryNav = [
     label: "Resources",
     children: [
       { label: "Help Center", href: "/resources/help-center/" },
+      { label: "Vendor", href: "/resources/vendor/" },
       { label: "Contact Us", href: "/resources/contact/" },
       { label: "Careers", href: "/resources/careers/" },
-      { label: "Vendor", href: "/resources/vendor/" },
-      { label: "Media", href: "/resources/media/" },
     ],
   },
 ];
@@ -108,6 +107,7 @@ export const footerColumns = [
       { label: "Become a Member", href: "/membership/become-a-member/" },
       { label: "Reactivate", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
+      { label: "Affiliates", href: "/service-impact/affiliates/" },
       { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
       { label: "Accountability", href: "/membership/accountability/" },
     ],
@@ -118,7 +118,6 @@ export const footerColumns = [
       { label: "National Programs", href: "/service-impact/national-programs/" },
       { label: "Scholarships", href: "/service-impact/partner-foundations/#nef" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
-      { label: "Affiliates", href: "/service-impact/affiliates/" },
       { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
     ],
   },
