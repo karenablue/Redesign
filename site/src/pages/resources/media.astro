@@ -1,0 +1,165 @@
+---
+/**
+ * Media — the official brand assets: logos, affiliate marks, templates, and
+ * the brand guidelines. "Media" is a Resources item in the tested IA,
+ * distinct from Media Relations (the press desk under News & Events).
+ *
+ * The asset list mirrors what HQ publishes at sgrho1922.org/media/. The files
+ * themselves stay on HQ's page, so the site never serves an out-of-date
+ * logo; every download link points there.
+ */
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import LinkGrid from "../../components/LinkGrid.astro";
+import CtaBand from "../../components/CtaBand.astro";
+
+const ASSETS_URL = "https://sgrho1922.org/media/";
+const GUIDELINES_URL =
+  "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
+
+const assets = [
+  {
+    label: "Shield",
+    note: "The Sorority's shield. PNG for screens, SVG for print.",
+    href: ASSETS_URL,
+    external: true,
+  },
+  {
+    label: "Greek Letters",
+    note: "ΣΓΡ in gold, blue, and white. PNG and SVG.",
+    href: ASSETS_URL,
+    external: true,
+  },
+  {
+    label: "Affiliate Logos",
+    note: "Rhoer, Philo®, and Rhosebud marks. PNG and SVG.",
+    href: ASSETS_URL,
+    external: true,
+  },
+  {
+    label: "Tagline",
+    note: "The “Greater Women” tagline. PNG and SVG.",
+    href: ASSETS_URL,
+    external: true,
+  },
+  {
+    label: "Templates",
+    note: "The PowerPoint template and letterhead.",
+    href: ASSETS_URL,
+    external: true,
+  },
+  {
+    label: "Social Media Policy",
+    note: "How chapters and members represent the Sorority online (PDF).",
+    href: ASSETS_URL,
+    external: true,
+  },
+];
+
+const related = [
+  {
+    label: "Brand Guidelines",
+    note: "Colors, typefaces, and correct use of every mark (PDF).",
+    href: GUIDELINES_URL,
+    external: true,
+  },
+  {
+    label: "Media Relations",
+    note: "Press contacts, interviews, and the approved boilerplate.",
+    href: "/news-events/media-relations/",
+  },
+  {
+    label: "Licensed Vendors",
+    note: "Buy paraphernalia only from approved vendors.",
+    href: "/resources/vendor/",
+  },
+];
+---
+
+<Base
+  title="Media"
+  activeTop="Resources"
+  description="Official Sigma Gamma Rho logos, affiliate marks, templates, and brand guidelines for authorized use."
+>
+  <PageHero
+    tone="paper"
+    editorial
+    stack
+    crumbs={[{ label: "Home", href: "/" }, { label: "Resources" }, { label: "Media" }]}
+    eyebrow="Resources • Brand Assets"
+    title="Official marks."
+    highlight="Used with care."
+    copy="The shield, Greek letters, affiliate logos, templates, and letterhead are the intellectual property of Sigma Gamma Rho Sorority, Inc. and are provided for authorized use only."
+    size="compact"
+  >
+    <a class="btn" href={ASSETS_URL} target="_blank" rel="noopener">
+      Download Official Assets <span aria-hidden="true">&#8599;</span>
+    </a>
+    <a class="btn btn--outline on-dark" href={GUIDELINES_URL} target="_blank" rel="noopener">
+      Brand Guidelines (PDF) <span aria-hidden="true">&#8599;</span>
+    </a>
+  </PageHero>
+
+  <section class="md-assets" aria-labelledby="md-assets-title">
+    <div class="container md-assets__inner">
+      <div class="md-assets__heading">
+        <p class="eyebrow">What&rsquo;s Available</p>
+        <h2 id="md-assets-title">Brand Assets</h2>
+        <p>
+          Every file is published by International Corporate Headquarters. Download the current
+          version each time rather than reusing an old copy.
+        </p>
+      </div>
+      <LinkGrid items={assets} cols={3} />
+    </div>
+  </section>
+
+  <section class="md-related" aria-labelledby="md-related-title">
+    <div class="container md-assets__inner">
+      <div class="md-assets__heading">
+        <p class="eyebrow">Before You Publish</p>
+        <h2 id="md-related-title">Use the Marks Correctly</h2>
+        <p>Check the guidelines first, and route press questions to the Media Relations team.</p>
+      </div>
+      <LinkGrid items={related} cols={3} />
+    </div>
+  </section>
+
+  <CtaBand
+    image="/optimized/hero-ug-sorors.webp"
+    focal="50% 30%"
+    eyebrow="Royal Blue & Gold"
+    title="Questions about a mark? "
+    highlight="Ask Headquarters."
+    copy="The Help Center routes brand and licensing questions to the right team."
+    actions={[
+      { label: "Visit the Help Center", href: "/resources/help-center/" },
+      { label: "Contact Us", href: "/resources/contact/", variant: "outline" },
+    ]}
+  />
+</Base>
+
+<style>
+  .md-assets,
+  .md-related {
+    padding-block: var(--section-y);
+  }
+  .md-assets {
+    background: var(--white);
+  }
+  .md-related {
+    background: var(--tint);
+  }
+  .md-assets__inner {
+    display: grid;
+    gap: var(--space-8);
+  }
+  .md-assets__heading h2 {
+    margin: var(--space-2) 0 var(--space-3);
+  }
+  .md-assets__heading > p:not(.eyebrow) {
+    color: var(--muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+</style>

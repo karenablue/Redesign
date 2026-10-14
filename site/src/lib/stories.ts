@@ -1,6 +1,6 @@
 /**
  * Shared bits for chapter stories and member voices (homepage + the
- * Chapter Stories page). Submissions go to the one public HQ address;
+ * Highlights & Stories page). Submissions go to the one public HQ address;
  * no other contact address is used on this site.
  */
 export const SUBMIT_EMAIL = "help@sgrho1922.org";

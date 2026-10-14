@@ -15,7 +15,6 @@ import { withBase } from "../../lib/url.js";
 import { getCollection } from "astro:content";
 
 const PRESS_EMAIL = "help@sgrho1922.org";
-const ASSETS_URL = "https://sgrho1922.org/media-inquiries/";
 const GUIDELINES_URL =
   "https://sgrho1922.org/wp-content/uploads/2026/07/SGR-Brand-Guidelines-FY2027.pdf";
 
@@ -229,7 +228,7 @@ const releases = (await getCollection("news"))
             </a>
           </li>
           <li>
-            <a href={withBase("/about/headquarters/")}>
+            <a href={withBase("/leadership/headquarters/")}>
               Dr. Karen Y. Williams, Executive Director <span aria-hidden="true">&rarr;</span>
             </a>
           </li>
@@ -275,8 +274,8 @@ const releases = (await getCollection("news"))
         </p>
       </div>
       <div class="mr-brand__actions">
-        <a class="btn" href={ASSETS_URL} target="_blank" rel="noopener">
-          Download Official Assets <span aria-hidden="true">&#8599;</span>
+        <a class="btn" href={withBase("/resources/media/")}>
+          Brand Assets <span aria-hidden="true">&rarr;</span>
         </a>
         <a class="btn btn--outline" href={GUIDELINES_URL} target="_blank" rel="noopener">
           Brand Guidelines (PDF) <span aria-hidden="true">&#8599;</span>

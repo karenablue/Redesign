@@ -50,7 +50,10 @@ function fold(line: string): string {
 }
 
 export function buildIcs(event: IcsEvent, stamp = new Date()): string {
-  const dtstamp = stamp.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const dtstamp = stamp
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}/, "");
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",

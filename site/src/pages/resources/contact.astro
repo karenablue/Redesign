@@ -8,11 +8,11 @@
  * Freshdesk ticket form for anyone who wants a tracking number. Office hours
  * are not published, so none are stated.
  */
-import Base from "../layouts/Base.astro";
-import PageHero from "../components/PageHero.astro";
-import CtaBand from "../components/CtaBand.astro";
-import FactSheet from "../components/FactSheet.astro";
-import LinkGrid from "../components/LinkGrid.astro";
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import FactSheet from "../../components/FactSheet.astro";
+import LinkGrid from "../../components/LinkGrid.astro";
 
 const EMAIL = "help@sgrho1922.org";
 const TICKET_URL = "https://helpsgrho1922.freshdesk.com/support/tickets/new";
@@ -69,8 +69,8 @@ const departments = [
 ---
 
 <Base
-  title="Contact"
-  activeTop="Contact"
+  title="Contact Us"
+  activeTop="Resources"
   description="Contact Sigma Gamma Rho's International Corporate Headquarters: address, phone, email, and an inquiry form."
 >
   <PageHero
@@ -222,7 +222,7 @@ const departments = [
 </Base>
 
 <script>
-  import { wireComposeForms } from "../scripts/compose-email";
+  import { wireComposeForms } from "../../scripts/compose-email";
 
   wireComposeForms();
 </script>

@@ -17,39 +17,39 @@
  */
 export const primaryNav = [
   {
-    label: "About Us",
+    label: "About",
     children: [
       { label: "Herstory", href: "/about/herstory/" },
-      { label: "The Seven Founders", href: "/about/our-founders/" },
+      { label: "Our Founders", href: "/about/our-founders/" },
+      { label: "Our Foundations", href: "/about/our-foundations/" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
-      { label: "International Corporate Headquarters", href: "/about/headquarters/" },
+      { label: "Anti-Hazing Policy", href: "/about/anti-hazing-policy/" },
     ],
   },
   {
     label: "Leadership",
     children: [
       { label: "International Grand Basileus", href: "/leadership/international-grand-basileus/" },
-      { label: "International Board of Directors", href: "/leadership/international-board/" },
+      { label: "Board of Directors", href: "/leadership/international-board/" },
       { label: "Regional Leadership", href: "/leadership/regional-leadership/" },
+      { label: "International Corporate Headquarters", href: "/leadership/headquarters/" },
       { label: "Past Grand Basilei", href: "/leadership/past-grand-basilei/" },
     ],
   },
   {
-    label: "Membership & Intake",
+    label: "Membership",
     children: [
       { label: "Become a Member", href: "/membership/become-a-member/" },
       { label: "Reactivate Membership", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
-      { label: "Affiliates", href: "/membership/affiliates/" },
-      { label: "Membership Accountability", href: "/membership/accountability/" },
     ],
   },
   {
-    label: "Programs & Impact",
+    label: "Programs & Initiatives",
     children: [
       { label: "National Programs", href: "/service-impact/national-programs/" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
-      { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
+      { label: "Affiliates", href: "/service-impact/affiliates/" },
     ],
   },
   {
@@ -57,7 +57,7 @@ export const primaryNav = [
     children: [
       { label: "Latest News", href: "/news-events/latest-news/" },
       { label: "Upcoming Events", href: "/news-events/upcoming-events/" },
-      { label: "Chapter Stories", href: "/news-events/chapter-stories/" },
+      { label: "Highlights & Stories", href: "/news-events/highlights-stories/" },
       { label: "Media Relations", href: "/news-events/media-relations/" },
     ],
   },
@@ -65,12 +65,12 @@ export const primaryNav = [
     label: "Resources",
     children: [
       { label: "Help Center", href: "/resources/help-center/" },
-      { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
-      { label: "Licensed Vendors", href: "/resources/vendor/" },
+      { label: "Contact Us", href: "/resources/contact/" },
       { label: "Careers", href: "/resources/careers/" },
+      { label: "Vendor", href: "/resources/vendor/" },
+      { label: "Media", href: "/resources/media/" },
     ],
   },
-  { label: "Contact", href: "/contact/" },
 ];
 
 /* Deck 1's two utility actions, right of the wordmark. */
@@ -94,9 +94,10 @@ export const footerColumns = [
     title: "About",
     links: [
       { label: "Our History", href: "/about/herstory/" },
-      { label: "The Seven Founders", href: "/about/our-founders/" },
+      { label: "Our Founders", href: "/about/our-founders/" },
+      { label: "Our Foundations", href: "/about/our-foundations/" },
       { label: "Notable Sigmas", href: "/about/notable-sigmas/" },
-      { label: "Headquarters", href: "/about/headquarters/" },
+      { label: "Headquarters", href: "/leadership/headquarters/" },
     ],
   },
   {
@@ -106,7 +107,6 @@ export const footerColumns = [
       { label: "Reactivate", href: "/membership/reactivate/" },
       { label: "Chapter Locator", href: "/membership/chapter-locator/" },
       { label: "Poodle Portal", href: "https://portal.sgrho1922.org/", external: true },
-      { label: "Affiliates", href: "/membership/affiliates/" },
       { label: "Accountability", href: "/membership/accountability/" },
     ],
   },
@@ -116,8 +116,8 @@ export const footerColumns = [
       { label: "National Programs", href: "/service-impact/national-programs/" },
       { label: "Scholarships", href: "/service-impact/partner-foundations/#nef" },
       { label: "Partner Foundations", href: "/service-impact/partner-foundations/" },
+      { label: "Affiliates", href: "/service-impact/affiliates/" },
       { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
-      { label: "Community Impact", href: "/service-impact/national-programs/" },
     ],
   },
 ];
@@ -130,7 +130,7 @@ export const footerLegal = [
   { label: "Terms of Use", href: "/terms/" },
   { label: "Accessibility", href: "/accessibility/" },
   { label: "Membership Accountability", href: "/membership/accountability/" },
-  { label: "Anti-Hazing Policy", href: "/resources/anti-hazing-policy/" },
+  { label: "Anti-Hazing Policy", href: "/about/anti-hazing-policy/" },
   { label: "Help Center", href: "/resources/help-center/" },
 ];
 
@@ -166,5 +166,12 @@ export function searchIndex() {
     if (item.href) out.push({ label: item.label, href: item.href });
     for (const child of item.children ?? []) out.push({ label: child.label, href: child.href });
   }
-  return out;
+  return [...out, ...unlistedPages];
 }
+
+/* Real pages the tested IA leaves out of primaryNav. They stay reachable
+   from the footer and in-page links, and search still finds them. */
+const unlistedPages = [
+  { label: "Membership Accountability", href: "/membership/accountability/" },
+  { label: "Corporate Partnerships", href: "/service-impact/corporate-partnerships/" },
+];

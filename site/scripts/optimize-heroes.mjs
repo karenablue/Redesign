@@ -131,16 +131,25 @@ await portraits(
   const [w, h] = [300, 630];
   const tiles = await Promise.all(
     founders.map((f) =>
-      sharp(src(f)).rotate().resize({ width: w, height: h, fit: "cover", position: "attention" })
-        .greyscale().normalise().toBuffer()
+      sharp(src(f))
+        .rotate()
+        .resize({ width: w, height: h, fit: "cover", position: "attention" })
+        .greyscale()
+        .normalise()
+        .toBuffer()
     )
   );
-  const strip = await sharp({ create: { width: w * founders.length, height: h, channels: 3, background: "#777" } })
+  const strip = await sharp({
+    create: { width: w * founders.length, height: h, channels: 3, background: "#777" },
+  })
     .composite(tiles.map((input, i) => ({ input, left: i * w, top: 0 })))
     .png()
     .toBuffer();
   await sharp(strip).webp({ quality: 70 }).toFile(out("founders-strip.webp"));
-  await sharp(strip).resize({ width: 1050 }).webp({ quality: 66 }).toFile(out("founders-strip-1050.webp"));
+  await sharp(strip)
+    .resize({ width: 1050 })
+    .webp({ quality: 66 })
+    .toFile(out("founders-strip-1050.webp"));
   console.log("founders-strip.webp  2100x630, founders-strip-1050.webp  1050x315");
 }
 // Notable Sigmas of the early century (credited on the Notable Sigmas page).
@@ -212,16 +221,30 @@ async function wide(name, file, widths, { grey = false } = {}) {
     p = p.resize({ width, withoutEnlargement: true });
     if (grey) p = p.grayscale();
     const info = await p.webp({ quality }).toFile(out(name.replace(/\.webp$/, `${suffix}.webp`)));
-    console.log(`${name.replace(/\.webp$/, `${suffix}.webp`)}  ${info.width}x${info.height}  ${Math.round(info.size / 1024)}KB`);
+    console.log(
+      `${name.replace(/\.webp$/, `${suffix}.webp`)}  ${info.width}x${info.height}  ${Math.round(info.size / 1024)}KB`
+    );
   }
 }
-await wide("home-cover.webp", "Beta Alpha.jpg", [["", 1920, 66], ["-900", 900, 62], ["-640", 640, 56]]);
+await wide("home-cover.webp", "Beta Alpha.jpg", [
+  ["", 1920, 66],
+  ["-900", 900, 62],
+  ["-640", 640, 56],
+]);
 await wide("home-join.webp", "live-2026/sigma-gamma-rho-join.webp", [["", 1600, 68]]);
 await wide("home-butler.webp", "College Avenue Campus.jpg", [["", 800, 72]], { grey: true });
 await wide("home-charter.webp", "sgr-alpha-charter.jpeg", [["", 768, 72]], { grey: true });
-await wide("home-boule-stage.webp", "live-2026/International-Board-of-Directors-2026-2.webp", [["", 960, 72]]);
+await wide("home-boule-stage.webp", "live-2026/International-Board-of-Directors-2026-2.webp", [
+  ["", 960, 72],
+]);
 
 // Full-width page covers (PageHero `cover`): the original width, plus a
 // 640px phone copy.
-await wide("cover-ug-sorors.webp", "ug sorors 5.jpg", [["", 1440, 68], ["-640", 640, 58]]);
-await wide("cover-beta-psi-sigma.webp", "Beta Psi Sigma.jpg", [["", 1365, 68], ["-640", 640, 58]]);
+await wide("cover-ug-sorors.webp", "ug sorors 5.jpg", [
+  ["", 1440, 68],
+  ["-640", 640, 58],
+]);
+await wide("cover-beta-psi-sigma.webp", "Beta Psi Sigma.jpg", [
+  ["", 1365, 68],
+  ["-640", 640, 58],
+]);

@@ -4,7 +4,7 @@ import { ROUTES } from "./helpers";
 /**
  * No page may load a subresource from another origin.
  *
- * This exists because /about/headquarters/ shipped eleven staff headshots
+ * This exists because /leadership/headquarters/ shipped eleven staff headshots
  * hotlinked from the legacy WordPress site (sgrho1922.org/wp-content/...).
  * Nothing caught it: the asset-weight work only measured local files, and the
  * suite's own static server sends no Content-Security-Policy, so the browser
@@ -33,7 +33,8 @@ async function findForeignSubresources(page: Page, allowed: string[]): Promise<F
   return page.evaluate((allowedHosts) => {
     const out: ForeignAsset[] = [];
     const seen = new Set<string>();
-    const selector = "img[src], script[src], link[href], source[src], source[srcset], video[src], video[poster], audio[src], iframe[src], embed[src], object[data], track[src]";
+    const selector =
+      "img[src], script[src], link[href], source[src], source[srcset], video[src], video[poster], audio[src], iframe[src], embed[src], object[data], track[src]";
     for (const el of Array.from(document.querySelectorAll(selector))) {
       const raw =
         el.getAttribute("src") ||
@@ -42,7 +43,10 @@ async function findForeignSubresources(page: Page, allowed: string[]): Promise<F
         el.getAttribute("srcset") ||
         "";
       // srcset can hold several candidates
-      for (const candidate of raw.split(",").map((s) => s.trim().split(/\s+/)[0]).filter(Boolean)) {
+      for (const candidate of raw
+        .split(",")
+        .map((s) => s.trim().split(/\s+/)[0])
+        .filter(Boolean)) {
         let url: URL;
         try {
           url = new URL(candidate, location.href);
@@ -66,8 +70,7 @@ async function findForeignSubresources(page: Page, allowed: string[]): Promise<F
   }, allowed);
 }
 
-const describe = (rows: ForeignAsset[]) =>
-  rows.map((r) => `  <${r.tag}> -> ${r.url}`).join("\n");
+const describe = (rows: ForeignAsset[]) => rows.map((r) => `  <${r.tag}> -> ${r.url}`).join("\n");
 
 for (const route of ROUTES) {
   test(`no off-site subresources ${route}`, async ({ page }) => {

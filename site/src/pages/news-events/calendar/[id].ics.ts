@@ -28,7 +28,8 @@ export const GET: APIRoute = ({ props, site }) => {
     location,
     description,
     url: site
-      ? new URL(`${import.meta.env.BASE_URL.replace(/\/$/, "")}/news-events/upcoming-events/`, site).href
+      ? new URL(`${import.meta.env.BASE_URL.replace(/\/$/, "")}/news-events/upcoming-events/`, site)
+          .href
       : undefined,
   });
   return new Response(body, {

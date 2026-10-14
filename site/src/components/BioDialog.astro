@@ -42,7 +42,9 @@ const { id, name, role, image, tone = "light" } = Astro.props;
     <header class="bio__head">
       {image && <img src={withBase(image)} alt="" width="96" height="96" />}
       <div>
-        <p class="bio__name" id={`${id}-name`}>{name}</p>
+        <p class="bio__name" id={`${id}-name`}>
+          {name}
+        </p>
         <p class="bio__role">{role}</p>
       </div>
     </header>

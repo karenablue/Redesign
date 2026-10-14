@@ -7,13 +7,12 @@
  * rhythm (Karena, 2026-09-17).
  *
  * Copy is drawn from the site's own pages (Grand Basileus bio, National
- * Programs, Herstory, Latest News). The administration theme, "One Sigma",
- * leads the page (Karena, 2026-09-26); its wording and the quote come from
- * the Grand Basileus's Watch The Yard Q&A (2024). Replace both when the
- * next administration's theme is announced.
+ * Programs, Herstory, Latest News). The One Sigma administration theme and
+ * quote come from the Grand Basileus's Watch The Yard Q&A (2024). Replace
+ * them when the next administration's theme is announced.
  *
- * Order speaks to members and the public first: the One Sigma message and
- * What's Happening come before heritage, programs and partnerships.
+ * Direction (Karena, 2026-09-30): introduce the organization and its service
+ * to prospective members and the public before administration news.
  *
  * Direction (Karena, 2026-09-26, from the homepage concepts): concept A's
  * magazine cover opens the page (HomeCover), and the legacy section takes
@@ -41,7 +40,6 @@ import ProgramLogo from "../components/ProgramLogo.astro";
 import { withBase } from "../lib/url.js";
 import { getCollection } from "astro:content";
 import { formatStoryDate } from "../lib/stories";
-
 
 // Large two-tone icons over each figure, the peer pattern Karena asked for
 // (AKA's stat cards): Phosphor duotone, royal line with a gold fill, no
@@ -204,7 +202,9 @@ const chapterStories = (await getCollection("stories"))
   .slice(0, 3);
 const memberVoice = (await getCollection("voices"))
   .map((v) => v.data)
-  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || b.consentDate.localeCompare(a.consentDate))[0];
+  .sort(
+    (a, b) => (a.order ?? 999) - (b.order ?? 999) || b.consentDate.localeCompare(a.consentDate)
+  )[0];
 
 // Summaries restate the foundation profiles already published on this site.
 const foundationDetails: Record<string, { focus: string; summary: string }> = {
@@ -256,17 +256,19 @@ const glance = [
   preloadSrcset={`${withBase("/optimized/home-cover-640.webp")} 640w, ${withBase("/optimized/home-cover-900.webp")} 900w, ${withBase("/optimized/home-cover.webp")} 1920w`}
   preloadSizes="100vw"
 >
-  <!-- The cover: One Sigma as the masthead over the hero film (the chapter
-       photograph underneath is the first paint, and all phones get). -->
+  <!-- The cover introduces the founders and service over the hero film. The
+       chapter photograph underneath is the first paint and all phones get. -->
   <HomeCover video />
 
-  <!-- One Sigma by the numbers: one lead figure at poster scale and three
+  <!-- National reach by the numbers: one lead figure at poster scale and three
        beside it, on the cover's navy. Large two-colour icons (the AKA
        pattern Karena chose), gold line on navy. -->
   <section class="reach on-dark" aria-labelledby="reach-title">
     <div class="container reach__grid">
       <div class="reach__lead" data-reveal>
-        <h2 class="eyebrow reach__title" id="reach-title">One Sigma, by the Numbers</h2>
+        <h2 class="eyebrow reach__title" id="reach-title">
+          Our Reach, by the Numbers
+        </h2>
         <span class="reach__icon reach__icon--lead" aria-hidden="true">
           <Fragment set:html={leadStat.icon.svg} />
         </span>
@@ -295,7 +297,287 @@ const glance = [
     </div>
   </section>
 
-  <!-- The administration theme leads: One Sigma, in the Grand Basileus's words. -->
+  <section class="section pathways" aria-labelledby="pathways-title">
+    <div class="container pathways__grid">
+      <div class="pathways__intro" data-reveal>
+        <p class="eyebrow">Your next step</p>
+        <h2 id="pathways-title">There is a place for you in this work.</h2>
+        <p>
+          Discover the sisterhood, find a chapter near you, or see how our programs serve
+          communities.
+        </p>
+      </div>
+      <ul class="pathways__list" data-reveal data-reveal-stagger>
+        <li>
+          <a href={withBase("/membership/become-a-member/")}>
+            <span class="pathways__number" aria-hidden="true">
+              01
+            </span>
+            <span class="pathways__link-copy">
+              <strong>Explore membership</strong>
+              <span>Learn about collegiate and alumnae pathways.</span>
+            </span>
+            <span class="pathways__arrow" aria-hidden="true">
+              &rarr;
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href={withBase("/membership/chapter-locator/")}>
+            <span class="pathways__number" aria-hidden="true">
+              02
+            </span>
+            <span class="pathways__link-copy">
+              <strong>Find a chapter</strong>
+              <span>Connect with the sisterhood in your area.</span>
+            </span>
+            <span class="pathways__arrow" aria-hidden="true">
+              &rarr;
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href={withBase("/service-impact/national-programs/")}>
+            <span class="pathways__number" aria-hidden="true">
+              03
+            </span>
+            <span class="pathways__link-copy">
+              <strong>See our work</strong>
+              <span>Explore five national programs and their purpose.</span>
+            </span>
+            <span class="pathways__arrow" aria-hidden="true">
+              &rarr;
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Origin: where the work comes from. -->
+  <!-- The three aims as one band of display type before the heritage story. -->
+  <DriftBand
+    words={["Sisterhood", "Scholarship", "Service"]}
+    label="Sisterhood. Scholarship. Service."
+  />
+
+  <section class="section legacy" aria-labelledby="legacy-title">
+    <div class="container">
+      <p class="eyebrow">Living Legacy</p>
+      {/* The signature: the founding year as a picture, filled with the
+          seven Founders (Herstory's year-as-graphic device, at poster scale). */}
+      <figure class="legacy__signature">
+        <p
+          class="legacy__year"
+          aria-hidden="true"
+          style={`--year-fill: image-set(url("${withBase("/optimized/founders-strip-1050.webp")}") 1x, url("${withBase("/optimized/founders-strip.webp")}") 2x)`}
+        >
+          1922
+        </p>
+        <figcaption>
+          Inside the numerals, the seven Founders: Mary Lou Allison Gardner Little, Dorothy Hanley
+          Whiteside, Vivian Irene White Marbury, Nannie Mae Gahn Johnson, Hattie Mae Annette Dulin
+          Redford, Bessie Mae Downey Rhoades Martin and Cubena McClure.
+        </figcaption>
+      </figure>
+      <div class="legacy__head" data-reveal>
+        <div>
+          <h2 class="legacy__title" id="legacy-title">
+            Seven Educators.
+            <br />
+            One Radical Idea.
+          </h2>
+        </div>
+        <div class="legacy__intro">
+          <p>
+            In 1922, seven Black educators founded Sigma Gamma Rho at Butler University in
+            Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
+            civic courage, a foundation that still shapes every chapter today.
+          </p>
+          <div class="legacy__links">
+            <a class="arrow-link" href={withBase("/about/herstory/")}>
+              Discover Our Herstory <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="arrow-link" href={withBase("/about/our-founders/")}>
+              Meet the Founders <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Then and now, divided by a gold seam: the archive in black and
+          white, the sisterhood today in colour. */}
+      <ThenNow
+        then={{
+          img: "/optimized/home-charter.webp",
+          alt: "Alpha Chapter charter members, 1924",
+          label: "From the beginning",
+          caption: "Alpha Chapter charter members, Indianapolis, Indiana, 1924",
+          year: "1924",
+        }}
+        now={{
+          img: "/optimized/hero-beta-psi-sigma.webp",
+          alt: "Four members in yellow, laughing together on a brick wall",
+          caption: "700+ collegiate and alumnae chapters today",
+          year: "Today",
+        }}
+      />
+      <ThenNow
+        then={{
+          img: "/optimized/home-butler.webp",
+          alt: "Historic Butler University campus",
+          caption: "Butler University, Indianapolis",
+        }}
+        now={{
+          img: "/optimized/home-boule-stage.webp",
+          alt: "The 2026–2028 International Board of Directors on stage at the 61st Boulé",
+          caption: "The 61st International Biennial Boulé, Tampa, 2026",
+        }}
+      />
+    </div>
+  </section>
+
+  <!-- At a glance: Herstory's key-facts device, on the same cream ground. -->
+  <section class="glance" aria-labelledby="glance-title">
+    <div class="container">
+      <h2 class="eyebrow glance__title" id="glance-title">
+        Sigma Gamma Rho at a Glance
+      </h2>
+      <ul class="glance__grid" data-reveal data-reveal-stagger>
+        {glance.map((f) => (
+          <li>
+            <p class="glance__label">{f.label}</p>
+            {"swatches" in f && f.swatches && (
+              <span class="glance__swatches" aria-hidden="true">
+                <i class="glance__swatch glance__swatch--royal"></i>
+                <i class="glance__swatch glance__swatch--gold"></i>
+              </span>
+            )}
+            <p class="glance__fact">
+              {"keep" in f && f.keep ? (
+                <>
+                  {f.title.split(f.keep)[0]}
+                  <span class="glance__keep">{f.keep}</span>
+                  {f.title.split(f.keep)[1]}
+                </>
+              ) : (
+                f.title
+              )}
+            </p>
+            <p class="glance__body">{f.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- The mission in motion. -->
+  <section class="section work" id="national-programs" aria-labelledby="work-title">
+    <div class="container">
+      <div class="work__head on-dark">
+        <p class="work__count">
+          <strong>05</strong>
+          <span>
+            National
+            <br />
+            Programs
+          </span>
+        </p>
+        <div class="work__intro">
+          <p class="eyebrow">Our Work in Action</p>
+          <h2 class="work__label" id="work-title">
+            Greater Service,
+            <em>Greater Progress®</em>
+          </h2>
+          <p>
+            Five national programs, bringing the Sorority's mission into classrooms, clinics, and
+            pools.
+          </p>
+          <div class="work__links">
+            <a class="work__support" href={withBase("/service-impact/national-programs/")}>
+              Explore All National Programs <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="work__support" href={withBase("/service-impact/partner-foundations/")}>
+              Explore Ways to Support <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <CardGrid as="ul" min="320px" cols={3} data-reveal data-reveal-stagger>
+        {signature.map((x) => (
+          <li class="program-row">
+            <figure
+              class:list={[
+                "program-row__media",
+                { "program-row__media--mark": "isMark" in x && x.isMark },
+              ]}
+            >
+              {"isMark" in x && x.isMark ? (
+                <ProgramLogo name="wellness" maxWidth={420} />
+              ) : (
+                <img
+                  src={withBase(x.img)}
+                  alt=""
+                  width="960"
+                  height="540"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </figure>
+            <div class="program-row__copy">
+              <h3>{x.purpose}</h3>
+              <p class="program-row__name">{x.title}</p>
+              <p class="program-row__summary">{x.scope}</p>
+              <a class="program-row__go" href={withBase(x.href)}>
+                {x.linkLabel}
+                <span class="program-row__arrow" aria-hidden="true">
+                  &rarr;
+                </span>
+              </a>
+            </div>
+          </li>
+        ))}
+      </CardGrid>
+    </div>
+  </section>
+
+  <!-- The chapter network is the bridge from national mission to local action. -->
+  <section class="chapter-callout on-dark" aria-labelledby="chapter-callout-title">
+    <img
+      class="chapter-callout__photo"
+      src={withBase("/optimized/home-join.webp")}
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="container chapter-callout__inner" data-reveal>
+      <div class="chapter-callout__story">
+        <p class="eyebrow">Across Five Regions and Beyond</p>
+        <h2 id="chapter-callout-title">Find your chapter.</h2>
+        <p>
+          Carry the legacy forward. Connect with collegiate and alumnae chapters across our five
+          regions and internationally.
+        </p>
+        <a class="btn" href={withBase("/membership/chapter-locator/")}>
+          Open the Chapter Locator <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+      <div class="chapter-callout__next">
+        <p>More Ways to Engage</p>
+        <a href={withBase("/membership/become-a-member/")}>
+          <span>Join the Sisterhood</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href={withBase("/membership/reactivate/")}>
+          <span>Reactivate Membership</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The administration theme, in the Grand Basileus's words. -->
   <section class="section vision" id="grand-basileus" aria-labelledby="vision-title">
     <div class="container vision__grid" data-reveal>
       <figure class="vision__portrait">
@@ -349,7 +631,7 @@ const glance = [
     </div>
   </section>
 
-  <!-- Members and the public first: news and the events agenda lead the page. -->
+  <!-- News and events keep visitors connected with current work. -->
   <section class="section dispatch" id="whats-happening" aria-labelledby="dispatch-title">
     <div class="container">
       <div class="dispatch__head">
@@ -454,24 +736,29 @@ const glance = [
 
   <!-- Chapter stories and member voices: the national mission, close to home.
        Shown only once chapters have sent stories; until then the invitation
-       to share one lives on the Chapter Stories page. -->
+       to share one lives on the Highlights & Stories page. -->
   {chapterStories.length > 0 && (
-  <section class="section across" aria-labelledby="across-title">
-    <div class="container">
-      <div class="across__head">
-        <div>
-          <p class="eyebrow">One Sigma, Every Region</p>
-          <h2 class="across__title" id="across-title">Chapter Stories</h2>
+    <section class="section across" aria-labelledby="across-title">
+      <div class="container">
+        <div class="across__head">
+          <div>
+            <p class="eyebrow">One Sigma, Every Region</p>
+            <h2 class="across__title" id="across-title">
+              Chapter Stories
+            </h2>
+          </div>
+          <a class="arrow-link" href={withBase("/news-events/highlights-stories/")}>
+            All chapter stories <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
-        <a class="arrow-link" href={withBase("/news-events/chapter-stories/")}>
-          All chapter stories <span aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
         <div class="across__grid" data-reveal>
           <ul class="across__stories">
             {chapterStories.map((s) => (
               <li>
-                <p class="across__meta">{s.region}{s.program && <> &middot; {s.program}</>}</p>
+                <p class="across__meta">
+                  {s.region}
+                  {s.program && <> &middot; {s.program}</>}
+                </p>
                 <h3>{s.title}</h3>
                 <p class="across__byline">
                   {s.chapter} &middot; <time datetime={s.date}>{formatStoryDate(s.date)}</time>
@@ -481,243 +768,24 @@ const glance = [
           </ul>
           {memberVoice && (
             <figure class="across__voice">
-              <blockquote><p>&ldquo;{memberVoice.quote}&rdquo;</p></blockquote>
+              <blockquote>
+                <p>&ldquo;{memberVoice.quote}&rdquo;</p>
+              </blockquote>
               <figcaption>
                 <strong>{memberVoice.name}</strong>
-                <span>{memberVoice.chapter} &middot; {memberVoice.region}</span>
+                <span>
+                  {memberVoice.chapter} &middot; {memberVoice.region}
+                </span>
               </figcaption>
             </figure>
           )}
         </div>
-    </div>
-  </section>
+      </div>
+    </section>
   )}
 
-  <!-- Origin: where the work comes from. -->
-  <!-- The three aims as one band of display type between news and heritage. -->
-  <DriftBand words={["Sisterhood", "Scholarship", "Service"]} label="Sisterhood. Scholarship. Service." />
-
-  <section class="section legacy" aria-labelledby="legacy-title">
-    <div class="container">
-      <p class="eyebrow">Living Legacy</p>
-      {/* The signature: the founding year as a picture, filled with the
-          seven Founders (Herstory's year-as-graphic device, at poster scale). */}
-      <figure class="legacy__signature">
-        <p
-          class="legacy__year"
-          aria-hidden="true"
-          style={`--year-fill: image-set(url("${withBase("/optimized/founders-strip-1050.webp")}") 1x, url("${withBase("/optimized/founders-strip.webp")}") 2x)`}
-        >
-          1922
-        </p>
-        <figcaption>
-          Inside the numerals, the seven Founders: Mary Lou Allison Gardner Little, Dorothy
-          Hanley Whiteside, Vivian Irene White Marbury, Nannie Mae Gahn Johnson, Hattie Mae
-          Annette Dulin Redford, Bessie Mae Downey Rhoades Martin and Cubena McClure.
-        </figcaption>
-      </figure>
-      <div class="legacy__head" data-reveal>
-        <div>
-          <h2 class="legacy__title" id="legacy-title">
-            Seven Educators.
-            <br />
-            One Radical Idea.
-          </h2>
-        </div>
-        <div class="legacy__intro">
-          <p>
-            In 1922, seven Black educators founded Sigma Gamma Rho at Butler University in
-            Indianapolis, Indiana. They built a sorority on academic excellence, sisterhood, and
-            civic courage, a foundation that still shapes every chapter today.
-          </p>
-          <div class="legacy__links">
-            <a class="arrow-link" href={withBase("/about/herstory/")}>
-              Discover Our Herstory <span aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="arrow-link" href={withBase("/about/our-founders/")}>
-              Meet the Founders <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Then and now, divided by a gold seam: the archive in black and
-          white, the sisterhood today in colour. */}
-      <ThenNow
-        then={{
-          img: "/optimized/home-charter.webp",
-          alt: "Alpha Chapter charter members, 1924",
-          label: "From the beginning",
-          caption: "Alpha Chapter charter members, Indianapolis, Indiana, 1924",
-          year: "1924",
-        }}
-        now={{
-          img: "/optimized/hero-beta-psi-sigma.webp",
-          alt: "Four members in yellow, laughing together on a brick wall",
-          caption: "700+ collegiate and alumnae chapters today",
-          year: "Today",
-        }}
-      />
-      <ThenNow
-        then={{
-          img: "/optimized/home-butler.webp",
-          alt: "Historic Butler University campus",
-          caption: "Butler University, Indianapolis",
-        }}
-        now={{
-          img: "/optimized/home-boule-stage.webp",
-          alt: "The 2026–2028 International Board of Directors on stage at the 61st Boulé",
-          caption: "The 61st International Biennial Boulé, Tampa, 2026",
-        }}
-      />
-    </div>
-  </section>
-
-  <!-- At a glance: Herstory's key-facts device, on the same cream ground. -->
-  <section class="glance" aria-labelledby="glance-title">
-    <div class="container">
-      <h2 class="eyebrow glance__title" id="glance-title">Sigma Gamma Rho at a Glance</h2>
-      <ul class="glance__grid" data-reveal data-reveal-stagger>
-        {glance.map((f) => (
-          <li>
-            <p class="glance__label">{f.label}</p>
-            {"swatches" in f && f.swatches && (
-              <span class="glance__swatches" aria-hidden="true">
-                <i class="glance__swatch glance__swatch--royal"></i>
-                <i class="glance__swatch glance__swatch--gold"></i>
-              </span>
-            )}
-            <p class="glance__fact">
-              {"keep" in f && f.keep ? (
-                <>
-                  {f.title.split(f.keep)[0]}
-                  <span class="glance__keep">{f.keep}</span>
-                  {f.title.split(f.keep)[1]}
-                </>
-              ) : (
-                f.title
-              )}
-            </p>
-            <p class="glance__body">{f.body}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- The mission in motion. -->
-  <section class="section work" id="national-programs" aria-labelledby="work-title">
-    <div class="container">
-      <div class="work__head on-dark">
-        <p class="work__count">
-          <strong>05</strong>
-          <span>
-            National
-            <br />
-            Programs
-          </span>
-        </p>
-        <div class="work__intro">
-          <p class="eyebrow">Our Work in Action</p>
-          <h2 class="work__label" id="work-title">
-            Greater Service,
-            <em>Greater Progress®</em>
-          </h2>
-          <p>
-            Five national programs, bringing the Sorority's mission into classrooms, clinics, and
-            pools.
-          </p>
-          <div class="work__links">
-            <a class="work__support" href={withBase("/service-impact/national-programs/")}>
-              Explore All National Programs <span aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="work__support" href={withBase("/service-impact/partner-foundations/")}>
-              Explore Ways to Support <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <CardGrid as="ul" min="320px" cols={3} data-reveal data-reveal-stagger>
-        {signature.map((x) => (
-          <li class="program-row">
-            <figure
-              class:list={[
-                "program-row__media",
-                { "program-row__media--mark": "isMark" in x && x.isMark },
-              ]}
-            >
-              {"isMark" in x && x.isMark ? (
-                <ProgramLogo name="wellness" maxWidth={420} />
-              ) : (
-                <img
-                  src={withBase(x.img)}
-                  alt=""
-                  width="960"
-                  height="540"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-            </figure>
-            <div class="program-row__copy">
-              <h3>{x.purpose}</h3>
-              <p class="program-row__name">{x.title}</p>
-              <p class="program-row__summary">{x.scope}</p>
-              <a class="program-row__go" href={withBase(x.href)}>
-                {x.linkLabel}
-                <span class="program-row__arrow" aria-hidden="true">
-                  &rarr;
-                </span>
-              </a>
-            </div>
-          </li>
-        ))}
-      </CardGrid>
-
-    </div>
-  </section>
-
-  <!-- The chapter network is the bridge from national mission to local action. -->
-  <section class="chapter-callout on-dark" aria-labelledby="chapter-callout-title">
-    <img
-      class="chapter-callout__photo"
-      src={withBase("/optimized/home-join.webp")}
-      alt=""
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="container chapter-callout__inner" data-reveal>
-      <div class="chapter-callout__story">
-        <p class="eyebrow">Across Five Regions and Beyond</p>
-        <h2 id="chapter-callout-title">Find your chapter.</h2>
-        <p>
-          Carry the legacy forward. Connect with collegiate and alumnae chapters across our five
-          regions and internationally.
-        </p>
-        <a class="btn" href={withBase("/membership/chapter-locator/")}>
-          Open the Chapter Locator <span aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
-      <div class="chapter-callout__next">
-        <p>More Ways to Engage</p>
-        <a href={withBase("/membership/become-a-member/")}>
-          <span>Join the Sisterhood</span>
-          <span aria-hidden="true">&rarr;</span>
-        </a>
-        <a href={withBase("/membership/reactivate/")}>
-          <span>Reactivate Membership</span>
-          <span aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- Greater Together. -->
-  <section
-    class="section partnership"
-    id="partnerships"
-    aria-labelledby="partnership-title"
-  >
+  <section class="section partnership" id="partnerships" aria-labelledby="partnership-title">
     <div class="container partnership__pitch" data-reveal>
       <div>
         <p class="eyebrow">Partnerships with Purpose</p>
@@ -814,19 +882,94 @@ const glance = [
   <aside class="safety-strip" aria-labelledby="safety-title">
     <div class="container safety-strip__inner">
       <p>
-        <strong id="safety-title">Sigma Gamma Rho has zero tolerance for hazing.</strong>{" "}
-        Concerns can be reported confidentially to a chapter advisor, a Regional Director, or
-        International Corporate Headquarters.
+        <strong id="safety-title">Sigma Gamma Rho has zero tolerance for hazing.</strong> Concerns
+        can be reported confidentially to a chapter advisor, a Regional Director, or International
+        Corporate Headquarters.
       </p>
-      <a class="arrow-link" href={withBase("/resources/anti-hazing-policy/#reporting")}>
+      <a class="arrow-link" href={withBase("/about/anti-hazing-policy/#reporting")}>
         Report a concern <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
   </aside>
-
 </Base>
 
 <style>
+  .pathways {
+    background: var(--bright-white);
+  }
+  .pathways__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .pathways__intro h2 {
+    max-width: 12ch;
+    margin: var(--space-4) 0 var(--space-5);
+    font-family: var(--font-editorial);
+    font-size: clamp(2.25rem, 3.4vw, 3.5rem);
+    line-height: 1.12;
+    color: var(--royal);
+  }
+  .pathways__intro > p:last-child {
+    max-width: 36ch;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .pathways__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .pathways__list li {
+    border-bottom: 1px solid var(--line);
+  }
+  .pathways__list a {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--space-5);
+    align-items: center;
+    min-height: 6.5rem;
+    color: var(--royal);
+    text-decoration: none;
+  }
+  .pathways__list a:hover .pathways__arrow,
+  .pathways__list a:focus-visible .pathways__arrow {
+    transform: translateX(var(--space-2));
+  }
+  .pathways__number {
+    align-self: start;
+    padding-top: var(--space-8);
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    color: var(--muted);
+  }
+  .pathways__link-copy {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .pathways__link-copy strong {
+    font-family: var(--font-editorial);
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 600;
+  }
+  .pathways__link-copy > span {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+  .pathways__arrow {
+    font-size: var(--text-xl);
+    transition: transform 180ms ease;
+  }
+  @media (max-width: 740px) {
+    .pathways__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
   /* Chapter stories: a tinted band between the news and the heritage story. */
   .across {
     background: var(--tint);
@@ -1421,7 +1564,9 @@ const glance = [
   }
   @supports ((background-clip: text) or (-webkit-background-clip: text)) {
     .legacy__year {
-      background: var(--year-fill) center 30% / cover, var(--royal);
+      background:
+        var(--year-fill) center 30% / cover,
+        var(--royal);
       background-blend-mode: multiply;
       -webkit-background-clip: text;
       background-clip: text;
@@ -1526,7 +1671,12 @@ const glance = [
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(90deg, rgba(8, 22, 51, 0.97) 0%, rgba(8, 22, 51, 0.88) 50%, rgba(8, 22, 51, 0.35) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(8, 22, 51, 0.97) 0%,
+      rgba(8, 22, 51, 0.88) 50%,
+      rgba(8, 22, 51, 0.35) 100%
+    );
   }
   .chapter-callout__inner {
     position: relative;

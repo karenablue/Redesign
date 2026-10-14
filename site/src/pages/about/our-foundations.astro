@@ -1,0 +1,166 @@
+---
+/**
+ * Our Foundations — what the Sorority stands on: mission, vision, the three
+ * aims, the motto, and the official symbols. "Our Foundations" is a card from
+ * the 2025 card sort (66.7% placed it under About); this page gives it a
+ * home in the tested IA. Every statement repeats wording already published on
+ * Herstory, so nothing here is new copy for HQ to approve.
+ */
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import DriftBand from "../../components/DriftBand.astro";
+import FactSheet from "../../components/FactSheet.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { withBase } from "../../lib/url.js";
+
+const symbols = [
+  {
+    label: "Motto",
+    lines: ["Greater Service, Greater Progress®"],
+    body: "A century-long standard for service and institutional responsibility.",
+  },
+  {
+    label: "Official Colors",
+    lines: ["Royal Blue & Gold"],
+    body: "Reflecting a glorious wealth of values, truth, and purity. An enduring hallmark of regal character and unwavering commitment to sisterhood.",
+  },
+  {
+    label: "Official Flower",
+    lines: ["Yellow Tea Rose"],
+    body: "Symbolic of beauty, resilience, and radiance. Delicate yet enduring through life’s trials, it mirrors the Sigma woman’s lasting fragrance of charm, dignity, and concern.",
+  },
+  {
+    label: "Official Call",
+    lines: ["EE-YIP®"],
+    body: "A distinctive, high-spirited greeting echoing the elegance and alertness of the mascot.",
+  },
+  {
+    label: "Official Mascot",
+    lines: ["The Poodle"],
+    body: "Selected for its sophisticated bearing, beauty, and keen intellect, an enduring symbol of poise and grace.",
+  },
+  {
+    label: "Official Publication",
+    lines: ["The Aurora®"],
+    body: "Established in 1927 to document national achievements, voice, and chapter progress.",
+  },
+];
+---
+
+<Base
+  title="Our Foundations"
+  activeTop="About"
+  description="The mission, vision, aims, motto, and official symbols of Sigma Gamma Rho Sorority, Incorporated."
+>
+  <PageHero
+    crumbs={[{ label: "Home", href: "/" }, { label: "About" }, { label: "Our Foundations" }]}
+    eyebrow="About • Our Foundations"
+    title="What we stand on."
+    highlight="Since 1922."
+    copy="The mission, aims, and symbols seven educators set down at Butler University, and that every Soror carries today."
+    image="/optimized/hero-charter.webp"
+    focal="50% 35%"
+    archival
+    size="regular"
+  >
+    <a class="btn" href="#mission">
+      Mission &amp; Vision <span aria-hidden="true">&darr;</span>
+    </a>
+    <a class="btn btn--outline on-dark" href="#symbols">
+      Our Symbols <span aria-hidden="true">&darr;</span>
+    </a>
+  </PageHero>
+
+  <section class="of-mv" id="mission" aria-label="Mission and vision">
+    <div class="container of-mv__inner">
+      <article>
+        <p class="eyebrow">Mission</p>
+        <h2>Greater progress in education, health, and leadership.</h2>
+        <p>
+          It is the mission of Sigma Gamma Rho Sorority, Inc. to enhance the quality of life for
+          women and their families in the U.S. and globally through community service, civil, and
+          social action. Our goal is to achieve greater progress in the areas of education, health
+          awareness, and leadership development. Our members, affiliates, staff, and community
+          partners work to create and support initiatives that align with our vision.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">Vision</p>
+        <h2>Every woman at her full potential.</h2>
+        <p>
+          We visualize a world in which all women and their families reach their full potential in
+          all aspects of life and are able to create unlimited opportunities for future generations.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <DriftBand
+    words={["Sisterhood", "Scholarship", "Service"]}
+    label="Our aims: Sisterhood. Scholarship. Service."
+  />
+
+  <section class="of-symbols" id="symbols" aria-labelledby="of-symbols-title">
+    <div class="container">
+      <p class="eyebrow">Official Symbols</p>
+      <h2 class="of-symbols__title" id="of-symbols-title">The marks of a Sigma woman.</h2>
+      <FactSheet items={symbols} cols={3} />
+      <p class="of-symbols__more">
+        The Founders, the charter, and a century of firsts are told on{" "}
+        <a href={withBase("/about/herstory/")}>Herstory</a>.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand
+    image="/optimized/hero-photoshoot.webp"
+    focal="50% 30%"
+    eyebrow="Royal Blue & Gold"
+    title="Built on these foundations. "
+    highlight="Carried by every Soror."
+    copy="Membership is a lifetime commitment to the aims the Founders set down in 1922."
+    actions={[
+      { label: "Become a Member", href: "/membership/become-a-member/" },
+      { label: "Meet the Founders", href: "/about/our-founders/", variant: "outline" },
+    ]}
+  />
+</Base>
+
+<style>
+  .of-mv {
+    background: var(--white);
+    padding-block: var(--section-y);
+  }
+  .of-mv__inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-12);
+  }
+  .of-mv h2 {
+    font-family: var(--font-editorial);
+    font-weight: 400;
+    margin: var(--space-2) 0 var(--space-4);
+  }
+  .of-mv article > p:not(.eyebrow) {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .of-symbols {
+    background: var(--tint);
+    padding-block: var(--section-y);
+  }
+  .of-symbols__title {
+    font-family: var(--font-editorial);
+    font-weight: 400;
+    margin: var(--space-2) 0 var(--space-8);
+  }
+  .of-symbols__more {
+    margin: var(--space-10) 0 0;
+    color: var(--muted);
+  }
+  .of-symbols__more a {
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+</style>

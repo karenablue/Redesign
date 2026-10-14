@@ -87,7 +87,13 @@ test("tap targets meet WCAG 2.5.8, allowing the spacing exception", async ({ pag
         .filter(visible)
         .map((el) => {
           const b = el.getBoundingClientRect();
-          return { el, cx: b.left + b.width / 2, cy: b.top + b.height / 2, w: b.width, h: b.height };
+          return {
+            el,
+            cx: b.left + b.width / 2,
+            cy: b.top + b.height / 2,
+            w: b.width,
+            h: b.height,
+          };
         });
 
       const failures: string[] = [];
@@ -95,9 +101,7 @@ test("tap targets meet WCAG 2.5.8, allowing the spacing exception", async ({ pag
         if (Math.min(t.w, t.h) >= 24) continue;
         if (inlineInProse(t.el)) continue;
         // Spacing exception: a 24px circle on each target must not overlap another's.
-        const crowded = targets.some(
-          (o) => o !== t && Math.hypot(o.cx - t.cx, o.cy - t.cy) < 24
-        );
+        const crowded = targets.some((o) => o !== t && Math.hypot(o.cx - t.cx, o.cy - t.cy) < 24);
         if (crowded) {
           failures.push(
             `${Math.round(t.w)}x${Math.round(t.h)} "${(t.el.textContent ?? "").trim().slice(0, 28)}"`
@@ -109,7 +113,10 @@ test("tap targets meet WCAG 2.5.8, allowing the spacing exception", async ({ pag
     if (bad.length) offenders.push(`  ${route}: ${bad.join("; ")}`);
   }
 
-  expect(offenders, `Targets under 24px that also fail the spacing exception:\n${offenders.join("\n")}`).toEqual([]);
+  expect(
+    offenders,
+    `Targets under 24px that also fail the spacing exception:\n${offenders.join("\n")}`
+  ).toEqual([]);
 });
 
 /**
@@ -126,7 +133,8 @@ test("page openings show their first action on a small phone's first screen", as
       const first = document.querySelector(".ph__actions .btn, .ph__actions input");
       return first ? first.getBoundingClientRect().bottom : null;
     });
-    if (bottom !== null && bottom > 640) late.push(`${route} (first action ends at ${Math.round(bottom)}px)`);
+    if (bottom !== null && bottom > 640)
+      late.push(`${route} (first action ends at ${Math.round(bottom)}px)`);
   }
   expect(late, `First action below the first screen:\n${late.join("\n")}`).toEqual([]);
 });

@@ -1,12 +1,9 @@
 ---
 /**
- * HomeCover — the homepage opening, set as a magazine cover (Karena chose
- * concept A's cover, 2026-09-26): one full-bleed picture, and "One Sigma" as
- * the masthead (two-tone, with the tagline, after the administration's One
- * Sigma mark) with the two actions beneath it. Nothing else sits on the
- * picture, so the faces and the film carry the cover (2026-09-27: the
- * earlier deck, paragraph and three cover lines crowded it; each of those
- * stories has its own place further down the page).
+ * HomeCover — the homepage opening. The founding educators and public mission
+ * now lead for prospective members and first-time visitors (Karena,
+ * 2026-09-30). The administration's One Sigma message has its own section
+ * below. The photograph and film remain the visual cover.
  *
  * props:
  *   video  play the cover film: eight shots from HQ's own 61st Boulé recaps
@@ -22,7 +19,6 @@ interface Props {
 }
 const { video = false } = Astro.props;
 
-const PORTAL_URL = "https://portal.sgrho1922.org/";
 const still = {
   src: withBase("/optimized/home-cover.webp"),
   srcset: `${withBase("/optimized/home-cover-640.webp")} 640w, ${withBase("/optimized/home-cover-900.webp")} 900w, ${withBase("/optimized/home-cover.webp")} 1920w`,
@@ -54,16 +50,23 @@ const still = {
   <div class="cover__shade" aria-hidden="true"></div>
   <div class="container cover__grid">
     <div class="cover__masthead">
-      <p class="cover__issue">Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup> &middot; <span class="cover__since">Since 1922</span></p>
-      <h1 id="cover-title" class="cover__title">One <span>Sigma</span></h1>
-      <p class="cover__tagline">One mission. One vision. One sisterhood.</p>
+      <p class="cover__issue">
+        Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup> &middot;{" "}
+        <span class="cover__since">Since 1922</span>
+      </p>
+      <h1 id="cover-title" class="cover__title">
+        Seven educators. <span>A century of service.</span>
+      </h1>
+      <p class="cover__tagline">
+        Since 1922, Sigma Gamma Rho has brought women together through scholarship, sisterhood, and
+        service in their communities.
+      </p>
       <div class="cover__actions">
-        <a class="btn" href={withBase("/service-impact/national-programs/")}>
-          Explore Our Impact <span aria-hidden="true">&rarr;</span>
+        <a class="btn" href={withBase("/membership/become-a-member/")}>
+          Explore Membership <span aria-hidden="true">&rarr;</span>
         </a>
-        <a class="btn btn--outline on-dark" href={PORTAL_URL} target="_blank" rel="noopener">
-          Member Login <span aria-hidden="true">&#8599;</span>
-          <span class="visually-hidden"> (opens the Poodle Portal in a new tab)</span>
+        <a class="btn btn--outline on-dark" href={withBase("/service-impact/national-programs/")}>
+          See Our Work <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
     </div>
@@ -75,34 +78,32 @@ const still = {
   </div>
 </section>
 
-{video && (
-  <script>
-    // The film plays only where it helps: a wide screen, no reduced-motion
-    // request, no data saving. The button stops it (WCAG 2.2.2).
-    const film = document.querySelector<HTMLVideoElement>("[data-cover-video]");
-    const toggle = document.querySelector<HTMLButtonElement>("[data-cover-toggle]");
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    const allowed =
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      window.matchMedia("(min-width: 900px)").matches &&
-      !conn?.saveData;
-    if (film && toggle) {
-      const cover = film.closest(".cover");
-      const sync = () => {
-        const paused = film.paused;
-        film.classList.toggle("is-playing", !paused);
-        cover?.classList.toggle("is-film", !paused);
-        toggle.setAttribute("aria-pressed", String(paused));
-        toggle.textContent = paused ? "Play background video" : "Pause background video";
-      };
-      if (allowed) film.play().catch(() => {});
-      film.addEventListener("play", sync);
-      film.addEventListener("pause", sync);
-      toggle.addEventListener("click", () => (film.paused ? film.play() : film.pause()));
-      sync();
-    }
-  </script>
-)}
+{video && <script>
+  // The film plays only where it helps: a wide screen, no reduced-motion
+  // request, no data saving. The button stops it (WCAG 2.2.2).
+  const film = document.querySelector<HTMLVideoElement>("[data-cover-video]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-cover-toggle]");
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const allowed =
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    window.matchMedia("(min-width: 900px)").matches &&
+    !conn?.saveData;
+  if (film && toggle) {
+    const cover = film.closest(".cover");
+    const sync = () => {
+      const paused = film.paused;
+      film.classList.toggle("is-playing", !paused);
+      cover?.classList.toggle("is-film", !paused);
+      toggle.setAttribute("aria-pressed", String(paused));
+      toggle.textContent = paused ? "Play background video" : "Pause background video";
+    };
+    if (allowed) film.play().catch(() => {});
+    film.addEventListener("play", sync);
+    film.addEventListener("pause", sync);
+    toggle.addEventListener("click", () => (film.paused ? film.play() : film.pause()));
+    sync();
+  }
+</script>}
 
 <style>
   .cover {
@@ -140,12 +141,22 @@ const still = {
     inset: 0;
     background:
       linear-gradient(180deg, rgba(8, 22, 51, 0.55) 0%, rgba(8, 22, 51, 0) 22%),
-      linear-gradient(0deg, rgba(8, 22, 51, 0.97) 0%, rgba(8, 22, 51, 0.88) 34%, rgba(8, 22, 51, 0) 68%);
+      linear-gradient(
+        0deg,
+        rgba(8, 22, 51, 0.97) 0%,
+        rgba(8, 22, 51, 0.88) 34%,
+        rgba(8, 22, 51, 0) 68%
+      );
   }
   .cover--video.is-film .cover__shade {
     background:
       linear-gradient(180deg, rgba(8, 22, 51, 0.55) 0%, rgba(8, 22, 51, 0) 22%),
-      linear-gradient(0deg, rgba(8, 22, 51, 0.97) 0%, rgba(8, 22, 51, 0.88) 34%, rgba(8, 22, 51, 0.15) 68%);
+      linear-gradient(
+        0deg,
+        rgba(8, 22, 51, 0.97) 0%,
+        rgba(8, 22, 51, 0.88) 34%,
+        rgba(8, 22, 51, 0.15) 68%
+      );
   }
 
   .cover__grid {
@@ -174,23 +185,22 @@ const still = {
     margin: 0;
     font-family: var(--font-label);
     font-weight: 400;
-    font-size: clamp(3.25rem, 10vw, 9rem);
-    line-height: 0.85;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 0.96;
     letter-spacing: -0.045em;
-    white-space: nowrap;
-    color: #fff;
+    color: var(--white);
   }
-  /* Two-tone, after the administration's One Sigma mark: ONE in white,
-     SIGMA in gold, with the mark's tagline beneath. */
   .cover__title span {
+    display: block;
     color: var(--gold);
   }
   .cover__tagline {
     margin: var(--space-5) 0 0;
-    color: #fff;
+    max-width: 55ch;
+    color: var(--white);
     font-size: clamp(1rem, 1.3vw, 1.2rem);
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    line-height: 1.5;
   }
   .cover__actions {
     display: flex;
@@ -235,7 +245,13 @@ const still = {
     .cover__shade,
     .cover--video.is-film .cover__shade {
       height: 22rem;
-      background: linear-gradient(180deg, rgba(8, 22, 51, 0.45) 0, rgba(8, 22, 51, 0) 5rem, rgba(8, 22, 51, 0) 13rem, #081633 22rem);
+      background: linear-gradient(
+        180deg,
+        rgba(8, 22, 51, 0.45) 0,
+        rgba(8, 22, 51, 0) 5rem,
+        rgba(8, 22, 51, 0) 13rem,
+        #081633 22rem
+      );
     }
     .cover__grid {
       grid-template-columns: minmax(0, 1fr);
@@ -248,6 +264,9 @@ const still = {
     }
   }
   @media (max-width: 600px) {
+    .cover__title {
+      font-size: clamp(2.25rem, 9vw, 3rem);
+    }
     .cover__actions .btn {
       flex: 1 1 100%;
       justify-content: center;

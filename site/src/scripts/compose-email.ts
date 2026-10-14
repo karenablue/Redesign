@@ -19,25 +19,33 @@ export function wireComposeForms(root: ParentNode = document) {
 
       const lines: string[] = [];
       const seen = new Set<string>();
-      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("[data-label]").forEach((el) => {
-        const label = el.dataset.label!;
-        if (seen.has(label)) return;
-        seen.add(label);
-        let value: string;
-        if (el instanceof HTMLInputElement && el.type === "checkbox") {
-          value = [...form.querySelectorAll<HTMLInputElement>(`input[data-label="${label}"]:checked`)]
-            .map((c) => c.value)
-            .join(", ");
-        } else {
-          value = el.value.trim();
-        }
-        lines.push(`${label}: ${value || "Not specified"}`);
-      });
+      form
+        .querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+          "[data-label]"
+        )
+        .forEach((el) => {
+          const label = el.dataset.label!;
+          if (seen.has(label)) return;
+          seen.add(label);
+          let value: string;
+          if (el instanceof HTMLInputElement && el.type === "checkbox") {
+            value = [
+              ...form.querySelectorAll<HTMLInputElement>(`input[data-label="${label}"]:checked`),
+            ]
+              .map((c) => c.value)
+              .join(", ");
+          } else {
+            value = el.value.trim();
+          }
+          lines.push(`${label}: ${value || "Not specified"}`);
+        });
       const body = form.querySelector<HTMLTextAreaElement>("[data-body]")?.value.trim();
       if (body) lines.push("", body);
 
       const extra = form.dataset.subjectField
-        ? (form.querySelector<HTMLInputElement | HTMLSelectElement>(`#${form.dataset.subjectField}`)?.value.trim() ?? "")
+        ? (form
+            .querySelector<HTMLInputElement | HTMLSelectElement>(`#${form.dataset.subjectField}`)
+            ?.value.trim() ?? "")
         : "";
       const subject = [form.dataset.subject ?? "Inquiry", extra].filter(Boolean).join(": ");
       const to = form.getAttribute("action")!.replace(/^mailto:/, "");

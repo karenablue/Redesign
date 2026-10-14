@@ -33,16 +33,57 @@ const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, "..", "src", "data");
 
 const US = {
-  Alabama: "AL", Alaska: "AK", Arizona: "AZ", Arkansas: "AR", California: "CA", Colorado: "CO",
-  Connecticut: "CT", Delaware: "DE", "District of Columbia": "DC", Florida: "FL", Georgia: "GA",
-  Hawaii: "HI", Idaho: "ID", Illinois: "IL", Indiana: "IN", Iowa: "IA", Kansas: "KS", Kentucky: "KY",
-  Louisiana: "LA", Maine: "ME", Maryland: "MD", Massachusetts: "MA", Michigan: "MI", Minnesota: "MN",
-  Mississippi: "MS", Missouri: "MO", Montana: "MT", Nebraska: "NE", Nevada: "NV",
-  "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
-  "North Carolina": "NC", "North Dakota": "ND", Ohio: "OH", Oklahoma: "OK", Oregon: "OR",
-  Pennsylvania: "PA", "Rhode Island": "RI", "South Carolina": "SC", "South Dakota": "SD",
-  Tennessee: "TN", Texas: "TX", Utah: "UT", Vermont: "VT", Virginia: "VA", Washington: "WA",
-  "West Virginia": "WV", Wisconsin: "WI", Wyoming: "WY",
+  Alabama: "AL",
+  Alaska: "AK",
+  Arizona: "AZ",
+  Arkansas: "AR",
+  California: "CA",
+  Colorado: "CO",
+  Connecticut: "CT",
+  Delaware: "DE",
+  "District of Columbia": "DC",
+  Florida: "FL",
+  Georgia: "GA",
+  Hawaii: "HI",
+  Idaho: "ID",
+  Illinois: "IL",
+  Indiana: "IN",
+  Iowa: "IA",
+  Kansas: "KS",
+  Kentucky: "KY",
+  Louisiana: "LA",
+  Maine: "ME",
+  Maryland: "MD",
+  Massachusetts: "MA",
+  Michigan: "MI",
+  Minnesota: "MN",
+  Mississippi: "MS",
+  Missouri: "MO",
+  Montana: "MT",
+  Nebraska: "NE",
+  Nevada: "NV",
+  "New Hampshire": "NH",
+  "New Jersey": "NJ",
+  "New Mexico": "NM",
+  "New York": "NY",
+  "North Carolina": "NC",
+  "North Dakota": "ND",
+  Ohio: "OH",
+  Oklahoma: "OK",
+  Oregon: "OR",
+  Pennsylvania: "PA",
+  "Rhode Island": "RI",
+  "South Carolina": "SC",
+  "South Dakota": "SD",
+  Tennessee: "TN",
+  Texas: "TX",
+  Utah: "UT",
+  Vermont: "VT",
+  Virginia: "VA",
+  Washington: "WA",
+  "West Virginia": "WV",
+  Wisconsin: "WI",
+  Wyoming: "WY",
 };
 // Places outside the fifty states, written the way the regional snapshot does.
 const PLACE = {
@@ -52,7 +93,11 @@ const PLACE = {
 };
 
 const JUNK = /^(test\b|confidential|copyright|remembers\b)|general member|members-at-large|^\s*$/i;
-const norm = (s) => String(s ?? "").normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
+const norm = (s) =>
+  String(s ?? "")
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
 
 const feedArg = process.argv[2];
 const feed = feedArg
@@ -102,7 +147,16 @@ writeFileSync(
 );
 writeFileSync(
   join(dataDir, "chapter-review.json"),
-  JSON.stringify({ retrieved, droppedNonChapterRows: dropped, withoutLocation: unplaced, inRegionalSnapshotButNotInFeed: notInFeed }, null, 1) + "\n"
+  JSON.stringify(
+    {
+      retrieved,
+      droppedNonChapterRows: dropped,
+      withoutLocation: unplaced,
+      inRegionalSnapshotButNotInFeed: notInFeed,
+    },
+    null,
+    1
+  ) + "\n"
 );
 console.log(
   `[sync-chapters] ${kept.length} chapters (${kept.filter((c) => c.lat !== undefined).length} mapped), ` +

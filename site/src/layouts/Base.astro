@@ -59,8 +59,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
         arrives after first paint and re-wraps long titles (a layout shift
         of 0.12 on Affiliates on a slow phone). Preloading the two weights
         headings use lets it land before the first paint. */}
-    <link rel="preload" as="font" type="font/woff" href={withBase("/fonts/LemonMilkMedium-mLZYV.woff")} crossorigin />
-    <link rel="preload" as="font" type="font/woff" href={withBase("/fonts/LemonMilkRegular-X3XE2.woff")} crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff"
+      href={withBase("/fonts/LemonMilkMedium-mLZYV.woff")}
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff"
+      href={withBase("/fonts/LemonMilkRegular-X3XE2.woff")}
+      crossorigin
+    />
     {preloadImage && (
       <link
         rel="preload"
@@ -102,7 +114,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <script>
       import "../scripts/motion.ts";
     </script>
-
     <style is:global>
       .skip-link {
         position: absolute;

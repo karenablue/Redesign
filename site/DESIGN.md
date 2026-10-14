@@ -175,7 +175,7 @@ accent; extra hues would break the Pearl Standard.
   light ground and **brand gold** inside `.on-dark`. Its partners are
   `--accent-underline` (brand gold on light, none on dark) and
   `--accent-hover` (deep royal on light, white on dark).
-- *Retired, Sept 2026:* `--gold-text`, `--gold-display`, `--gold-bright` and
+- _Retired, Sept 2026:_ `--gold-text`, `--gold-display`, `--gold-bright` and
   `--gold-dark`. They each passed contrast, and together they made the site
   read as several golds, which the brand does not have.
 
@@ -183,8 +183,8 @@ accent; extra hues would break the Pearl Standard.
 
 - **White** (`#ffffff`): the default page ground and card surface.
 - **Cream** (`#fffbf0`) and **Cream 2** (`#fef8ed`): the warm alternating band
-  and card background. *Note: the official FY2027 palette contains no cream —
-  this is a rebuild decision and it is what supplies the warmth.*
+  and card background. _Note: the official FY2027 palette contains no cream —
+  this is a rebuild decision and it is what supplies the warmth._
 - **Tint** (`#f4f6fb`): the cool slate band, used to separate sections without
   going warm.
 - **Ink** (`#333333`): body text. **Muted** (`#555a66`) and **Muted 2**
@@ -229,7 +229,7 @@ quotes. There is no script face.
 - **Headline** (LEMON MILK 400, `clamp(2rem, 1.4rem + 3vw, 3rem)`, lh 1.15):
   section h2.
 - **Title** (Montserrat **700**, `clamp(1.5rem, 1.2rem + 1.4vw, 2rem)`, lh 1.3):
-  h3/h4 and every card title. Deliberately *not* LEMON MILK.
+  h3/h4 and every card title. Deliberately _not_ LEMON MILK.
 - **Body** (Montserrat 400, `clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`, lh 1.7):
   all prose. Reading measure 600–700px.
 - **Label** (Montserrat 700, 11px, tracking 0.15em, uppercase): eyebrows and
@@ -293,10 +293,10 @@ Two shadow tokens exist and are deliberately reserved:
   genuinely floats above the page.
 - **`--shadow-md`** (`0 14px 34px rgba(8,22,51,.18)`): feature imagery only.
 
-*Known drift: several pages currently use `--shadow-md` as a resting state on
+_Known drift: several pages currently use `--shadow-md` as a resting state on
 cards and figures. That predates this decision and contradicts it; new work
 should not copy the pattern, and existing instances are candidates for
-removal.*
+removal._
 
 ### Named Rules
 

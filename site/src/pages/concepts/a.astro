@@ -55,31 +55,38 @@ const programs = [
     <div class="cover__shade" aria-hidden="true"></div>
     <div class="container cover__grid">
       <div class="cover__masthead">
-        <p class="cover__issue">Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup> Since 1922</p>
-        <h1 id="cover-title" class="cover__title">One Sigma</h1>
+        <p class="cover__issue">
+          Sigma Gamma Rho Sorority, Inc.<sup>&reg;</sup> Since 1922
+        </p>
+        <h1 id="cover-title" class="cover__title">
+          One Sigma
+        </h1>
       </div>
       <div class="cover__bottom">
-      <div class="cover__intro">
-        <p class="cover__deck">
-          Seven founders. A century of greater service. One sisterhood, in every region.
-        </p>
-        <div class="cover__actions">
-          <a class="btn" href={withBase("/membership/become-a-member/")}>Become a member</a>
-          <a class="btn btn--outline on-dark" href={PORTAL_URL} target="_blank" rel="noopener">
-            Member login<span class="visually-hidden"> (opens the Poodle Portal in a new tab)</span>
-          </a>
-        </div>
-      </div>
-      <ul class="cover__lines" aria-label="In this issue">
-        {coverLines.map((c) => (
-          <li>
-            <a href={withBase(c.href)}>
-              <strong>{c.title}</strong>
-              <span>{c.text}</span>
+        <div class="cover__intro">
+          <p class="cover__deck">
+            Seven founders. A century of greater service. One sisterhood, in every region.
+          </p>
+          <div class="cover__actions">
+            <a class="btn" href={withBase("/membership/become-a-member/")}>
+              Become a member
             </a>
-          </li>
-        ))}
-      </ul>
+            <a class="btn btn--outline on-dark" href={PORTAL_URL} target="_blank" rel="noopener">
+              Member login
+              <span class="visually-hidden"> (opens the Poodle Portal in a new tab)</span>
+            </a>
+          </div>
+        </div>
+        <ul class="cover__lines" aria-label="In this issue">
+          {coverLines.map((c) => (
+            <li>
+              <a href={withBase(c.href)}>
+                <strong>{c.title}</strong>
+                <span>{c.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
@@ -100,7 +107,9 @@ const programs = [
       />
     </figure>
     <div class="spread__text">
-      <h2 id="spread-quote" class="visually-hidden">The administration's theme</h2>
+      <h2 id="spread-quote" class="visually-hidden">
+        The administration's theme
+      </h2>
       <blockquote>
         <p>
           “I will focus on strengthening our sisterhood in the spirit of ‘One Sigma’, the theme of
@@ -131,7 +140,9 @@ const programs = [
         SWIM 1922® brings water safety and swim instruction into local communities through USA
         Swimming.
       </p>
-      <a class="btn" href={withBase("/service-impact/national-programs/#swim")}>Explore SWIM 1922</a>
+      <a class="btn" href={withBase("/service-impact/national-programs/#swim")}>
+        Explore SWIM 1922
+      </a>
     </div>
   </section>
 
@@ -179,7 +190,9 @@ const programs = [
       <h2 id="join-title">Find your chapter</h2>
       <p>Undergraduate and alumnae chapters, from campuses to cities, in every region.</p>
       <div class="cover__actions">
-        <a class="btn" href={withBase("/membership/chapter-locator/")}>Search chapters</a>
+        <a class="btn" href={withBase("/membership/chapter-locator/")}>
+          Search chapters
+        </a>
         <a class="btn btn--outline on-dark" href={withBase("/membership/become-a-member/")}>
           How to join
         </a>
@@ -211,7 +224,12 @@ const programs = [
     inset: 0;
     background:
       linear-gradient(180deg, rgba(8, 22, 51, 0.7) 0%, rgba(8, 22, 51, 0) 34%),
-      linear-gradient(0deg, rgba(8, 22, 51, 0.94) 0%, rgba(8, 22, 51, 0.6) 38%, rgba(8, 22, 51, 0) 70%);
+      linear-gradient(
+        0deg,
+        rgba(8, 22, 51, 0.94) 0%,
+        rgba(8, 22, 51, 0.6) 38%,
+        rgba(8, 22, 51, 0) 70%
+      );
   }
   /* A magazine cover: the masthead across the top, over the trees; the
      deck and cover lines at the foot; the faces left clear between. */
@@ -503,7 +521,12 @@ const programs = [
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(90deg, rgba(8, 22, 51, 0.95) 0%, rgba(8, 22, 51, 0.75) 45%, rgba(8, 22, 51, 0.1) 80%);
+    background: linear-gradient(
+      90deg,
+      rgba(8, 22, 51, 0.95) 0%,
+      rgba(8, 22, 51, 0.75) 45%,
+      rgba(8, 22, 51, 0.1) 80%
+    );
   }
   .join__text {
     position: relative;

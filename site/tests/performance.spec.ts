@@ -22,7 +22,6 @@ const BUDGETS = {
   video: 4 * MB,
 };
 
-
 async function weigh(page: Page, route: string) {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Network.enable");
@@ -45,18 +44,31 @@ const fmt = (b: number) => `${(b / MB).toFixed(2)} MB`;
 for (const route of ROUTES) {
   test(`page weight ${route}`, async ({ page }) => {
     const { other, video } = await weigh(page, route);
-    expect(other, `${route} downloads ${fmt(other)} excluding video; budget ${fmt(BUDGETS.page)}`).toBeLessThanOrEqual(BUDGETS.page);
-    expect(video, `${route} downloads ${fmt(video)} of video; budget ${fmt(BUDGETS.video)}`).toBeLessThanOrEqual(BUDGETS.video);
+    expect(
+      other,
+      `${route} downloads ${fmt(other)} excluding video; budget ${fmt(BUDGETS.page)}`
+    ).toBeLessThanOrEqual(BUDGETS.page);
+    expect(
+      video,
+      `${route} downloads ${fmt(video)} of video; budget ${fmt(BUDGETS.video)}`
+    ).toBeLessThanOrEqual(BUDGETS.video);
   });
 }
 
 test("page weight / on a phone stays inside the page budget with no video", async ({ browser }) => {
-  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+  });
   const page = await context.newPage();
   const { other, video } = await weigh(page, "/");
   await context.close();
   expect(video, "a phone should not download the hero clip unasked").toBe(0);
-  expect(other, `phone homepage downloads ${fmt(other)}; budget ${fmt(BUDGETS.page)}`).toBeLessThanOrEqual(BUDGETS.page);
+  expect(
+    other,
+    `phone homepage downloads ${fmt(other)}; budget ${fmt(BUDGETS.page)}`
+  ).toBeLessThanOrEqual(BUDGETS.page);
 });
 
 /**
@@ -111,7 +123,10 @@ test.describe("slow phone, every page", () => {
               for (const e of list.getEntries()) lcp = e.startTime;
             }).observe({ type: "largest-contentful-paint", buffered: true });
             new PerformanceObserver((list) => {
-              for (const e of list.getEntries() as (PerformanceEntry & { value: number; hadRecentInput: boolean })[])
+              for (const e of list.getEntries() as (PerformanceEntry & {
+                value: number;
+                hadRecentInput: boolean;
+              })[])
                 if (!e.hadRecentInput) cls += e.value;
             }).observe({ type: "layout-shift", buffered: true });
             setTimeout(() => resolve({ lcp, cls }), 200);
@@ -119,8 +134,13 @@ test.describe("slow phone, every page", () => {
       );
       await context.close();
       await cold.close();
-      expect(lcp, `${route} LCP was ${(lcp / 1000).toFixed(2)}s on slow 4G; budget 2.5s`).toBeLessThanOrEqual(2500);
-      expect(cls, `${route} layout shift was ${cls.toFixed(3)}; budget 0.1`).toBeLessThanOrEqual(0.1);
+      expect(
+        lcp,
+        `${route} LCP was ${(lcp / 1000).toFixed(2)}s on slow 4G; budget 2.5s`
+      ).toBeLessThanOrEqual(2500);
+      expect(cls, `${route} layout shift was ${cls.toFixed(3)}; budget 0.1`).toBeLessThanOrEqual(
+        0.1
+      );
     });
   }
 });

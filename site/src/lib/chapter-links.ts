@@ -63,4 +63,3 @@ export function chapterLinks(chapter: { name: string; website?: string }) {
   }));
   return { website, social };
 }
-

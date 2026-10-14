@@ -10,8 +10,9 @@ export const ROUTES = [
   "/",
   "/about/herstory/",
   "/about/our-founders/",
+  "/about/our-foundations/",
   "/about/notable-sigmas/",
-  "/about/headquarters/",
+  "/leadership/headquarters/",
   "/leadership/international-grand-basileus/",
   "/leadership/international-board/",
   "/leadership/regional-leadership/",
@@ -19,20 +20,21 @@ export const ROUTES = [
   "/membership/become-a-member/",
   "/membership/reactivate/",
   "/membership/chapter-locator/",
-  "/membership/affiliates/",
+  "/service-impact/affiliates/",
   "/membership/accountability/",
   "/service-impact/national-programs/",
   "/service-impact/partner-foundations/",
   "/service-impact/corporate-partnerships/",
   "/news-events/latest-news/",
   "/news-events/upcoming-events/",
-  "/news-events/chapter-stories/",
+  "/news-events/highlights-stories/",
   "/news-events/media-relations/",
   "/resources/vendor/",
   "/resources/help-center/",
-  "/resources/anti-hazing-policy/",
+  "/about/anti-hazing-policy/",
   "/resources/careers/",
-  "/contact/",
+  "/resources/contact/",
+  "/resources/media/",
   "/privacy/",
   "/cookies/",
   "/terms/",
@@ -99,7 +101,9 @@ export async function auditContrast(page: import("@playwright/test").Page) {
         }
         cur = cur.parentElement;
       }
-      return { rgb: acc ? composite(acc.rgb, acc.a, [255, 255, 255]).map(Math.round) : [255, 255, 255] };
+      return {
+        rgb: acc ? composite(acc.rgb, acc.a, [255, 255, 255]).map(Math.round) : [255, 255, 255],
+      };
     };
 
     const failures: ContrastFailureShape[] = [];

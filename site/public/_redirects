@@ -1,0 +1,7 @@
+# Old URLs from before the nav was aligned with the tested IA (2026-10-06).
+# Cloudflare Pages reads this file from the root of the build output.
+/contact/                        /resources/contact/                 301
+/resources/anti-hazing-policy/   /about/anti-hazing-policy/          301
+/about/headquarters/             /leadership/headquarters/           301
+/membership/affiliates/          /service-impact/affiliates/         301
+/news-events/chapter-stories/    /news-events/highlights-stories/    301

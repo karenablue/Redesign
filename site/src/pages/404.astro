@@ -21,8 +21,12 @@ const sections = primaryNav.filter((item) => item.href || item.children?.length)
     watermark="404"
     size="compact"
   >
-    <a class="btn" href={withBase("/")}>Back to Home</a>
-    <a class="btn btn--outline on-dark" href={withBase("/contact/")}>Contact Headquarters</a>
+    <a class="btn" href={withBase("/")}>
+      Back to Home
+    </a>
+    <a class="btn btn--outline on-dark" href={withBase("/resources/contact/")}>
+      Contact Headquarters
+    </a>
   </PageHero>
 
   <section class="nf">

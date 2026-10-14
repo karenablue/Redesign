@@ -53,7 +53,9 @@ for (const route of ROUTES) {
         const prev = +levels[i - 1].tagName[1];
         const cur = +levels[i].tagName[1];
         if (cur > prev + 1) {
-          headingSkips.push(`h${prev} -> h${cur} at "${levels[i].textContent?.trim().slice(0, 40)}"`);
+          headingSkips.push(
+            `h${prev} -> h${cur} at "${levels[i].textContent?.trim().slice(0, 40)}"`
+          );
         }
       }
 
@@ -80,9 +82,7 @@ for (const route of ROUTES) {
         })
         .map((c) => `${c.tagName.toLowerCase()}[${(c as HTMLInputElement).type ?? ""}]`);
 
-      const namelessControls = Array.from(
-        document.querySelectorAll("a[href],button,[role=button]")
-      )
+      const namelessControls = Array.from(document.querySelectorAll("a[href],button,[role=button]"))
         .filter(visible)
         .filter((el) => !accessibleName(el))
         .map((el) => `${el.tagName.toLowerCase()}.${String(el.className).split(" ")[0]}`);
@@ -99,17 +99,36 @@ for (const route of ROUTES) {
         unlabeledControls,
         namelessControls,
         positiveTabindex,
-        hasSkipLink: !!document.querySelector('a.skip-link, a[href="#main"], a[href="#main-content"]'),
+        hasSkipLink: !!document.querySelector(
+          'a.skip-link, a[href="#main"], a[href="#main-content"]'
+        ),
       };
     });
 
     expect(report.lang, `${route} needs <html lang>`).toBeTruthy();
-    expect(report.headingSkips, `${route} skips heading levels:\n  ${report.headingSkips.join("\n  ")}`).toEqual([]);
-    expect(report.duplicateIds, `${route} has duplicate ids: ${report.duplicateIds.join(", ")}`).toEqual([]);
-    expect(report.imagesMissingAlt, `${route} has <img> with no alt attribute: ${report.imagesMissingAlt.join(", ")}`).toEqual([]);
-    expect(report.unlabeledControls, `${route} has unlabeled form controls: ${report.unlabeledControls.join(", ")}`).toEqual([]);
-    expect(report.namelessControls, `${route} has links/buttons with no accessible name: ${report.namelessControls.join(", ")}`).toEqual([]);
-    expect(report.positiveTabindex, `${route} uses positive tabindex, which breaks tab order`).toBe(0);
+    expect(
+      report.headingSkips,
+      `${route} skips heading levels:\n  ${report.headingSkips.join("\n  ")}`
+    ).toEqual([]);
+    expect(
+      report.duplicateIds,
+      `${route} has duplicate ids: ${report.duplicateIds.join(", ")}`
+    ).toEqual([]);
+    expect(
+      report.imagesMissingAlt,
+      `${route} has <img> with no alt attribute: ${report.imagesMissingAlt.join(", ")}`
+    ).toEqual([]);
+    expect(
+      report.unlabeledControls,
+      `${route} has unlabeled form controls: ${report.unlabeledControls.join(", ")}`
+    ).toEqual([]);
+    expect(
+      report.namelessControls,
+      `${route} has links/buttons with no accessible name: ${report.namelessControls.join(", ")}`
+    ).toEqual([]);
+    expect(report.positiveTabindex, `${route} uses positive tabindex, which breaks tab order`).toBe(
+      0
+    );
     expect(report.hasSkipLink, `${route} needs a skip-to-content link`).toBe(true);
   });
 }
@@ -146,7 +165,9 @@ test("keyboard: the mobile nav drawer opens, closes on Escape, and returns focus
   const focusReturned = await page.evaluate(() =>
     document.activeElement?.classList.contains("nav-toggle")
   );
-  expect(focusReturned, "Escape should return focus to the toggle that opened the drawer").toBe(true);
+  expect(focusReturned, "Escape should return focus to the toggle that opened the drawer").toBe(
+    true
+  );
 });
 
 test("phone: the open menu offers Join, Poodle Portal and Donate", async ({ page }) => {

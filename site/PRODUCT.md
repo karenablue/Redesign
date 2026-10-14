@@ -8,28 +8,24 @@ web
 
 ## Users
 
-Two primary audiences, confirmed by the client. Neither is secondary; when
-their needs conflict on a surface, the surface must serve both rather than
-pick one:
+The homepage and primary navigation lead with prospective members and the
+general public (Karena, 2026-09-30). The site serves:
 
 - **Prospective sorors** — collegiate women and alumnae/graduate women
   evaluating membership. Their job is to decide whether this is for them, then
   find the right pathway (collegiate vs. alumnae) and a chapter near them.
+- **General public** — visitors learning who Sigma Gamma Rho is, how its
+  founders shaped its mission, and what its service programs do locally.
 - **Corporate and foundation partners** — sponsors, funders, and prospective
   partners evaluating credibility, national reach, and program substance
   before committing money or a co-branded initiative.
 
-Also served, but not the optimization target: current sorors, inactive members
-considering reactivation, families of members, individual donors, and
-press/general public.
-
-**Homepage exception (Karena, 2026-09-26):** the homepage speaks to current
-members and the general public first. Its order is the "One Sigma"
-administration theme with the Grand Basileus, then news and events, then
-heritage, programs, the chapter locator and partnerships. The hero's buttons
-are "Explore Our Impact" and "Member Login". Prospective sorors and partners
-stay the primary audiences for every other page, and are reached from the
-homepage's lower sections and the main navigation.
+Current sorors, inactive members considering reactivation, families of members,
+individual donors, and press also have clear paths. Member access remains in
+the header; the public homepage introduces the seven founders, service, and
+membership before leadership updates and news. This updates the 2026-09-26
+homepage direction after Karena's 2026-09-30 request to focus on prospective
+visitors and the public.
 
 ## Product Purpose
 
@@ -66,7 +62,8 @@ one a peer organization cannot truthfully copy.
 
 ## Capabilities and Constraints
 
-- 28 routes in the current build (27 public pages plus a custom 404).
+- 30 routes in the public-page test list, plus a news article, three noindex
+  design concepts, a custom 404, and utility output such as `robots.txt`.
 - **The Poodle Portal stays external.** It is linked to and never rebuilt,
   proxied, or wrapped.
 - **HQ staff must be able to self-edit content** — at minimum news, events,
@@ -80,13 +77,12 @@ one a peer organization cannot truthfully copy.
   admin, never under personal accounts, or the handover becomes a migration
   and she stays a single point of failure.
 - **Content source: markdown in this repository**, exposed through Astro
-  content collections (`src/content.config.ts`). Events are migrated;
-  news and leadership are the remaining candidates. Content is therefore
-  plain text that survives any CMS being abandoned, and the choice of editor
-  is deliberately deferred: Decap, Sveltia and Tina all edit these same
-  files. **Open decision: which CMS UI**, weighted toward one with email
-  logins so staff never touch git (Tina Cloud does this; Decap's old
-  no-account path depended on Netlify Identity and is no longer viable).
+  content collections (`src/content.config.ts`). Events, news, the
+  International Board, and Notable Sigmas use these collections. The content
+  remains plain text if the editor is replaced. Sveltia CMS is the selected
+  editor UI at `/admin/`; it still needs an HQ-owned GitHub repository,
+  authentication, and an end-to-end save test before handoff. See
+  [HANDOFF.md](HANDOFF.md).
 - **Headless WordPress was considered and dropped.** Verified from the live
   site on 2026-09-15: `sgrho1922.org` serves WordPress on PHP 8.4.25 behind
   Cloudflare, from a Plesk-managed Linux origin (a general VPS or reseller
@@ -96,20 +92,19 @@ one a peer organization cannot truthfully copy.
   post, 30 pages, and no custom post types** — the structure lives in theme
   templates, not in queryable fields. So it offers almost no structured
   content to preserve, while costing two systems and two bills to maintain
-  forever. *Only HQ can confirm who holds the hosting account.*
+  forever. _Only HQ can confirm who holds the hosting account._
 - **Deploy target: Cloudflare Pages.** HQ's DNS is already on Cloudflare
   (`sara`/`noah.ns.cloudflare.com`), so this needs no nameserver change, and
   security headers ship in-repo as `public/_headers`. Note the live site
   returns `cf-cache-status: DYNAMIC` — its HTML is not edge-cached today, so
   every view reaches that Plesk server; a static build removes that hop.
 - Organization vocabulary is not interchangeable with generic equivalents:
-  *Herstory* (not History), *Soror*, *Boulé*, *Basileus* / *Grand Basileus*,
-  *Philos®*, *Rhoer Club®*, *EE-YIP®*. Full legal name on first use.
+  _Herstory_ (not History), _Soror_, _Boulé_, _Basileus_ / _Grand Basileus_,
+  _Philos®_, _Rhoer Club®_, _EE-YIP®_. Full legal name on first use.
 
 ## Brand Commitments
 
-- The **SGR Brand Guidelines FY2027** (created January 2026, effective July
-  2026) is the authoritative source. Where anything else disagrees, it wins.
+- The **SGR Brand Guidelines FY2027** (created January 2026, effective July 2026) is the authoritative source. Where anything else disagrees, it wins.
 - Official type is **LEMON MILK** (display) and **Montserrat** (body) — the
   guidelines name only these two and explicitly reject decorative fonts.
   The rebuild adds one editorial face by an explicit client decision
@@ -135,7 +130,7 @@ one a peer organization cannot truthfully copy.
   1. **Cream** (`#fffbf0`, `#fef8ed`) is outside the official palette but used
      38 times across 20 files. It came from the Figma Make source and it is
      what supplies the site's warmth and its alternating-band rhythm — most
-     visibly the Key Facts band on *Herstory*. Removing it is a visual
+     visibly the Key Facts band on _Herstory_. Removing it is a visual
      decision, not a cleanup; see `AGENTS.md` §6, which says not to strip it
      without a human decision. Same status for `--tint` (`#f4f6fb`), the cool
      slate band.

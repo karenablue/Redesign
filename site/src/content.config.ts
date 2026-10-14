@@ -28,45 +28,47 @@ const isoDate = z.preprocess(
 
 const events = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/events" }),
-  schema: z.object({
-    title: z.string().min(1),
+  schema: z
+    .object({
+      title: z.string().min(1),
 
-    /**
-     * Date is deliberately two free-text fields rather than a real date: real
-     * entries include "Sep–Oct" and a day of "—" for month-long activations,
-     * which no date type can represent. They are rendered verbatim.
-     */
-    month: z.string().min(1),
-    day: z.string().min(1),
+      /**
+       * Date is deliberately two free-text fields rather than a real date: real
+       * entries include "Sep–Oct" and a day of "—" for month-long activations,
+       * which no date type can represent. They are rendered verbatim.
+       */
+      month: z.string().min(1),
+      day: z.string().min(1),
 
-    /** Category chip. Free text on purpose — HQ can add a category after
-     *  handover without anyone editing code. */
-    tag: z.string().min(1),
+      /** Category chip. Free text on purpose — HQ can add a category after
+       *  handover without anyone editing code. */
+      tag: z.string().min(1),
 
-    location: z.string().min(1),
+      location: z.string().min(1),
 
-    /**
-     * Confirmed calendar dates, YYYY-MM-DD. Optional because most entries
-     * carry no year yet. When `start` is set, the event gets an
-     * "Add to calendar" download; `end` is the last day, for multi-day events.
-     * Only fill these from HQ's confirmed schedule; never infer the year.
-     */
-    start: isoDate.optional(),
-    end: isoDate.optional(),
+      /**
+       * Confirmed calendar dates, YYYY-MM-DD. Optional because most entries
+       * carry no year yet. When `start` is set, the event gets an
+       * "Add to calendar" download; `end` is the last day, for multi-day events.
+       * Only fill these from HQ's confirmed schedule; never infer the year.
+       */
+      start: isoDate.optional(),
+      end: isoDate.optional(),
 
-    /** Pins the event in the wide banner above the list. Use on one entry. */
-    featured: z.boolean().optional(),
+      /** Pins the event in the wide banner above the list. Use on one entry. */
+      featured: z.boolean().optional(),
 
-    /**
-     * Display position. The curated sequence runs across a season
-     * (Sep → May), and because the dates above are fuzzy it cannot be derived
-     * by sorting. An editor reorders the page by changing these numbers.
-     */
-    order: z.number().int().positive(),
-  }).refine((e) => !e.end || (e.start !== undefined && e.end >= e.start), {
-    message: "`end` needs a `start`, and cannot be before it",
-    path: ["end"],
-  }),
+      /**
+       * Display position. The curated sequence runs across a season
+       * (Sep → May), and because the dates above are fuzzy it cannot be derived
+       * by sorting. An editor reorders the page by changing these numbers.
+       */
+      order: z.number().int().positive(),
+    })
+    .refine((e) => !e.end || (e.start !== undefined && e.end >= e.start), {
+      message: "`end` needs a `start`, and cannot be before it",
+      path: ["end"],
+    }),
 });
 
 /** Latest news. Prose lives in the markdown body, like events. */

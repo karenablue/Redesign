@@ -53,7 +53,9 @@ async function installColorUtils(page: Page) {
     };
     const hex = (s: string) => {
       const h = String(s).trim().replace("#", "");
-      return /^[0-9a-f]{6}$/i.test(h) ? [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)) : null;
+      return /^[0-9a-f]{6}$/i.test(h)
+        ? [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16))
+        : null;
     };
     const channel = (v: number) => {
       v /= 255;
@@ -253,13 +255,20 @@ async function auditHoverContrast(page: Page): Promise<HoverFailure[]> {
   const count = await page.evaluate(() => {
     let n = 0;
     const seen = new Set<string>();
-    for (const el of Array.from(document.querySelectorAll("a[href], button, [role=button], summary"))) {
+    for (const el of Array.from(
+      document.querySelectorAll("a[href], button, [role=button], summary")
+    )) {
       const box = el.getBoundingClientRect();
       if (!box.width || !box.height) continue;
       // parked off-canvas until focused, e.g. the skip link
       if (box.top + window.scrollY < 0 || box.left + window.scrollX < 0) continue;
       const cs = getComputedStyle(el);
-      if (cs.visibility === "hidden" || el.closest("[hidden]") || el.closest('[aria-hidden="true"]')) continue;
+      if (
+        cs.visibility === "hidden" ||
+        el.closest("[hidden]") ||
+        el.closest('[aria-hidden="true"]')
+      )
+        continue;
       if (!(el.textContent || "").trim()) continue; // icon-only controls are non-text contrast, out of scope
 
       const region = el.closest("section, header, footer, nav, aside");
@@ -346,16 +355,20 @@ for (const route of ROUTES) {
     await installColorUtils(page);
     await page.goto(route, { waitUntil: "load" });
     const violations = await auditOneGold(page);
-    expect(violations, `One-Gold Rule violations on ${route}:\n${describeGold(violations)}`).toEqual([]);
+    expect(
+      violations,
+      `One-Gold Rule violations on ${route}:\n${describeGold(violations)}`
+    ).toEqual([]);
   });
 
   test(`hover contrast ${route}`, async ({ page }) => {
     await installColorUtils(page);
     await page.goto(route, { waitUntil: "load" });
     const failures = await auditHoverContrast(page);
-    expect(failures, `WCAG 1.4.3 failures in the HOVER state on ${route}:\n${describeHover(failures)}`).toEqual(
-      []
-    );
+    expect(
+      failures,
+      `WCAG 1.4.3 failures in the HOVER state on ${route}:\n${describeHover(failures)}`
+    ).toEqual([]);
   });
 }
 
@@ -373,20 +386,37 @@ test.describe("canaries: each check must catch a deliberately broken page", () =
 
   test("one gold flags a darker, non-brand gold used as text", async ({ page }) => {
     // #8a6510 was the retired --gold-text.
-    await expectGold(page, ".ph__title span { color: #8a6510 !important; }", "/resources/help-center/", "non-brand gold");
+    await expectGold(
+      page,
+      ".ph__title span { color: #8a6510 !important; }",
+      "/resources/help-center/",
+      "non-brand gold"
+    );
   });
 
   test("one gold flags a lighter, non-brand gold on a dark hero", async ({ page }) => {
     // #f0cf5c was the retired --gold-bright: it passes contrast on navy and is
     // still off-brand.
-    await expectGold(page, ".ph__title span { color: #f0cf5c !important; }", "/resources/help-center/", "non-brand gold");
+    await expectGold(
+      page,
+      ".ph__title span { color: #f0cf5c !important; }",
+      "/resources/help-center/",
+      "non-brand gold"
+    );
   });
 
   test("one gold flags brand gold as text on a light ground", async ({ page }) => {
-    await expectGold(page, ".legal-toc a { color: #dfb136 !important; }", "/privacy/", "brand gold");
+    await expectGold(
+      page,
+      ".legal-toc a { color: #dfb136 !important; }",
+      "/privacy/",
+      "brand gold"
+    );
   });
 
-  test("one gold still flags brand gold on a translucent tint over a LIGHT ground", async ({ page }) => {
+  test("one gold still flags brand gold on a translucent tint over a LIGHT ground", async ({
+    page,
+  }) => {
     // Guards the alpha-weighted gradient reading: a faint wash must not make a
     // light page read as dark.
     await expectGold(
@@ -399,7 +429,7 @@ test.describe("canaries: each check must catch a deliberately broken page", () =
 
   test("hover contrast flags a link that turns white on a light ground", async ({ page }) => {
     await installColorUtils(page);
-    await page.goto("/contact/", { waitUntil: "load" });
+    await page.goto("/resources/contact/", { waitUntil: "load" });
     await page.addStyleTag({ content: "a:hover { color: #ffffff !important; }" });
     const failures = await auditHoverContrast(page);
     expect(failures.length, "the injected hover failure was not detected").toBeGreaterThan(0);

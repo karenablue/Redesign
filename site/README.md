@@ -1,10 +1,8 @@
 # SGRho site rebuild (Astro)
 
-This is the scaffold for rebuilding the Sigma Gamma Rho site as **semantic HTML
-assembled from shared components**, replacing the Figma-export code in the repo
-root (637 `<div>`s on the homepage, 25 unshared stylesheets, the same hero
-rebuilt from scratch on every page, fixed-pixel grid tracks that collapse on
-real screens).
+This is the Sigma Gamma Rho national website rebuild: **semantic HTML assembled
+from shared components**, replacing the Figma-export code in the repo root.
+The source handoff and launch checklist is in [HANDOFF.md](HANDOFF.md).
 
 The old files in the repo root are the **visual reference**. Nothing here
 imports them.
@@ -17,12 +15,12 @@ Double-clicking `dist/index.html` (or any `.astro`/`.html` file) opens it as
 nav collapses to a bullet list and the hero is unstyled black text. That is not
 a bug in the site; a multi-page site with clean URLs has to be served.
 
-Always view it with:
+For local development, view it with:
 
 ```bash
 cd site
-npm install        # first time only
-npm run dev        # builds + opens http://localhost:4321 in your browser
+npm ci             # first time, and after dependency changes
+npm run dev        # opens http://localhost:4321 in your browser
 ```
 
 `npm run build` → `site/dist/` (plain static HTML); `npm run preview` serves
@@ -30,9 +28,11 @@ that build the same way a host would. Deploying `dist/` to any web host also
 works — the "no CSS" problem is unique to opening files straight from disk.
 
 `predev` / `prebuild` run `scripts/link-images.mjs`, which links
-`site/public/images` to the repo-root `images/` folder so the existing 65 MB of
-photography is served without being copied into this project. The link is
-git-ignored and recreated automatically.
+`site/public/images` to the repo-root `images/` folder so the photography is
+served without being copied into this project. The link is git-ignored and
+recreated automatically. **Keep the full repository when transferring source;**
+`site/` alone cannot build the published imagery. The built `dist/` includes
+the images and can be deployed on its own.
 
 ## How it's organized
 
@@ -65,10 +65,12 @@ src/
     StatBand.astro     The "at a glance" number row.
     CtaBand.astro      The dark navy call-to-action band that closes each page.
   pages/
-    index.astro            Homepage — condensed rebuild showing the full flow.
-    about/herstory.astro    END-TO-END REFERENCE. Port every other page the
-                            same way: shared components first, page-scoped
-                            <style> only for genuinely unique bands.
+    index.astro            Homepage.
+    about/herstory.astro    End-to-end reference for page composition.
+    membership/            Membership pathways and chapter locator.
+    service-impact/        Programs and partnerships.
+    news-events/           News, events, and chapter stories.
+  content/                 Markdown edited through the content editor.
 ```
 
 URLs come from file paths: `src/pages/about/herstory.astro` → `/about/herstory/`.
@@ -95,13 +97,17 @@ URLs come from file paths: `src/pages/about/herstory.astro` → `/about/herstory
 
 ## Deploy
 
-`npm run build` emits fully static HTML/CSS in `dist/` — host it the same way
-the current flat files are hosted. If it goes under a sub-path (e.g. GitHub
-Pages project site), set `SITE_BASE=/Redesign npm run build` and update `site`
-in `astro.config.mjs` to the real domain.
+`npm run build` emits fully static HTML/CSS in `dist/`. The intended host is
+Cloudflare Pages. Build from the full repository with `site` as the project
+root, `npm ci && npm run build` as the build command, and `dist` as the output
+directory. If it goes under a sub-path instead, set `SITE_BASE` for the build
+and update `site` in `astro.config.mjs` to the real domain. Complete the
+account, editor, content approval, and deployed-preview steps in
+[HANDOFF.md](HANDOFF.md) before changing the live domain.
 
-## When the rebuild is done
+## Later source cleanup
 
-Move `images/` into `site/`, delete `scripts/link-images.mjs` + the
+When the remaining content and account approvals are complete, move `images/`
+into `site/`, delete `scripts/link-images.mjs` + the
 `predev`/`prebuild` hooks + the `public/images` line in `.gitignore`, remove the
 old page folders from the repo root, and promote `site/` to the repo root.

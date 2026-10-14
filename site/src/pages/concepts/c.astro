@@ -11,7 +11,10 @@ import ConceptBar from "../../components/ConceptBar.astro";
 import { withBase } from "../../lib/url.js";
 
 const PORTAL_URL = "https://portal.sgrho1922.org/";
-const tiles = Array.from({ length: 16 }, (_, i) => `/optimized/concepts/wall-${String(i + 1).padStart(2, "0")}.webp`);
+const tiles = Array.from(
+  { length: 16 },
+  (_, i) => `/optimized/concepts/wall-${String(i + 1).padStart(2, "0")}.webp`
+);
 const programs = [
   { name: "Project CRADLE Care®", what: "Supporting Black maternal health", href: "#cradle" },
   { name: "SWIM 1922®", what: "Teaching water safety", href: "#swim" },
@@ -40,7 +43,9 @@ const programs = [
         territories and 10 countries.
       </p>
       <div class="wall__actions">
-        <a class="btn" href={withBase("/membership/become-a-member/")}>Become a member</a>
+        <a class="btn" href={withBase("/membership/become-a-member/")}>
+          Become a member
+        </a>
         <a class="btn btn--outline on-dark" href={withBase("/membership/chapter-locator/")}>
           Find a chapter
         </a>
@@ -72,8 +77,8 @@ const programs = [
       <p class="story__when">July 2026</p>
       <h2 id="story-title">Tampa welcomes Sigma Gamma Rho for the 61st Boulé</h2>
       <p>
-        Thousands of members, partners, and guests gathered at the Tampa Convention Center, the first
-        Sigma Gamma Rho international convention in Tampa since 1976.
+        Thousands of members, partners, and guests gathered at the Tampa Convention Center, the
+        first Sigma Gamma Rho international convention in Tampa since 1976.
       </p>
       <a href={withBase("/news-events/latest-news/61st-biennial-boule/")}>Read the story</a>
     </div>

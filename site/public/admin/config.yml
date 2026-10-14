@@ -6,7 +6,7 @@
 # in a minute or two without anyone touching git or a terminal.
 #
 # BEFORE THIS WORKS, two things must exist that only the account owner can
-# create (see the handover notes in PRODUCT.md):
+# create (see the handover steps in HANDOFF.md):
 #   1. This repository on GitHub, under an SGRho organisation.
 #   2. A GitHub OAuth app, so editors can sign in. Sveltia can use a hosted
 #      auth relay, or a Cloudflare Worker in the same account.
@@ -44,7 +44,12 @@ collections:
       - { name: title, label: Title, widget: string }
       - { name: month, label: Month, widget: string, hint: 'e.g. "Sep" or "Sep–Oct"' }
       - { name: day, label: Day, widget: string, hint: 'e.g. "12", "15–19", or "—" for all month' }
-      - { name: tag, label: Category, widget: string, hint: "e.g. Signature, Regional, Advocacy, Wellness" }
+      - {
+          name: tag,
+          label: Category,
+          widget: string,
+          hint: "e.g. Signature, Regional, Advocacy, Wellness",
+        }
       - { name: location, label: Location, widget: string, hint: 'City, State — or "Virtual"' }
       - { name: order, label: Order on page, widget: number, value_type: int, min: 1 }
       - { name: body, label: Description, widget: markdown }
@@ -63,8 +68,20 @@ collections:
       - { name: title, label: Headline, widget: string }
       - { name: tag, label: Category, widget: string }
       - { name: image, label: Image, widget: image }
-      - { name: href, label: Link, widget: string, required: false, hint: "A full https:// URL, or a site path like /service-impact/national-programs/" }
-      - { name: external, label: Opens in a new tab, widget: boolean, required: false, default: false }
+      - {
+          name: href,
+          label: Link,
+          widget: string,
+          required: false,
+          hint: "A full https:// URL, or a site path like /service-impact/national-programs/",
+        }
+      - {
+          name: external,
+          label: Opens in a new tab,
+          widget: boolean,
+          required: false,
+          default: false,
+        }
       - { name: order, label: Order on page, widget: number, value_type: int, min: 1 }
       - { name: body, label: Summary, widget: markdown }
 

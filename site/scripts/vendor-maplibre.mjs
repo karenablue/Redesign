@@ -16,7 +16,12 @@ const { version } = JSON.parse(readFileSync(join(pkgDir, "package.json"), "utf8"
 const out = join(here, "..", "public", "vendor", "maplibre");
 
 mkdirSync(out, { recursive: true });
-for (const file of ["maplibre-gl.mjs", "maplibre-gl-shared.mjs", "maplibre-gl-worker.mjs", "maplibre-gl.css"]) {
+for (const file of [
+  "maplibre-gl.mjs",
+  "maplibre-gl-shared.mjs",
+  "maplibre-gl-worker.mjs",
+  "maplibre-gl.css",
+]) {
   copyFileSync(join(pkgDir, "dist", file), join(out, file));
 }
 console.log(`[vendor-maplibre] maplibre-gl ${version} -> public/vendor/maplibre/`);

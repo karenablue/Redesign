@@ -41,7 +41,10 @@ const pairs = [
     },
     title: "From Butler to the Boulé",
     text: "The only NPHC sorority founded at a predominantly white institution now gathers thousands of members, partners and guests at its International Biennial Boulé.",
-    link: { label: "Read about the 61st Boulé", href: "/news-events/latest-news/61st-biennial-boule/" },
+    link: {
+      label: "Read about the 61st Boulé",
+      href: "/news-events/latest-news/61st-biennial-boule/",
+    },
   },
 ];
 ---
@@ -61,14 +64,18 @@ const pairs = [
         alt="Portraits of the seven Founders"
         fetchpriority="high"
       />
-      <figcaption class="diptych__year" aria-hidden="true">1922</figcaption>
+      <figcaption class="diptych__year" aria-hidden="true">
+        1922
+      </figcaption>
     </figure>
     <figure class="diptych__half diptych__now">
       <img
         src={withBase("/optimized/concepts/board-boule.webp")}
         alt="The 2026–2028 International Board of Directors on stage at the 61st Boulé"
       />
-      <figcaption class="diptych__year" aria-hidden="true">Today</figcaption>
+      <figcaption class="diptych__year" aria-hidden="true">
+        Today
+      </figcaption>
     </figure>
     <div class="diptych__seam" aria-hidden="true"></div>
     <div class="diptych__words">
@@ -78,8 +85,12 @@ const pairs = [
           <span>More than 100,000 women since.</span>
         </h1>
         <div class="diptych__actions">
-          <a class="btn" href={withBase("/membership/become-a-member/")}>Become a member</a>
-          <a class="btn btn--outline on-dark" href={withBase("/about/herstory/")}>Read our Herstory</a>
+          <a class="btn" href={withBase("/membership/become-a-member/")}>
+            Become a member
+          </a>
+          <a class="btn btn--outline on-dark" href={withBase("/about/herstory/")}>
+            Read our Herstory
+          </a>
           <a class="diptych__login" href={PORTAL_URL} target="_blank" rel="noopener">
             Member login<span class="visually-hidden"> (opens the Poodle Portal in a new tab)</span>
           </a>
@@ -113,13 +124,17 @@ const pairs = [
   <section class="motto on-dark" aria-labelledby="motto-title">
     <div class="container motto__inner">
       <h2 id="motto-title">
-        Greater Service,<br />Greater Progress<sup>&reg;</sup>
+        Greater Service,
+        <br />
+        Greater Progress<sup>&reg;</sup>
       </h2>
       <p>
         Maternal health, water safety, school supplies, women's wellness and youth leadership: five
         national programs carry the Founders' purpose into communities today.
       </p>
-      <a class="btn" href={withBase("/service-impact/national-programs/")}>See the national programs</a>
+      <a class="btn" href={withBase("/service-impact/national-programs/")}>
+        See the national programs
+      </a>
     </div>
   </section>
 </Base>

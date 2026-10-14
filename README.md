@@ -12,6 +12,9 @@ This repo holds two things side by side on purpose:
 run it, how it's organized, and how to port a page from the root reference into
 the new system.
 
+The source transfer, account setup, content approvals, and launch checks are
+documented in [`site/HANDOFF.md`](site/HANDOFF.md).
+
 When the rebuild is finished, the root reference pages get deleted and `site/`
 is promoted to the repo root (see "When the rebuild is done" in
 `site/README.md`).

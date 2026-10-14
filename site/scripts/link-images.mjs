@@ -20,8 +20,8 @@ if (existsSync(link)) {
   process.exit(0);
 }
 if (!existsSync(target)) {
-  console.warn(`[link-images] source not found: ${target} — skipping`);
-  process.exit(0);
+  console.error(`[link-images] source not found: ${target} — build needs the full repository`);
+  process.exit(1);
 }
 
 mkdirSync(dirname(link), { recursive: true });

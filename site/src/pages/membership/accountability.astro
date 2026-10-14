@@ -207,7 +207,7 @@ const cellsForRecord = (
 
 <Base
   title="Membership Accountability"
-  activeTop="Membership & Intake"
+  activeTop="Membership"
   description="How Sigma Gamma Rho Sorority, Inc. handles suspension, expulsion and denouncement, and how to verify a member's or chapter's standing."
   bodyClass="page-accountability"
 >
@@ -227,7 +227,7 @@ const cellsForRecord = (
     jumpLabel="The five lists"
     jump={categories.map((c) => ({ href: `#category-${c.key}`, label: c.title }))}
   >
-    <a class="btn" href={withBase("/contact/")}>
+    <a class="btn" href={withBase("/resources/contact/")}>
       Verify Standing with Headquarters
     </a>
   </PageHero>
@@ -253,7 +253,7 @@ const cellsForRecord = (
               View the Public Register
             </a>
           )}
-          <a class={entries.length > 0 ? "btn btn--outline" : "btn"} href={withBase("/contact/")}>
+          <a class={entries.length > 0 ? "btn btn--outline" : "btn"} href={withBase("/resources/contact/")}>
             Verify Standing with Headquarters
           </a>
         </div>
@@ -367,7 +367,7 @@ const cellsForRecord = (
           To verify the standing of any chapter or individual, contact International Corporate
           Headquarters at <a href="mailto:help@sgrho1922.org">help@sgrho1922.org</a>.
         </p>
-        <a class="btn" href={withBase("/resources/anti-hazing-policy/")}>
+        <a class="btn" href={withBase("/about/anti-hazing-policy/")}>
           Read the Anti-Hazing Policy
         </a>
       </div>
