@@ -50,3 +50,11 @@ playwright/.cache/
 # sanctioned rule exceptions (see `impeccable hooks`) — but the cache is
 # machine-local derived state.
 .impeccable/hook.cache.json
+
+# Local AI-assistant tooling — not part of the site
+AGENTS.md
+CLAUDE.md
+skills-lock.json
+.impeccable/
+.agents/
+.claude/
