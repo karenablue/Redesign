@@ -1,13 +1,11 @@
 /**
- * robots.txt, built from the site URL in astro.config.mjs so the sitemap
- * link follows the domain (and any base path) without a second edit.
+ * robots.txt. The site is a private concept, so every page carries a noindex
+ * meta tag (Base.astro). Crawling stays allowed on purpose: a crawler blocked
+ * here would never see the noindex. No sitemap is advertised while private.
  */
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = ({ site }) => {
-  const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-  const sitemap = new URL(`${base}sitemap-index.xml`, site);
-  return new Response(`User-agent: *\nAllow: /\n\nSitemap: ${sitemap.href}\n`, {
+export const GET: APIRoute = () =>
+  new Response("User-agent: *\nAllow: /\n", {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
-};

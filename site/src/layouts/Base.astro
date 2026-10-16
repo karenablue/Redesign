@@ -10,7 +10,6 @@
  *   image         social share image path (root-absolute), optional
  *   preloadSrcset / preloadSizes  make that preload responsive, matching
  *                 the image's own srcset and sizes
- *   noindex       keep the page out of search engines (design concepts)
  *   preloadImage  the page's largest above-the-fold image (root-absolute),
  *                 fetched first at high priority. Pass it only for an image
  *                 the browser cannot discover early, such as a video poster.
@@ -29,7 +28,6 @@ const {
   preloadImage,
   preloadSrcset,
   preloadSizes,
-  noindex = false,
 } = Astro.props;
 
 const fullTitle = title
@@ -45,7 +43,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {/* Private concept site: every page stays out of search until it goes public. */}
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
 
@@ -100,6 +99,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <a class="skip-link" href="#main">
       Skip to content
     </a>
+    <p class="concept-notice">
+      Independent design concept by Karena Blue. Not the official Sigma Gamma Rho website.
+    </p>
     <SiteHeader activeTop={activeTop} />
     {/* tabindex="-1" is what makes the skip link above actually work: a bare
         <main id="main"> is not focusable, so browsers scroll to it but leave
@@ -115,6 +117,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
       import "../scripts/motion.ts";
     </script>
     <style is:global>
+      .concept-notice {
+        margin: 0;
+        padding: 0.45rem var(--space-4);
+        background: var(--navy);
+        color: var(--white);
+        font-size: var(--text-xs);
+        line-height: 1.4;
+        letter-spacing: 0.04em;
+        text-align: center;
+      }
       .skip-link {
         position: absolute;
         left: var(--space-4);

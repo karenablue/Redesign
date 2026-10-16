@@ -61,8 +61,7 @@ one a peer organization cannot truthfully copy.
 
 ## Capabilities and Constraints
 
-- 30 routes in the public-page test list, plus a news article, three noindex
-  design concepts, a custom 404, and utility output such as `robots.txt`.
+- 30 routes in the public-page test list, plus a news article, a custom 404, and utility output such as `robots.txt`.
 - **The Poodle Portal stays external.** It is linked to and never rebuilt,
   proxied, or wrapped.
 - **HQ staff must be able to self-edit content** — at minimum news, events,
